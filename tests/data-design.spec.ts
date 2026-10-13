@@ -13,7 +13,7 @@ test("an existing canvas photo can be dragged into a frame with one-step Undo", 
     .click();
   await page.getByLabel("X position", { exact: true }).fill("100");
   await page.getByLabel("Y position", { exact: true }).fill("100");
-  await page.keyboard.press("Escape");
+  await page.locator(".upper-canvas").click({ position: { x: 5, y: 5 } });
   await page.getByRole("button", { name: "Photos", exact: true }).click();
   await page
     .getByRole("button", {
@@ -21,6 +21,9 @@ test("an existing canvas photo can be dragged into a frame with one-step Undo", 
       exact: true,
     })
     .click();
+  await expect
+    .poll(async () => (await saved(page)).pages[0].data.objects.length)
+    .toBe(2);
   await page.getByLabel("Element width", { exact: true }).fill("160");
   await page.getByLabel("Element height", { exact: true }).fill("120");
   await page.getByLabel("X position", { exact: true }).fill("700");

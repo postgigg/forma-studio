@@ -208,6 +208,8 @@ The app uses React, TypeScript, Vite, Fabric, Node, Playwright, nginx/Docker, an
 
 ## Validation and demo regeneration
 
+Verified on Windows on **2026-10-13**: the production Docker build succeeded, **33 browser tests** and **13 server checks** passed, and the editor fit four desktop/mobile viewport sizes. The real AI Pencil ocean demo preserved every pixel outside its marked region and supported one-step Undo. A separate real refinement produced 45 editable stars distributed across a poster while preserving its text. The scripts and example screenshots below make these checks reproducible.
+
 With the local editor and worker running:
 
 ```powershell
@@ -237,6 +239,8 @@ node scripts/test-ai-pencil-live.mjs
 ## Artwork and scope
 
 Stickers are individual transparent PNGs generated with the built-in image tool. Prompts and provenance live in `shared/sticker-prompts*.json` and `shared/sticker-provenance*.json`. Branded graphics and occasion templates use native editable geometry. The four Forma fonts come from the original geometry in `scripts/build-fonts.py`.
+
+Sample photographs in the photo library come from Unsplash. You can replace them with your own photographs through Uploads.
 
 The [roadmap](docs/ROADMAP.md) separates working tools from proposed next features: timeline video/audio, background removal, smart format adaptation, bulk creation, collaboration, and connected data.
 

@@ -169,33 +169,47 @@ test("refinement rejects invalid geometry, unsupported fonts and photo edits out
     /No changes/,
   );
 });
-test("Magic Eraser requires exactly one existing photo and a mask with the same dimensions", () => {
-  const input = {
-    ...brief,
-    nodes: [brief.nodes[2]],
-    eraser: { id: "photo", mask: src },
-  };
-  assert.equal(validateRefinement(input).eraser.id, "photo");
-  assert.throws(
-    () => validateRefinement({ ...input, nodes: brief.nodes }),
-    /one selected photo/,
-  );
-  assert.throws(
-    () =>
-      validateRefinement({ ...input, eraser: { id: "another", mask: src } }),
-    /one selected photo/,
-  );
-  const bytes = Buffer.from(src.split(",")[1], "base64");
-  bytes.writeUInt32BE(512, 16);
+for (const tool of ["eraser", "pencil"])
+  test(`${tool} requires exactly one existing photo and a mask with the same dimensions`, () => {
+    const input = {
+      ...brief,
+      nodes: [brief.nodes[2]],
+      [tool]: { id: "photo", mask: src },
+    };
+    assert.equal(validateRefinement(input)[tool].id, "photo");
+    assert.throws(
+      () => validateRefinement({ ...input, nodes: brief.nodes }),
+      /one selected photo/,
+    );
+    assert.throws(
+      () =>
+        validateRefinement({ ...input, [tool]: { id: "another", mask: src } }),
+      /one selected photo/,
+    );
+    const bytes = Buffer.from(src.split(",")[1], "base64");
+    bytes.writeUInt32BE(512, 16);
+    assert.throws(
+      () =>
+        validateRefinement({
+          ...input,
+          [tool]: {
+            id: "photo",
+            mask: "data:image/png;base64," + bytes.toString("base64"),
+          },
+        }),
+      /match/,
+    );
+  });
+
+test("masked editing rejects combined pencil and eraser instructions", () => {
   assert.throws(
     () =>
       validateRefinement({
-        ...input,
-        eraser: {
-          id: "photo",
-          mask: "data:image/png;base64," + bytes.toString("base64"),
-        },
+        ...brief,
+        nodes: [brief.nodes[2]],
+        eraser: { id: "photo", mask: src },
+        pencil: { id: "photo", mask: src },
       }),
-    /match/,
+    /one masked image edit/,
   );
 });
