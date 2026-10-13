@@ -1,0 +1,2451 @@
+[
+  {
+    "id": "daisy-sticker",
+    "name": "Clay daisy",
+    "category": "AI stickers",
+    "src": "/elements/daisy-sticker.png",
+    "description": "Dimensional ivory clay daisy with apricot center; transparent."
+  },
+  {
+    "id": "iridescent-ribbon",
+    "name": "Pearl ribbon",
+    "category": "AI stickers",
+    "src": "/elements/iridescent-ribbon.png",
+    "description": "Elegant iridescent lilac and pearl abstract 3D ribbon; transparent."
+  },
+  {
+    "id": "botanical-sticker",
+    "name": "Paper botanicals",
+    "category": "AI stickers",
+    "src": "/elements/botanical-sticker.png",
+    "description": "Sage eucalyptus and ivory blossoms in tactile paper collage; transparent."
+  },
+  {
+    "id": "sunshine-sticker",
+    "name": "Hello sunshine",
+    "category": "AI stickers",
+    "src": "/elements/sunshine-sticker.png",
+    "description": "Warm yellow retro smiling sunshine with cream die-cut edge; transparent."
+  },
+  {
+    "id": "plants-photo",
+    "name": "Greenhouse morning",
+    "category": "Photos",
+    "src": "/photos/plants.jpg",
+    "description": "Real overhead photograph of potting soil, a green garden scoop, pruning scissors and a ceramic pot on a workbench."
+  },
+  {
+    "id": "coast-photo",
+    "name": "Somewhere by the water",
+    "category": "Photos",
+    "src": "/photos/coast.jpg",
+    "description": "Real photograph of a blue alpine lake with mountains."
+  },
+  {
+    "id": "interior-photo",
+    "name": "Quiet corners",
+    "category": "Photos",
+    "src": "/photos/interior.jpg",
+    "description": "Real photograph of an elegant neutral modern living room."
+  },
+  {
+    "id": "sticker-001",
+    "name": "Monstera moment",
+    "category": "AI stickers",
+    "theme": "Botanical",
+    "src": "/elements/sticker-001.png",
+    "description": "one sculptural split-leaf monstera leaf; Botanical; individually AI-generated transparent sticker."
+  },
+  {
+    "id": "sticker-002",
+    "name": "Blush tulip",
+    "category": "AI stickers",
+    "theme": "Botanical",
+    "src": "/elements/sticker-002.png",
+    "description": "a single graceful blush pink tulip with curved stem and two leaves; Botanical; individually AI-generated transparent sticker."
+  },
+  {
+    "id": "sticker-003",
+    "name": "Lavender bundle",
+    "category": "AI stickers",
+    "theme": "Botanical",
+    "src": "/elements/sticker-003.png",
+    "description": "a tied petite bundle of lavender sprigs; Botanical; individually AI-generated transparent sticker."
+  },
+  {
+    "id": "sticker-004",
+    "name": "Olive branch",
+    "category": "AI stickers",
+    "theme": "Botanical",
+    "src": "/elements/sticker-004.png",
+    "description": "a slender elegant olive branch with three green olives; Botanical; individually AI-generated transparent sticker."
+  },
+  {
+    "id": "sticker-005",
+    "name": "Desert cactus",
+    "category": "AI stickers",
+    "theme": "Botanical",
+    "src": "/elements/sticker-005.png",
+    "description": "a charming miniature saguaro cactus in a peach ceramic pot; Botanical; individually AI-generated transparent sticker."
+  },
+  {
+    "id": "sticker-006",
+    "name": "Wild mushroom",
+    "category": "AI stickers",
+    "theme": "Botanical",
+    "src": "/elements/sticker-006.png",
+    "description": "two whimsical woodland mushrooms forming one cohesive sticker; Botanical; individually AI-generated transparent sticker."
+  },
+  {
+    "id": "sticker-007",
+    "name": "Lemon blossom",
+    "category": "AI stickers",
+    "theme": "Botanical",
+    "src": "/elements/sticker-007.png",
+    "description": "one lemon blossom branch with a tiny lemon and white flowers; Botanical; individually AI-generated transparent sticker."
+  },
+  {
+    "id": "sticker-008",
+    "name": "Ginkgo fan",
+    "category": "AI stickers",
+    "theme": "Botanical",
+    "src": "/elements/sticker-008.png",
+    "description": "a pair of golden ginkgo leaves crossing at their stems; Botanical; individually AI-generated transparent sticker."
+  },
+  {
+    "id": "sticker-009",
+    "name": "Fern unfurling",
+    "category": "AI stickers",
+    "theme": "Botanical",
+    "src": "/elements/sticker-009.png",
+    "description": "one unfurling woodland fern with intricate delicate fronds; Botanical; individually AI-generated transparent sticker."
+  },
+  {
+    "id": "sticker-010",
+    "name": "Lotus bloom",
+    "category": "AI stickers",
+    "theme": "Botanical",
+    "src": "/elements/sticker-010.png",
+    "description": "a serene pale pink lotus blossom in three-quarter view; Botanical; individually AI-generated transparent sticker."
+  },
+  {
+    "id": "sticker-011",
+    "name": "Cherry pop",
+    "category": "AI stickers",
+    "theme": "Sweet things",
+    "src": "/elements/sticker-011.png",
+    "description": "two glossy red cherries attached to one curved stem; Sweet things; individually AI-generated transparent sticker."
+  },
+  {
+    "id": "sticker-012",
+    "name": "Peachy keen",
+    "category": "AI stickers",
+    "theme": "Sweet things",
+    "src": "/elements/sticker-012.png",
+    "description": "a single velvety peach with one leaf; Sweet things; individually AI-generated transparent sticker."
+  },
+  {
+    "id": "sticker-013",
+    "name": "Strawberry smile",
+    "category": "AI stickers",
+    "theme": "Sweet things",
+    "src": "/elements/sticker-013.png",
+    "description": "one charming strawberry with tiny oval eyes and a subtle smile; Sweet things; individually AI-generated transparent sticker."
+  },
+  {
+    "id": "sticker-014",
+    "name": "Citrus slice",
+    "category": "AI stickers",
+    "theme": "Sweet things",
+    "src": "/elements/sticker-014.png",
+    "description": "a sculptural juicy orange half with visible citrus segments; Sweet things; individually AI-generated transparent sticker."
+  },
+  {
+    "id": "sticker-015",
+    "name": "Avocado duo",
+    "category": "AI stickers",
+    "theme": "Sweet things",
+    "src": "/elements/sticker-015.png",
+    "description": "an avocado half with a rounded brown pit; Sweet things; individually AI-generated transparent sticker."
+  },
+  {
+    "id": "sticker-016",
+    "name": "Berry tart",
+    "category": "AI stickers",
+    "theme": "Sweet things",
+    "src": "/elements/sticker-016.png",
+    "description": "a miniature patisserie strawberry tart with cream and berries; Sweet things; individually AI-generated transparent sticker."
+  },
+  {
+    "id": "sticker-017",
+    "name": "Croissant cloud",
+    "category": "AI stickers",
+    "theme": "Sweet things",
+    "src": "/elements/sticker-017.png",
+    "description": "one buttery flaky croissant in a playful inflated sculptural style; Sweet things; individually AI-generated transparent sticker."
+  },
+  {
+    "id": "sticker-018",
+    "name": "Matcha moment",
+    "category": "AI stickers",
+    "theme": "Sweet things",
+    "src": "/elements/sticker-018.png",
+    "description": "a pale mint matcha latte in a handleless ceramic cup; Sweet things; individually AI-generated transparent sticker."
+  },
+  {
+    "id": "sticker-019",
+    "name": "Ice cream swirl",
+    "category": "AI stickers",
+    "theme": "Sweet things",
+    "src": "/elements/sticker-019.png",
+    "description": "a strawberry and vanilla soft-serve ice cream in a waffle cone; Sweet things; individually AI-generated transparent sticker."
+  },
+  {
+    "id": "sticker-020",
+    "name": "Donut delight",
+    "category": "AI stickers",
+    "theme": "Sweet things",
+    "src": "/elements/sticker-020.png",
+    "description": "a lavender-glazed doughnut with colorful tiny sprinkles; Sweet things; individually AI-generated transparent sticker."
+  },
+  {
+    "id": "sticker-021",
+    "name": "Sleepy fox",
+    "category": "AI stickers",
+    "theme": "Little creatures",
+    "src": "/elements/sticker-021.png",
+    "description": "a tiny curled-up orange fox with a fluffy tail; Little creatures; individually AI-generated transparent sticker."
+  },
+  {
+    "id": "sticker-022",
+    "name": "Pocket penguin",
+    "category": "AI stickers",
+    "theme": "Little creatures",
+    "src": "/elements/sticker-022.png",
+    "description": "a happy plump baby penguin with apricot feet; Little creatures; individually AI-generated transparent sticker."
+  },
+  {
+    "id": "sticker-023",
+    "name": "Curious cat",
+    "category": "AI stickers",
+    "theme": "Little creatures",
+    "src": "/elements/sticker-023.png",
+    "description": "a curious cream kitten sitting with its tail curled; Little creatures; individually AI-generated transparent sticker."
+  },
+  {
+    "id": "sticker-024",
+    "name": "Frog friend",
+    "category": "AI stickers",
+    "theme": "Little creatures",
+    "src": "/elements/sticker-024.png",
+    "description": "a cheerful tiny green frog with rosy cheeks; Little creatures; individually AI-generated transparent sticker."
+  },
+  {
+    "id": "sticker-025",
+    "name": "Little bee",
+    "category": "AI stickers",
+    "theme": "Little creatures",
+    "src": "/elements/sticker-025.png",
+    "description": "a friendly fuzzy golden bee with tiny translucent wings; Little creatures; individually AI-generated transparent sticker."
+  },
+  {
+    "id": "sticker-026",
+    "name": "Butterfly daydream",
+    "category": "AI stickers",
+    "theme": "Little creatures",
+    "src": "/elements/sticker-026.png",
+    "description": "a beautiful lilac butterfly with symmetric patterned wings; Little creatures; individually AI-generated transparent sticker."
+  },
+  {
+    "id": "sticker-027",
+    "name": "Snail mail",
+    "category": "AI stickers",
+    "theme": "Little creatures",
+    "src": "/elements/sticker-027.png",
+    "description": "a charming small snail with a peach spiral shell; Little creatures; individually AI-generated transparent sticker."
+  },
+  {
+    "id": "sticker-028",
+    "name": "Whale hello",
+    "category": "AI stickers",
+    "theme": "Little creatures",
+    "src": "/elements/sticker-028.png",
+    "description": "a gentle miniature blue whale with a small water spout; Little creatures; individually AI-generated transparent sticker."
+  },
+  {
+    "id": "sticker-029",
+    "name": "Tiny turtle",
+    "category": "AI stickers",
+    "theme": "Little creatures",
+    "src": "/elements/sticker-029.png",
+    "description": "an adorable sea turtle with a sage patterned shell; Little creatures; individually AI-generated transparent sticker."
+  },
+  {
+    "id": "sticker-030",
+    "name": "Panda pause",
+    "category": "AI stickers",
+    "theme": "Little creatures",
+    "src": "/elements/sticker-030.png",
+    "description": "a sleepy baby panda hugging a short bamboo stalk; Little creatures; individually AI-generated transparent sticker."
+  },
+  {
+    "id": "sticker-031",
+    "name": "Crescent dreams",
+    "category": "AI stickers",
+    "theme": "Cosmic",
+    "src": "/elements/sticker-031.png",
+    "description": "one pearlescent crescent moon embracing one tiny star; Cosmic; individually AI-generated transparent sticker."
+  },
+  {
+    "id": "sticker-032",
+    "name": "Saturn glow",
+    "category": "AI stickers",
+    "theme": "Cosmic",
+    "src": "/elements/sticker-032.png",
+    "description": "a sculptural lavender Saturn planet with peach orbital rings; Cosmic; individually AI-generated transparent sticker."
+  },
+  {
+    "id": "sticker-033",
+    "name": "Shooting wish",
+    "category": "AI stickers",
+    "theme": "Cosmic",
+    "src": "/elements/sticker-033.png",
+    "description": "one golden shooting star with a flowing pastel comet tail; Cosmic; individually AI-generated transparent sticker."
+  },
+  {
+    "id": "sticker-034",
+    "name": "Cloud nine",
+    "category": "AI stickers",
+    "theme": "Cosmic",
+    "src": "/elements/sticker-034.png",
+    "description": "one fluffy ivory cloud with tiny soft rainbow raindrops; Cosmic; individually AI-generated transparent sticker."
+  },
+  {
+    "id": "sticker-035",
+    "name": "Aurora portal",
+    "category": "AI stickers",
+    "theme": "Cosmic",
+    "src": "/elements/sticker-035.png",
+    "description": "a sculptural oval portal containing flowing aurora light; Cosmic; individually AI-generated transparent sticker."
+  },
+  {
+    "id": "sticker-036",
+    "name": "Crystal comet",
+    "category": "AI stickers",
+    "theme": "Cosmic",
+    "src": "/elements/sticker-036.png",
+    "description": "an iridescent faceted comet with a short elegant translucent tail; Cosmic; individually AI-generated transparent sticker."
+  },
+  {
+    "id": "sticker-037",
+    "name": "Magic meteor",
+    "category": "AI stickers",
+    "theme": "Cosmic",
+    "src": "/elements/sticker-037.png",
+    "description": "a softly faceted blue meteor with pink flame trail; Cosmic; individually AI-generated transparent sticker."
+  },
+  {
+    "id": "sticker-038",
+    "name": "Starlight cluster",
+    "category": "AI stickers",
+    "theme": "Cosmic",
+    "src": "/elements/sticker-038.png",
+    "description": "three dimensional four-point stars forming one compact balanced cluster; Cosmic; individually AI-generated transparent sticker."
+  },
+  {
+    "id": "sticker-039",
+    "name": "Eclipse halo",
+    "category": "AI stickers",
+    "theme": "Cosmic",
+    "src": "/elements/sticker-039.png",
+    "description": "a midnight disk framed by a beautiful luminous golden eclipse halo; Cosmic; individually AI-generated transparent sticker."
+  },
+  {
+    "id": "sticker-040",
+    "name": "Dream rocket",
+    "category": "AI stickers",
+    "theme": "Cosmic",
+    "src": "/elements/sticker-040.png",
+    "description": "a charming retro lilac toy rocket with peach fins and a tiny flame; Cosmic; individually AI-generated transparent sticker."
+  },
+  {
+    "id": "sticker-041",
+    "name": "Paintbrush flourish",
+    "category": "AI stickers",
+    "theme": "Creative desk",
+    "src": "/elements/sticker-041.png",
+    "description": "one artist paintbrush making a compact coral paint swoosh; Creative desk; individually AI-generated transparent sticker."
+  },
+  {
+    "id": "sticker-042",
+    "name": "Color pencil trio",
+    "category": "AI stickers",
+    "theme": "Creative desk",
+    "src": "/elements/sticker-042.png",
+    "description": "three sharpened colorful pencils forming a fan; Creative desk; individually AI-generated transparent sticker."
+  },
+  {
+    "id": "sticker-043",
+    "name": "Palette play",
+    "category": "AI stickers",
+    "theme": "Creative desk",
+    "src": "/elements/sticker-043.png",
+    "description": "a small wooden artist palette with five rich paint dollops; Creative desk; individually AI-generated transparent sticker."
+  },
+  {
+    "id": "sticker-044",
+    "name": "Scissor cut",
+    "category": "AI stickers",
+    "theme": "Creative desk",
+    "src": "/elements/sticker-044.png",
+    "description": "a pair of elegant peach-handled craft scissors; Creative desk; individually AI-generated transparent sticker."
+  },
+  {
+    "id": "sticker-045",
+    "name": "Sketchbook soul",
+    "category": "AI stickers",
+    "theme": "Creative desk",
+    "src": "/elements/sticker-045.png",
+    "description": "a small open cream sketchbook with abstract colored doodles and no writing; Creative desk; individually AI-generated transparent sticker."
+  },
+  {
+    "id": "sticker-046",
+    "name": "Camera click",
+    "category": "AI stickers",
+    "theme": "Creative desk",
+    "src": "/elements/sticker-046.png",
+    "description": "a pastel retro instant camera without text or logos; Creative desk; individually AI-generated transparent sticker."
+  },
+  {
+    "id": "sticker-047",
+    "name": "Vinyl mood",
+    "category": "AI stickers",
+    "theme": "Creative desk",
+    "src": "/elements/sticker-047.png",
+    "description": "a glossy midnight vinyl record partially emerging from a lilac sleeve; Creative desk; individually AI-generated transparent sticker."
+  },
+  {
+    "id": "sticker-048",
+    "name": "Tape loops",
+    "category": "AI stickers",
+    "theme": "Creative desk",
+    "src": "/elements/sticker-048.png",
+    "description": "two rolls of pastel patterned washi tape arranged together; Creative desk; individually AI-generated transparent sticker."
+  },
+  {
+    "id": "sticker-049",
+    "name": "Ink bottle",
+    "category": "AI stickers",
+    "theme": "Creative desk",
+    "src": "/elements/sticker-049.png",
+    "description": "a miniature cobalt glass ink bottle with a golden dip pen; Creative desk; individually AI-generated transparent sticker."
+  },
+  {
+    "id": "sticker-050",
+    "name": "Creative spark",
+    "category": "AI stickers",
+    "theme": "Creative desk",
+    "src": "/elements/sticker-050.png",
+    "description": "a delightful warm glowing light bulb with a lilac base and a tiny flourish; Creative desk; individually AI-generated transparent sticker."
+  },
+  {
+    "id": "sticker-051",
+    "name": "Mountain escape",
+    "category": "AI stickers",
+    "theme": "Wanderlust",
+    "src": "/elements/sticker-051.png",
+    "description": "a compact alpine mountain peak with pine trees and a tiny sunrise; Wanderlust; individually AI-generated transparent sticker."
+  },
+  {
+    "id": "sticker-052",
+    "name": "Palm day",
+    "category": "AI stickers",
+    "theme": "Wanderlust",
+    "src": "/elements/sticker-052.png",
+    "description": "a graceful tropical palm tree bending in a breeze; Wanderlust; individually AI-generated transparent sticker."
+  },
+  {
+    "id": "sticker-053",
+    "name": "Beach umbrella",
+    "category": "AI stickers",
+    "theme": "Wanderlust",
+    "src": "/elements/sticker-053.png",
+    "description": "a striped coral beach umbrella seen at a charming angle; Wanderlust; individually AI-generated transparent sticker."
+  },
+  {
+    "id": "sticker-054",
+    "name": "Little sailboat",
+    "category": "AI stickers",
+    "theme": "Wanderlust",
+    "src": "/elements/sticker-054.png",
+    "description": "a small white sailboat with a peach sail on one compact teal wave; Wanderlust; individually AI-generated transparent sticker."
+  },
+  {
+    "id": "sticker-055",
+    "name": "Hot air dream",
+    "category": "AI stickers",
+    "theme": "Wanderlust",
+    "src": "/elements/sticker-055.png",
+    "description": "a beautiful pastel striped hot air balloon with a tiny wicker basket; Wanderlust; individually AI-generated transparent sticker."
+  },
+  {
+    "id": "sticker-056",
+    "name": "Compass rose",
+    "category": "AI stickers",
+    "theme": "Wanderlust",
+    "src": "/elements/sticker-056.png",
+    "description": "an elegant brass compass with clear directional geometry and no letters; Wanderlust; individually AI-generated transparent sticker."
+  },
+  {
+    "id": "sticker-057",
+    "name": "Road trip",
+    "category": "AI stickers",
+    "theme": "Wanderlust",
+    "src": "/elements/sticker-057.png",
+    "description": "a charming retro mint camper van in three-quarter view, no markings; Wanderlust; individually AI-generated transparent sticker."
+  },
+  {
+    "id": "sticker-058",
+    "name": "Passport adventure",
+    "category": "AI stickers",
+    "theme": "Wanderlust",
+    "src": "/elements/sticker-058.png",
+    "description": "a cream passport-like travel notebook with a simple globe emblem and no words; Wanderlust; individually AI-generated transparent sticker."
+  },
+  {
+    "id": "sticker-059",
+    "name": "Suitcase stories",
+    "category": "AI stickers",
+    "theme": "Wanderlust",
+    "src": "/elements/sticker-059.png",
+    "description": "a tiny vintage terracotta suitcase with plain unlabeled travel patches; Wanderlust; individually AI-generated transparent sticker."
+  },
+  {
+    "id": "sticker-060",
+    "name": "City bicycle",
+    "category": "AI stickers",
+    "theme": "Wanderlust",
+    "src": "/elements/sticker-060.png",
+    "description": "a sage green city bicycle with a small flower-filled front basket; Wanderlust; individually AI-generated transparent sticker."
+  },
+  {
+    "id": "sticker-061",
+    "name": "Chrome heart",
+    "category": "AI stickers",
+    "theme": "Sculptural",
+    "src": "/elements/sticker-061.png",
+    "description": "one inflated mirror-chrome heart with lilac and peach reflections; Sculptural; individually AI-generated transparent sticker."
+  },
+  {
+    "id": "sticker-062",
+    "name": "Glass twist",
+    "category": "AI stickers",
+    "theme": "Sculptural",
+    "src": "/elements/sticker-062.png",
+    "description": "a translucent teal glass twisted ribbon sculpture; Sculptural; individually AI-generated transparent sticker."
+  },
+  {
+    "id": "sticker-063",
+    "name": "Peach torus",
+    "category": "AI stickers",
+    "theme": "Sculptural",
+    "src": "/elements/sticker-063.png",
+    "description": "one soft matte peach inflated torus bent into an organic shape; Sculptural; individually AI-generated transparent sticker."
+  },
+  {
+    "id": "sticker-064",
+    "name": "Pearl spiral",
+    "category": "AI stickers",
+    "theme": "Sculptural",
+    "src": "/elements/sticker-064.png",
+    "description": "a creamy pearlescent spiral shell-like abstract sculpture; Sculptural; individually AI-generated transparent sticker."
+  },
+  {
+    "id": "sticker-065",
+    "name": "Liquid blob",
+    "category": "AI stickers",
+    "theme": "Sculptural",
+    "src": "/elements/sticker-065.png",
+    "description": "one playful glossy lilac organic fluid blob with three rounded lobes; Sculptural; individually AI-generated transparent sticker."
+  },
+  {
+    "id": "sticker-066",
+    "name": "Golden chain",
+    "category": "AI stickers",
+    "theme": "Sculptural",
+    "src": "/elements/sticker-066.png",
+    "description": "three interlocking brushed gold oval chain links in a compact diagonal; Sculptural; individually AI-generated transparent sticker."
+  },
+  {
+    "id": "sticker-067",
+    "name": "Velvet squiggle",
+    "category": "AI stickers",
+    "theme": "Sculptural",
+    "src": "/elements/sticker-067.png",
+    "description": "one plush cobalt velvet three-dimensional wavy squiggle; Sculptural; individually AI-generated transparent sticker."
+  },
+  {
+    "id": "sticker-068",
+    "name": "Prism fold",
+    "category": "AI stickers",
+    "theme": "Sculptural",
+    "src": "/elements/sticker-068.png",
+    "description": "an elegant folded iridescent translucent prism ribbon; Sculptural; individually AI-generated transparent sticker."
+  },
+  {
+    "id": "sticker-069",
+    "name": "Floating pebbles",
+    "category": "AI stickers",
+    "theme": "Sculptural",
+    "src": "/elements/sticker-069.png",
+    "description": "three smooth sculptural pastel pebbles in a balanced compact vertical stack; Sculptural; individually AI-generated transparent sticker."
+  },
+  {
+    "id": "sticker-070",
+    "name": "Inflated asterisk",
+    "category": "AI stickers",
+    "theme": "Sculptural",
+    "src": "/elements/sticker-070.png",
+    "description": "one inflated soft coral six-armed asterisk with beautiful rounded edges; Sculptural; individually AI-generated transparent sticker."
+  },
+  {
+    "id": "sticker-071",
+    "name": "Cozy mug",
+    "category": "AI stickers",
+    "theme": "Cozy living",
+    "src": "/elements/sticker-071.png",
+    "description": "a handmade cream ceramic mug with a small rising swirl of steam; Cozy living; individually AI-generated transparent sticker."
+  },
+  {
+    "id": "sticker-072",
+    "name": "Candle glow",
+    "category": "AI stickers",
+    "theme": "Cozy living",
+    "src": "/elements/sticker-072.png",
+    "description": "a ribbed amber glass candle with a tiny warm flame; Cozy living; individually AI-generated transparent sticker."
+  },
+  {
+    "id": "sticker-073",
+    "name": "Reading nook",
+    "category": "AI stickers",
+    "theme": "Cozy living",
+    "src": "/elements/sticker-073.png",
+    "description": "a compact stack of three beautiful books with a tiny leaf bookmark and no words; Cozy living; individually AI-generated transparent sticker."
+  },
+  {
+    "id": "sticker-074",
+    "name": "Knit warmth",
+    "category": "AI stickers",
+    "theme": "Cozy living",
+    "src": "/elements/sticker-074.png",
+    "description": "a loosely folded chunky dusty-rose knitted scarf; Cozy living; individually AI-generated transparent sticker."
+  },
+  {
+    "id": "sticker-075",
+    "name": "Wool basket",
+    "category": "AI stickers",
+    "theme": "Cozy living",
+    "src": "/elements/sticker-075.png",
+    "description": "a small woven basket holding two balls of pastel yarn; Cozy living; individually AI-generated transparent sticker."
+  },
+  {
+    "id": "sticker-076",
+    "name": "Rainy window",
+    "category": "AI stickers",
+    "theme": "Cozy living",
+    "src": "/elements/sticker-076.png",
+    "description": "a compact arched window showing delicate raindrops and a quiet cloudy sky; Cozy living; individually AI-generated transparent sticker."
+  },
+  {
+    "id": "sticker-077",
+    "name": "Teapot time",
+    "category": "AI stickers",
+    "theme": "Cozy living",
+    "src": "/elements/sticker-077.png",
+    "description": "a rounded sage ceramic teapot with a warm wooden handle; Cozy living; individually AI-generated transparent sticker."
+  },
+  {
+    "id": "sticker-078",
+    "name": "Record player",
+    "category": "AI stickers",
+    "theme": "Cozy living",
+    "src": "/elements/sticker-078.png",
+    "description": "a miniature terracotta retro record player with a spinning black record; Cozy living; individually AI-generated transparent sticker."
+  },
+  {
+    "id": "sticker-079",
+    "name": "Soft slippers",
+    "category": "AI stickers",
+    "theme": "Cozy living",
+    "src": "/elements/sticker-079.png",
+    "description": "a pair of cozy cream shearling slippers; Cozy living; individually AI-generated transparent sticker."
+  },
+  {
+    "id": "sticker-080",
+    "name": "Sunday lamp",
+    "category": "AI stickers",
+    "theme": "Cozy living",
+    "src": "/elements/sticker-080.png",
+    "description": "a small sculptural mushroom-shaped table lamp in warm ochre; Cozy living; individually AI-generated transparent sticker."
+  },
+  {
+    "id": "sticker-081",
+    "name": "Party popper",
+    "category": "AI stickers",
+    "theme": "Celebrate",
+    "src": "/elements/sticker-081.png",
+    "description": "one festive paper confetti popper bursting a compact colorful confetti spray; Celebrate; individually AI-generated transparent sticker."
+  },
+  {
+    "id": "sticker-082",
+    "name": "Birthday candle",
+    "category": "AI stickers",
+    "theme": "Celebrate",
+    "src": "/elements/sticker-082.png",
+    "description": "one beautifully striped lilac birthday candle with a warm flame; Celebrate; individually AI-generated transparent sticker."
+  },
+  {
+    "id": "sticker-083",
+    "name": "Gift of joy",
+    "category": "AI stickers",
+    "theme": "Celebrate",
+    "src": "/elements/sticker-083.png",
+    "description": "a small coral gift box tied with an oversized cream satin bow; Celebrate; individually AI-generated transparent sticker."
+  },
+  {
+    "id": "sticker-084",
+    "name": "Balloon bouquet",
+    "category": "AI stickers",
+    "theme": "Celebrate",
+    "src": "/elements/sticker-084.png",
+    "description": "three pearlescent pastel balloons tied into one compact bouquet; Celebrate; individually AI-generated transparent sticker."
+  },
+  {
+    "id": "sticker-085",
+    "name": "Disco sparkle",
+    "category": "AI stickers",
+    "theme": "Celebrate",
+    "src": "/elements/sticker-085.png",
+    "description": "a tiny mirrored disco ball with subtle reflected sparkle highlights; Celebrate; individually AI-generated transparent sticker."
+  },
+  {
+    "id": "sticker-086",
+    "name": "Celebration cake",
+    "category": "AI stickers",
+    "theme": "Celebrate",
+    "src": "/elements/sticker-086.png",
+    "description": "a miniature two-layer vanilla celebration cake with strawberries and one candle; Celebrate; individually AI-generated transparent sticker."
+  },
+  {
+    "id": "sticker-087",
+    "name": "Cheers glasses",
+    "category": "AI stickers",
+    "theme": "Celebrate",
+    "src": "/elements/sticker-087.png",
+    "description": "two elegant sparkling lemonade coupe glasses gently clinking, no alcohol branding; Celebrate; individually AI-generated transparent sticker."
+  },
+  {
+    "id": "sticker-088",
+    "name": "Party crown",
+    "category": "AI stickers",
+    "theme": "Celebrate",
+    "src": "/elements/sticker-088.png",
+    "description": "a playful golden paper crown with lilac gemstone accents; Celebrate; individually AI-generated transparent sticker."
+  },
+  {
+    "id": "sticker-089",
+    "name": "Medal moment",
+    "category": "AI stickers",
+    "theme": "Celebrate",
+    "src": "/elements/sticker-089.png",
+    "description": "a gold celebration medal with a coral ribbon and simple star emblem, no text; Celebrate; individually AI-generated transparent sticker."
+  },
+  {
+    "id": "sticker-090",
+    "name": "Ribbon rosette",
+    "category": "AI stickers",
+    "theme": "Celebrate",
+    "src": "/elements/sticker-090.png",
+    "description": "a dimensional lilac award rosette with a golden center and two ribbon tails, no text; Celebrate; individually AI-generated transparent sticker."
+  },
+  {
+    "id": "sticker-091",
+    "name": "Headphone escape",
+    "category": "AI stickers",
+    "theme": "Modern life",
+    "src": "/elements/sticker-091.png",
+    "description": "a pair of soft lilac over-ear headphones; Modern life; individually AI-generated transparent sticker."
+  },
+  {
+    "id": "sticker-092",
+    "name": "Game time",
+    "category": "AI stickers",
+    "theme": "Modern life",
+    "src": "/elements/sticker-092.png",
+    "description": "a playful cream game controller with pastel buttons and no branding; Modern life; individually AI-generated transparent sticker."
+  },
+  {
+    "id": "sticker-093",
+    "name": "Laptop ideas",
+    "category": "AI stickers",
+    "theme": "Modern life",
+    "src": "/elements/sticker-093.png",
+    "description": "a tiny open lavender laptop with abstract colorful shapes on its screen and no writing; Modern life; individually AI-generated transparent sticker."
+  },
+  {
+    "id": "sticker-094",
+    "name": "Message bubble",
+    "category": "AI stickers",
+    "theme": "Modern life",
+    "src": "/elements/sticker-094.png",
+    "description": "one glossy peach chat bubble with three small ivory dots; Modern life; individually AI-generated transparent sticker."
+  },
+  {
+    "id": "sticker-095",
+    "name": "Envelope love",
+    "category": "AI stickers",
+    "theme": "Modern life",
+    "src": "/elements/sticker-095.png",
+    "description": "a cream open envelope holding a small coral heart; Modern life; individually AI-generated transparent sticker."
+  },
+  {
+    "id": "sticker-096",
+    "name": "Cloud upload",
+    "category": "AI stickers",
+    "theme": "Modern life",
+    "src": "/elements/sticker-096.png",
+    "description": "a soft pale-blue cloud with a simple ivory upward arrow; Modern life; individually AI-generated transparent sticker."
+  },
+  {
+    "id": "sticker-097",
+    "name": "Battery bloom",
+    "category": "AI stickers",
+    "theme": "Modern life",
+    "src": "/elements/sticker-097.png",
+    "description": "a stylized mint battery with a tiny sprouting leaf, no words; Modern life; individually AI-generated transparent sticker."
+  },
+  {
+    "id": "sticker-098",
+    "name": "Calendar day",
+    "category": "AI stickers",
+    "theme": "Modern life",
+    "src": "/elements/sticker-098.png",
+    "description": "a compact pastel desk calendar with simple colored blocks instead of numbers; Modern life; individually AI-generated transparent sticker."
+  },
+  {
+    "id": "sticker-099",
+    "name": "Check it off",
+    "category": "AI stickers",
+    "theme": "Modern life",
+    "src": "/elements/sticker-099.png",
+    "description": "a sculptural sage check mark enclosed in a cream soft rounded square; Modern life; individually AI-generated transparent sticker."
+  },
+  {
+    "id": "sticker-100",
+    "name": "Digital magic",
+    "category": "AI stickers",
+    "theme": "Modern life",
+    "src": "/elements/sticker-100.png",
+    "description": "a beautiful iridescent computer cursor arrow with one tiny four-point sparkle; Modern life; individually AI-generated transparent sticker."
+  },
+  {
+    "id": "sticker-101",
+    "name": "Folded pistachio croissant with finely layered pastry",
+    "category": "AI stickers",
+    "theme": "Café crema",
+    "src": "/elements/sticker-101.png",
+    "description": "Folded pistachio croissant with finely layered pastry; original coordinated Café crema collection"
+  },
+  {
+    "id": "sticker-102",
+    "name": "Tiny glass cortado with a polished teaspoon",
+    "category": "AI stickers",
+    "theme": "Café crema",
+    "src": "/elements/sticker-102.png",
+    "description": "Tiny glass cortado with a polished teaspoon; original coordinated Café crema collection"
+  },
+  {
+    "id": "sticker-103",
+    "name": "Vintage chrome espresso portafilter holding fresh grounds",
+    "category": "AI stickers",
+    "theme": "Café crema",
+    "src": "/elements/sticker-103.png",
+    "description": "Vintage chrome espresso portafilter holding fresh grounds; original coordinated Café crema collection"
+  },
+  {
+    "id": "sticker-104",
+    "name": "Caramel canelé on a scalloped paper liner",
+    "category": "AI stickers",
+    "theme": "Café crema",
+    "src": "/elements/sticker-104.png",
+    "description": "Caramel canelé on a scalloped paper liner; original coordinated Café crema collection"
+  },
+  {
+    "id": "sticker-105",
+    "name": "Tiny copper stovetop coffee pot with ivory handle",
+    "category": "AI stickers",
+    "theme": "Café crema",
+    "src": "/elements/sticker-105.png",
+    "description": "Tiny copper stovetop coffee pot with ivory handle; original coordinated Café crema collection"
+  },
+  {
+    "id": "sticker-106",
+    "name": "Sculptural swirl of whipped coffee in a short glass",
+    "category": "AI stickers",
+    "theme": "Café crema",
+    "src": "/elements/sticker-106.png",
+    "description": "Sculptural swirl of whipped coffee in a short glass; original coordinated Café crema collection"
+  },
+  {
+    "id": "sticker-107",
+    "name": "Folded linen napkin tied with a cinnamon stick",
+    "category": "AI stickers",
+    "theme": "Café crema",
+    "src": "/elements/sticker-107.png",
+    "description": "Folded linen napkin tied with a cinnamon stick; original coordinated Café crema collection"
+  },
+  {
+    "id": "sticker-108",
+    "name": "Small kraft coffee bag with an original abstract bean emblem",
+    "category": "AI stickers",
+    "theme": "Café crema",
+    "src": "/elements/sticker-108.png",
+    "description": "Small kraft coffee bag with an original abstract bean emblem; original coordinated Café crema collection"
+  },
+  {
+    "id": "sticker-109",
+    "name": "Single almond biscotti dipped in dark chocolate",
+    "category": "AI stickers",
+    "theme": "Café crema",
+    "src": "/elements/sticker-109.png",
+    "description": "Single almond biscotti dipped in dark chocolate; original coordinated Café crema collection"
+  },
+  {
+    "id": "sticker-110",
+    "name": "Speckled ceramic pour-over dripper with a paper filter",
+    "category": "AI stickers",
+    "theme": "Café crema",
+    "src": "/elements/sticker-110.png",
+    "description": "Speckled ceramic pour-over dripper with a paper filter; original coordinated Café crema collection"
+  },
+  {
+    "id": "sticker-111",
+    "name": "Elegant unlabeled frosted serum bottle with a pipette",
+    "category": "AI stickers",
+    "theme": "Terra skincare",
+    "src": "/elements/sticker-111.png",
+    "description": "Elegant unlabeled frosted serum bottle with a pipette; original coordinated Terra skincare collection"
+  },
+  {
+    "id": "sticker-112",
+    "name": "Folded aloe leaf with a translucent gel droplet",
+    "category": "AI stickers",
+    "theme": "Terra skincare",
+    "src": "/elements/sticker-112.png",
+    "description": "Folded aloe leaf with a translucent gel droplet; original coordinated Terra skincare collection"
+  },
+  {
+    "id": "sticker-113",
+    "name": "Pale rose quartz facial roller",
+    "category": "AI stickers",
+    "theme": "Terra skincare",
+    "src": "/elements/sticker-113.png",
+    "description": "Pale rose quartz facial roller; original coordinated Terra skincare collection"
+  },
+  {
+    "id": "sticker-114",
+    "name": "Open ochre jar of whipped cream with a small wooden scoop",
+    "category": "AI stickers",
+    "theme": "Terra skincare",
+    "src": "/elements/sticker-114.png",
+    "description": "Open ochre jar of whipped cream with a small wooden scoop; original coordinated Terra skincare collection"
+  },
+  {
+    "id": "sticker-115",
+    "name": "Polished jade gua sha stone shaped like a soft heart",
+    "category": "AI stickers",
+    "theme": "Terra skincare",
+    "src": "/elements/sticker-115.png",
+    "description": "Polished jade gua sha stone shaped like a soft heart; original coordinated Terra skincare collection"
+  },
+  {
+    "id": "sticker-116",
+    "name": "Scalloped soap bar tied with natural raffia",
+    "category": "AI stickers",
+    "theme": "Terra skincare",
+    "src": "/elements/sticker-116.png",
+    "description": "Scalloped soap bar tied with natural raffia; original coordinated Terra skincare collection"
+  },
+  {
+    "id": "sticker-117",
+    "name": "Realistic golden jojoba seeds beside a tiny oil drop",
+    "category": "AI stickers",
+    "theme": "Terra skincare",
+    "src": "/elements/sticker-117.png",
+    "description": "Realistic golden jojoba seeds beside a tiny oil drop; original coordinated Terra skincare collection"
+  },
+  {
+    "id": "sticker-118",
+    "name": "Textured cotton cleansing pad with a small dried calendula bloom",
+    "category": "AI stickers",
+    "theme": "Terra skincare",
+    "src": "/elements/sticker-118.png",
+    "description": "Textured cotton cleansing pad with a small dried calendula bloom; original coordinated Terra skincare collection"
+  },
+  {
+    "id": "sticker-119",
+    "name": "Refill pouch with a minimal original leaf-shaped seal and no text",
+    "category": "AI stickers",
+    "theme": "Terra skincare",
+    "src": "/elements/sticker-119.png",
+    "description": "Refill pouch with a minimal original leaf-shaped seal and no text; original coordinated Terra skincare collection"
+  },
+  {
+    "id": "sticker-120",
+    "name": "Hand-carved wooden comb with an arched silhouette",
+    "category": "AI stickers",
+    "theme": "Terra skincare",
+    "src": "/elements/sticker-120.png",
+    "description": "Hand-carved wooden comb with an arched silhouette; original coordinated Terra skincare collection"
+  },
+  {
+    "id": "sticker-121",
+    "name": "Sculptural brushed-gold horseshoe clasp",
+    "category": "AI stickers",
+    "theme": "Noir atelier",
+    "src": "/elements/sticker-121.png",
+    "description": "Sculptural brushed-gold horseshoe clasp; original coordinated Noir atelier collection"
+  },
+  {
+    "id": "sticker-122",
+    "name": "Folded black satin bow with elongated tails",
+    "category": "AI stickers",
+    "theme": "Noir atelier",
+    "src": "/elements/sticker-122.png",
+    "description": "Folded black satin bow with elongated tails; original coordinated Noir atelier collection"
+  },
+  {
+    "id": "sticker-123",
+    "name": "Vintage couture measuring tape curled into a spiral with no readable markings",
+    "category": "AI stickers",
+    "theme": "Noir atelier",
+    "src": "/elements/sticker-123.png",
+    "description": "Vintage couture measuring tape curled into a spiral with no readable markings; original coordinated Noir atelier collection"
+  },
+  {
+    "id": "sticker-124",
+    "name": "Cream spool of silk thread pierced by one gold needle",
+    "category": "AI stickers",
+    "theme": "Noir atelier",
+    "src": "/elements/sticker-124.png",
+    "description": "Cream spool of silk thread pierced by one gold needle; original coordinated Noir atelier collection"
+  },
+  {
+    "id": "sticker-125",
+    "name": "Elegant black sunglasses frame with warm brown lenses",
+    "category": "AI stickers",
+    "theme": "Noir atelier",
+    "src": "/elements/sticker-125.png",
+    "description": "Elegant black sunglasses frame with warm brown lenses; original coordinated Noir atelier collection"
+  },
+  {
+    "id": "sticker-126",
+    "name": "Ivory pleated silk scarf tied in a loose knot",
+    "category": "AI stickers",
+    "theme": "Noir atelier",
+    "src": "/elements/sticker-126.png",
+    "description": "Ivory pleated silk scarf tied in a loose knot; original coordinated Noir atelier collection"
+  },
+  {
+    "id": "sticker-127",
+    "name": "Pair of sculptural gold drop earrings on transparent air",
+    "category": "AI stickers",
+    "theme": "Noir atelier",
+    "src": "/elements/sticker-127.png",
+    "description": "Pair of sculptural gold drop earrings on transparent air; original coordinated Noir atelier collection"
+  },
+  {
+    "id": "sticker-128",
+    "name": "Brushed-gold perfume atomizer with no lettering",
+    "category": "AI stickers",
+    "theme": "Noir atelier",
+    "src": "/elements/sticker-128.png",
+    "description": "Brushed-gold perfume atomizer with no lettering; original coordinated Noir atelier collection"
+  },
+  {
+    "id": "sticker-129",
+    "name": "Tiny quilted ivory clutch with a black clasp",
+    "category": "AI stickers",
+    "theme": "Noir atelier",
+    "src": "/elements/sticker-129.png",
+    "description": "Tiny quilted ivory clutch with a black clasp; original coordinated Noir atelier collection"
+  },
+  {
+    "id": "sticker-130",
+    "name": "Polished black sculptural mannequin bust",
+    "category": "AI stickers",
+    "theme": "Noir atelier",
+    "src": "/elements/sticker-130.png",
+    "description": "Polished black sculptural mannequin bust; original coordinated Noir atelier collection"
+  },
+  {
+    "id": "sticker-131",
+    "name": "Rolled lavender yoga mat with an oat-colored strap",
+    "category": "AI stickers",
+    "theme": "Luna wellness",
+    "src": "/elements/sticker-131.png",
+    "description": "Rolled lavender yoga mat with an oat-colored strap; original coordinated Luna wellness collection"
+  },
+  {
+    "id": "sticker-132",
+    "name": "Balanced stack of three smooth warm-gray massage stones",
+    "category": "AI stickers",
+    "theme": "Luna wellness",
+    "src": "/elements/sticker-132.png",
+    "description": "Balanced stack of three smooth warm-gray massage stones; original coordinated Luna wellness collection"
+  },
+  {
+    "id": "sticker-133",
+    "name": "Small brass singing bowl and wooden mallet",
+    "category": "AI stickers",
+    "theme": "Luna wellness",
+    "src": "/elements/sticker-133.png",
+    "description": "Small brass singing bowl and wooden mallet; original coordinated Luna wellness collection"
+  },
+  {
+    "id": "sticker-134",
+    "name": "Linen eye pillow with a sprig of dried lavender",
+    "category": "AI stickers",
+    "theme": "Luna wellness",
+    "src": "/elements/sticker-134.png",
+    "description": "Linen eye pillow with a sprig of dried lavender; original coordinated Luna wellness collection"
+  },
+  {
+    "id": "sticker-135",
+    "name": "Sculptural incense holder with one delicate curl of translucent smoke",
+    "category": "AI stickers",
+    "theme": "Luna wellness",
+    "src": "/elements/sticker-135.png",
+    "description": "Sculptural incense holder with one delicate curl of translucent smoke; original coordinated Luna wellness collection"
+  },
+  {
+    "id": "sticker-136",
+    "name": "Pale clay crescent moon trinket dish",
+    "category": "AI stickers",
+    "theme": "Luna wellness",
+    "src": "/elements/sticker-136.png",
+    "description": "Pale clay crescent moon trinket dish; original coordinated Luna wellness collection"
+  },
+  {
+    "id": "sticker-137",
+    "name": "Mauve glass aromatherapy bottle with a spherical stopper",
+    "category": "AI stickers",
+    "theme": "Luna wellness",
+    "src": "/elements/sticker-137.png",
+    "description": "Mauve glass aromatherapy bottle with a spherical stopper; original coordinated Luna wellness collection"
+  },
+  {
+    "id": "sticker-138",
+    "name": "Small wooden massage brush with natural bristles",
+    "category": "AI stickers",
+    "theme": "Luna wellness",
+    "src": "/elements/sticker-138.png",
+    "description": "Small wooden massage brush with natural bristles; original coordinated Luna wellness collection"
+  },
+  {
+    "id": "sticker-139",
+    "name": "Folded waffle cotton towel with apricot ribbon",
+    "category": "AI stickers",
+    "theme": "Luna wellness",
+    "src": "/elements/sticker-139.png",
+    "description": "Folded waffle cotton towel with apricot ribbon; original coordinated Luna wellness collection"
+  },
+  {
+    "id": "sticker-140",
+    "name": "Ceramic teacup holding a delicate chamomile flower",
+    "category": "AI stickers",
+    "theme": "Luna wellness",
+    "src": "/elements/sticker-140.png",
+    "description": "Ceramic teacup holding a delicate chamomile flower; original coordinated Luna wellness collection"
+  },
+  {
+    "id": "sticker-141",
+    "name": "Compact climbing carabiner with orange rope knotted through it",
+    "category": "AI stickers",
+    "theme": "Peak outdoor",
+    "src": "/elements/sticker-141.png",
+    "description": "Compact climbing carabiner with orange rope knotted through it; original coordinated Peak outdoor collection"
+  },
+  {
+    "id": "sticker-142",
+    "name": "Folded topographic map with contour lines but no labels",
+    "category": "AI stickers",
+    "theme": "Peak outdoor",
+    "src": "/elements/sticker-142.png",
+    "description": "Folded topographic map with contour lines but no labels; original coordinated Peak outdoor collection"
+  },
+  {
+    "id": "sticker-143",
+    "name": "Tiny blue camping stove with a stainless steel kettle",
+    "category": "AI stickers",
+    "theme": "Peak outdoor",
+    "src": "/elements/sticker-143.png",
+    "description": "Tiny blue camping stove with a stainless steel kettle; original coordinated Peak outdoor collection"
+  },
+  {
+    "id": "sticker-144",
+    "name": "Pair of wool hiking socks rolled together",
+    "category": "AI stickers",
+    "theme": "Peak outdoor",
+    "src": "/elements/sticker-144.png",
+    "description": "Pair of wool hiking socks rolled together; original coordinated Peak outdoor collection"
+  },
+  {
+    "id": "sticker-145",
+    "name": "Warm orange enamel trail boot badge with no words",
+    "category": "AI stickers",
+    "theme": "Peak outdoor",
+    "src": "/elements/sticker-145.png",
+    "description": "Warm orange enamel trail boot badge with no words; original coordinated Peak outdoor collection"
+  },
+  {
+    "id": "sticker-146",
+    "name": "Folded pine-green hammock tied at both ends",
+    "category": "AI stickers",
+    "theme": "Peak outdoor",
+    "src": "/elements/sticker-146.png",
+    "description": "Folded pine-green hammock tied at both ends; original coordinated Peak outdoor collection"
+  },
+  {
+    "id": "sticker-147",
+    "name": "Clear camp lantern with amber internal glow",
+    "category": "AI stickers",
+    "theme": "Peak outdoor",
+    "src": "/elements/sticker-147.png",
+    "description": "Clear camp lantern with amber internal glow; original coordinated Peak outdoor collection"
+  },
+  {
+    "id": "sticker-148",
+    "name": "Steel insulated flask with an original mountain emblem",
+    "category": "AI stickers",
+    "theme": "Peak outdoor",
+    "src": "/elements/sticker-148.png",
+    "description": "Steel insulated flask with an original mountain emblem; original coordinated Peak outdoor collection"
+  },
+  {
+    "id": "sticker-149",
+    "name": "Tiny mountaineering ice axe with leather strap",
+    "category": "AI stickers",
+    "theme": "Peak outdoor",
+    "src": "/elements/sticker-149.png",
+    "description": "Tiny mountaineering ice axe with leather strap; original coordinated Peak outdoor collection"
+  },
+  {
+    "id": "sticker-150",
+    "name": "Coiled climbing rope with realistic woven fibers",
+    "category": "AI stickers",
+    "theme": "Peak outdoor",
+    "src": "/elements/sticker-150.png",
+    "description": "Coiled climbing rope with realistic woven fibers; original coordinated Peak outdoor collection"
+  },
+  {
+    "id": "sticker-151",
+    "name": "Navy ceramic lighthouse with softly glowing windows",
+    "category": "AI stickers",
+    "theme": "Marine club",
+    "src": "/elements/sticker-151.png",
+    "description": "Navy ceramic lighthouse with softly glowing windows; original coordinated Marine club collection"
+  },
+  {
+    "id": "sticker-152",
+    "name": "Coiled cream nautical rope with a sailor knot",
+    "category": "AI stickers",
+    "theme": "Marine club",
+    "src": "/elements/sticker-152.png",
+    "description": "Coiled cream nautical rope with a sailor knot; original coordinated Marine club collection"
+  },
+  {
+    "id": "sticker-153",
+    "name": "Sculptural coral-red lifebuoy with ivory bands",
+    "category": "AI stickers",
+    "theme": "Marine club",
+    "src": "/elements/sticker-153.png",
+    "description": "Sculptural coral-red lifebuoy with ivory bands; original coordinated Marine club collection"
+  },
+  {
+    "id": "sticker-154",
+    "name": "Tiny enamel sailboat with a seafoam sail",
+    "category": "AI stickers",
+    "theme": "Marine club",
+    "src": "/elements/sticker-154.png",
+    "description": "Tiny enamel sailboat with a seafoam sail; original coordinated Marine club collection"
+  },
+  {
+    "id": "sticker-155",
+    "name": "Single translucent sea-glass heart with frosted edges",
+    "category": "AI stickers",
+    "theme": "Marine club",
+    "src": "/elements/sticker-155.png",
+    "description": "Single translucent sea-glass heart with frosted edges; original coordinated Marine club collection"
+  },
+  {
+    "id": "sticker-156",
+    "name": "Pearly oyster shell holding a tiny golden pearl",
+    "category": "AI stickers",
+    "theme": "Marine club",
+    "src": "/elements/sticker-156.png",
+    "description": "Pearly oyster shell holding a tiny golden pearl; original coordinated Marine club collection"
+  },
+  {
+    "id": "sticker-157",
+    "name": "Folded navy striped beach umbrella viewed three-quarter",
+    "category": "AI stickers",
+    "theme": "Marine club",
+    "src": "/elements/sticker-157.png",
+    "description": "Folded navy striped beach umbrella viewed three-quarter; original coordinated Marine club collection"
+  },
+  {
+    "id": "sticker-158",
+    "name": "Brass ship wheel with a smooth wooden rim",
+    "category": "AI stickers",
+    "theme": "Marine club",
+    "src": "/elements/sticker-158.png",
+    "description": "Brass ship wheel with a smooth wooden rim; original coordinated Marine club collection"
+  },
+  {
+    "id": "sticker-159",
+    "name": "Delicate coral branch with organic small forks",
+    "category": "AI stickers",
+    "theme": "Marine club",
+    "src": "/elements/sticker-159.png",
+    "description": "Delicate coral branch with organic small forks; original coordinated Marine club collection"
+  },
+  {
+    "id": "sticker-160",
+    "name": "Woven seaside basket holding a folded striped towel",
+    "category": "AI stickers",
+    "theme": "Marine club",
+    "src": "/elements/sticker-160.png",
+    "description": "Woven seaside basket holding a folded striped towel; original coordinated Marine club collection"
+  },
+  {
+    "id": "sticker-161",
+    "name": "Ripe purple fig cut open to show its tiny seeds",
+    "category": "AI stickers",
+    "theme": "Harvest market",
+    "src": "/elements/sticker-161.png",
+    "description": "Ripe purple fig cut open to show its tiny seeds; original coordinated Harvest market collection"
+  },
+  {
+    "id": "sticker-162",
+    "name": "Glossy artichoke with sculptural overlapping leaves",
+    "category": "AI stickers",
+    "theme": "Harvest market",
+    "src": "/elements/sticker-162.png",
+    "description": "Glossy artichoke with sculptural overlapping leaves; original coordinated Harvest market collection"
+  },
+  {
+    "id": "sticker-163",
+    "name": "Knobbly golden pear with a single leaf",
+    "category": "AI stickers",
+    "theme": "Harvest market",
+    "src": "/elements/sticker-163.png",
+    "description": "Knobbly golden pear with a single leaf; original coordinated Harvest market collection"
+  },
+  {
+    "id": "sticker-164",
+    "name": "Bundle of rainbow carrots tied with garden twine",
+    "category": "AI stickers",
+    "theme": "Harvest market",
+    "src": "/elements/sticker-164.png",
+    "description": "Bundle of rainbow carrots tied with garden twine; original coordinated Harvest market collection"
+  },
+  {
+    "id": "sticker-165",
+    "name": "Small jar of honey with an ivory cloth lid and no text",
+    "category": "AI stickers",
+    "theme": "Harvest market",
+    "src": "/elements/sticker-165.png",
+    "description": "Small jar of honey with an ivory cloth lid and no text; original coordinated Harvest market collection"
+  },
+  {
+    "id": "sticker-166",
+    "name": "Heirloom aubergine with a curling green stem",
+    "category": "AI stickers",
+    "theme": "Harvest market",
+    "src": "/elements/sticker-166.png",
+    "description": "Heirloom aubergine with a curling green stem; original coordinated Harvest market collection"
+  },
+  {
+    "id": "sticker-167",
+    "name": "Cut pomegranate with jewel-like red seeds",
+    "category": "AI stickers",
+    "theme": "Harvest market",
+    "src": "/elements/sticker-167.png",
+    "description": "Cut pomegranate with jewel-like red seeds; original coordinated Harvest market collection"
+  },
+  {
+    "id": "sticker-168",
+    "name": "Round wooden cheese board with a wedge of artisan cheese",
+    "category": "AI stickers",
+    "theme": "Harvest market",
+    "src": "/elements/sticker-168.png",
+    "description": "Round wooden cheese board with a wedge of artisan cheese; original coordinated Harvest market collection"
+  },
+  {
+    "id": "sticker-169",
+    "name": "Chestnuts with one opening spiky shell",
+    "category": "AI stickers",
+    "theme": "Harvest market",
+    "src": "/elements/sticker-169.png",
+    "description": "Chestnuts with one opening spiky shell; original coordinated Harvest market collection"
+  },
+  {
+    "id": "sticker-170",
+    "name": "Bunch of deep violet grapes with a curling vine",
+    "category": "AI stickers",
+    "theme": "Harvest market",
+    "src": "/elements/sticker-170.png",
+    "description": "Bunch of deep violet grapes with a curling vine; original coordinated Harvest market collection"
+  },
+  {
+    "id": "sticker-171",
+    "name": "Single delicate anemone with an inky center",
+    "category": "AI stickers",
+    "theme": "Petal florist",
+    "src": "/elements/sticker-171.png",
+    "description": "Single delicate anemone with an inky center; original coordinated Petal florist collection"
+  },
+  {
+    "id": "sticker-172",
+    "name": "Graceful branch of white magnolia blossoms",
+    "category": "AI stickers",
+    "theme": "Petal florist",
+    "src": "/elements/sticker-172.png",
+    "description": "Graceful branch of white magnolia blossoms; original coordinated Petal florist collection"
+  },
+  {
+    "id": "sticker-173",
+    "name": "Tiny wrapped bouquet of ranunculus and eucalyptus",
+    "category": "AI stickers",
+    "theme": "Petal florist",
+    "src": "/elements/sticker-173.png",
+    "description": "Tiny wrapped bouquet of ranunculus and eucalyptus; original coordinated Petal florist collection"
+  },
+  {
+    "id": "sticker-174",
+    "name": "Single sculptural protea flower",
+    "category": "AI stickers",
+    "theme": "Petal florist",
+    "src": "/elements/sticker-174.png",
+    "description": "Single sculptural protea flower; original coordinated Petal florist collection"
+  },
+  {
+    "id": "sticker-175",
+    "name": "Blush ceramic bud vase holding two cosmos stems",
+    "category": "AI stickers",
+    "theme": "Petal florist",
+    "src": "/elements/sticker-175.png",
+    "description": "Blush ceramic bud vase holding two cosmos stems; original coordinated Petal florist collection"
+  },
+  {
+    "id": "sticker-176",
+    "name": "Elegant dried pampas plume with feathery texture",
+    "category": "AI stickers",
+    "theme": "Petal florist",
+    "src": "/elements/sticker-176.png",
+    "description": "Elegant dried pampas plume with feathery texture; original coordinated Petal florist collection"
+  },
+  {
+    "id": "sticker-177",
+    "name": "Curving branch of tiny blue delphinium blooms",
+    "category": "AI stickers",
+    "theme": "Petal florist",
+    "src": "/elements/sticker-177.png",
+    "description": "Curving branch of tiny blue delphinium blooms; original coordinated Petal florist collection"
+  },
+  {
+    "id": "sticker-178",
+    "name": "Soft peach dahlia with many carefully layered petals",
+    "category": "AI stickers",
+    "theme": "Petal florist",
+    "src": "/elements/sticker-178.png",
+    "description": "Soft peach dahlia with many carefully layered petals; original coordinated Petal florist collection"
+  },
+  {
+    "id": "sticker-179",
+    "name": "Folded florist ribbon curl with long tapered ends",
+    "category": "AI stickers",
+    "theme": "Petal florist",
+    "src": "/elements/sticker-179.png",
+    "description": "Folded florist ribbon curl with long tapered ends; original coordinated Petal florist collection"
+  },
+  {
+    "id": "sticker-180",
+    "name": "Blooming pink dogwood branch with four-petal blossoms",
+    "category": "AI stickers",
+    "theme": "Petal florist",
+    "src": "/elements/sticker-180.png",
+    "description": "Blooming pink dogwood branch with four-petal blossoms; original coordinated Petal florist collection"
+  },
+  {
+    "id": "sticker-181",
+    "name": "Sculptural cobalt-blue ampersand made of glossy ceramic",
+    "category": "AI stickers",
+    "theme": "Mosaic studio",
+    "src": "/elements/sticker-181.png",
+    "description": "Sculptural cobalt-blue ampersand made of glossy ceramic; original coordinated Mosaic studio collection"
+  },
+  {
+    "id": "sticker-182",
+    "name": "Stack of irregular color swatch cards with no text",
+    "category": "AI stickers",
+    "theme": "Mosaic studio",
+    "src": "/elements/sticker-182.png",
+    "description": "Stack of irregular color swatch cards with no text; original coordinated Mosaic studio collection"
+  },
+  {
+    "id": "sticker-183",
+    "name": "Tiny risograph-style print roller with red ink",
+    "category": "AI stickers",
+    "theme": "Mosaic studio",
+    "src": "/elements/sticker-183.png",
+    "description": "Tiny risograph-style print roller with red ink; original coordinated Mosaic studio collection"
+  },
+  {
+    "id": "sticker-184",
+    "name": "Folded paper accordion sculpture in alternating citron and ivory",
+    "category": "AI stickers",
+    "theme": "Mosaic studio",
+    "src": "/elements/sticker-184.png",
+    "description": "Folded paper accordion sculpture in alternating citron and ivory; original coordinated Mosaic studio collection"
+  },
+  {
+    "id": "sticker-185",
+    "name": "Artist's chunky charcoal stick with a paper wrapper",
+    "category": "AI stickers",
+    "theme": "Mosaic studio",
+    "src": "/elements/sticker-185.png",
+    "description": "Artist's chunky charcoal stick with a paper wrapper; original coordinated Mosaic studio collection"
+  },
+  {
+    "id": "sticker-186",
+    "name": "Blue utility knife beside one clean paper curl",
+    "category": "AI stickers",
+    "theme": "Mosaic studio",
+    "src": "/elements/sticker-186.png",
+    "description": "Blue utility knife beside one clean paper curl; original coordinated Mosaic studio collection"
+  },
+  {
+    "id": "sticker-187",
+    "name": "Small open metal tin of vivid watercolor pans",
+    "category": "AI stickers",
+    "theme": "Mosaic studio",
+    "src": "/elements/sticker-187.png",
+    "description": "Small open metal tin of vivid watercolor pans; original coordinated Mosaic studio collection"
+  },
+  {
+    "id": "sticker-188",
+    "name": "Sculptural red wax seal with an original abstract sun emblem",
+    "category": "AI stickers",
+    "theme": "Mosaic studio",
+    "src": "/elements/sticker-188.png",
+    "description": "Sculptural red wax seal with an original abstract sun emblem; original coordinated Mosaic studio collection"
+  },
+  {
+    "id": "sticker-189",
+    "name": "Graphite drafting compass open at an elegant angle",
+    "category": "AI stickers",
+    "theme": "Mosaic studio",
+    "src": "/elements/sticker-189.png",
+    "description": "Graphite drafting compass open at an elegant angle; original coordinated Mosaic studio collection"
+  },
+  {
+    "id": "sticker-190",
+    "name": "Swirled cobalt and tomato glass paperweight",
+    "category": "AI stickers",
+    "theme": "Mosaic studio",
+    "src": "/elements/sticker-190.png",
+    "description": "Swirled cobalt and tomato glass paperweight; original coordinated Mosaic studio collection"
+  },
+  {
+    "id": "sticker-191",
+    "name": "Tiny floating glass microchip with silver contact pins",
+    "category": "AI stickers",
+    "theme": "Nova technology",
+    "src": "/elements/sticker-191.png",
+    "description": "Tiny floating glass microchip with silver contact pins; original coordinated Nova technology collection"
+  },
+  {
+    "id": "sticker-192",
+    "name": "Sculptural holographic shield with a subtle check-shaped inset",
+    "category": "AI stickers",
+    "theme": "Nova technology",
+    "src": "/elements/sticker-192.png",
+    "description": "Sculptural holographic shield with a subtle check-shaped inset; original coordinated Nova technology collection"
+  },
+  {
+    "id": "sticker-193",
+    "name": "Pearl-silver satellite dish with a small blue receiver",
+    "category": "AI stickers",
+    "theme": "Nova technology",
+    "src": "/elements/sticker-193.png",
+    "description": "Pearl-silver satellite dish with a small blue receiver; original coordinated Nova technology collection"
+  },
+  {
+    "id": "sticker-194",
+    "name": "Rounded translucent-blue data cube with internal grid",
+    "category": "AI stickers",
+    "theme": "Nova technology",
+    "src": "/elements/sticker-194.png",
+    "description": "Rounded translucent-blue data cube with internal grid; original coordinated Nova technology collection"
+  },
+  {
+    "id": "sticker-195",
+    "name": "Sleek miniature white wireless router with two antennas",
+    "category": "AI stickers",
+    "theme": "Nova technology",
+    "src": "/elements/sticker-195.png",
+    "description": "Sleek miniature white wireless router with two antennas; original coordinated Nova technology collection"
+  },
+  {
+    "id": "sticker-196",
+    "name": "Tiny orbital satellite with indigo solar panels",
+    "category": "AI stickers",
+    "theme": "Nova technology",
+    "src": "/elements/sticker-196.png",
+    "description": "Tiny orbital satellite with indigo solar panels; original coordinated Nova technology collection"
+  },
+  {
+    "id": "sticker-197",
+    "name": "Clear glass cursor arrow with iridescent edges",
+    "category": "AI stickers",
+    "theme": "Nova technology",
+    "src": "/elements/sticker-197.png",
+    "description": "Clear glass cursor arrow with iridescent edges; original coordinated Nova technology collection"
+  },
+  {
+    "id": "sticker-198",
+    "name": "Brushed-silver fingerprint disc with fine concentric ridges",
+    "category": "AI stickers",
+    "theme": "Nova technology",
+    "src": "/elements/sticker-198.png",
+    "description": "Brushed-silver fingerprint disc with fine concentric ridges; original coordinated Nova technology collection"
+  },
+  {
+    "id": "sticker-199",
+    "name": "Pair of soft blue over-ear headphones with silver hinges",
+    "category": "AI stickers",
+    "theme": "Nova technology",
+    "src": "/elements/sticker-199.png",
+    "description": "Pair of soft blue over-ear headphones with silver hinges; original coordinated Nova technology collection"
+  },
+  {
+    "id": "sticker-200",
+    "name": "Translucent-indigo cloud with a silver upward arrow",
+    "category": "AI stickers",
+    "theme": "Nova technology",
+    "src": "/elements/sticker-200.png",
+    "description": "Translucent-indigo cloud with a silver upward arrow; original coordinated Nova technology collection"
+  },
+  {
+    "id": "sticker-201",
+    "name": "Neatly stacked trio of brushed-brass coins with an original abstract arch emblem",
+    "category": "AI stickers",
+    "theme": "Ledger finance",
+    "src": "/elements/sticker-201.png",
+    "description": "Neatly stacked trio of brushed-brass coins with an original abstract arch emblem; original coordinated Ledger finance collection"
+  },
+  {
+    "id": "sticker-202",
+    "name": "Tiny white card terminal with a blank dark display",
+    "category": "AI stickers",
+    "theme": "Ledger finance",
+    "src": "/elements/sticker-202.png",
+    "description": "Tiny white card terminal with a blank dark display; original coordinated Ledger finance collection"
+  },
+  {
+    "id": "sticker-203",
+    "name": "Folded forest-green wallet with a brass clasp",
+    "category": "AI stickers",
+    "theme": "Ledger finance",
+    "src": "/elements/sticker-203.png",
+    "description": "Folded forest-green wallet with a brass clasp; original coordinated Ledger finance collection"
+  },
+  {
+    "id": "sticker-204",
+    "name": "Minimalist three-bar growth chart sculpted in green ceramic",
+    "category": "AI stickers",
+    "theme": "Ledger finance",
+    "src": "/elements/sticker-204.png",
+    "description": "Minimalist three-bar growth chart sculpted in green ceramic; original coordinated Ledger finance collection"
+  },
+  {
+    "id": "sticker-205",
+    "name": "Small ivory piggy bank with a single brass coin",
+    "category": "AI stickers",
+    "theme": "Ledger finance",
+    "src": "/elements/sticker-205.png",
+    "description": "Small ivory piggy bank with a single brass coin; original coordinated Ledger finance collection"
+  },
+  {
+    "id": "sticker-206",
+    "name": "Polished brass key beside a green geometric house form",
+    "category": "AI stickers",
+    "theme": "Ledger finance",
+    "src": "/elements/sticker-206.png",
+    "description": "Polished brass key beside a green geometric house form; original coordinated Ledger finance collection"
+  },
+  {
+    "id": "sticker-207",
+    "name": "Tidy roll of blank receipt paper with a gentle curl",
+    "category": "AI stickers",
+    "theme": "Ledger finance",
+    "src": "/elements/sticker-207.png",
+    "description": "Tidy roll of blank receipt paper with a gentle curl; original coordinated Ledger finance collection"
+  },
+  {
+    "id": "sticker-208",
+    "name": "Small white calculator with blank colored keys",
+    "category": "AI stickers",
+    "theme": "Ledger finance",
+    "src": "/elements/sticker-208.png",
+    "description": "Small white calculator with blank colored keys; original coordinated Ledger finance collection"
+  },
+  {
+    "id": "sticker-209",
+    "name": "Geometric green vault door with a brushed-metal dial",
+    "category": "AI stickers",
+    "theme": "Ledger finance",
+    "src": "/elements/sticker-209.png",
+    "description": "Geometric green vault door with a brushed-metal dial; original coordinated Ledger finance collection"
+  },
+  {
+    "id": "sticker-210",
+    "name": "White envelope holding a blank green bank card",
+    "category": "AI stickers",
+    "theme": "Ledger finance",
+    "src": "/elements/sticker-210.png",
+    "description": "White envelope holding a blank green bank card; original coordinated Ledger finance collection"
+  },
+  {
+    "id": "sticker-211",
+    "name": "Copper saucepan with a cream enamel interior",
+    "category": "AI stickers",
+    "theme": "Bistro rouge",
+    "src": "/elements/sticker-211.png",
+    "description": "Copper saucepan with a cream enamel interior; original coordinated Bistro rouge collection"
+  },
+  {
+    "id": "sticker-212",
+    "name": "Small cherry-red pepper grinder",
+    "category": "AI stickers",
+    "theme": "Bistro rouge",
+    "src": "/elements/sticker-212.png",
+    "description": "Small cherry-red pepper grinder; original coordinated Bistro rouge collection"
+  },
+  {
+    "id": "sticker-213",
+    "name": "Folded checked kitchen towel with a wooden spoon",
+    "category": "AI stickers",
+    "theme": "Bistro rouge",
+    "src": "/elements/sticker-213.png",
+    "description": "Folded checked kitchen towel with a wooden spoon; original coordinated Bistro rouge collection"
+  },
+  {
+    "id": "sticker-214",
+    "name": "Plated poached pear with a tiny red wine sauce swirl",
+    "category": "AI stickers",
+    "theme": "Bistro rouge",
+    "src": "/elements/sticker-214.png",
+    "description": "Plated poached pear with a tiny red wine sauce swirl; original coordinated Bistro rouge collection"
+  },
+  {
+    "id": "sticker-215",
+    "name": "Cast-iron skillet with one golden fried egg",
+    "category": "AI stickers",
+    "theme": "Bistro rouge",
+    "src": "/elements/sticker-215.png",
+    "description": "Cast-iron skillet with one golden fried egg; original coordinated Bistro rouge collection"
+  },
+  {
+    "id": "sticker-216",
+    "name": "Small ceramic olive dish holding three glossy olives",
+    "category": "AI stickers",
+    "theme": "Bistro rouge",
+    "src": "/elements/sticker-216.png",
+    "description": "Small ceramic olive dish holding three glossy olives; original coordinated Bistro rouge collection"
+  },
+  {
+    "id": "sticker-217",
+    "name": "Baguette segment wrapped in cream paper without lettering",
+    "category": "AI stickers",
+    "theme": "Bistro rouge",
+    "src": "/elements/sticker-217.png",
+    "description": "Baguette segment wrapped in cream paper without lettering; original coordinated Bistro rouge collection"
+  },
+  {
+    "id": "sticker-218",
+    "name": "Silver oyster fork with a tiny lemon wedge",
+    "category": "AI stickers",
+    "theme": "Bistro rouge",
+    "src": "/elements/sticker-218.png",
+    "description": "Silver oyster fork with a tiny lemon wedge; original coordinated Bistro rouge collection"
+  },
+  {
+    "id": "sticker-219",
+    "name": "Glass carafe of ruby fruit cordial",
+    "category": "AI stickers",
+    "theme": "Bistro rouge",
+    "src": "/elements/sticker-219.png",
+    "description": "Glass carafe of ruby fruit cordial; original coordinated Bistro rouge collection"
+  },
+  {
+    "id": "sticker-220",
+    "name": "Miniature cream stand mixer with a red mixing bowl",
+    "category": "AI stickers",
+    "theme": "Bistro rouge",
+    "src": "/elements/sticker-220.png",
+    "description": "Miniature cream stand mixer with a red mixing bowl; original coordinated Bistro rouge collection"
+  },
+  {
+    "id": "sticker-221",
+    "name": "Felt beagle puppy sitting with a sage bandana",
+    "category": "AI stickers",
+    "theme": "Paws boutique",
+    "src": "/elements/sticker-221.png",
+    "description": "Felt beagle puppy sitting with a sage bandana; original coordinated Paws boutique collection"
+  },
+  {
+    "id": "sticker-222",
+    "name": "Plush tabby kitten curled inside a peach basket",
+    "category": "AI stickers",
+    "theme": "Paws boutique",
+    "src": "/elements/sticker-222.png",
+    "description": "Plush tabby kitten curled inside a peach basket; original coordinated Paws boutique collection"
+  },
+  {
+    "id": "sticker-223",
+    "name": "Small ceramic paw-shaped food bowl",
+    "category": "AI stickers",
+    "theme": "Paws boutique",
+    "src": "/elements/sticker-223.png",
+    "description": "Small ceramic paw-shaped food bowl; original coordinated Paws boutique collection"
+  },
+  {
+    "id": "sticker-224",
+    "name": "Braided cotton tug toy with peach and cream strands",
+    "category": "AI stickers",
+    "theme": "Paws boutique",
+    "src": "/elements/sticker-224.png",
+    "description": "Braided cotton tug toy with peach and cream strands; original coordinated Paws boutique collection"
+  },
+  {
+    "id": "sticker-225",
+    "name": "Leather pet collar with a tiny brass heart tag and no letters",
+    "category": "AI stickers",
+    "theme": "Paws boutique",
+    "src": "/elements/sticker-225.png",
+    "description": "Leather pet collar with a tiny brass heart tag and no letters; original coordinated Paws boutique collection"
+  },
+  {
+    "id": "sticker-226",
+    "name": "Fluffy white rabbit with one folded ear",
+    "category": "AI stickers",
+    "theme": "Paws boutique",
+    "src": "/elements/sticker-226.png",
+    "description": "Fluffy white rabbit with one folded ear; original coordinated Paws boutique collection"
+  },
+  {
+    "id": "sticker-227",
+    "name": "Tiny felt hedgehog curled on an invisible surface",
+    "category": "AI stickers",
+    "theme": "Paws boutique",
+    "src": "/elements/sticker-227.png",
+    "description": "Tiny felt hedgehog curled on an invisible surface; original coordinated Paws boutique collection"
+  },
+  {
+    "id": "sticker-228",
+    "name": "Sculptural dog biscuit shaped like a pretzel",
+    "category": "AI stickers",
+    "theme": "Paws boutique",
+    "src": "/elements/sticker-228.png",
+    "description": "Sculptural dog biscuit shaped like a pretzel; original coordinated Paws boutique collection"
+  },
+  {
+    "id": "sticker-229",
+    "name": "Small pet carrier in sage canvas with mesh detail",
+    "category": "AI stickers",
+    "theme": "Paws boutique",
+    "src": "/elements/sticker-229.png",
+    "description": "Small pet carrier in sage canvas with mesh detail; original coordinated Paws boutique collection"
+  },
+  {
+    "id": "sticker-230",
+    "name": "Soft felt parakeet with peach cheeks",
+    "category": "AI stickers",
+    "theme": "Paws boutique",
+    "src": "/elements/sticker-230.png",
+    "description": "Soft felt parakeet with peach cheeks; original coordinated Paws boutique collection"
+  },
+  {
+    "id": "sticker-231",
+    "name": "Wooden stacking rainbow shaped like a scalloped bridge",
+    "category": "AI stickers",
+    "theme": "Little wonder",
+    "src": "/elements/sticker-231.png",
+    "description": "Wooden stacking rainbow shaped like a scalloped bridge; original coordinated Little wonder collection"
+  },
+  {
+    "id": "sticker-232",
+    "name": "Crocheted baby elephant holding a tiny fabric star",
+    "category": "AI stickers",
+    "theme": "Little wonder",
+    "src": "/elements/sticker-232.png",
+    "description": "Crocheted baby elephant holding a tiny fabric star; original coordinated Little wonder collection"
+  },
+  {
+    "id": "sticker-233",
+    "name": "Pair of soft knitted baby booties with lilac ties",
+    "category": "AI stickers",
+    "theme": "Little wonder",
+    "src": "/elements/sticker-233.png",
+    "description": "Pair of soft knitted baby booties with lilac ties; original coordinated Little wonder collection"
+  },
+  {
+    "id": "sticker-234",
+    "name": "Natural wooden pull-along duck with blue wheels",
+    "category": "AI stickers",
+    "theme": "Little wonder",
+    "src": "/elements/sticker-234.png",
+    "description": "Natural wooden pull-along duck with blue wheels; original coordinated Little wonder collection"
+  },
+  {
+    "id": "sticker-235",
+    "name": "Small fabric mobile of moons and clouds arranged as one cohesive hanging object",
+    "category": "AI stickers",
+    "theme": "Little wonder",
+    "src": "/elements/sticker-235.png",
+    "description": "Small fabric mobile of moons and clouds arranged as one cohesive hanging object; original coordinated Little wonder collection"
+  },
+  {
+    "id": "sticker-236",
+    "name": "Plush corduroy giraffe sitting upright",
+    "category": "AI stickers",
+    "theme": "Little wonder",
+    "src": "/elements/sticker-236.png",
+    "description": "Plush corduroy giraffe sitting upright; original coordinated Little wonder collection"
+  },
+  {
+    "id": "sticker-237",
+    "name": "Wooden spinning top painted powder blue and cream",
+    "category": "AI stickers",
+    "theme": "Little wonder",
+    "src": "/elements/sticker-237.png",
+    "description": "Wooden spinning top painted powder blue and cream; original coordinated Little wonder collection"
+  },
+  {
+    "id": "sticker-238",
+    "name": "Soft quilted baby bib with a subtle original flower motif",
+    "category": "AI stickers",
+    "theme": "Little wonder",
+    "src": "/elements/sticker-238.png",
+    "description": "Soft quilted baby bib with a subtle original flower motif; original coordinated Little wonder collection"
+  },
+  {
+    "id": "sticker-239",
+    "name": "Small wooden toy sailboat with a linen sail",
+    "category": "AI stickers",
+    "theme": "Little wonder",
+    "src": "/elements/sticker-239.png",
+    "description": "Small wooden toy sailboat with a linen sail; original coordinated Little wonder collection"
+  },
+  {
+    "id": "sticker-240",
+    "name": "Cuddly knitted lamb with a butter-yellow bow",
+    "category": "AI stickers",
+    "theme": "Little wonder",
+    "src": "/elements/sticker-240.png",
+    "description": "Cuddly knitted lamb with a butter-yellow bow; original coordinated Little wonder collection"
+  },
+  {
+    "id": "sticker-241",
+    "name": "Sculptural terracotta table lamp with a pleated shade",
+    "category": "AI stickers",
+    "theme": "Casa forms",
+    "src": "/elements/sticker-241.png",
+    "description": "Sculptural terracotta table lamp with a pleated shade; original coordinated Casa forms collection"
+  },
+  {
+    "id": "sticker-242",
+    "name": "Curved walnut lounge chair with an ivory cushion",
+    "category": "AI stickers",
+    "theme": "Casa forms",
+    "src": "/elements/sticker-242.png",
+    "description": "Curved walnut lounge chair with an ivory cushion; original coordinated Casa forms collection"
+  },
+  {
+    "id": "sticker-243",
+    "name": "Wavy travertine bookend with visible mineral pores",
+    "category": "AI stickers",
+    "theme": "Casa forms",
+    "src": "/elements/sticker-243.png",
+    "description": "Wavy travertine bookend with visible mineral pores; original coordinated Casa forms collection"
+  },
+  {
+    "id": "sticker-244",
+    "name": "Small moss-green sculptural watering can",
+    "category": "AI stickers",
+    "theme": "Casa forms",
+    "src": "/elements/sticker-244.png",
+    "description": "Small moss-green sculptural watering can; original coordinated Casa forms collection"
+  },
+  {
+    "id": "sticker-245",
+    "name": "Folded bouclé throw draped into an elegant knot",
+    "category": "AI stickers",
+    "theme": "Casa forms",
+    "src": "/elements/sticker-245.png",
+    "description": "Folded bouclé throw draped into an elegant knot; original coordinated Casa forms collection"
+  },
+  {
+    "id": "sticker-246",
+    "name": "Hand-thrown ceramic pitcher with an asymmetric handle",
+    "category": "AI stickers",
+    "theme": "Casa forms",
+    "src": "/elements/sticker-246.png",
+    "description": "Hand-thrown ceramic pitcher with an asymmetric handle; original coordinated Casa forms collection"
+  },
+  {
+    "id": "sticker-247",
+    "name": "Miniature arched doorway made from warm limestone",
+    "category": "AI stickers",
+    "theme": "Casa forms",
+    "src": "/elements/sticker-247.png",
+    "description": "Miniature arched doorway made from warm limestone; original coordinated Casa forms collection"
+  },
+  {
+    "id": "sticker-248",
+    "name": "Stack of three decorative ceramic tiles with original geometric motifs",
+    "category": "AI stickers",
+    "theme": "Casa forms",
+    "src": "/elements/sticker-248.png",
+    "description": "Stack of three decorative ceramic tiles with original geometric motifs; original coordinated Casa forms collection"
+  },
+  {
+    "id": "sticker-249",
+    "name": "Round rattan mirror with woven rays",
+    "category": "AI stickers",
+    "theme": "Casa forms",
+    "src": "/elements/sticker-249.png",
+    "description": "Round rattan mirror with woven rays; original coordinated Casa forms collection"
+  },
+  {
+    "id": "sticker-250",
+    "name": "Sculptural black metal candleholder holding two ivory candles",
+    "category": "AI stickers",
+    "theme": "Casa forms",
+    "src": "/elements/sticker-250.png",
+    "description": "Sculptural black metal candleholder holding two ivory candles; original coordinated Casa forms collection"
+  },
+  {
+    "id": "sticker-251",
+    "name": "Folded ivory invitation envelope with a gold wax seal and no lettering",
+    "category": "AI stickers",
+    "theme": "Golden occasion",
+    "src": "/elements/sticker-251.png",
+    "description": "Folded ivory invitation envelope with a gold wax seal and no lettering; original coordinated Golden occasion collection"
+  },
+  {
+    "id": "sticker-252",
+    "name": "Champagne glass with a delicate blush ribbon tied to its stem",
+    "category": "AI stickers",
+    "theme": "Golden occasion",
+    "src": "/elements/sticker-252.png",
+    "description": "Champagne glass with a delicate blush ribbon tied to its stem; original coordinated Golden occasion collection"
+  },
+  {
+    "id": "sticker-253",
+    "name": "Sculptural gold numberless anniversary medallion with laurel edges",
+    "category": "AI stickers",
+    "theme": "Golden occasion",
+    "src": "/elements/sticker-253.png",
+    "description": "Sculptural gold numberless anniversary medallion with laurel edges; original coordinated Golden occasion collection"
+  },
+  {
+    "id": "sticker-254",
+    "name": "Small tiered ivory celebration cake with one gold leaf flourish",
+    "category": "AI stickers",
+    "theme": "Golden occasion",
+    "src": "/elements/sticker-254.png",
+    "description": "Small tiered ivory celebration cake with one gold leaf flourish; original coordinated Golden occasion collection"
+  },
+  {
+    "id": "sticker-255",
+    "name": "Silk blush peony corsage with a pearl pin",
+    "category": "AI stickers",
+    "theme": "Golden occasion",
+    "src": "/elements/sticker-255.png",
+    "description": "Silk blush peony corsage with a pearl pin; original coordinated Golden occasion collection"
+  },
+  {
+    "id": "sticker-256",
+    "name": "Pair of intertwined gold wedding bands",
+    "category": "AI stickers",
+    "theme": "Golden occasion",
+    "src": "/elements/sticker-256.png",
+    "description": "Pair of intertwined gold wedding bands; original coordinated Golden occasion collection"
+  },
+  {
+    "id": "sticker-257",
+    "name": "Elegant folded paper fan with gold-tipped ribs",
+    "category": "AI stickers",
+    "theme": "Golden occasion",
+    "src": "/elements/sticker-257.png",
+    "description": "Elegant folded paper fan with gold-tipped ribs; original coordinated Golden occasion collection"
+  },
+  {
+    "id": "sticker-258",
+    "name": "Clear glass place-card holder gripping a blank ivory card",
+    "category": "AI stickers",
+    "theme": "Golden occasion",
+    "src": "/elements/sticker-258.png",
+    "description": "Clear glass place-card holder gripping a blank ivory card; original coordinated Golden occasion collection"
+  },
+  {
+    "id": "sticker-259",
+    "name": "Shower of five large sculptural champagne confetti curls arranged as one isolated element",
+    "category": "AI stickers",
+    "theme": "Golden occasion",
+    "src": "/elements/sticker-259.png",
+    "description": "Shower of five large sculptural champagne confetti curls arranged as one isolated element; original coordinated Golden occasion collection"
+  },
+  {
+    "id": "sticker-260",
+    "name": "Satin ring pillow with a single gold ring",
+    "category": "AI stickers",
+    "theme": "Golden occasion",
+    "src": "/elements/sticker-260.png",
+    "description": "Satin ring pillow with a single gold ring; original coordinated Golden occasion collection"
+  },
+  {
+    "id": "sticker-261",
+    "name": "Textured navy basketball with vermillion seams",
+    "category": "AI stickers",
+    "theme": "Tempo sport",
+    "src": "/elements/sticker-261.png",
+    "description": "Textured navy basketball with vermillion seams; original coordinated Tempo sport collection"
+  },
+  {
+    "id": "sticker-262",
+    "name": "Miniature tennis racket with a white grip and red strings",
+    "category": "AI stickers",
+    "theme": "Tempo sport",
+    "src": "/elements/sticker-262.png",
+    "description": "Miniature tennis racket with a white grip and red strings; original coordinated Tempo sport collection"
+  },
+  {
+    "id": "sticker-263",
+    "name": "Pair of cream boxing gloves tied together",
+    "category": "AI stickers",
+    "theme": "Tempo sport",
+    "src": "/elements/sticker-263.png",
+    "description": "Pair of cream boxing gloves tied together; original coordinated Tempo sport collection"
+  },
+  {
+    "id": "sticker-264",
+    "name": "Red road cycling helmet with sculptural vents",
+    "category": "AI stickers",
+    "theme": "Tempo sport",
+    "src": "/elements/sticker-264.png",
+    "description": "Red road cycling helmet with sculptural vents; original coordinated Tempo sport collection"
+  },
+  {
+    "id": "sticker-265",
+    "name": "Small white athletic whistle on a navy cord",
+    "category": "AI stickers",
+    "theme": "Tempo sport",
+    "src": "/elements/sticker-265.png",
+    "description": "Small white athletic whistle on a navy cord; original coordinated Tempo sport collection"
+  },
+  {
+    "id": "sticker-266",
+    "name": "Rolled resistance band with a red fabric sleeve",
+    "category": "AI stickers",
+    "theme": "Tempo sport",
+    "src": "/elements/sticker-266.png",
+    "description": "Rolled resistance band with a red fabric sleeve; original coordinated Tempo sport collection"
+  },
+  {
+    "id": "sticker-267",
+    "name": "Balanced pair of navy dumbbells with rounded ends",
+    "category": "AI stickers",
+    "theme": "Tempo sport",
+    "src": "/elements/sticker-267.png",
+    "description": "Balanced pair of navy dumbbells with rounded ends; original coordinated Tempo sport collection"
+  },
+  {
+    "id": "sticker-268",
+    "name": "Leather baseball glove holding an ivory ball",
+    "category": "AI stickers",
+    "theme": "Tempo sport",
+    "src": "/elements/sticker-268.png",
+    "description": "Leather baseball glove holding an ivory ball; original coordinated Tempo sport collection"
+  },
+  {
+    "id": "sticker-269",
+    "name": "Sleek vermillion running shoe with white laces",
+    "category": "AI stickers",
+    "theme": "Tempo sport",
+    "src": "/elements/sticker-269.png",
+    "description": "Sleek vermillion running shoe with white laces; original coordinated Tempo sport collection"
+  },
+  {
+    "id": "sticker-270",
+    "name": "Tiny red table-tennis paddle with an ivory ball",
+    "category": "AI stickers",
+    "theme": "Tempo sport",
+    "src": "/elements/sticker-270.png",
+    "description": "Tiny red table-tennis paddle with an ivory ball; original coordinated Tempo sport collection"
+  },
+  {
+    "id": "sticker-271",
+    "name": "Small plum portable record player with an ivory vinyl disc",
+    "category": "AI stickers",
+    "theme": "Vinyl social",
+    "src": "/elements/sticker-271.png",
+    "description": "Small plum portable record player with an ivory vinyl disc; original coordinated Vinyl social collection"
+  },
+  {
+    "id": "sticker-272",
+    "name": "Retro silver microphone with a coral cable curl",
+    "category": "AI stickers",
+    "theme": "Vinyl social",
+    "src": "/elements/sticker-272.png",
+    "description": "Retro silver microphone with a coral cable curl; original coordinated Vinyl social collection"
+  },
+  {
+    "id": "sticker-273",
+    "name": "Pair of dusty-coral studio monitors as one cohesive sticker",
+    "category": "AI stickers",
+    "theme": "Vinyl social",
+    "src": "/elements/sticker-273.png",
+    "description": "Pair of dusty-coral studio monitors as one cohesive sticker; original coordinated Vinyl social collection"
+  },
+  {
+    "id": "sticker-274",
+    "name": "Vintage plum cassette tape with a blank ivory label",
+    "category": "AI stickers",
+    "theme": "Vinyl social",
+    "src": "/elements/sticker-274.png",
+    "description": "Vintage plum cassette tape with a blank ivory label; original coordinated Vinyl social collection"
+  },
+  {
+    "id": "sticker-275",
+    "name": "Brushed-gold trumpet with subtle warm reflections",
+    "category": "AI stickers",
+    "theme": "Vinyl social",
+    "src": "/elements/sticker-275.png",
+    "description": "Brushed-gold trumpet with subtle warm reflections; original coordinated Vinyl social collection"
+  },
+  {
+    "id": "sticker-276",
+    "name": "Tiny ivory electric keyboard with plum sides",
+    "category": "AI stickers",
+    "theme": "Vinyl social",
+    "src": "/elements/sticker-276.png",
+    "description": "Tiny ivory electric keyboard with plum sides; original coordinated Vinyl social collection"
+  },
+  {
+    "id": "sticker-277",
+    "name": "Disco ball made of champagne and lilac mirror tiles",
+    "category": "AI stickers",
+    "theme": "Vinyl social",
+    "src": "/elements/sticker-277.png",
+    "description": "Disco ball made of champagne and lilac mirror tiles; original coordinated Vinyl social collection"
+  },
+  {
+    "id": "sticker-278",
+    "name": "Folded concert ticket with abstract graphics and no writing",
+    "category": "AI stickers",
+    "theme": "Vinyl social",
+    "src": "/elements/sticker-278.png",
+    "description": "Folded concert ticket with abstract graphics and no writing; original coordinated Vinyl social collection"
+  },
+  {
+    "id": "sticker-279",
+    "name": "Pair of elegant plum maracas with cream geometric bands",
+    "category": "AI stickers",
+    "theme": "Vinyl social",
+    "src": "/elements/sticker-279.png",
+    "description": "Pair of elegant plum maracas with cream geometric bands; original coordinated Vinyl social collection"
+  },
+  {
+    "id": "sticker-280",
+    "name": "Tiny coral acoustic guitar with an ivory pickguard",
+    "category": "AI stickers",
+    "theme": "Vinyl social",
+    "src": "/elements/sticker-280.png",
+    "description": "Tiny coral acoustic guitar with an ivory pickguard; original coordinated Vinyl social collection"
+  },
+  {
+    "id": "sticker-281",
+    "name": "Kraft paper seed packet with an original leaf emblem and no text",
+    "category": "AI stickers",
+    "theme": "Earthwise",
+    "src": "/elements/sticker-281.png",
+    "description": "Kraft paper seed packet with an original leaf emblem and no text; original coordinated Earthwise collection"
+  },
+  {
+    "id": "sticker-282",
+    "name": "Reusable cream mesh produce bag holding two green pears",
+    "category": "AI stickers",
+    "theme": "Earthwise",
+    "src": "/elements/sticker-282.png",
+    "description": "Reusable cream mesh produce bag holding two green pears; original coordinated Earthwise collection"
+  },
+  {
+    "id": "sticker-283",
+    "name": "Cork-covered refillable notebook with a moss ribbon bookmark",
+    "category": "AI stickers",
+    "theme": "Earthwise",
+    "src": "/elements/sticker-283.png",
+    "description": "Cork-covered refillable notebook with a moss ribbon bookmark; original coordinated Earthwise collection"
+  },
+  {
+    "id": "sticker-284",
+    "name": "Clear refill bottle with a bamboo pump",
+    "category": "AI stickers",
+    "theme": "Earthwise",
+    "src": "/elements/sticker-284.png",
+    "description": "Clear refill bottle with a bamboo pump; original coordinated Earthwise collection"
+  },
+  {
+    "id": "sticker-285",
+    "name": "Miniature compost bin in moss-colored enamel with two leaves",
+    "category": "AI stickers",
+    "theme": "Earthwise",
+    "src": "/elements/sticker-285.png",
+    "description": "Miniature compost bin in moss-colored enamel with two leaves; original coordinated Earthwise collection"
+  },
+  {
+    "id": "sticker-286",
+    "name": "Bamboo toothbrush with cream bristles",
+    "category": "AI stickers",
+    "theme": "Earthwise",
+    "src": "/elements/sticker-286.png",
+    "description": "Bamboo toothbrush with cream bristles; original coordinated Earthwise collection"
+  },
+  {
+    "id": "sticker-287",
+    "name": "Folded recycled-paper shopping bag with cotton handles",
+    "category": "AI stickers",
+    "theme": "Earthwise",
+    "src": "/elements/sticker-287.png",
+    "description": "Folded recycled-paper shopping bag with cotton handles; original coordinated Earthwise collection"
+  },
+  {
+    "id": "sticker-288",
+    "name": "Small cork planter holding a young fern shoot",
+    "category": "AI stickers",
+    "theme": "Earthwise",
+    "src": "/elements/sticker-288.png",
+    "description": "Small cork planter holding a young fern shoot; original coordinated Earthwise collection"
+  },
+  {
+    "id": "sticker-289",
+    "name": "Reusable stainless straw tied to a linen pouch",
+    "category": "AI stickers",
+    "theme": "Earthwise",
+    "src": "/elements/sticker-289.png",
+    "description": "Reusable stainless straw tied to a linen pouch; original coordinated Earthwise collection"
+  },
+  {
+    "id": "sticker-290",
+    "name": "Beeswax food wrap folded around a small loaf",
+    "category": "AI stickers",
+    "theme": "Earthwise",
+    "src": "/elements/sticker-290.png",
+    "description": "Beeswax food wrap folded around a small loaf; original coordinated Earthwise collection"
+  },
+  {
+    "id": "sticker-291",
+    "name": "Midnight-blue weekender bag with tan leather handles",
+    "category": "AI stickers",
+    "theme": "Orbit travel",
+    "src": "/elements/sticker-291.png",
+    "description": "Midnight-blue weekender bag with tan leather handles; original coordinated Orbit travel collection"
+  },
+  {
+    "id": "sticker-292",
+    "name": "Miniature yellow city tram with ivory windows",
+    "category": "AI stickers",
+    "theme": "Orbit travel",
+    "src": "/elements/sticker-292.png",
+    "description": "Miniature yellow city tram with ivory windows; original coordinated Orbit travel collection"
+  },
+  {
+    "id": "sticker-293",
+    "name": "Folded neck pillow in saffron linen",
+    "category": "AI stickers",
+    "theme": "Orbit travel",
+    "src": "/elements/sticker-293.png",
+    "description": "Folded neck pillow in saffron linen; original coordinated Orbit travel collection"
+  },
+  {
+    "id": "sticker-294",
+    "name": "Tiny vintage camera with a cream strap",
+    "category": "AI stickers",
+    "theme": "Orbit travel",
+    "src": "/elements/sticker-294.png",
+    "description": "Tiny vintage camera with a cream strap; original coordinated Orbit travel collection"
+  },
+  {
+    "id": "sticker-295",
+    "name": "Luggage tag in navy leather with a blank ivory inset",
+    "category": "AI stickers",
+    "theme": "Orbit travel",
+    "src": "/elements/sticker-295.png",
+    "description": "Luggage tag in navy leather with a blank ivory inset; original coordinated Orbit travel collection"
+  },
+  {
+    "id": "sticker-296",
+    "name": "Ceramic miniature pagoda roof with saffron accents",
+    "category": "AI stickers",
+    "theme": "Orbit travel",
+    "src": "/elements/sticker-296.png",
+    "description": "Ceramic miniature pagoda roof with saffron accents; original coordinated Orbit travel collection"
+  },
+  {
+    "id": "sticker-297",
+    "name": "Pair of folded aviator sunglasses on a cream travel pouch",
+    "category": "AI stickers",
+    "theme": "Orbit travel",
+    "src": "/elements/sticker-297.png",
+    "description": "Pair of folded aviator sunglasses on a cream travel pouch; original coordinated Orbit travel collection"
+  },
+  {
+    "id": "sticker-298",
+    "name": "Small brass hotel key with a geometric navy fob and no numbers",
+    "category": "AI stickers",
+    "theme": "Orbit travel",
+    "src": "/elements/sticker-298.png",
+    "description": "Small brass hotel key with a geometric navy fob and no numbers; original coordinated Orbit travel collection"
+  },
+  {
+    "id": "sticker-299",
+    "name": "Cream travel journal held closed with a saffron elastic band",
+    "category": "AI stickers",
+    "theme": "Orbit travel",
+    "src": "/elements/sticker-299.png",
+    "description": "Cream travel journal held closed with a saffron elastic band; original coordinated Orbit travel collection"
+  },
+  {
+    "id": "sticker-300",
+    "name": "Sculptural enamel mountain funicular cabin in midnight blue",
+    "category": "AI stickers",
+    "theme": "Orbit travel",
+    "src": "/elements/sticker-300.png",
+    "description": "Sculptural enamel mountain funicular cabin in midnight blue; original coordinated Orbit travel collection"
+  }
+]

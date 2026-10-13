@@ -1,0 +1,41 @@
+{
+  "name": "forma-studio",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1 --port 5186 --strictPort",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview --host 127.0.0.1 --port 5186 --strictPort",
+    "test": "playwright test",
+    "db:start": "supabase start",
+    "db:stop": "supabase stop",
+    "db:status": "supabase status",
+    "local": "node scripts/start-local.mjs",
+    "ai:start": "node scripts/start-ai.mjs",
+    "ai:stop": "node scripts/stop-ai.mjs",
+    "test:server": "node --test tests/designer.test.mjs tests/photos.test.mjs tests/refinements.test.mjs tests/frames.test.mjs",
+    "test:ai-live": "node scripts/test-designer-live.mjs"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "2.117.3",
+    "fabric": "7.4.0",
+    "gifenc": "^1.0.3",
+    "idb-keyval": "6.3.0",
+    "jspdf": "4.2.1",
+    "lucide-react": "1.55.0",
+    "react": "19.3.0",
+    "react-dom": "19.3.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.64.0",
+    "@types/node": "26.6.5",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "@vitejs/plugin-react": "6.1.2",
+    "prettier": "3.9.10",
+    "supabase": "2.120.0",
+    "typescript": "7.0.2",
+    "vite": "8.3.4"
+  }
+}

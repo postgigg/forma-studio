@@ -1,0 +1,40 @@
+project_id = "forma-studio"
+[api]
+enabled = true
+port = 57621
+schemas = ["public", "graphql_public"]
+extra_search_path = ["public", "extensions"]
+max_rows = 1000
+[db]
+port = 57622
+shadow_port = 57620
+major_version = 17
+[db.migrations]
+enabled = true
+[db.seed]
+enabled = false
+[realtime]
+enabled = false
+[studio]
+enabled = true
+port = 57623
+api_url = "http://127.0.0.1:57621"
+[local_smtp]
+enabled = true
+port = 57624
+[storage]
+enabled = false
+[auth]
+enabled = true
+site_url = "http://localhost:5186"
+additional_redirect_urls = ["http://127.0.0.1:5186"]
+jwt_expiry = 3600
+enable_signup = true
+minimum_password_length = 8
+[auth.email]
+enable_signup = true
+enable_confirmations = false
+[analytics]
+enabled = false
+[edge_runtime]
+enabled = false

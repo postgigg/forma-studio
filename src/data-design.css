@@ -1,0 +1,345 @@
+.chart-library {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 20px;
+}
+.chart-library button {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 15px;
+  background: #f9f7fd;
+  border: 1px solid #e7e1ef;
+  border-radius: 14px;
+  padding: 18px;
+  color: #754adb;
+  text-align: left;
+}
+.chart-library button:hover {
+  background: #eee7fc;
+}
+.chart-library strong {
+  font-size: 13px;
+  color: #292432;
+}
+.chart-library small {
+  font-size: 10px;
+  line-height: 1.4;
+  color: #736d7d;
+}
+.chart-dialog {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
+  gap: 24px;
+  align-items: start;
+}
+.chart-preview {
+  position: sticky;
+  top: 0;
+  border: 1px solid #e9e4ef;
+  background: #f6f3f9;
+  padding: 18px;
+  border-radius: 16px;
+}
+.chart-preview canvas {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0 4px 22px #29243212;
+}
+.chart-controls {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.field-row {
+  display: flex;
+  gap: 12px;
+  align-items: end;
+}
+.field-row .field:first-child {
+  flex: 1;
+}
+.field-row input[type="color"] {
+  width: 48px;
+  height: 36px;
+}
+.chart-data-heading {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.chart-data-heading h3 {
+  margin-right: auto;
+  font-size: 14px;
+}
+.chart-data-heading button {
+  font-size: 11px;
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+.chart-table-wrap {
+  overflow: auto;
+  max-height: 310px;
+  border: 1px solid #e4ddeb;
+  border-radius: 10px;
+}
+.chart-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+}
+.chart-table th {
+  background: #f6f2fc;
+  text-align: left;
+  padding: 8px;
+  position: sticky;
+  top: 0;
+}
+.chart-table td {
+  padding: 4px;
+  border-top: 1px solid #eee8f4;
+}
+.chart-table input {
+  width: 100%;
+  min-width: 70px;
+  background: transparent;
+  border: 1px solid transparent;
+  padding: 8px 5px;
+  border-radius: 5px;
+  font-size: 12px;
+}
+.chart-table input:focus {
+  border-color: #754adb;
+  background: white;
+  outline: none;
+}
+.chart-table td:first-child input {
+  min-width: 105px;
+}
+.series-heading {
+  display: flex;
+  align-items: center;
+}
+.series-heading input[type="color"] {
+  padding: 0;
+  min-width: 21px;
+  width: 21px;
+  height: 24px;
+  flex-shrink: 0;
+}
+.series-heading input:not([type="color"]) {
+  min-width: 80px;
+}
+.chart-table button {
+  background: none;
+  border: 0;
+  color: #8a8099;
+  padding: 4px;
+}
+.chart-data-actions {
+  display: flex;
+  gap: 8px;
+}
+.chart-data-actions button {
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.csv-entry textarea {
+  width: 100%;
+  min-height: 110px;
+  font-family: monospace;
+  margin-bottom: 8px;
+}
+.mask-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  margin: 14px 0 22px;
+}
+.mask-grid button {
+  min-width: 0;
+  background: #faf8fc;
+  border: 1px solid #e9e3ef;
+  border-radius: 10px;
+  padding: 6px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+}
+.mask-grid button:hover {
+  border-color: #9870e5;
+  background: #f0e9fc;
+}
+.mask-grid canvas {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.mask-grid small {
+  text-transform: capitalize;
+  color: #6a6278;
+  font-size: 10px;
+}
+.letter-mask-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+.photo-frame-library > .check-row {
+  margin-top: 10px;
+}
+.photo-mask-dialog {
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) minmax(220px, 1fr);
+  gap: 26px;
+}
+.mask-crop-preview {
+  align-self: start;
+  border-radius: 16px;
+  overflow: hidden;
+  background: repeating-conic-gradient(#ece9f1 0% 25%, #f9f7fc 0% 50%) 0 0/24px
+    24px;
+  border: 1px solid #e3dceb;
+}
+.mask-crop-preview canvas {
+  display: block;
+  width: 100%;
+  height: auto;
+  cursor: grab;
+  touch-action: none;
+}
+.mask-crop-preview canvas:active {
+  cursor: grabbing;
+}
+.mask-crop-preview p {
+  font-size: 12px;
+  color: #6e637b;
+  text-align: center;
+  padding: 15px;
+  margin: 0;
+  background: #f8f5fc;
+}
+.mask-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.mask-controls .secondary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.stage-marquee {
+  position: fixed;
+  pointer-events: none;
+  background: #754adb24;
+  border: 1px solid #754adb;
+  z-index: 80;
+}
+.area-selecting,
+.area-selecting canvas {
+  cursor: crosshair !important;
+}
+.selection-hint {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  max-width: 360px;
+  background: #302341;
+  color: white;
+  padding: 10px 14px;
+  border-radius: 20px;
+  z-index: 20;
+  font-size: 11px;
+  pointer-events: none;
+}
+.chart-controls .field,
+.mask-controls .field {
+  margin: 0;
+}
+.chart-controls .check-row,
+.mask-controls .check-row {
+  margin: 0;
+}
+.mask-controls {
+  gap: 11px;
+}
+.modal:has(.photo-mask-dialog) {
+  width: min(980px, calc(100vw - 32px));
+}
+.modal:has(.chart-dialog) .modal-actions,
+.modal:has(.photo-mask-dialog) .modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding-top: 20px;
+}
+.photo-frame-library .section-label {
+  margin-top: 18px;
+}
+.corner-inputs {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.corner-inputs input[type="range"] {
+  min-width: 0;
+  flex: 1;
+}
+.corner-inputs input[type="number"] {
+  width: 62px;
+  border: 1px solid #e2dbea;
+  border-radius: 6px;
+  padding: 7px;
+}
+.corner-presets {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+.corner-presets button {
+  flex: 1;
+  padding: 6px;
+  border: 1px solid #e5ddeb;
+  border-radius: 5px;
+  color: #725387;
+  background: #faf7fd;
+  font-size: 10px;
+}
+.refine-additions {
+  font-size: 12px;
+  font-weight: 600;
+  color: #7452b2;
+}
+.refine-design-notes {
+  padding-left: 18px;
+  color: #776985;
+  font-size: 12px;
+  line-height: 1.65;
+}
+@media (max-width: 800px) {
+  .chart-dialog,
+  .photo-mask-dialog {
+    grid-template-columns: 1fr;
+  }
+  .chart-preview {
+    position: static;
+    max-width: 400px;
+    margin: auto;
+  }
+  .mask-crop-preview {
+    max-width: 400px;
+    margin: auto;
+  }
+  .chart-controls {
+    gap: 10px;
+  }
+}

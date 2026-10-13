@@ -1,0 +1,1008 @@
+{
+  "generator": "Built-in image_gen",
+  "promptSet": "shared/sticker-prompts.json",
+  "transparentBackground": true,
+  "uniqueFiles": 100,
+  "assets": [
+    {
+      "id": "sticker-001",
+      "name": "Monstera moment",
+      "theme": "Botanical",
+      "file": "public/elements/sticker-001.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 2274251,
+      "sha256": "7248dceb76179c6f64c1f4e4640f630a131f1e797201d37bbad445333817ccf7"
+    },
+    {
+      "id": "sticker-002",
+      "name": "Blush tulip",
+      "theme": "Botanical",
+      "file": "public/elements/sticker-002.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1000531,
+      "sha256": "f8152c816916d7a962e666d5ef8679cb31f46051a918d55f0c6a1a48ab93ee85"
+    },
+    {
+      "id": "sticker-003",
+      "name": "Lavender bundle",
+      "theme": "Botanical",
+      "file": "public/elements/sticker-003.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1607152,
+      "sha256": "8446c0c656cc786ed6bc782a0c89f38cc51804727974f7bbf6b0bc4eb3d01451"
+    },
+    {
+      "id": "sticker-004",
+      "name": "Olive branch",
+      "theme": "Botanical",
+      "file": "public/elements/sticker-004.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1675105,
+      "sha256": "28e9ffc0c4acc68ea577718b78f50041e1025b0f4901ef0190f1f5ae56940a0c"
+    },
+    {
+      "id": "sticker-005",
+      "name": "Desert cactus",
+      "theme": "Botanical",
+      "file": "public/elements/sticker-005.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1335414,
+      "sha256": "602c1d1e0b01f221833b1ab219b2280d0b1e3ae337e4c15253c8a0ae20eb8bab"
+    },
+    {
+      "id": "sticker-006",
+      "name": "Wild mushroom",
+      "theme": "Botanical",
+      "file": "public/elements/sticker-006.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 2120009,
+      "sha256": "72b0379d15d841fb1d028ccc50fd05dbce973f11ceb31da3b5764a3ac715bda9"
+    },
+    {
+      "id": "sticker-007",
+      "name": "Lemon blossom",
+      "theme": "Botanical",
+      "file": "public/elements/sticker-007.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1635027,
+      "sha256": "2a40c61b65fe70b10b199529d255077eaa1198c8710e6046907ee9c182e8841d"
+    },
+    {
+      "id": "sticker-008",
+      "name": "Ginkgo fan",
+      "theme": "Botanical",
+      "file": "public/elements/sticker-008.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1604381,
+      "sha256": "eedb9637ae6a56a1b6249bb4e2b1aae5b3bdb90c69b5505d79c7af978ee4580b"
+    },
+    {
+      "id": "sticker-009",
+      "name": "Fern unfurling",
+      "theme": "Botanical",
+      "file": "public/elements/sticker-009.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 2114185,
+      "sha256": "82211f4deee541e19101734d3281896015d26b37e98ac10a61b225c3e258553a"
+    },
+    {
+      "id": "sticker-010",
+      "name": "Lotus bloom",
+      "theme": "Botanical",
+      "file": "public/elements/sticker-010.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 2070173,
+      "sha256": "8f7b512c30b66a5c0892720229b4da899edcfa7c7c4e80e4e564adad1848ed76"
+    },
+    {
+      "id": "sticker-011",
+      "name": "Cherry pop",
+      "theme": "Sweet things",
+      "file": "public/elements/sticker-011.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1037828,
+      "sha256": "26e0d02e5333d4cc830bc9b07bd661e08ba16698ea896cf356e0eeff8bcd25a0"
+    },
+    {
+      "id": "sticker-012",
+      "name": "Peachy keen",
+      "theme": "Sweet things",
+      "file": "public/elements/sticker-012.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1706455,
+      "sha256": "8fac7ccc1dcc632ae1e29b9a00eccb3ea62b38838100ad332384c42ce67e2df4"
+    },
+    {
+      "id": "sticker-013",
+      "name": "Strawberry smile",
+      "theme": "Sweet things",
+      "file": "public/elements/sticker-013.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1687745,
+      "sha256": "0c5cac9246e6019ec40ea5617d3c76efd7d0f8c333e6f092ec248fa9249c511e"
+    },
+    {
+      "id": "sticker-014",
+      "name": "Citrus slice",
+      "theme": "Sweet things",
+      "file": "public/elements/sticker-014.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1545216,
+      "sha256": "742722f9d7ee01dad6e9c9426d729c2e1471b00ac52661a669cb0bfc87df47c0"
+    },
+    {
+      "id": "sticker-015",
+      "name": "Avocado duo",
+      "theme": "Sweet things",
+      "file": "public/elements/sticker-015.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1370977,
+      "sha256": "cee9392502ca97c04091f17b8971260903713ae4ec712aed10a5427083f28613"
+    },
+    {
+      "id": "sticker-016",
+      "name": "Berry tart",
+      "theme": "Sweet things",
+      "file": "public/elements/sticker-016.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1875128,
+      "sha256": "bd6ab7987d904b2336aa26255c3d9d5bba55ff6e19b856f8dd0d4b117a407cb7"
+    },
+    {
+      "id": "sticker-017",
+      "name": "Croissant cloud",
+      "theme": "Sweet things",
+      "file": "public/elements/sticker-017.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1546257,
+      "sha256": "48e9675f8c502e5fac77fba554f1089502e68b8cc7fe9c3fc3c040349f364f20"
+    },
+    {
+      "id": "sticker-018",
+      "name": "Matcha moment",
+      "theme": "Sweet things",
+      "file": "public/elements/sticker-018.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1559781,
+      "sha256": "4344f46052512bd21f183ad778d773234455ea35aafe4378c2eb93f55c8a391d"
+    },
+    {
+      "id": "sticker-019",
+      "name": "Ice cream swirl",
+      "theme": "Sweet things",
+      "file": "public/elements/sticker-019.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 857019,
+      "sha256": "db56105c4b5a5f1d4bfea501c58884929d23e72de136812caf1c6a968759f527"
+    },
+    {
+      "id": "sticker-020",
+      "name": "Donut delight",
+      "theme": "Sweet things",
+      "file": "public/elements/sticker-020.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1372200,
+      "sha256": "94598bcc3413bda48407a9ac3413716596a68f9143fb5a90d95ad24650b083d2"
+    },
+    {
+      "id": "sticker-021",
+      "name": "Sleepy fox",
+      "theme": "Little creatures",
+      "file": "public/elements/sticker-021.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1418235,
+      "sha256": "23c61e9e60cb720fcb31bae6e82847afe23a84ab655c95cbbebe6803052aa6b1"
+    },
+    {
+      "id": "sticker-022",
+      "name": "Pocket penguin",
+      "theme": "Little creatures",
+      "file": "public/elements/sticker-022.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1269626,
+      "sha256": "a9ea0d3f79029960e90e30183ecb3616274d40f755ae6ea5726c00fccd93320c"
+    },
+    {
+      "id": "sticker-023",
+      "name": "Curious cat",
+      "theme": "Little creatures",
+      "file": "public/elements/sticker-023.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1356588,
+      "sha256": "e3f1b1861ade2df14c3ff4576d93719e1267a3279fdd823d5d2b1a62acafbc12"
+    },
+    {
+      "id": "sticker-024",
+      "name": "Frog friend",
+      "theme": "Little creatures",
+      "file": "public/elements/sticker-024.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1295644,
+      "sha256": "9313af4a30fbfe41e4f5c8980e7498e5ca8cb3c683efc810bae045a9bf650fa3"
+    },
+    {
+      "id": "sticker-025",
+      "name": "Little bee",
+      "theme": "Little creatures",
+      "file": "public/elements/sticker-025.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1470827,
+      "sha256": "c06618a3d50a717be46a51e1b3497a37d8677c22583a05d3687dfdb9d21745c5"
+    },
+    {
+      "id": "sticker-026",
+      "name": "Butterfly daydream",
+      "theme": "Little creatures",
+      "file": "public/elements/sticker-026.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1520853,
+      "sha256": "f09b8c5617651c1b662dc90f7b30952c5d187335f2e5a8e310bb5d46fd9f69a2"
+    },
+    {
+      "id": "sticker-027",
+      "name": "Snail mail",
+      "theme": "Little creatures",
+      "file": "public/elements/sticker-027.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1249519,
+      "sha256": "0492b12618c75c9b5c29587a49f5a82171b978e12d9e1df69819985e0ec06142"
+    },
+    {
+      "id": "sticker-028",
+      "name": "Whale hello",
+      "theme": "Little creatures",
+      "file": "public/elements/sticker-028.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1104756,
+      "sha256": "cea613e7b46867894efc9e7b053272aeb641d269c721f879c7ed5387990cc13b"
+    },
+    {
+      "id": "sticker-029",
+      "name": "Tiny turtle",
+      "theme": "Little creatures",
+      "file": "public/elements/sticker-029.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1306785,
+      "sha256": "27f94508ea259f9ecf5863a08641f01be11223dca41a19586aef0f2b62f53de4"
+    },
+    {
+      "id": "sticker-030",
+      "name": "Panda pause",
+      "theme": "Little creatures",
+      "file": "public/elements/sticker-030.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1697495,
+      "sha256": "05d627996a08bc3e5a354ae0fc6bd0175324df7bb088008422648fdddf0a7640"
+    },
+    {
+      "id": "sticker-031",
+      "name": "Crescent dreams",
+      "theme": "Cosmic",
+      "file": "public/elements/sticker-031.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1435354,
+      "sha256": "01c1f1d75fbfa7410549f30800cf51a292c360c4410076b90f28071706a296ef"
+    },
+    {
+      "id": "sticker-032",
+      "name": "Saturn glow",
+      "theme": "Cosmic",
+      "file": "public/elements/sticker-032.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1443175,
+      "sha256": "24d2cb70edd3685c3c55b7043d70821c82cd30a1c73c9b9110a46e633821c6d2"
+    },
+    {
+      "id": "sticker-033",
+      "name": "Shooting wish",
+      "theme": "Cosmic",
+      "file": "public/elements/sticker-033.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1031063,
+      "sha256": "ab5a630163fbe5957954585591e8bdef747d14fd518ad24fa2a8c810741b542e"
+    },
+    {
+      "id": "sticker-034",
+      "name": "Cloud nine",
+      "theme": "Cosmic",
+      "file": "public/elements/sticker-034.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 962569,
+      "sha256": "455369d95f0e7152bca694fd4c3415c024966a3e32c05c20d5176e089f75c505"
+    },
+    {
+      "id": "sticker-035",
+      "name": "Aurora portal",
+      "theme": "Cosmic",
+      "file": "public/elements/sticker-035.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1281026,
+      "sha256": "44e48c50c2f503a8e98738c64fb317c25e2cb740ce63787f16217ff92327fb22"
+    },
+    {
+      "id": "sticker-036",
+      "name": "Crystal comet",
+      "theme": "Cosmic",
+      "file": "public/elements/sticker-036.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1098391,
+      "sha256": "1c6bb30708f71518f4bab5a6fd7385fc4bda4164778299cf26243beadafeef8e"
+    },
+    {
+      "id": "sticker-037",
+      "name": "Magic meteor",
+      "theme": "Cosmic",
+      "file": "public/elements/sticker-037.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1201765,
+      "sha256": "7ec107b338b0e8a0b0adeb637ed3a5616aeb9e8f79b7059593e78f15e7f1679a"
+    },
+    {
+      "id": "sticker-038",
+      "name": "Starlight cluster",
+      "theme": "Cosmic",
+      "file": "public/elements/sticker-038.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 824411,
+      "sha256": "3552b408b1396b2ed84677b562ea10a1a9158c23d1baee1bdb29c62c451319ff"
+    },
+    {
+      "id": "sticker-039",
+      "name": "Eclipse halo",
+      "theme": "Cosmic",
+      "file": "public/elements/sticker-039.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1794540,
+      "sha256": "e0ed4f17da466c4ed74c153806642e745cc3764ed671a8a042d3ae1f315b0ad0"
+    },
+    {
+      "id": "sticker-040",
+      "name": "Dream rocket",
+      "theme": "Cosmic",
+      "file": "public/elements/sticker-040.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 912006,
+      "sha256": "48aaf26b09b333648622554cf02296f34d80261c603b37e2b8de1989219742d9"
+    },
+    {
+      "id": "sticker-041",
+      "name": "Paintbrush flourish",
+      "theme": "Creative desk",
+      "file": "public/elements/sticker-041.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1011734,
+      "sha256": "d737df2996ffb5eed4fca6f870bd23fe6c369a792faa8fef9c8bfad8a3a2a5d5"
+    },
+    {
+      "id": "sticker-042",
+      "name": "Color pencil trio",
+      "theme": "Creative desk",
+      "file": "public/elements/sticker-042.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1219771,
+      "sha256": "e3d51a7984386d521db66d3183a49740d79a77ad2728f95dd6f90c214d96c435"
+    },
+    {
+      "id": "sticker-043",
+      "name": "Palette play",
+      "theme": "Creative desk",
+      "file": "public/elements/sticker-043.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1746724,
+      "sha256": "1fb5cdfb3241bdac7c2f665e225fe2d772deddab13a8e9610f8787aea0882d66"
+    },
+    {
+      "id": "sticker-044",
+      "name": "Scissor cut",
+      "theme": "Creative desk",
+      "file": "public/elements/sticker-044.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 845446,
+      "sha256": "18a57679eeca7d1e694d9e289c6993c7f35cfb1c12a35d12cd5a5e4152ce685e"
+    },
+    {
+      "id": "sticker-045",
+      "name": "Sketchbook soul",
+      "theme": "Creative desk",
+      "file": "public/elements/sticker-045.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1530394,
+      "sha256": "3ea7bbc5a30caa378741d003342d30f436f3f932ab28a0bc64b7d9f3002d960f"
+    },
+    {
+      "id": "sticker-046",
+      "name": "Camera click",
+      "theme": "Creative desk",
+      "file": "public/elements/sticker-046.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1657999,
+      "sha256": "263fc62983508cd5be6b59e7d194975e9d0e850ff995af5a400da33fc43e6d23"
+    },
+    {
+      "id": "sticker-047",
+      "name": "Vinyl mood",
+      "theme": "Creative desk",
+      "file": "public/elements/sticker-047.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1812964,
+      "sha256": "91dc747c47112e472e7278f3d11efe0d4807a3cf2ee09f900d465c232827b6a5"
+    },
+    {
+      "id": "sticker-048",
+      "name": "Tape loops",
+      "theme": "Creative desk",
+      "file": "public/elements/sticker-048.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1498103,
+      "sha256": "c8ab8b0d1701e19fa2e4a4faf15dbfd75f3789127ee358fe1ce6ccb53a444fbe"
+    },
+    {
+      "id": "sticker-049",
+      "name": "Ink bottle",
+      "theme": "Creative desk",
+      "file": "public/elements/sticker-049.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1752701,
+      "sha256": "4c453d16da4f9454aa107f9594ef9fc7a20bbb88eed19ad3bca816696e77c927"
+    },
+    {
+      "id": "sticker-050",
+      "name": "Creative spark",
+      "theme": "Creative desk",
+      "file": "public/elements/sticker-050.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 847044,
+      "sha256": "81a340f672f84290b65ee1a63f0d38a28e3ca69b7751582e4fe5405c4f6f2bce"
+    },
+    {
+      "id": "sticker-051",
+      "name": "Mountain escape",
+      "theme": "Wanderlust",
+      "file": "public/elements/sticker-051.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1962024,
+      "sha256": "077847570dc1db99151c5b439844c9c850332ae1bb6e6f34214ba925b6969f5d"
+    },
+    {
+      "id": "sticker-052",
+      "name": "Palm day",
+      "theme": "Wanderlust",
+      "file": "public/elements/sticker-052.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1789804,
+      "sha256": "5900f8ba2f821fb406cdf0486a31de71ad56d8acaece4b44a3923fe527a8bda6"
+    },
+    {
+      "id": "sticker-053",
+      "name": "Beach umbrella",
+      "theme": "Wanderlust",
+      "file": "public/elements/sticker-053.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1288334,
+      "sha256": "d7f0072f829c4fa07dbd14763e23aac9f2479c1a355680426552108893baf172"
+    },
+    {
+      "id": "sticker-054",
+      "name": "Little sailboat",
+      "theme": "Wanderlust",
+      "file": "public/elements/sticker-054.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1374546,
+      "sha256": "b74c4f88a145a0cf29989bdaad22c989bb4b2cfd3cc9546cd782db43f5a4a20c"
+    },
+    {
+      "id": "sticker-055",
+      "name": "Hot air dream",
+      "theme": "Wanderlust",
+      "file": "public/elements/sticker-055.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1580048,
+      "sha256": "ff68ac95b778093c1189db9de422a9f1a7244a590b6a3a00fd745f44b58a9cdc"
+    },
+    {
+      "id": "sticker-056",
+      "name": "Compass rose",
+      "theme": "Wanderlust",
+      "file": "public/elements/sticker-056.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 2108691,
+      "sha256": "b7f8eb8e610292469ffbe2e78f7998ef7eeb05c41ec724a08da726fe5a176508"
+    },
+    {
+      "id": "sticker-057",
+      "name": "Road trip",
+      "theme": "Wanderlust",
+      "file": "public/elements/sticker-057.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 2084187,
+      "sha256": "5bc9b55ea54fd97643bb939f361a80f132636549bc1bedf840ff3768dbc4b86e"
+    },
+    {
+      "id": "sticker-058",
+      "name": "Passport adventure",
+      "theme": "Wanderlust",
+      "file": "public/elements/sticker-058.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1903685,
+      "sha256": "4004aaa8760afcddbbe91bfecaab08b076cac8b8b3930d1a1c37f5545d25ff7b"
+    },
+    {
+      "id": "sticker-059",
+      "name": "Suitcase stories",
+      "theme": "Wanderlust",
+      "file": "public/elements/sticker-059.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 2314756,
+      "sha256": "7f12f2dac2dae0a1792ab8185599c7104a16f5fb727a2341b3bfdf252a7d8309"
+    },
+    {
+      "id": "sticker-060",
+      "name": "City bicycle",
+      "theme": "Wanderlust",
+      "file": "public/elements/sticker-060.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1871547,
+      "sha256": "bfbf61d1e01928806faf439bafb10306dc43f0bb1fc9d67b6b43447654232ad7"
+    },
+    {
+      "id": "sticker-061",
+      "name": "Chrome heart",
+      "theme": "Sculptural",
+      "file": "public/elements/sticker-061.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1237116,
+      "sha256": "d9564edac58310311e6a0af575f974248cb3b1bdf9e302ce9a531c5286c2c39c"
+    },
+    {
+      "id": "sticker-062",
+      "name": "Glass twist",
+      "theme": "Sculptural",
+      "file": "public/elements/sticker-062.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1079604,
+      "sha256": "5a524d3f565559103a0b64c9d834ed736777d8b178428261bb5be6c39ab5059c"
+    },
+    {
+      "id": "sticker-063",
+      "name": "Peach torus",
+      "theme": "Sculptural",
+      "file": "public/elements/sticker-063.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1188560,
+      "sha256": "d79ba2ce5e5d7b972fc50093ce5de9aaff50498eea16097a9eb76296e82f2864"
+    },
+    {
+      "id": "sticker-064",
+      "name": "Pearl spiral",
+      "theme": "Sculptural",
+      "file": "public/elements/sticker-064.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1405412,
+      "sha256": "6b38d17027b3ef706eaaf0ff1b914543f6124d29663fbc573c4d831df05da68a"
+    },
+    {
+      "id": "sticker-065",
+      "name": "Liquid blob",
+      "theme": "Sculptural",
+      "file": "public/elements/sticker-065.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1059623,
+      "sha256": "82f5f4ca4cc8d4416b74997ca5a03351e0868e05dafb50e422ee0b0796faa8c4"
+    },
+    {
+      "id": "sticker-066",
+      "name": "Golden chain",
+      "theme": "Sculptural",
+      "file": "public/elements/sticker-066.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1058644,
+      "sha256": "2406498fc5edda9392575774638f31a7296ee929850dfadffd1c94a4507825e5"
+    },
+    {
+      "id": "sticker-067",
+      "name": "Velvet squiggle",
+      "theme": "Sculptural",
+      "file": "public/elements/sticker-067.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 867284,
+      "sha256": "78b7bbf0c2219dfcb62fd28b8e16c7208d99821ed83f9982578e26f27f8cd0f7"
+    },
+    {
+      "id": "sticker-068",
+      "name": "Prism fold",
+      "theme": "Sculptural",
+      "file": "public/elements/sticker-068.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1052074,
+      "sha256": "231eb3906cfdada3264857e113422beafa75b60db104ac5d8d05196f89556245"
+    },
+    {
+      "id": "sticker-069",
+      "name": "Floating pebbles",
+      "theme": "Sculptural",
+      "file": "public/elements/sticker-069.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1195278,
+      "sha256": "65027f92ba13a3259ada09b46a151e000ab67d452f664be19a572469eeffc251"
+    },
+    {
+      "id": "sticker-070",
+      "name": "Inflated asterisk",
+      "theme": "Sculptural",
+      "file": "public/elements/sticker-070.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1368008,
+      "sha256": "b7e7ce43d676fc55537b7ff9fc93592a2434e2cb6d82c1f20d3904da77cad9b8"
+    },
+    {
+      "id": "sticker-071",
+      "name": "Cozy mug",
+      "theme": "Cozy living",
+      "file": "public/elements/sticker-071.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1585598,
+      "sha256": "8831fcad6735d75ea5c099d5434b2d5ad77ac1bfc6cc731bb9d2f1f41c96aa9e"
+    },
+    {
+      "id": "sticker-072",
+      "name": "Candle glow",
+      "theme": "Cozy living",
+      "file": "public/elements/sticker-072.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1761348,
+      "sha256": "b7b34d602b29e8911f08b6180cccfc7a55180a73d55629d490fb1ffe102f3fbd"
+    },
+    {
+      "id": "sticker-073",
+      "name": "Reading nook",
+      "theme": "Cozy living",
+      "file": "public/elements/sticker-073.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 2130900,
+      "sha256": "1bee920fd614ac490a3fbeaf8aa5ec8a263174ae0764c246170392c87c14598c"
+    },
+    {
+      "id": "sticker-074",
+      "name": "Knit warmth",
+      "theme": "Cozy living",
+      "file": "public/elements/sticker-074.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1990478,
+      "sha256": "896af18085bbdbc0766edd1f1efe214bfdd16244310ffe68ed1458ea22926296"
+    },
+    {
+      "id": "sticker-075",
+      "name": "Wool basket",
+      "theme": "Cozy living",
+      "file": "public/elements/sticker-075.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1854846,
+      "sha256": "952e67324d9ae5dff13bc93e7183031236a990484ab77a2b88f7f4212fb4486a"
+    },
+    {
+      "id": "sticker-076",
+      "name": "Rainy window",
+      "theme": "Cozy living",
+      "file": "public/elements/sticker-076.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1850961,
+      "sha256": "91131bbc6f49c3e8273c690f8874c0e53d354c3ee0fb5594dfe0c0ce64847dab"
+    },
+    {
+      "id": "sticker-077",
+      "name": "Teapot time",
+      "theme": "Cozy living",
+      "file": "public/elements/sticker-077.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1603289,
+      "sha256": "ca8cbd1722b28e84bdd603e6a1dfbd52d90c22b030911fc98329c36c2d96bbda"
+    },
+    {
+      "id": "sticker-078",
+      "name": "Record player",
+      "theme": "Cozy living",
+      "file": "public/elements/sticker-078.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1823962,
+      "sha256": "d0394d7bea58a57a329c2b5f799d0b14246ad7dd3f526a386981f9133f615a8b"
+    },
+    {
+      "id": "sticker-079",
+      "name": "Soft slippers",
+      "theme": "Cozy living",
+      "file": "public/elements/sticker-079.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1790074,
+      "sha256": "f46acacb42f5cffd2c878393b0cc6804cb903360d57dd350ac08c98c1fca8fa0"
+    },
+    {
+      "id": "sticker-080",
+      "name": "Sunday lamp",
+      "theme": "Cozy living",
+      "file": "public/elements/sticker-080.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1745881,
+      "sha256": "117305c01b9c3abe3849128cc9af0c31518b925f91e4b7cdcb749d867d163e63"
+    },
+    {
+      "id": "sticker-081",
+      "name": "Party popper",
+      "theme": "Celebrate",
+      "file": "public/elements/sticker-081.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1225283,
+      "sha256": "a80d6bdfc07bae60da3412c4679de6166fd1e0e0a0f374ff7c32f021c3beb959"
+    },
+    {
+      "id": "sticker-082",
+      "name": "Birthday candle",
+      "theme": "Celebrate",
+      "file": "public/elements/sticker-082.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1382378,
+      "sha256": "245b749a3344d502e03119a791f2665c540d266bef8582568bf5b3b3ee3719ab"
+    },
+    {
+      "id": "sticker-083",
+      "name": "Gift of joy",
+      "theme": "Celebrate",
+      "file": "public/elements/sticker-083.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1944990,
+      "sha256": "0f86b062331ae7fbf9715f7288be423b63273608bf69cfea15b2bdda757f23fb"
+    },
+    {
+      "id": "sticker-084",
+      "name": "Balloon bouquet",
+      "theme": "Celebrate",
+      "file": "public/elements/sticker-084.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1187166,
+      "sha256": "ab5009e09080cf55547859bdede55034fde66afb75ed659ff59884f59e569c3f"
+    },
+    {
+      "id": "sticker-085",
+      "name": "Disco sparkle",
+      "theme": "Celebrate",
+      "file": "public/elements/sticker-085.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1648889,
+      "sha256": "622792e3d54c01d3c4094fd312d08f6e347b2eb6fb9117c8949de27b83f9e951"
+    },
+    {
+      "id": "sticker-086",
+      "name": "Celebration cake",
+      "theme": "Celebrate",
+      "file": "public/elements/sticker-086.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1843252,
+      "sha256": "d69b030c5464790cc01dbddfde434df0a0798f9c7e510a460f42db8fde1251f5"
+    },
+    {
+      "id": "sticker-087",
+      "name": "Cheers glasses",
+      "theme": "Celebrate",
+      "file": "public/elements/sticker-087.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1895758,
+      "sha256": "8a624fb23bfba3bf8fa7e7d4aebcf7a198bc9e16ff7ec41dc172f55bb8416748"
+    },
+    {
+      "id": "sticker-088",
+      "name": "Party crown",
+      "theme": "Celebrate",
+      "file": "public/elements/sticker-088.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1964126,
+      "sha256": "5f8da97e6bf05da6761738fdd84042a552b3dc04c10a180001a22649d809f06f"
+    },
+    {
+      "id": "sticker-089",
+      "name": "Medal moment",
+      "theme": "Celebrate",
+      "file": "public/elements/sticker-089.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1867328,
+      "sha256": "9aa3c84cb58aa61cb873c2dbd7e10f0f7a35fd2f1e9e54acdaa6c3931a4f83b0"
+    },
+    {
+      "id": "sticker-090",
+      "name": "Ribbon rosette",
+      "theme": "Celebrate",
+      "file": "public/elements/sticker-090.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1735866,
+      "sha256": "092f45a69d4d080209c80cf9915acc13ec9cf837143f2bb92b227ed301b515d8"
+    },
+    {
+      "id": "sticker-091",
+      "name": "Headphone escape",
+      "theme": "Modern life",
+      "file": "public/elements/sticker-091.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1206070,
+      "sha256": "8a23a77ee379e395e43de1ac861e5172bb800e3b25eb62847f9108f391f718e1"
+    },
+    {
+      "id": "sticker-092",
+      "name": "Game time",
+      "theme": "Modern life",
+      "file": "public/elements/sticker-092.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1097134,
+      "sha256": "f84690a9348c0d591f5da55912ed5efaa8b722fcd12b8b6ccdcadc8d2ff1eb93"
+    },
+    {
+      "id": "sticker-093",
+      "name": "Laptop ideas",
+      "theme": "Modern life",
+      "file": "public/elements/sticker-093.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1099218,
+      "sha256": "2153cf236cf63d159e4736ecaee01132a268f6ee9e201900bbccbee08fc66dd1"
+    },
+    {
+      "id": "sticker-094",
+      "name": "Message bubble",
+      "theme": "Modern life",
+      "file": "public/elements/sticker-094.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 824896,
+      "sha256": "70c0f6a4ecd642dc8163be41802d797ee6129f750e5096f2539fc83cf58989c8"
+    },
+    {
+      "id": "sticker-095",
+      "name": "Envelope love",
+      "theme": "Modern life",
+      "file": "public/elements/sticker-095.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1137449,
+      "sha256": "bf57f751837c7cd7f12b49215980ee059214317e36fc8e6a1e3bed685b2134e4"
+    },
+    {
+      "id": "sticker-096",
+      "name": "Cloud upload",
+      "theme": "Modern life",
+      "file": "public/elements/sticker-096.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 867923,
+      "sha256": "2b4e7884e64bdc89df414829e3bda726dd08d85c2a465e907e4391d44cee26dc"
+    },
+    {
+      "id": "sticker-097",
+      "name": "Battery bloom",
+      "theme": "Modern life",
+      "file": "public/elements/sticker-097.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1027957,
+      "sha256": "1fb23db4a14fec536638950cb7a6a563e66e43b61da25545cee0a1c3298f074f"
+    },
+    {
+      "id": "sticker-098",
+      "name": "Calendar day",
+      "theme": "Modern life",
+      "file": "public/elements/sticker-098.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1414543,
+      "sha256": "d7246c188e48ff19893e0e6bf0948d59341aeb5dc89a94712e8b3747b477ce8b"
+    },
+    {
+      "id": "sticker-099",
+      "name": "Check it off",
+      "theme": "Modern life",
+      "file": "public/elements/sticker-099.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1312246,
+      "sha256": "98ced075225061073cc966d1572388aa491b0c8a3619aa5ee58bdcb970a85c03"
+    },
+    {
+      "id": "sticker-100",
+      "name": "Digital magic",
+      "theme": "Modern life",
+      "file": "public/elements/sticker-100.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 942140,
+      "sha256": "3722ce1a261b4af3fcb9a0b7f172a7c3c227505377e97036f0c80ffbecea045d"
+    }
+  ]
+}

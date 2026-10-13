@@ -1,0 +1,606 @@
+{
+  "generator": "built-in image_gen",
+  "transparent_background": true,
+  "prompts": [
+    {
+      "id": "sticker-001",
+      "name": "Monstera moment",
+      "theme": "Botanical",
+      "prompt": "Use case: stylized-concept. Asset type: one premium reusable sticker for a professional Canva-like Elements library. Subject: one sculptural split-leaf monstera leaf. Style: refined tactile layered paper collage in muted sage, forest green, ivory and soft terracotta. Composition: a single cohesive isolated design element, complete silhouette entirely visible, centered with generous 10% transparent margins, square composition. Beautiful professional art direction, crisp detail, visually distinct and instantly recognizable even small, natural material shading. No words, letters, numbers, watermarks, signatures, company logos, or rectangular backdrop. Truly transparent background with clean alpha edges, not a drawn checkerboard. Deliver one finished standalone sticker."
+    },
+    {
+      "id": "sticker-002",
+      "name": "Blush tulip",
+      "theme": "Botanical",
+      "prompt": "Use case: stylized-concept. Asset type: one premium reusable sticker for a professional Canva-like Elements library. Subject: a single graceful blush pink tulip with curved stem and two leaves. Style: refined tactile layered paper collage in muted sage, forest green, ivory and soft terracotta. Composition: a single cohesive isolated design element, complete silhouette entirely visible, centered with generous 10% transparent margins, square composition. Beautiful professional art direction, crisp detail, visually distinct and instantly recognizable even small, natural material shading. No words, letters, numbers, watermarks, signatures, company logos, or rectangular backdrop. Truly transparent background with clean alpha edges, not a drawn checkerboard. Deliver one finished standalone sticker."
+    },
+    {
+      "id": "sticker-003",
+      "name": "Lavender bundle",
+      "theme": "Botanical",
+      "prompt": "Use case: stylized-concept. Asset type: one premium reusable sticker for a professional Canva-like Elements library. Subject: a tied petite bundle of lavender sprigs. Style: refined tactile layered paper collage in muted sage, forest green, ivory and soft terracotta. Composition: a single cohesive isolated design element, complete silhouette entirely visible, centered with generous 10% transparent margins, square composition. Beautiful professional art direction, crisp detail, visually distinct and instantly recognizable even small, natural material shading. No words, letters, numbers, watermarks, signatures, company logos, or rectangular backdrop. Truly transparent background with clean alpha edges, not a drawn checkerboard. Deliver one finished standalone sticker."
+    },
+    {
+      "id": "sticker-004",
+      "name": "Olive branch",
+      "theme": "Botanical",
+      "prompt": "Use case: stylized-concept. Asset type: one premium reusable sticker for a professional Canva-like Elements library. Subject: a slender elegant olive branch with three green olives. Style: refined tactile layered paper collage in muted sage, forest green, ivory and soft terracotta. Composition: a single cohesive isolated design element, complete silhouette entirely visible, centered with generous 10% transparent margins, square composition. Beautiful professional art direction, crisp detail, visually distinct and instantly recognizable even small, natural material shading. No words, letters, numbers, watermarks, signatures, company logos, or rectangular backdrop. Truly transparent background with clean alpha edges, not a drawn checkerboard. Deliver one finished standalone sticker."
+    },
+    {
+      "id": "sticker-005",
+      "name": "Desert cactus",
+      "theme": "Botanical",
+      "prompt": "Use case: stylized-concept. Asset type: one premium reusable sticker for a professional Canva-like Elements library. Subject: a charming miniature saguaro cactus in a peach ceramic pot. Style: refined tactile layered paper collage in muted sage, forest green, ivory and soft terracotta. Composition: a single cohesive isolated design element, complete silhouette entirely visible, centered with generous 10% transparent margins, square composition. Beautiful professional art direction, crisp detail, visually distinct and instantly recognizable even small, natural material shading. No words, letters, numbers, watermarks, signatures, company logos, or rectangular backdrop. Truly transparent background with clean alpha edges, not a drawn checkerboard. Deliver one finished standalone sticker."
+    },
+    {
+      "id": "sticker-006",
+      "name": "Wild mushroom",
+      "theme": "Botanical",
+      "prompt": "Use case: stylized-concept. Asset type: one premium reusable sticker for a professional Canva-like Elements library. Subject: two whimsical woodland mushrooms forming one cohesive sticker. Style: refined tactile layered paper collage in muted sage, forest green, ivory and soft terracotta. Composition: a single cohesive isolated design element, complete silhouette entirely visible, centered with generous 10% transparent margins, square composition. Beautiful professional art direction, crisp detail, visually distinct and instantly recognizable even small, natural material shading. No words, letters, numbers, watermarks, signatures, company logos, or rectangular backdrop. Truly transparent background with clean alpha edges, not a drawn checkerboard. Deliver one finished standalone sticker."
+    },
+    {
+      "id": "sticker-007",
+      "name": "Lemon blossom",
+      "theme": "Botanical",
+      "prompt": "Use case: stylized-concept. Asset type: one premium reusable sticker for a professional Canva-like Elements library. Subject: one lemon blossom branch with a tiny lemon and white flowers. Style: refined tactile layered paper collage in muted sage, forest green, ivory and soft terracotta. Composition: a single cohesive isolated design element, complete silhouette entirely visible, centered with generous 10% transparent margins, square composition. Beautiful professional art direction, crisp detail, visually distinct and instantly recognizable even small, natural material shading. No words, letters, numbers, watermarks, signatures, company logos, or rectangular backdrop. Truly transparent background with clean alpha edges, not a drawn checkerboard. Deliver one finished standalone sticker."
+    },
+    {
+      "id": "sticker-008",
+      "name": "Ginkgo fan",
+      "theme": "Botanical",
+      "prompt": "Use case: stylized-concept. Asset type: one premium reusable sticker for a professional Canva-like Elements library. Subject: a pair of golden ginkgo leaves crossing at their stems. Style: refined tactile layered paper collage in muted sage, forest green, ivory and soft terracotta. Composition: a single cohesive isolated design element, complete silhouette entirely visible, centered with generous 10% transparent margins, square composition. Beautiful professional art direction, crisp detail, visually distinct and instantly recognizable even small, natural material shading. No words, letters, numbers, watermarks, signatures, company logos, or rectangular backdrop. Truly transparent background with clean alpha edges, not a drawn checkerboard. Deliver one finished standalone sticker."
+    },
+    {
+      "id": "sticker-009",
+      "name": "Fern unfurling",
+      "theme": "Botanical",
+      "prompt": "Use case: stylized-concept. Asset type: one premium reusable sticker for a professional Canva-like Elements library. Subject: one unfurling woodland fern with intricate delicate fronds. Style: refined tactile layered paper collage in muted sage, forest green, ivory and soft terracotta. Composition: a single cohesive isolated design element, complete silhouette entirely visible, centered with generous 10% transparent margins, square composition. Beautiful professional art direction, crisp detail, visually distinct and instantly recognizable even small, natural material shading. No words, letters, numbers, watermarks, signatures, company logos, or rectangular backdrop. Truly transparent background with clean alpha edges, not a drawn checkerboard. Deliver one finished standalone sticker."
+    },
+    {
+      "id": "sticker-010",
+      "name": "Lotus bloom",
+      "theme": "Botanical",
+      "prompt": "Use case: stylized-concept. Asset type: one premium reusable sticker for a professional Canva-like Elements library. Subject: a serene pale pink lotus blossom in three-quarter view. Style: refined tactile layered paper collage in muted sage, forest green, ivory and soft terracotta. Composition: a single cohesive isolated design element, complete silhouette entirely visible, centered with generous 10% transparent margins, square composition. Beautiful professional art direction, crisp detail, visually distinct and instantly recognizable even small, natural material shading. No words, letters, numbers, watermarks, signatures, company logos, or rectangular backdrop. Truly transparent background with clean alpha edges, not a drawn checkerboard. Deliver one finished standalone sticker."
+    },
+    {
+      "id": "sticker-011",
+      "name": "Cherry pop",
+      "theme": "Sweet things",
+      "prompt": "Use case: stylized-concept. Asset type: one premium reusable sticker for a professional Canva-like Elements library. Subject: two glossy red cherries attached to one curved stem. Style: playful premium 3D soft clay illustration with delicious colors, tactile matte surfaces and art-directed studio highlights. Composition: a single cohesive isolated design element, complete silhouette entirely visible, centered with generous 10% transparent margins, square composition. Beautiful professional art direction, crisp detail, visually distinct and instantly recognizable even small, natural material shading. No words, letters, numbers, watermarks, signatures, company logos, or rectangular backdrop. Truly transparent background with clean alpha edges, not a drawn checkerboard. Deliver one finished standalone sticker."
+    },
+    {
+      "id": "sticker-012",
+      "name": "Peachy keen",
+      "theme": "Sweet things",
+      "prompt": "Use case: stylized-concept. Asset type: one premium reusable sticker for a professional Canva-like Elements library. Subject: a single velvety peach with one leaf. Style: playful premium 3D soft clay illustration with delicious colors, tactile matte surfaces and art-directed studio highlights. Composition: a single cohesive isolated design element, complete silhouette entirely visible, centered with generous 10% transparent margins, square composition. Beautiful professional art direction, crisp detail, visually distinct and instantly recognizable even small, natural material shading. No words, letters, numbers, watermarks, signatures, company logos, or rectangular backdrop. Truly transparent background with clean alpha edges, not a drawn checkerboard. Deliver one finished standalone sticker."
+    },
+    {
+      "id": "sticker-013",
+      "name": "Strawberry smile",
+      "theme": "Sweet things",
+      "prompt": "Use case: stylized-concept. Asset type: one premium reusable sticker for a professional Canva-like Elements library. Subject: one charming strawberry with tiny oval eyes and a subtle smile. Style: playful premium 3D soft clay illustration with delicious colors, tactile matte surfaces and art-directed studio highlights. Composition: a single cohesive isolated design element, complete silhouette entirely visible, centered with generous 10% transparent margins, square composition. Beautiful professional art direction, crisp detail, visually distinct and instantly recognizable even small, natural material shading. No words, letters, numbers, watermarks, signatures, company logos, or rectangular backdrop. Truly transparent background with clean alpha edges, not a drawn checkerboard. Deliver one finished standalone sticker."
+    },
+    {
+      "id": "sticker-014",
+      "name": "Citrus slice",
+      "theme": "Sweet things",
+      "prompt": "Use case: stylized-concept. Asset type: one premium reusable sticker for a professional Canva-like Elements library. Subject: a sculptural juicy orange half with visible citrus segments. Style: playful premium 3D soft clay illustration with delicious colors, tactile matte surfaces and art-directed studio highlights. Composition: a single cohesive isolated design element, complete silhouette entirely visible, centered with generous 10% transparent margins, square composition. Beautiful professional art direction, crisp detail, visually distinct and instantly recognizable even small, natural material shading. No words, letters, numbers, watermarks, signatures, company logos, or rectangular backdrop. Truly transparent background with clean alpha edges, not a drawn checkerboard. Deliver one finished standalone sticker."
+    },
+    {
+      "id": "sticker-015",
+      "name": "Avocado duo",
+      "theme": "Sweet things",
+      "prompt": "Use case: stylized-concept. Asset type: one premium reusable sticker for a professional Canva-like Elements library. Subject: an avocado half with a rounded brown pit. Style: playful premium 3D soft clay illustration with delicious colors, tactile matte surfaces and art-directed studio highlights. Composition: a single cohesive isolated design element, complete silhouette entirely visible, centered with generous 10% transparent margins, square composition. Beautiful professional art direction, crisp detail, visually distinct and instantly recognizable even small, natural material shading. No words, letters, numbers, watermarks, signatures, company logos, or rectangular backdrop. Truly transparent background with clean alpha edges, not a drawn checkerboard. Deliver one finished standalone sticker."
+    },
+    {
+      "id": "sticker-016",
+      "name": "Berry tart",
+      "theme": "Sweet things",
+      "prompt": "Use case: stylized-concept. Asset type: one premium reusable sticker for a professional Canva-like Elements library. Subject: a miniature patisserie strawberry tart with cream and berries. Style: playful premium 3D soft clay illustration with delicious colors, tactile matte surfaces and art-directed studio highlights. Composition: a single cohesive isolated design element, complete silhouette entirely visible, centered with generous 10% transparent margins, square composition. Beautiful professional art direction, crisp detail, visually distinct and instantly recognizable even small, natural material shading. No words, letters, numbers, watermarks, signatures, company logos, or rectangular backdrop. Truly transparent background with clean alpha edges, not a drawn checkerboard. Deliver one finished standalone sticker."
+    },
+    {
+      "id": "sticker-017",
+      "name": "Croissant cloud",
+      "theme": "Sweet things",
+      "prompt": "Use case: stylized-concept. Asset type: one premium reusable sticker for a professional Canva-like Elements library. Subject: one buttery flaky croissant in a playful inflated sculptural style. Style: playful premium 3D soft clay illustration with delicious colors, tactile matte surfaces and art-directed studio highlights. Composition: a single cohesive isolated design element, complete silhouette entirely visible, centered with generous 10% transparent margins, square composition. Beautiful professional art direction, crisp detail, visually distinct and instantly recognizable even small, natural material shading. No words, letters, numbers, watermarks, signatures, company logos, or rectangular backdrop. Truly transparent background with clean alpha edges, not a drawn checkerboard. Deliver one finished standalone sticker."
+    },
+    {
+      "id": "sticker-018",
+      "name": "Matcha moment",
+      "theme": "Sweet things",
+      "prompt": "Use case: stylized-concept. Asset type: one premium reusable sticker for a professional Canva-like Elements library. Subject: a pale mint matcha latte in a handleless ceramic cup. Style: playful premium 3D soft clay illustration with delicious colors, tactile matte surfaces and art-directed studio highlights. Composition: a single cohesive isolated design element, complete silhouette entirely visible, centered with generous 10% transparent margins, square composition. Beautiful professional art direction, crisp detail, visually distinct and instantly recognizable even small, natural material shading. No words, letters, numbers, watermarks, signatures, company logos, or rectangular backdrop. Truly transparent background with clean alpha edges, not a drawn checkerboard. Deliver one finished standalone sticker."
+    },
+    {
+      "id": "sticker-019",
+      "name": "Ice cream swirl",
+      "theme": "Sweet things",
+      "prompt": "Use case: stylized-concept. Asset type: one premium reusable sticker for a professional Canva-like Elements library. Subject: a strawberry and vanilla soft-serve ice cream in a waffle cone. Style: playful premium 3D soft clay illustration with delicious colors, tactile matte surfaces and art-directed studio highlights. Composition: a single cohesive isolated design element, complete silhouette entirely visible, centered with generous 10% transparent margins, square composition. Beautiful professional art direction, crisp detail, visually distinct and instantly recognizable even small, natural material shading. No words, letters, numbers, watermarks, signatures, company logos, or rectangular backdrop. Truly transparent background with clean alpha edges, not a drawn checkerboard. Deliver one finished standalone sticker."
+    },
+    {
+      "id": "sticker-020",
+      "name": "Donut delight",
+      "theme": "Sweet things",
+      "prompt": "Use case: stylized-concept. Asset type: one premium reusable sticker for a professional Canva-like Elements library. Subject: a lavender-glazed doughnut with colorful tiny sprinkles. Style: playful premium 3D soft clay illustration with delicious colors, tactile matte surfaces and art-directed studio highlights. Composition: a single cohesive isolated design element, complete silhouette entirely visible, centered with generous 10% transparent margins, square composition. Beautiful professional art direction, crisp detail, visually distinct and instantly recognizable even small, natural material shading. No words, letters, numbers, watermarks, signatures, company logos, or rectangular backdrop. Truly transparent background with clean alpha edges, not a drawn checkerboard. Deliver one finished standalone sticker."
+    },
+    {
+      "id": "sticker-021",
+      "name": "Sleepy fox",
+      "theme": "Little creatures",
+      "prompt": "Use case: stylized-concept. Asset type: one premium reusable sticker for a professional Canva-like Elements library. Subject: a tiny curled-up orange fox with a fluffy tail. Style: adorable sophisticated 3D collectible clay character, soft rounded shapes, expressive tiny features, carefully modeled studio lighting, editorial stationery style. Composition: a single cohesive isolated design element, complete silhouette entirely visible, centered with generous 10% transparent margins, square composition. Beautiful professional art direction, crisp detail, visually distinct and instantly recognizable even small, natural material shading. No words, letters, numbers, watermarks, signatures, company logos, or rectangular backdrop. Truly transparent background with clean alpha edges, not a drawn checkerboard. Deliver one finished standalone sticker."
+    },
+    {
+      "id": "sticker-022",
+      "name": "Pocket penguin",
+      "theme": "Little creatures",
+      "prompt": "Use case: stylized-concept. Asset type: one premium reusable sticker for a professional Canva-like Elements library. Subject: a happy plump baby penguin with apricot feet. Style: adorable sophisticated 3D collectible clay character, soft rounded shapes, expressive tiny features, carefully modeled studio lighting, editorial stationery style. Composition: a single cohesive isolated design element, complete silhouette entirely visible, centered with generous 10% transparent margins, square composition. Beautiful professional art direction, crisp detail, visually distinct and instantly recognizable even small, natural material shading. No words, letters, numbers, watermarks, signatures, company logos, or rectangular backdrop. Truly transparent background with clean alpha edges, not a drawn checkerboard. Deliver one finished standalone sticker."
+    },
+    {
+      "id": "sticker-023",
+      "name": "Curious cat",
+      "theme": "Little creatures",
+      "prompt": "Use case: stylized-concept. Asset type: one premium reusable sticker for a professional Canva-like Elements library. Subject: a curious cream kitten sitting with its tail curled. Style: adorable sophisticated 3D collectible clay character, soft rounded shapes, expressive tiny features, carefully modeled studio lighting, editorial stationery style. Composition: a single cohesive isolated design element, complete silhouette entirely visible, centered with generous 10% transparent margins, square composition. Beautiful professional art direction, crisp detail, visually distinct and instantly recognizable even small, natural material shading. No words, letters, numbers, watermarks, signatures, company logos, or rectangular backdrop. Truly transparent background with clean alpha edges, not a drawn checkerboard. Deliver one finished standalone sticker."
+    },
+    {
+      "id": "sticker-024",
+      "name": "Frog friend",
+      "theme": "Little creatures",
+      "prompt": "Use case: stylized-concept. Asset type: one premium reusable sticker for a professional Canva-like Elements library. Subject: a cheerful tiny green frog with rosy cheeks. Style: adorable sophisticated 3D collectible clay character, soft rounded shapes, expressive tiny features, carefully modeled studio lighting, editorial stationery style. Composition: a single cohesive isolated design element, complete silhouette entirely visible, centered with generous 10% transparent margins, square composition. Beautiful professional art direction, crisp detail, visually distinct and instantly recognizable even small, natural material shading. No words, letters, numbers, watermarks, signatures, company logos, or rectangular backdrop. Truly transparent background with clean alpha edges, not a drawn checkerboard. Deliver one finished standalone sticker."
+    },
+    {
+      "id": "sticker-025",
+      "name": "Little bee",
+      "theme": "Little creatures",
+      "prompt": "Use case: stylized-concept. Asset type: one premium reusable sticker for a professional Canva-like Elements library. Subject: a friendly fuzzy golden bee with tiny translucent wings. Style: adorable sophisticated 3D collectible clay character, soft rounded shapes, expressive tiny features, carefully modeled studio lighting, editorial stationery style. Composition: a single cohesive isolated design element, complete silhouette entirely visible, centered with generous 10% transparent margins, square composition. Beautiful professional art direction, crisp detail, visually distinct and instantly recognizable even small, natural material shading. No words, letters, numbers, watermarks, signatures, company logos, or rectangular backdrop. Truly transparent background with clean alpha edges, not a drawn checkerboard. Deliver one finished standalone sticker."
+    },
+    {
+      "id": "sticker-026",
+      "name": "Butterfly daydream",
+      "theme": "Little creatures",
+      "prompt": "Use case: stylized-concept. Asset type: one premium reusable sticker for a professional Canva-like Elements library. Subject: a beautiful lilac butterfly with symmetric patterned wings. Style: adorable sophisticated 3D collectible clay character, soft rounded shapes, expressive tiny features, carefully modeled studio lighting, editorial stationery style. Composition: a single cohesive isolated design element, complete silhouette entirely visible, centered with generous 10% transparent margins, square composition. Beautiful professional art direction, crisp detail, visually distinct and instantly recognizable even small, natural material shading. No words, letters, numbers, watermarks, signatures, company logos, or rectangular backdrop. Truly transparent background with clean alpha edges, not a drawn checkerboard. Deliver one finished standalone sticker."
+    },
+    {
+      "id": "sticker-027",
+      "name": "Snail mail",
+      "theme": "Little creatures",
+      "prompt": "Use case: stylized-concept. Asset type: one premium reusable sticker for a professional Canva-like Elements library. Subject: a charming small snail with a peach spiral shell. Style: adorable sophisticated 3D collectible clay character, soft rounded shapes, expressive tiny features, carefully modeled studio lighting, editorial stationery style. Composition: a single cohesive isolated design element, complete silhouette entirely visible, centered with generous 10% transparent margins, square composition. Beautiful professional art direction, crisp detail, visually distinct and instantly recognizable even small, natural material shading. No words, letters, numbers, watermarks, signatures, company logos, or rectangular backdrop. Truly transparent background with clean alpha edges, not a drawn checkerboard. Deliver one finished standalone sticker."
+    },
+    {
+      "id": "sticker-028",
+      "name": "Whale hello",
+      "theme": "Little creatures",
+      "prompt": "Use case: stylized-concept. Asset type: one premium reusable sticker for a professional Canva-like Elements library. Subject: a gentle miniature blue whale with a small water spout. Style: adorable sophisticated 3D collectible clay character, soft rounded shapes, expressive tiny features, carefully modeled studio lighting, editorial stationery style. Composition: a single cohesive isolated design element, complete silhouette entirely visible, centered with generous 10% transparent margins, square composition. Beautiful professional art direction, crisp detail, visually distinct and instantly recognizable even small, natural material shading. No words, letters, numbers, watermarks, signatures, company logos, or rectangular backdrop. Truly transparent background with clean alpha edges, not a drawn checkerboard. Deliver one finished standalone sticker."
+    },
+    {
+      "id": "sticker-029",
+      "name": "Tiny turtle",
+      "theme": "Little creatures",
+      "prompt": "Use case: stylized-concept. Asset type: one premium reusable sticker for a professional Canva-like Elements library. Subject: an adorable sea turtle with a sage patterned shell. Style: adorable sophisticated 3D collectible clay character, soft rounded shapes, expressive tiny features, carefully modeled studio lighting, editorial stationery style. Composition: a single cohesive isolated design element, complete silhouette entirely visible, centered with generous 10% transparent margins, square composition. Beautiful professional art direction, crisp detail, visually distinct and instantly recognizable even small, natural material shading. No words, letters, numbers, watermarks, signatures, company logos, or rectangular backdrop. Truly transparent background with clean alpha edges, not a drawn checkerboard. Deliver one finished standalone sticker."
+    },
+    {
+      "id": "sticker-030",
+      "name": "Panda pause",
+      "theme": "Little creatures",
+      "prompt": "Use case: stylized-concept. Asset type: one premium reusable sticker for a professional Canva-like Elements library. Subject: a sleepy baby panda hugging a short bamboo stalk. Style: adorable sophisticated 3D collectible clay character, soft rounded shapes, expressive tiny features, carefully modeled studio lighting, editorial stationery style. Composition: a single cohesive isolated design element, complete silhouette entirely visible, centered with generous 10% transparent margins, square composition. Beautiful professional art direction, crisp detail, visually distinct and instantly recognizable even small, natural material shading. No words, letters, numbers, watermarks, signatures, company logos, or rectangular backdrop. Truly transparent background with clean alpha edges, not a drawn checkerboard. Deliver one finished standalone sticker."
+    },
+    {
+      "id": "sticker-031",
+      "name": "Crescent dreams",
+      "theme": "Cosmic",
+      "prompt": "Use case: stylized-concept. Asset type: one premium reusable sticker for a professional Canva-like Elements library. Subject: one pearlescent crescent moon embracing one tiny star. Style: dreamy premium dimensional illustration with pearlescent surfaces, restrained lavender, midnight blue, butter yellow and peach accents. Composition: a single cohesive isolated design element, complete silhouette entirely visible, centered with generous 10% transparent margins, square composition. Beautiful professional art direction, crisp detail, visually distinct and instantly recognizable even small, natural material shading. No words, letters, numbers, watermarks, signatures, company logos, or rectangular backdrop. Truly transparent background with clean alpha edges, not a drawn checkerboard. Deliver one finished standalone sticker."
+    },
+    {
+      "id": "sticker-032",
+      "name": "Saturn glow",
+      "theme": "Cosmic",
+      "prompt": "Use case: stylized-concept. Asset type: one premium reusable sticker for a professional Canva-like Elements library. Subject: a sculptural lavender Saturn planet with peach orbital rings. Style: dreamy premium dimensional illustration with pearlescent surfaces, restrained lavender, midnight blue, butter yellow and peach accents. Composition: a single cohesive isolated design element, complete silhouette entirely visible, centered with generous 10% transparent margins, square composition. Beautiful professional art direction, crisp detail, visually distinct and instantly recognizable even small, natural material shading. No words, letters, numbers, watermarks, signatures, company logos, or rectangular backdrop. Truly transparent background with clean alpha edges, not a drawn checkerboard. Deliver one finished standalone sticker."
+    },
+    {
+      "id": "sticker-033",
+      "name": "Shooting wish",
+      "theme": "Cosmic",
+      "prompt": "Use case: stylized-concept. Asset type: one premium reusable sticker for a professional Canva-like Elements library. Subject: one golden shooting star with a flowing pastel comet tail. Style: dreamy premium dimensional illustration with pearlescent surfaces, restrained lavender, midnight blue, butter yellow and peach accents. Composition: a single cohesive isolated design element, complete silhouette entirely visible, centered with generous 10% transparent margins, square composition. Beautiful professional art direction, crisp detail, visually distinct and instantly recognizable even small, natural material shading. No words, letters, numbers, watermarks, signatures, company logos, or rectangular backdrop. Truly transparent background with clean alpha edges, not a drawn checkerboard. Deliver one finished standalone sticker."
+    },
+    {
+      "id": "sticker-034",
+      "name": "Cloud nine",
+      "theme": "Cosmic",
+      "prompt": "Use case: stylized-concept. Asset type: one premium reusable sticker for a professional Canva-like Elements library. Subject: one fluffy ivory cloud with tiny soft rainbow raindrops. Style: dreamy premium dimensional illustration with pearlescent surfaces, restrained lavender, midnight blue, butter yellow and peach accents. Composition: a single cohesive isolated design element, complete silhouette entirely visible, centered with generous 10% transparent margins, square composition. Beautiful professional art direction, crisp detail, visually distinct and instantly recognizable even small, natural material shading. No words, letters, numbers, watermarks, signatures, company logos, or rectangular backdrop. Truly transparent background with clean alpha edges, not a drawn checkerboard. Deliver one finished standalone sticker."
+    },
+    {
+      "id": "sticker-035",
+      "name": "Aurora portal",
+      "theme": "Cosmic",
+      "prompt": "Use case: stylized-concept. Asset type: one premium reusable sticker for a professional Canva-like Elements library. Subject: a sculptural oval portal containing flowing aurora light. Style: dreamy premium dimensional illustration with pearlescent surfaces, restrained lavender, midnight blue, butter yellow and peach accents. Composition: a single cohesive isolated design element, complete silhouette entirely visible, centered with generous 10% transparent margins, square composition. Beautiful professional art direction, crisp detail, visually distinct and instantly recognizable even small, natural material shading. No words, letters, numbers, watermarks, signatures, company logos, or rectangular backdrop. Truly transparent background with clean alpha edges, not a drawn checkerboard. Deliver one finished standalone sticker."
+    },
+    {
+      "id": "sticker-036",
+      "name": "Crystal comet",
+      "theme": "Cosmic",
+      "prompt": "Use case: stylized-concept. Asset type: one premium reusable sticker for a professional Canva-like Elements library. Subject: an iridescent faceted comet with a short elegant translucent tail. Style: dreamy premium dimensional illustration with pearlescent surfaces, restrained lavender, midnight blue, butter yellow and peach accents. Composition: a single cohesive isolated design element, complete silhouette entirely visible, centered with generous 10% transparent margins, square composition. Beautiful professional art direction, crisp detail, visually distinct and instantly recognizable even small, natural material shading. No words, letters, numbers, watermarks, signatures, company logos, or rectangular backdrop. Truly transparent background with clean alpha edges, not a drawn checkerboard. Deliver one finished standalone sticker."
+    },
+    {
+      "id": "sticker-037",
+      "name": "Magic meteor",
+      "theme": "Cosmic",
+      "prompt": "Use case: stylized-concept. Asset type: one premium reusable sticker for a professional Canva-like Elements library. Subject: a softly faceted blue meteor with pink flame trail. Style: dreamy premium dimensional illustration with pearlescent surfaces, restrained lavender, midnight blue, butter yellow and peach accents. Composition: a single cohesive isolated design element, complete silhouette entirely visible, centered with generous 10% transparent margins, square composition. Beautiful professional art direction, crisp detail, visually distinct and instantly recognizable even small, natural material shading. No words, letters, numbers, watermarks, signatures, company logos, or rectangular backdrop. Truly transparent background with clean alpha edges, not a drawn checkerboard. Deliver one finished standalone sticker."
+    },
+    {
+      "id": "sticker-038",
+      "name": "Starlight cluster",
+      "theme": "Cosmic",
+      "prompt": "Use case: stylized-concept. Asset type: one premium reusable sticker for a professional Canva-like Elements library. Subject: three dimensional four-point stars forming one compact balanced cluster. Style: dreamy premium dimensional illustration with pearlescent surfaces, restrained lavender, midnight blue, butter yellow and peach accents. Composition: a single cohesive isolated design element, complete silhouette entirely visible, centered with generous 10% transparent margins, square composition. Beautiful professional art direction, crisp detail, visually distinct and instantly recognizable even small, natural material shading. No words, letters, numbers, watermarks, signatures, company logos, or rectangular backdrop. Truly transparent background with clean alpha edges, not a drawn checkerboard. Deliver one finished standalone sticker."
+    },
+    {
+      "id": "sticker-039",
+      "name": "Eclipse halo",
+      "theme": "Cosmic",
+      "prompt": "Use case: stylized-concept. Asset type: one premium reusable sticker for a professional Canva-like Elements library. Subject: a midnight disk framed by a beautiful luminous golden eclipse halo. Style: dreamy premium dimensional illustration with pearlescent surfaces, restrained lavender, midnight blue, butter yellow and peach accents. Composition: a single cohesive isolated design element, complete silhouette entirely visible, centered with generous 10% transparent margins, square composition. Beautiful professional art direction, crisp detail, visually distinct and instantly recognizable even small, natural material shading. No words, letters, numbers, watermarks, signatures, company logos, or rectangular backdrop. Truly transparent background with clean alpha edges, not a drawn checkerboard. Deliver one finished standalone sticker."
+    },
+    {
+      "id": "sticker-040",
+      "name": "Dream rocket",
+      "theme": "Cosmic",
+      "prompt": "Use case: stylized-concept. Asset type: one premium reusable sticker for a professional Canva-like Elements library. Subject: a charming retro lilac toy rocket with peach fins and a tiny flame. Style: dreamy premium dimensional illustration with pearlescent surfaces, restrained lavender, midnight blue, butter yellow and peach accents. Composition: a single cohesive isolated design element, complete silhouette entirely visible, centered with generous 10% transparent margins, square composition. Beautiful professional art direction, crisp detail, visually distinct and instantly recognizable even small, natural material shading. No words, letters, numbers, watermarks, signatures, company logos, or rectangular backdrop. Truly transparent background with clean alpha edges, not a drawn checkerboard. Deliver one finished standalone sticker."
+    },
+    {
+      "id": "sticker-041",
+      "name": "Paintbrush flourish",
+      "theme": "Creative desk",
+      "prompt": "Use case: stylized-concept. Asset type: one premium reusable sticker for a professional Canva-like Elements library. Subject: one artist paintbrush making a compact coral paint swoosh. Style: tactile papercraft and polished miniature 3D editorial illustration, warm neutral stationery palette with lilac and coral accents. Composition: a single cohesive isolated design element, complete silhouette entirely visible, centered with generous 10% transparent margins, square composition. Beautiful professional art direction, crisp detail, visually distinct and instantly recognizable even small, natural material shading. No words, letters, numbers, watermarks, signatures, company logos, or rectangular backdrop. Truly transparent background with clean alpha edges, not a drawn checkerboard. Deliver one finished standalone sticker."
+    },
+    {
+      "id": "sticker-042",
+      "name": "Color pencil trio",
+      "theme": "Creative desk",
+      "prompt": "Use case: stylized-concept. Asset type: one premium reusable sticker for a professional Canva-like Elements library. Subject: three sharpened colorful pencils forming a fan. Style: tactile papercraft and polished miniature 3D editorial illustration, warm neutral stationery palette with lilac and coral accents. Composition: a single cohesive isolated design element, complete silhouette entirely visible, centered with generous 10% transparent margins, square composition. Beautiful professional art direction, crisp detail, visually distinct and instantly recognizable even small, natural material shading. No words, letters, numbers, watermarks, signatures, company logos, or rectangular backdrop. Truly transparent background with clean alpha edges, not a drawn checkerboard. Deliver one finished standalone sticker."
+    },
+    {
+      "id": "sticker-043",
+      "name": "Palette play",
+      "theme": "Creative desk",
+      "prompt": "Use case: stylized-concept. Asset type: one premium reusable sticker for a professional Canva-like Elements library. Subject: a small wooden artist palette with five rich paint dollops. Style: tactile papercraft and polished miniature 3D editorial illustration, warm neutral stationery palette with lilac and coral accents. Composition: a single cohesive isolated design element, complete silhouette entirely visible, centered with generous 10% transparent margins, square composition. Beautiful professional art direction, crisp detail, visually distinct and instantly recognizable even small, natural material shading. No words, letters, numbers, watermarks, signatures, company logos, or rectangular backdrop. Truly transparent background with clean alpha edges, not a drawn checkerboard. Deliver one finished standalone sticker."
+    },
+    {
+      "id": "sticker-044",
+      "name": "Scissor cut",
+      "theme": "Creative desk",
+      "prompt": "Use case: stylized-concept. Asset type: one premium reusable sticker for a professional Canva-like Elements library. Subject: a pair of elegant peach-handled craft scissors. Style: tactile papercraft and polished miniature 3D editorial illustration, warm neutral stationery palette with lilac and coral accents. Composition: a single cohesive isolated design element, complete silhouette entirely visible, centered with generous 10% transparent margins, square composition. Beautiful professional art direction, crisp detail, visually distinct and instantly recognizable even small, natural material shading. No words, letters, numbers, watermarks, signatures, company logos, or rectangular backdrop. Truly transparent background with clean alpha edges, not a drawn checkerboard. Deliver one finished standalone sticker."
+    },
+    {
+      "id": "sticker-045",
+      "name": "Sketchbook soul",
+      "theme": "Creative desk",
+      "prompt": "Use case: stylized-concept. Asset type: one premium reusable sticker for a professional Canva-like Elements library. Subject: a small open cream sketchbook with abstract colored doodles and no writing. Style: tactile papercraft and polished miniature 3D editorial illustration, warm neutral stationery palette with lilac and coral accents. Composition: a single cohesive isolated design element, complete silhouette entirely visible, centered with generous 10% transparent margins, square composition. Beautiful professional art direction, crisp detail, visually distinct and instantly recognizable even small, natural material shading. No words, letters, numbers, watermarks, signatures, company logos, or rectangular backdrop. Truly transparent background with clean alpha edges, not a drawn checkerboard. Deliver one finished standalone sticker."
+    },
+    {
+      "id": "sticker-046",
+      "name": "Camera click",
+      "theme": "Creative desk",
+      "prompt": "Use case: stylized-concept. Asset type: one premium reusable sticker for a professional Canva-like Elements library. Subject: a pastel retro instant camera without text or logos. Style: tactile papercraft and polished miniature 3D editorial illustration, warm neutral stationery palette with lilac and coral accents. Composition: a single cohesive isolated design element, complete silhouette entirely visible, centered with generous 10% transparent margins, square composition. Beautiful professional art direction, crisp detail, visually distinct and instantly recognizable even small, natural material shading. No words, letters, numbers, watermarks, signatures, company logos, or rectangular backdrop. Truly transparent background with clean alpha edges, not a drawn checkerboard. Deliver one finished standalone sticker."
+    },
+    {
+      "id": "sticker-047",
+      "name": "Vinyl mood",
+      "theme": "Creative desk",
+      "prompt": "Use case: stylized-concept. Asset type: one premium reusable sticker for a professional Canva-like Elements library. Subject: a glossy midnight vinyl record partially emerging from a lilac sleeve. Style: tactile papercraft and polished miniature 3D editorial illustration, warm neutral stationery palette with lilac and coral accents. Composition: a single cohesive isolated design element, complete silhouette entirely visible, centered with generous 10% transparent margins, square composition. Beautiful professional art direction, crisp detail, visually distinct and instantly recognizable even small, natural material shading. No words, letters, numbers, watermarks, signatures, company logos, or rectangular backdrop. Truly transparent background with clean alpha edges, not a drawn checkerboard. Deliver one finished standalone sticker."
+    },
+    {
+      "id": "sticker-048",
+      "name": "Tape loops",
+      "theme": "Creative desk",
+      "prompt": "Use case: stylized-concept. Asset type: one premium reusable sticker for a professional Canva-like Elements library. Subject: two rolls of pastel patterned washi tape arranged together. Style: tactile papercraft and polished miniature 3D editorial illustration, warm neutral stationery palette with lilac and coral accents. Composition: a single cohesive isolated design element, complete silhouette entirely visible, centered with generous 10% transparent margins, square composition. Beautiful professional art direction, crisp detail, visually distinct and instantly recognizable even small, natural material shading. No words, letters, numbers, watermarks, signatures, company logos, or rectangular backdrop. Truly transparent background with clean alpha edges, not a drawn checkerboard. Deliver one finished standalone sticker."
+    },
+    {
+      "id": "sticker-049",
+      "name": "Ink bottle",
+      "theme": "Creative desk",
+      "prompt": "Use case: stylized-concept. Asset type: one premium reusable sticker for a professional Canva-like Elements library. Subject: a miniature cobalt glass ink bottle with a golden dip pen. Style: tactile papercraft and polished miniature 3D editorial illustration, warm neutral stationery palette with lilac and coral accents. Composition: a single cohesive isolated design element, complete silhouette entirely visible, centered with generous 10% transparent margins, square composition. Beautiful professional art direction, crisp detail, visually distinct and instantly recognizable even small, natural material shading. No words, letters, numbers, watermarks, signatures, company logos, or rectangular backdrop. Truly transparent background with clean alpha edges, not a drawn checkerboard. Deliver one finished standalone sticker."
+    },
+    {
+      "id": "sticker-050",
+      "name": "Creative spark",
+      "theme": "Creative desk",
+      "prompt": "Use case: stylized-concept. Asset type: one premium reusable sticker for a professional Canva-like Elements library. Subject: a delightful warm glowing light bulb with a lilac base and a tiny flourish. Style: tactile papercraft and polished miniature 3D editorial illustration, warm neutral stationery palette with lilac and coral accents. Composition: a single cohesive isolated design element, complete silhouette entirely visible, centered with generous 10% transparent margins, square composition. Beautiful professional art direction, crisp detail, visually distinct and instantly recognizable even small, natural material shading. No words, letters, numbers, watermarks, signatures, company logos, or rectangular backdrop. Truly transparent background with clean alpha edges, not a drawn checkerboard. Deliver one finished standalone sticker."
+    },
+    {
+      "id": "sticker-051",
+      "name": "Mountain escape",
+      "theme": "Wanderlust",
+      "prompt": "Use case: stylized-concept. Asset type: one premium reusable sticker for a professional Canva-like Elements library. Subject: a compact alpine mountain peak with pine trees and a tiny sunrise. Style: premium stylized travel sticker with layered paper texture, dimensional detail and modern muted teal, coral, butter yellow and ivory colors. Composition: a single cohesive isolated design element, complete silhouette entirely visible, centered with generous 10% transparent margins, square composition. Beautiful professional art direction, crisp detail, visually distinct and instantly recognizable even small, natural material shading. No words, letters, numbers, watermarks, signatures, company logos, or rectangular backdrop. Truly transparent background with clean alpha edges, not a drawn checkerboard. Deliver one finished standalone sticker."
+    },
+    {
+      "id": "sticker-052",
+      "name": "Palm day",
+      "theme": "Wanderlust",
+      "prompt": "Use case: stylized-concept. Asset type: one premium reusable sticker for a professional Canva-like Elements library. Subject: a graceful tropical palm tree bending in a breeze. Style: premium stylized travel sticker with layered paper texture, dimensional detail and modern muted teal, coral, butter yellow and ivory colors. Composition: a single cohesive isolated design element, complete silhouette entirely visible, centered with generous 10% transparent margins, square composition. Beautiful professional art direction, crisp detail, visually distinct and instantly recognizable even small, natural material shading. No words, letters, numbers, watermarks, signatures, company logos, or rectangular backdrop. Truly transparent background with clean alpha edges, not a drawn checkerboard. Deliver one finished standalone sticker."
+    },
+    {
+      "id": "sticker-053",
+      "name": "Beach umbrella",
+      "theme": "Wanderlust",
+      "prompt": "Use case: stylized-concept. Asset type: one premium reusable sticker for a professional Canva-like Elements library. Subject: a striped coral beach umbrella seen at a charming angle. Style: premium stylized travel sticker with layered paper texture, dimensional detail and modern muted teal, coral, butter yellow and ivory colors. Composition: a single cohesive isolated design element, complete silhouette entirely visible, centered with generous 10% transparent margins, square composition. Beautiful professional art direction, crisp detail, visually distinct and instantly recognizable even small, natural material shading. No words, letters, numbers, watermarks, signatures, company logos, or rectangular backdrop. Truly transparent background with clean alpha edges, not a drawn checkerboard. Deliver one finished standalone sticker."
+    },
+    {
+      "id": "sticker-054",
+      "name": "Little sailboat",
+      "theme": "Wanderlust",
+      "prompt": "Use case: stylized-concept. Asset type: one premium reusable sticker for a professional Canva-like Elements library. Subject: a small white sailboat with a peach sail on one compact teal wave. Style: premium stylized travel sticker with layered paper texture, dimensional detail and modern muted teal, coral, butter yellow and ivory colors. Composition: a single cohesive isolated design element, complete silhouette entirely visible, centered with generous 10% transparent margins, square composition. Beautiful professional art direction, crisp detail, visually distinct and instantly recognizable even small, natural material shading. No words, letters, numbers, watermarks, signatures, company logos, or rectangular backdrop. Truly transparent background with clean alpha edges, not a drawn checkerboard. Deliver one finished standalone sticker."
+    },
+    {
+      "id": "sticker-055",
+      "name": "Hot air dream",
+      "theme": "Wanderlust",
+      "prompt": "Use case: stylized-concept. Asset type: one premium reusable sticker for a professional Canva-like Elements library. Subject: a beautiful pastel striped hot air balloon with a tiny wicker basket. Style: premium stylized travel sticker with layered paper texture, dimensional detail and modern muted teal, coral, butter yellow and ivory colors. Composition: a single cohesive isolated design element, complete silhouette entirely visible, centered with generous 10% transparent margins, square composition. Beautiful professional art direction, crisp detail, visually distinct and instantly recognizable even small, natural material shading. No words, letters, numbers, watermarks, signatures, company logos, or rectangular backdrop. Truly transparent background with clean alpha edges, not a drawn checkerboard. Deliver one finished standalone sticker."
+    },
+    {
+      "id": "sticker-056",
+      "name": "Compass rose",
+      "theme": "Wanderlust",
+      "prompt": "Use case: stylized-concept. Asset type: one premium reusable sticker for a professional Canva-like Elements library. Subject: an elegant brass compass with clear directional geometry and no letters. Style: premium stylized travel sticker with layered paper texture, dimensional detail and modern muted teal, coral, butter yellow and ivory colors. Composition: a single cohesive isolated design element, complete silhouette entirely visible, centered with generous 10% transparent margins, square composition. Beautiful professional art direction, crisp detail, visually distinct and instantly recognizable even small, natural material shading. No words, letters, numbers, watermarks, signatures, company logos, or rectangular backdrop. Truly transparent background with clean alpha edges, not a drawn checkerboard. Deliver one finished standalone sticker."
+    },
+    {
+      "id": "sticker-057",
+      "name": "Road trip",
+      "theme": "Wanderlust",
+      "prompt": "Use case: stylized-concept. Asset type: one premium reusable sticker for a professional Canva-like Elements library. Subject: a charming retro mint camper van in three-quarter view, no markings. Style: premium stylized travel sticker with layered paper texture, dimensional detail and modern muted teal, coral, butter yellow and ivory colors. Composition: a single cohesive isolated design element, complete silhouette entirely visible, centered with generous 10% transparent margins, square composition. Beautiful professional art direction, crisp detail, visually distinct and instantly recognizable even small, natural material shading. No words, letters, numbers, watermarks, signatures, company logos, or rectangular backdrop. Truly transparent background with clean alpha edges, not a drawn checkerboard. Deliver one finished standalone sticker."
+    },
+    {
+      "id": "sticker-058",
+      "name": "Passport adventure",
+      "theme": "Wanderlust",
+      "prompt": "Use case: stylized-concept. Asset type: one premium reusable sticker for a professional Canva-like Elements library. Subject: a cream passport-like travel notebook with a simple globe emblem and no words. Style: premium stylized travel sticker with layered paper texture, dimensional detail and modern muted teal, coral, butter yellow and ivory colors. Composition: a single cohesive isolated design element, complete silhouette entirely visible, centered with generous 10% transparent margins, square composition. Beautiful professional art direction, crisp detail, visually distinct and instantly recognizable even small, natural material shading. No words, letters, numbers, watermarks, signatures, company logos, or rectangular backdrop. Truly transparent background with clean alpha edges, not a drawn checkerboard. Deliver one finished standalone sticker."
+    },
+    {
+      "id": "sticker-059",
+      "name": "Suitcase stories",
+      "theme": "Wanderlust",
+      "prompt": "Use case: stylized-concept. Asset type: one premium reusable sticker for a professional Canva-like Elements library. Subject: a tiny vintage terracotta suitcase with plain unlabeled travel patches. Style: premium stylized travel sticker with layered paper texture, dimensional detail and modern muted teal, coral, butter yellow and ivory colors. Composition: a single cohesive isolated design element, complete silhouette entirely visible, centered with generous 10% transparent margins, square composition. Beautiful professional art direction, crisp detail, visually distinct and instantly recognizable even small, natural material shading. No words, letters, numbers, watermarks, signatures, company logos, or rectangular backdrop. Truly transparent background with clean alpha edges, not a drawn checkerboard. Deliver one finished standalone sticker."
+    },
+    {
+      "id": "sticker-060",
+      "name": "City bicycle",
+      "theme": "Wanderlust",
+      "prompt": "Use case: stylized-concept. Asset type: one premium reusable sticker for a professional Canva-like Elements library. Subject: a sage green city bicycle with a small flower-filled front basket. Style: premium stylized travel sticker with layered paper texture, dimensional detail and modern muted teal, coral, butter yellow and ivory colors. Composition: a single cohesive isolated design element, complete silhouette entirely visible, centered with generous 10% transparent margins, square composition. Beautiful professional art direction, crisp detail, visually distinct and instantly recognizable even small, natural material shading. No words, letters, numbers, watermarks, signatures, company logos, or rectangular backdrop. Truly transparent background with clean alpha edges, not a drawn checkerboard. Deliver one finished standalone sticker."
+    },
+    {
+      "id": "sticker-061",
+      "name": "Chrome heart",
+      "theme": "Sculptural",
+      "prompt": "Use case: stylized-concept. Asset type: one premium reusable sticker for a professional Canva-like Elements library. Subject: one inflated mirror-chrome heart with lilac and peach reflections. Style: art-directed contemporary 3D design sculpture with sophisticated pearlescent, glass, chrome and soft clay materials, bold readable silhouette. Composition: a single cohesive isolated design element, complete silhouette entirely visible, centered with generous 10% transparent margins, square composition. Beautiful professional art direction, crisp detail, visually distinct and instantly recognizable even small, natural material shading. No words, letters, numbers, watermarks, signatures, company logos, or rectangular backdrop. Truly transparent background with clean alpha edges, not a drawn checkerboard. Deliver one finished standalone sticker."
+    },
+    {
+      "id": "sticker-062",
+      "name": "Glass twist",
+      "theme": "Sculptural",
+      "prompt": "Use case: stylized-concept. Asset type: one premium reusable sticker for a professional Canva-like Elements library. Subject: a translucent teal glass twisted ribbon sculpture. Style: art-directed contemporary 3D design sculpture with sophisticated pearlescent, glass, chrome and soft clay materials, bold readable silhouette. Composition: a single cohesive isolated design element, complete silhouette entirely visible, centered with generous 10% transparent margins, square composition. Beautiful professional art direction, crisp detail, visually distinct and instantly recognizable even small, natural material shading. No words, letters, numbers, watermarks, signatures, company logos, or rectangular backdrop. Truly transparent background with clean alpha edges, not a drawn checkerboard. Deliver one finished standalone sticker."
+    },
+    {
+      "id": "sticker-063",
+      "name": "Peach torus",
+      "theme": "Sculptural",
+      "prompt": "Use case: stylized-concept. Asset type: one premium reusable sticker for a professional Canva-like Elements library. Subject: one soft matte peach inflated torus bent into an organic shape. Style: art-directed contemporary 3D design sculpture with sophisticated pearlescent, glass, chrome and soft clay materials, bold readable silhouette. Composition: a single cohesive isolated design element, complete silhouette entirely visible, centered with generous 10% transparent margins, square composition. Beautiful professional art direction, crisp detail, visually distinct and instantly recognizable even small, natural material shading. No words, letters, numbers, watermarks, signatures, company logos, or rectangular backdrop. Truly transparent background with clean alpha edges, not a drawn checkerboard. Deliver one finished standalone sticker."
+    },
+    {
+      "id": "sticker-064",
+      "name": "Pearl spiral",
+      "theme": "Sculptural",
+      "prompt": "Use case: stylized-concept. Asset type: one premium reusable sticker for a professional Canva-like Elements library. Subject: a creamy pearlescent spiral shell-like abstract sculpture. Style: art-directed contemporary 3D design sculpture with sophisticated pearlescent, glass, chrome and soft clay materials, bold readable silhouette. Composition: a single cohesive isolated design element, complete silhouette entirely visible, centered with generous 10% transparent margins, square composition. Beautiful professional art direction, crisp detail, visually distinct and instantly recognizable even small, natural material shading. No words, letters, numbers, watermarks, signatures, company logos, or rectangular backdrop. Truly transparent background with clean alpha edges, not a drawn checkerboard. Deliver one finished standalone sticker."
+    },
+    {
+      "id": "sticker-065",
+      "name": "Liquid blob",
+      "theme": "Sculptural",
+      "prompt": "Use case: stylized-concept. Asset type: one premium reusable sticker for a professional Canva-like Elements library. Subject: one playful glossy lilac organic fluid blob with three rounded lobes. Style: art-directed contemporary 3D design sculpture with sophisticated pearlescent, glass, chrome and soft clay materials, bold readable silhouette. Composition: a single cohesive isolated design element, complete silhouette entirely visible, centered with generous 10% transparent margins, square composition. Beautiful professional art direction, crisp detail, visually distinct and instantly recognizable even small, natural material shading. No words, letters, numbers, watermarks, signatures, company logos, or rectangular backdrop. Truly transparent background with clean alpha edges, not a drawn checkerboard. Deliver one finished standalone sticker."
+    },
+    {
+      "id": "sticker-066",
+      "name": "Golden chain",
+      "theme": "Sculptural",
+      "prompt": "Use case: stylized-concept. Asset type: one premium reusable sticker for a professional Canva-like Elements library. Subject: three interlocking brushed gold oval chain links in a compact diagonal. Style: art-directed contemporary 3D design sculpture with sophisticated pearlescent, glass, chrome and soft clay materials, bold readable silhouette. Composition: a single cohesive isolated design element, complete silhouette entirely visible, centered with generous 10% transparent margins, square composition. Beautiful professional art direction, crisp detail, visually distinct and instantly recognizable even small, natural material shading. No words, letters, numbers, watermarks, signatures, company logos, or rectangular backdrop. Truly transparent background with clean alpha edges, not a drawn checkerboard. Deliver one finished standalone sticker."
+    },
+    {
+      "id": "sticker-067",
+      "name": "Velvet squiggle",
+      "theme": "Sculptural",
+      "prompt": "Use case: stylized-concept. Asset type: one premium reusable sticker for a professional Canva-like Elements library. Subject: one plush cobalt velvet three-dimensional wavy squiggle. Style: art-directed contemporary 3D design sculpture with sophisticated pearlescent, glass, chrome and soft clay materials, bold readable silhouette. Composition: a single cohesive isolated design element, complete silhouette entirely visible, centered with generous 10% transparent margins, square composition. Beautiful professional art direction, crisp detail, visually distinct and instantly recognizable even small, natural material shading. No words, letters, numbers, watermarks, signatures, company logos, or rectangular backdrop. Truly transparent background with clean alpha edges, not a drawn checkerboard. Deliver one finished standalone sticker."
+    },
+    {
+      "id": "sticker-068",
+      "name": "Prism fold",
+      "theme": "Sculptural",
+      "prompt": "Use case: stylized-concept. Asset type: one premium reusable sticker for a professional Canva-like Elements library. Subject: an elegant folded iridescent translucent prism ribbon. Style: art-directed contemporary 3D design sculpture with sophisticated pearlescent, glass, chrome and soft clay materials, bold readable silhouette. Composition: a single cohesive isolated design element, complete silhouette entirely visible, centered with generous 10% transparent margins, square composition. Beautiful professional art direction, crisp detail, visually distinct and instantly recognizable even small, natural material shading. No words, letters, numbers, watermarks, signatures, company logos, or rectangular backdrop. Truly transparent background with clean alpha edges, not a drawn checkerboard. Deliver one finished standalone sticker."
+    },
+    {
+      "id": "sticker-069",
+      "name": "Floating pebbles",
+      "theme": "Sculptural",
+      "prompt": "Use case: stylized-concept. Asset type: one premium reusable sticker for a professional Canva-like Elements library. Subject: three smooth sculptural pastel pebbles in a balanced compact vertical stack. Style: art-directed contemporary 3D design sculpture with sophisticated pearlescent, glass, chrome and soft clay materials, bold readable silhouette. Composition: a single cohesive isolated design element, complete silhouette entirely visible, centered with generous 10% transparent margins, square composition. Beautiful professional art direction, crisp detail, visually distinct and instantly recognizable even small, natural material shading. No words, letters, numbers, watermarks, signatures, company logos, or rectangular backdrop. Truly transparent background with clean alpha edges, not a drawn checkerboard. Deliver one finished standalone sticker."
+    },
+    {
+      "id": "sticker-070",
+      "name": "Inflated asterisk",
+      "theme": "Sculptural",
+      "prompt": "Use case: stylized-concept. Asset type: one premium reusable sticker for a professional Canva-like Elements library. Subject: one inflated soft coral six-armed asterisk with beautiful rounded edges. Style: art-directed contemporary 3D design sculpture with sophisticated pearlescent, glass, chrome and soft clay materials, bold readable silhouette. Composition: a single cohesive isolated design element, complete silhouette entirely visible, centered with generous 10% transparent margins, square composition. Beautiful professional art direction, crisp detail, visually distinct and instantly recognizable even small, natural material shading. No words, letters, numbers, watermarks, signatures, company logos, or rectangular backdrop. Truly transparent background with clean alpha edges, not a drawn checkerboard. Deliver one finished standalone sticker."
+    },
+    {
+      "id": "sticker-071",
+      "name": "Cozy mug",
+      "theme": "Cozy living",
+      "prompt": "Use case: stylized-concept. Asset type: one premium reusable sticker for a professional Canva-like Elements library. Subject: a handmade cream ceramic mug with a small rising swirl of steam. Style: warm premium miniature illustration mixing soft matte clay and tactile textile details, ivory, terracotta, sage, mustard and dusty rose colors. Composition: a single cohesive isolated design element, complete silhouette entirely visible, centered with generous 10% transparent margins, square composition. Beautiful professional art direction, crisp detail, visually distinct and instantly recognizable even small, natural material shading. No words, letters, numbers, watermarks, signatures, company logos, or rectangular backdrop. Truly transparent background with clean alpha edges, not a drawn checkerboard. Deliver one finished standalone sticker."
+    },
+    {
+      "id": "sticker-072",
+      "name": "Candle glow",
+      "theme": "Cozy living",
+      "prompt": "Use case: stylized-concept. Asset type: one premium reusable sticker for a professional Canva-like Elements library. Subject: a ribbed amber glass candle with a tiny warm flame. Style: warm premium miniature illustration mixing soft matte clay and tactile textile details, ivory, terracotta, sage, mustard and dusty rose colors. Composition: a single cohesive isolated design element, complete silhouette entirely visible, centered with generous 10% transparent margins, square composition. Beautiful professional art direction, crisp detail, visually distinct and instantly recognizable even small, natural material shading. No words, letters, numbers, watermarks, signatures, company logos, or rectangular backdrop. Truly transparent background with clean alpha edges, not a drawn checkerboard. Deliver one finished standalone sticker."
+    },
+    {
+      "id": "sticker-073",
+      "name": "Reading nook",
+      "theme": "Cozy living",
+      "prompt": "Use case: stylized-concept. Asset type: one premium reusable sticker for a professional Canva-like Elements library. Subject: a compact stack of three beautiful books with a tiny leaf bookmark and no words. Style: warm premium miniature illustration mixing soft matte clay and tactile textile details, ivory, terracotta, sage, mustard and dusty rose colors. Composition: a single cohesive isolated design element, complete silhouette entirely visible, centered with generous 10% transparent margins, square composition. Beautiful professional art direction, crisp detail, visually distinct and instantly recognizable even small, natural material shading. No words, letters, numbers, watermarks, signatures, company logos, or rectangular backdrop. Truly transparent background with clean alpha edges, not a drawn checkerboard. Deliver one finished standalone sticker."
+    },
+    {
+      "id": "sticker-074",
+      "name": "Knit warmth",
+      "theme": "Cozy living",
+      "prompt": "Use case: stylized-concept. Asset type: one premium reusable sticker for a professional Canva-like Elements library. Subject: a loosely folded chunky dusty-rose knitted scarf. Style: warm premium miniature illustration mixing soft matte clay and tactile textile details, ivory, terracotta, sage, mustard and dusty rose colors. Composition: a single cohesive isolated design element, complete silhouette entirely visible, centered with generous 10% transparent margins, square composition. Beautiful professional art direction, crisp detail, visually distinct and instantly recognizable even small, natural material shading. No words, letters, numbers, watermarks, signatures, company logos, or rectangular backdrop. Truly transparent background with clean alpha edges, not a drawn checkerboard. Deliver one finished standalone sticker."
+    },
+    {
+      "id": "sticker-075",
+      "name": "Wool basket",
+      "theme": "Cozy living",
+      "prompt": "Use case: stylized-concept. Asset type: one premium reusable sticker for a professional Canva-like Elements library. Subject: a small woven basket holding two balls of pastel yarn. Style: warm premium miniature illustration mixing soft matte clay and tactile textile details, ivory, terracotta, sage, mustard and dusty rose colors. Composition: a single cohesive isolated design element, complete silhouette entirely visible, centered with generous 10% transparent margins, square composition. Beautiful professional art direction, crisp detail, visually distinct and instantly recognizable even small, natural material shading. No words, letters, numbers, watermarks, signatures, company logos, or rectangular backdrop. Truly transparent background with clean alpha edges, not a drawn checkerboard. Deliver one finished standalone sticker."
+    },
+    {
+      "id": "sticker-076",
+      "name": "Rainy window",
+      "theme": "Cozy living",
+      "prompt": "Use case: stylized-concept. Asset type: one premium reusable sticker for a professional Canva-like Elements library. Subject: a compact arched window showing delicate raindrops and a quiet cloudy sky. Style: warm premium miniature illustration mixing soft matte clay and tactile textile details, ivory, terracotta, sage, mustard and dusty rose colors. Composition: a single cohesive isolated design element, complete silhouette entirely visible, centered with generous 10% transparent margins, square composition. Beautiful professional art direction, crisp detail, visually distinct and instantly recognizable even small, natural material shading. No words, letters, numbers, watermarks, signatures, company logos, or rectangular backdrop. Truly transparent background with clean alpha edges, not a drawn checkerboard. Deliver one finished standalone sticker."
+    },
+    {
+      "id": "sticker-077",
+      "name": "Teapot time",
+      "theme": "Cozy living",
+      "prompt": "Use case: stylized-concept. Asset type: one premium reusable sticker for a professional Canva-like Elements library. Subject: a rounded sage ceramic teapot with a warm wooden handle. Style: warm premium miniature illustration mixing soft matte clay and tactile textile details, ivory, terracotta, sage, mustard and dusty rose colors. Composition: a single cohesive isolated design element, complete silhouette entirely visible, centered with generous 10% transparent margins, square composition. Beautiful professional art direction, crisp detail, visually distinct and instantly recognizable even small, natural material shading. No words, letters, numbers, watermarks, signatures, company logos, or rectangular backdrop. Truly transparent background with clean alpha edges, not a drawn checkerboard. Deliver one finished standalone sticker."
+    },
+    {
+      "id": "sticker-078",
+      "name": "Record player",
+      "theme": "Cozy living",
+      "prompt": "Use case: stylized-concept. Asset type: one premium reusable sticker for a professional Canva-like Elements library. Subject: a miniature terracotta retro record player with a spinning black record. Style: warm premium miniature illustration mixing soft matte clay and tactile textile details, ivory, terracotta, sage, mustard and dusty rose colors. Composition: a single cohesive isolated design element, complete silhouette entirely visible, centered with generous 10% transparent margins, square composition. Beautiful professional art direction, crisp detail, visually distinct and instantly recognizable even small, natural material shading. No words, letters, numbers, watermarks, signatures, company logos, or rectangular backdrop. Truly transparent background with clean alpha edges, not a drawn checkerboard. Deliver one finished standalone sticker."
+    },
+    {
+      "id": "sticker-079",
+      "name": "Soft slippers",
+      "theme": "Cozy living",
+      "prompt": "Use case: stylized-concept. Asset type: one premium reusable sticker for a professional Canva-like Elements library. Subject: a pair of cozy cream shearling slippers. Style: warm premium miniature illustration mixing soft matte clay and tactile textile details, ivory, terracotta, sage, mustard and dusty rose colors. Composition: a single cohesive isolated design element, complete silhouette entirely visible, centered with generous 10% transparent margins, square composition. Beautiful professional art direction, crisp detail, visually distinct and instantly recognizable even small, natural material shading. No words, letters, numbers, watermarks, signatures, company logos, or rectangular backdrop. Truly transparent background with clean alpha edges, not a drawn checkerboard. Deliver one finished standalone sticker."
+    },
+    {
+      "id": "sticker-080",
+      "name": "Sunday lamp",
+      "theme": "Cozy living",
+      "prompt": "Use case: stylized-concept. Asset type: one premium reusable sticker for a professional Canva-like Elements library. Subject: a small sculptural mushroom-shaped table lamp in warm ochre. Style: warm premium miniature illustration mixing soft matte clay and tactile textile details, ivory, terracotta, sage, mustard and dusty rose colors. Composition: a single cohesive isolated design element, complete silhouette entirely visible, centered with generous 10% transparent margins, square composition. Beautiful professional art direction, crisp detail, visually distinct and instantly recognizable even small, natural material shading. No words, letters, numbers, watermarks, signatures, company logos, or rectangular backdrop. Truly transparent background with clean alpha edges, not a drawn checkerboard. Deliver one finished standalone sticker."
+    },
+    {
+      "id": "sticker-081",
+      "name": "Party popper",
+      "theme": "Celebrate",
+      "prompt": "Use case: stylized-concept. Asset type: one premium reusable sticker for a professional Canva-like Elements library. Subject: one festive paper confetti popper bursting a compact colorful confetti spray. Style: joyful premium party stationery illustration with tactile paper, satin ribbons and glossy balloon surfaces, curated coral, lilac, butter yellow and mint. Composition: a single cohesive isolated design element, complete silhouette entirely visible, centered with generous 10% transparent margins, square composition. Beautiful professional art direction, crisp detail, visually distinct and instantly recognizable even small, natural material shading. No words, letters, numbers, watermarks, signatures, company logos, or rectangular backdrop. Truly transparent background with clean alpha edges, not a drawn checkerboard. Deliver one finished standalone sticker."
+    },
+    {
+      "id": "sticker-082",
+      "name": "Birthday candle",
+      "theme": "Celebrate",
+      "prompt": "Use case: stylized-concept. Asset type: one premium reusable sticker for a professional Canva-like Elements library. Subject: one beautifully striped lilac birthday candle with a warm flame. Style: joyful premium party stationery illustration with tactile paper, satin ribbons and glossy balloon surfaces, curated coral, lilac, butter yellow and mint. Composition: a single cohesive isolated design element, complete silhouette entirely visible, centered with generous 10% transparent margins, square composition. Beautiful professional art direction, crisp detail, visually distinct and instantly recognizable even small, natural material shading. No words, letters, numbers, watermarks, signatures, company logos, or rectangular backdrop. Truly transparent background with clean alpha edges, not a drawn checkerboard. Deliver one finished standalone sticker."
+    },
+    {
+      "id": "sticker-083",
+      "name": "Gift of joy",
+      "theme": "Celebrate",
+      "prompt": "Use case: stylized-concept. Asset type: one premium reusable sticker for a professional Canva-like Elements library. Subject: a small coral gift box tied with an oversized cream satin bow. Style: joyful premium party stationery illustration with tactile paper, satin ribbons and glossy balloon surfaces, curated coral, lilac, butter yellow and mint. Composition: a single cohesive isolated design element, complete silhouette entirely visible, centered with generous 10% transparent margins, square composition. Beautiful professional art direction, crisp detail, visually distinct and instantly recognizable even small, natural material shading. No words, letters, numbers, watermarks, signatures, company logos, or rectangular backdrop. Truly transparent background with clean alpha edges, not a drawn checkerboard. Deliver one finished standalone sticker."
+    },
+    {
+      "id": "sticker-084",
+      "name": "Balloon bouquet",
+      "theme": "Celebrate",
+      "prompt": "Use case: stylized-concept. Asset type: one premium reusable sticker for a professional Canva-like Elements library. Subject: three pearlescent pastel balloons tied into one compact bouquet. Style: joyful premium party stationery illustration with tactile paper, satin ribbons and glossy balloon surfaces, curated coral, lilac, butter yellow and mint. Composition: a single cohesive isolated design element, complete silhouette entirely visible, centered with generous 10% transparent margins, square composition. Beautiful professional art direction, crisp detail, visually distinct and instantly recognizable even small, natural material shading. No words, letters, numbers, watermarks, signatures, company logos, or rectangular backdrop. Truly transparent background with clean alpha edges, not a drawn checkerboard. Deliver one finished standalone sticker."
+    },
+    {
+      "id": "sticker-085",
+      "name": "Disco sparkle",
+      "theme": "Celebrate",
+      "prompt": "Use case: stylized-concept. Asset type: one premium reusable sticker for a professional Canva-like Elements library. Subject: a tiny mirrored disco ball with subtle reflected sparkle highlights. Style: joyful premium party stationery illustration with tactile paper, satin ribbons and glossy balloon surfaces, curated coral, lilac, butter yellow and mint. Composition: a single cohesive isolated design element, complete silhouette entirely visible, centered with generous 10% transparent margins, square composition. Beautiful professional art direction, crisp detail, visually distinct and instantly recognizable even small, natural material shading. No words, letters, numbers, watermarks, signatures, company logos, or rectangular backdrop. Truly transparent background with clean alpha edges, not a drawn checkerboard. Deliver one finished standalone sticker."
+    },
+    {
+      "id": "sticker-086",
+      "name": "Celebration cake",
+      "theme": "Celebrate",
+      "prompt": "Use case: stylized-concept. Asset type: one premium reusable sticker for a professional Canva-like Elements library. Subject: a miniature two-layer vanilla celebration cake with strawberries and one candle. Style: joyful premium party stationery illustration with tactile paper, satin ribbons and glossy balloon surfaces, curated coral, lilac, butter yellow and mint. Composition: a single cohesive isolated design element, complete silhouette entirely visible, centered with generous 10% transparent margins, square composition. Beautiful professional art direction, crisp detail, visually distinct and instantly recognizable even small, natural material shading. No words, letters, numbers, watermarks, signatures, company logos, or rectangular backdrop. Truly transparent background with clean alpha edges, not a drawn checkerboard. Deliver one finished standalone sticker."
+    },
+    {
+      "id": "sticker-087",
+      "name": "Cheers glasses",
+      "theme": "Celebrate",
+      "prompt": "Use case: stylized-concept. Asset type: one premium reusable sticker for a professional Canva-like Elements library. Subject: two elegant sparkling lemonade coupe glasses gently clinking, no alcohol branding. Style: joyful premium party stationery illustration with tactile paper, satin ribbons and glossy balloon surfaces, curated coral, lilac, butter yellow and mint. Composition: a single cohesive isolated design element, complete silhouette entirely visible, centered with generous 10% transparent margins, square composition. Beautiful professional art direction, crisp detail, visually distinct and instantly recognizable even small, natural material shading. No words, letters, numbers, watermarks, signatures, company logos, or rectangular backdrop. Truly transparent background with clean alpha edges, not a drawn checkerboard. Deliver one finished standalone sticker."
+    },
+    {
+      "id": "sticker-088",
+      "name": "Party crown",
+      "theme": "Celebrate",
+      "prompt": "Use case: stylized-concept. Asset type: one premium reusable sticker for a professional Canva-like Elements library. Subject: a playful golden paper crown with lilac gemstone accents. Style: joyful premium party stationery illustration with tactile paper, satin ribbons and glossy balloon surfaces, curated coral, lilac, butter yellow and mint. Composition: a single cohesive isolated design element, complete silhouette entirely visible, centered with generous 10% transparent margins, square composition. Beautiful professional art direction, crisp detail, visually distinct and instantly recognizable even small, natural material shading. No words, letters, numbers, watermarks, signatures, company logos, or rectangular backdrop. Truly transparent background with clean alpha edges, not a drawn checkerboard. Deliver one finished standalone sticker."
+    },
+    {
+      "id": "sticker-089",
+      "name": "Medal moment",
+      "theme": "Celebrate",
+      "prompt": "Use case: stylized-concept. Asset type: one premium reusable sticker for a professional Canva-like Elements library. Subject: a gold celebration medal with a coral ribbon and simple star emblem, no text. Style: joyful premium party stationery illustration with tactile paper, satin ribbons and glossy balloon surfaces, curated coral, lilac, butter yellow and mint. Composition: a single cohesive isolated design element, complete silhouette entirely visible, centered with generous 10% transparent margins, square composition. Beautiful professional art direction, crisp detail, visually distinct and instantly recognizable even small, natural material shading. No words, letters, numbers, watermarks, signatures, company logos, or rectangular backdrop. Truly transparent background with clean alpha edges, not a drawn checkerboard. Deliver one finished standalone sticker."
+    },
+    {
+      "id": "sticker-090",
+      "name": "Ribbon rosette",
+      "theme": "Celebrate",
+      "prompt": "Use case: stylized-concept. Asset type: one premium reusable sticker for a professional Canva-like Elements library. Subject: a dimensional lilac award rosette with a golden center and two ribbon tails, no text. Style: joyful premium party stationery illustration with tactile paper, satin ribbons and glossy balloon surfaces, curated coral, lilac, butter yellow and mint. Composition: a single cohesive isolated design element, complete silhouette entirely visible, centered with generous 10% transparent margins, square composition. Beautiful professional art direction, crisp detail, visually distinct and instantly recognizable even small, natural material shading. No words, letters, numbers, watermarks, signatures, company logos, or rectangular backdrop. Truly transparent background with clean alpha edges, not a drawn checkerboard. Deliver one finished standalone sticker."
+    },
+    {
+      "id": "sticker-091",
+      "name": "Headphone escape",
+      "theme": "Modern life",
+      "prompt": "Use case: stylized-concept. Asset type: one premium reusable sticker for a professional Canva-like Elements library. Subject: a pair of soft lilac over-ear headphones. Style: charming premium 3D icon-like sticker with refined tactile materials, rounded forms and lilac, sky blue, cream and peach colors, no brand marks. Composition: a single cohesive isolated design element, complete silhouette entirely visible, centered with generous 10% transparent margins, square composition. Beautiful professional art direction, crisp detail, visually distinct and instantly recognizable even small, natural material shading. No words, letters, numbers, watermarks, signatures, company logos, or rectangular backdrop. Truly transparent background with clean alpha edges, not a drawn checkerboard. Deliver one finished standalone sticker."
+    },
+    {
+      "id": "sticker-092",
+      "name": "Game time",
+      "theme": "Modern life",
+      "prompt": "Use case: stylized-concept. Asset type: one premium reusable sticker for a professional Canva-like Elements library. Subject: a playful cream game controller with pastel buttons and no branding. Style: charming premium 3D icon-like sticker with refined tactile materials, rounded forms and lilac, sky blue, cream and peach colors, no brand marks. Composition: a single cohesive isolated design element, complete silhouette entirely visible, centered with generous 10% transparent margins, square composition. Beautiful professional art direction, crisp detail, visually distinct and instantly recognizable even small, natural material shading. No words, letters, numbers, watermarks, signatures, company logos, or rectangular backdrop. Truly transparent background with clean alpha edges, not a drawn checkerboard. Deliver one finished standalone sticker."
+    },
+    {
+      "id": "sticker-093",
+      "name": "Laptop ideas",
+      "theme": "Modern life",
+      "prompt": "Use case: stylized-concept. Asset type: one premium reusable sticker for a professional Canva-like Elements library. Subject: a tiny open lavender laptop with abstract colorful shapes on its screen and no writing. Style: charming premium 3D icon-like sticker with refined tactile materials, rounded forms and lilac, sky blue, cream and peach colors, no brand marks. Composition: a single cohesive isolated design element, complete silhouette entirely visible, centered with generous 10% transparent margins, square composition. Beautiful professional art direction, crisp detail, visually distinct and instantly recognizable even small, natural material shading. No words, letters, numbers, watermarks, signatures, company logos, or rectangular backdrop. Truly transparent background with clean alpha edges, not a drawn checkerboard. Deliver one finished standalone sticker."
+    },
+    {
+      "id": "sticker-094",
+      "name": "Message bubble",
+      "theme": "Modern life",
+      "prompt": "Use case: stylized-concept. Asset type: one premium reusable sticker for a professional Canva-like Elements library. Subject: one glossy peach chat bubble with three small ivory dots. Style: charming premium 3D icon-like sticker with refined tactile materials, rounded forms and lilac, sky blue, cream and peach colors, no brand marks. Composition: a single cohesive isolated design element, complete silhouette entirely visible, centered with generous 10% transparent margins, square composition. Beautiful professional art direction, crisp detail, visually distinct and instantly recognizable even small, natural material shading. No words, letters, numbers, watermarks, signatures, company logos, or rectangular backdrop. Truly transparent background with clean alpha edges, not a drawn checkerboard. Deliver one finished standalone sticker."
+    },
+    {
+      "id": "sticker-095",
+      "name": "Envelope love",
+      "theme": "Modern life",
+      "prompt": "Use case: stylized-concept. Asset type: one premium reusable sticker for a professional Canva-like Elements library. Subject: a cream open envelope holding a small coral heart. Style: charming premium 3D icon-like sticker with refined tactile materials, rounded forms and lilac, sky blue, cream and peach colors, no brand marks. Composition: a single cohesive isolated design element, complete silhouette entirely visible, centered with generous 10% transparent margins, square composition. Beautiful professional art direction, crisp detail, visually distinct and instantly recognizable even small, natural material shading. No words, letters, numbers, watermarks, signatures, company logos, or rectangular backdrop. Truly transparent background with clean alpha edges, not a drawn checkerboard. Deliver one finished standalone sticker."
+    },
+    {
+      "id": "sticker-096",
+      "name": "Cloud upload",
+      "theme": "Modern life",
+      "prompt": "Use case: stylized-concept. Asset type: one premium reusable sticker for a professional Canva-like Elements library. Subject: a soft pale-blue cloud with a simple ivory upward arrow. Style: charming premium 3D icon-like sticker with refined tactile materials, rounded forms and lilac, sky blue, cream and peach colors, no brand marks. Composition: a single cohesive isolated design element, complete silhouette entirely visible, centered with generous 10% transparent margins, square composition. Beautiful professional art direction, crisp detail, visually distinct and instantly recognizable even small, natural material shading. No words, letters, numbers, watermarks, signatures, company logos, or rectangular backdrop. Truly transparent background with clean alpha edges, not a drawn checkerboard. Deliver one finished standalone sticker."
+    },
+    {
+      "id": "sticker-097",
+      "name": "Battery bloom",
+      "theme": "Modern life",
+      "prompt": "Use case: stylized-concept. Asset type: one premium reusable sticker for a professional Canva-like Elements library. Subject: a stylized mint battery with a tiny sprouting leaf, no words. Style: charming premium 3D icon-like sticker with refined tactile materials, rounded forms and lilac, sky blue, cream and peach colors, no brand marks. Composition: a single cohesive isolated design element, complete silhouette entirely visible, centered with generous 10% transparent margins, square composition. Beautiful professional art direction, crisp detail, visually distinct and instantly recognizable even small, natural material shading. No words, letters, numbers, watermarks, signatures, company logos, or rectangular backdrop. Truly transparent background with clean alpha edges, not a drawn checkerboard. Deliver one finished standalone sticker."
+    },
+    {
+      "id": "sticker-098",
+      "name": "Calendar day",
+      "theme": "Modern life",
+      "prompt": "Use case: stylized-concept. Asset type: one premium reusable sticker for a professional Canva-like Elements library. Subject: a compact pastel desk calendar with simple colored blocks instead of numbers. Style: charming premium 3D icon-like sticker with refined tactile materials, rounded forms and lilac, sky blue, cream and peach colors, no brand marks. Composition: a single cohesive isolated design element, complete silhouette entirely visible, centered with generous 10% transparent margins, square composition. Beautiful professional art direction, crisp detail, visually distinct and instantly recognizable even small, natural material shading. No words, letters, numbers, watermarks, signatures, company logos, or rectangular backdrop. Truly transparent background with clean alpha edges, not a drawn checkerboard. Deliver one finished standalone sticker."
+    },
+    {
+      "id": "sticker-099",
+      "name": "Check it off",
+      "theme": "Modern life",
+      "prompt": "Use case: stylized-concept. Asset type: one premium reusable sticker for a professional Canva-like Elements library. Subject: a sculptural sage check mark enclosed in a cream soft rounded square. Style: charming premium 3D icon-like sticker with refined tactile materials, rounded forms and lilac, sky blue, cream and peach colors, no brand marks. Composition: a single cohesive isolated design element, complete silhouette entirely visible, centered with generous 10% transparent margins, square composition. Beautiful professional art direction, crisp detail, visually distinct and instantly recognizable even small, natural material shading. No words, letters, numbers, watermarks, signatures, company logos, or rectangular backdrop. Truly transparent background with clean alpha edges, not a drawn checkerboard. Deliver one finished standalone sticker."
+    },
+    {
+      "id": "sticker-100",
+      "name": "Digital magic",
+      "theme": "Modern life",
+      "prompt": "Use case: stylized-concept. Asset type: one premium reusable sticker for a professional Canva-like Elements library. Subject: a beautiful iridescent computer cursor arrow with one tiny four-point sparkle. Style: charming premium 3D icon-like sticker with refined tactile materials, rounded forms and lilac, sky blue, cream and peach colors, no brand marks. Composition: a single cohesive isolated design element, complete silhouette entirely visible, centered with generous 10% transparent margins, square composition. Beautiful professional art direction, crisp detail, visually distinct and instantly recognizable even small, natural material shading. No words, letters, numbers, watermarks, signatures, company logos, or rectangular backdrop. Truly transparent background with clean alpha edges, not a drawn checkerboard. Deliver one finished standalone sticker."
+    }
+  ]
+}

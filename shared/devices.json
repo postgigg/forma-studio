@@ -1,0 +1,7 @@
+[
+  {"id":"macbook","name":"MacBook","kind":"laptop","width":1380,"height":920,"screen":[91,49,1198,749],"viewport":{"width":1440,"height":900},"mobile":false},
+  {"id":"laptop","name":"Laptop","kind":"laptop","width":1400,"height":920,"screen":[78,48,1244,700],"viewport":{"width":1440,"height":810},"mobile":false},
+  {"id":"ipad","name":"iPad","kind":"tablet","width":940,"height":1260,"screen":[42,42,856,1176],"viewport":{"width":834,"height":1146},"mobile":true},
+  {"id":"tablet","name":"Tablet","kind":"tablet","width":1260,"height":900,"screen":[50,38,1160,824],"viewport":{"width":1024,"height":727},"mobile":true},
+  {"id":"iphone","name":"iPhone","kind":"phone","width":560,"height":1100,"screen":[20,20,520,1060],"viewport":{"width":390,"height":795},"mobile":true}
+]

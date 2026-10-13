@@ -1,0 +1,30 @@
+[
+  {
+    "family": "Forma Frame",
+    "file": "/fonts/formaframe.ttf",
+    "glyphs": 164,
+    "source": "Original vector stroke geometry; AI-authored, built with fontTools",
+    "license": "Unrestricted use and embedding"
+  },
+  {
+    "family": "Forma Soft",
+    "file": "/fonts/formasoft.ttf",
+    "glyphs": 164,
+    "source": "Original vector stroke geometry; AI-authored, built with fontTools",
+    "license": "Unrestricted use and embedding"
+  },
+  {
+    "family": "Forma Deco",
+    "file": "/fonts/formadeco.ttf",
+    "glyphs": 164,
+    "source": "Original vector stroke geometry; AI-authored, built with fontTools",
+    "license": "Unrestricted use and embedding"
+  },
+  {
+    "family": "Forma Outline",
+    "file": "/fonts/formaoutline.ttf",
+    "glyphs": 164,
+    "source": "Original vector stroke geometry; AI-authored, built with fontTools",
+    "license": "Unrestricted use and embedding"
+  }
+]

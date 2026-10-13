@@ -1,0 +1,15 @@
+name: forma-studio
+services:
+  studio:
+    build:
+      context: .
+      args:
+        VITE_SUPABASE_URL: ${VITE_SUPABASE_URL:-}
+        VITE_SUPABASE_ANON_KEY: ${VITE_SUPABASE_ANON_KEY:-}
+    ports:
+      - "127.0.0.1:5186:80"
+    restart: unless-stopped
+networks:
+  default:
+    name: forma-local
+    external: true

@@ -1,0 +1,194 @@
+[
+  {
+    "id": "leaf-sprig",
+    "name": "Leaf sprig",
+    "path": "M100 190 C110 115 91 58 105 12 M104 136 C36 138 22 90 30 68 C86 70 102 102 104 136 M103 99 C164 100 183 56 175 32 C125 38 108 66 103 99",
+    "stroke": true
+  },
+  {
+    "id": "arch",
+    "name": "Soft arch",
+    "path": "M20 190V90 A80 80 0 0 1 180 90V190H150V90 A50 50 0 0 0 50 90V190Z",
+    "stroke": false
+  },
+  {
+    "id": "sun-rays",
+    "name": "Radiant sun",
+    "path": "M100 50A50 50 0 1 1 99.99 50 M100 3V27 M100 173V197 M3 100H27 M173 100H197 M31 31L48 48 M152 152L169 169 M31 169L48 152 M152 48L169 31",
+    "stroke": true
+  },
+  {
+    "id": "crescent",
+    "name": "Midnight crescent",
+    "path": "M140 8 A95 95 0 1 0 192 146 A83 83 0 0 1 140 8Z",
+    "stroke": false
+  },
+  {
+    "id": "cloud",
+    "name": "Daydream cloud",
+    "path": "M48 160C-5 160 -4 91 39 87C23 29 104 11 125 60C160 34 196 62 181 94C214 111 199 160 163 160Z",
+    "stroke": false
+  },
+  {
+    "id": "lightning",
+    "name": "Electric bolt",
+    "path": "M116 3L28 114H90L72 198L177 74H114Z",
+    "stroke": false
+  },
+  {
+    "id": "chevrons",
+    "name": "Forward motion",
+    "path": "M15 20L90 100L15 180H62L137 100L62 20Z M92 20L167 100L92 180H137L198 100L137 20Z",
+    "stroke": false
+  },
+  {
+    "id": "loop-arrow",
+    "name": "Looping arrow",
+    "path": "M12 175C23 86 151 99 140 50C128 -6 62 41 86 96C108 144 168 83 180 15 M145 26L181 12L191 50",
+    "stroke": true
+  },
+  {
+    "id": "speech-bubble",
+    "name": "Let's talk",
+    "path": "M25 20H175Q195 20 195 40V130Q195 150 175 150H78L30 190V150H25Q5 150 5 130V40Q5 20 25 20Z",
+    "stroke": false
+  },
+  {
+    "id": "ticket",
+    "name": "Admit one",
+    "path": "M10 35H190V70A30 30 0 0 0 190 130V165H10V130A30 30 0 0 0 10 70Z",
+    "stroke": false
+  },
+  {
+    "id": "ribbon-banner",
+    "name": "Ribbon banner",
+    "path": "M0 60H40V35H160V60H200L176 100L200 140H152V118H48V140H0L24 100Z M48 48V106H152V48Z",
+    "stroke": false
+  },
+  {
+    "id": "crown",
+    "name": "Royal crown",
+    "path": "M15  50L52 112L100 25L148 112L185 50L169 165H31Z",
+    "stroke": false
+  },
+  {
+    "id": "laurel",
+    "name": "Laurel wreath",
+    "path": "M86 184C26 160 17 87 49 28 M114 184C174 160 183 87 151 28 M40 133L15 114 M33 109L9 86 M34 83L15 61 M41 59L29 37 M47 132L65 102 M39 102L57 79 M43 76L62 55 M160 133L185 114 M167 109L191 86 M166 83L185 61 M159 59L171 37 M153 132L135 102 M161 102L143 79 M157 76L138 55",
+    "stroke": true
+  },
+  {
+    "id": "botanical-leaf",
+    "name": "Botanical silhouette",
+    "path": "M99 189C-9 149 13 32 101 11C182 33 211 141 99 189Z M99 164V49 M98 126L57 87 M102 111L148 68",
+    "stroke": false
+  },
+  {
+    "id": "ocean-lines",
+    "name": "Ocean rhythm",
+    "path": "M5 40Q29 12 53 40T101 40T149 40T197 40 M5 90Q29 62 53 90T101 90T149 90T197 90 M5 140Q29 112 53 140T101 140T149 140T197 140",
+    "stroke": true
+  },
+  {
+    "id": "paper-plane",
+    "name": "Paper airplane",
+    "path": "M5 94L196 10L149 190L94 130L60 166L65 113Z M66 113L168 38L94 130",
+    "stroke": false
+  },
+  {
+    "id": "sunrise",
+    "name": "A new morning",
+    "path": "M20 151A80 80 0 0 1 180 151 M5 151H195 M33 179H166 M100 5V32 M31 32L50 51 M169 32L150 51 M5 87L30 96 M195 87L170 96",
+    "stroke": true
+  },
+  {
+    "id": "mountain-peaks",
+    "name": "Mountain peaks",
+    "path": "M2 176L69 42L111 113L143 60L199 176Z M47 88L69 42L97 90L72 77L60 93Z",
+    "stroke": false
+  },
+  {
+    "id": "diamond",
+    "name": "Precious diamond",
+    "path": "M37 20H163L197 79L100 192L3 79Z M37 20L65 79L100 192L135 79L163 20 M3 79H197 M65 79L100 20L135 79",
+    "stroke": true
+  },
+  {
+    "id": "bow",
+    "name": "Ribbon bow",
+    "path": "M94 93C47 9 -5 16 10 73C21 116 67 108 94 105L42 184L93 165L103 114L119 165L167 184L114 105C153 116 200 110 195 62C190 13 145 26 109 94Z",
+    "stroke": false
+  },
+  {
+    "id": "abstract-blob",
+    "name": "Organic pebble",
+    "path": "M106 6C154 -2 211 49 190 109C171 153 183 204 103 193C33 194 -3 158 13 97C24 66 26 12 106 6Z",
+    "stroke": false
+  },
+  {
+    "id": "torn-strip",
+    "name": "Torn paper strip",
+    "path": "M4 47L24 56L40 40L59 51L83 36L107 47L134 38L155 50L177 39L197 48L193 153L174 146L159 165L130 152L112 166L86 157L60 168L39 150L20 162L4 147Z",
+    "stroke": false
+  },
+  {
+    "id": "corner-brackets",
+    "name": "Frame corners",
+    "path": "M10 68V10H68 M132 10H190V68 M190 132V190H132 M68 190H10V132",
+    "stroke": true
+  },
+  {
+    "id": "plus-cluster",
+    "name": "Positive energy",
+    "path": "M52 5V85 M12 45H92 M153  90V190 M103 140H200 M151 5V 50 M129 27H173",
+    "stroke": true
+  },
+  {
+    "id": "sparkle-trail",
+    "name": "Stardust trail",
+    "path": "M45 18Q48 53 82 57Q48 61 45 96Q41 61 7 57Q41 53 45 18Z M139 61Q144 117 196 122Q144 127 139 183Q134 127 82 122Q134 117 139 61Z M160 9Q163 29 183 32Q163 35 160 55Q157 35 137 32Q157 29 160 9Z",
+    "stroke": false
+  },
+  {
+    "id": "swoosh",
+    "name": "Confident swoosh",
+    "path": "M5 145C51 69 113 57 174 88L159 59L194 91L156 129L167 104C109 79 64 86 5 145Z",
+    "stroke": false
+  },
+  {
+    "id": "checkmark",
+    "name": "Done beautifully",
+    "path": "M12 102L70 160L190 39L169 18L70 119L33 81Z",
+    "stroke": false
+  },
+  {
+    "id": "location-pin",
+    "name": "Somewhere special",
+    "path": "M100 195C76 160 27 104 27 76A73 73 0 0 1 173 76C173 111 129 161 100 195Z M100 43A30 30 0 1 0 100 103A30 30 0 1 0 100 43Z",
+    "stroke": false
+  },
+  {
+    "id": "music-note",
+    "name": "Good vibrations",
+    "path": "M67 140V34L175 10V134 M67 61L175 37 M67 140C37 121 4 146 14 171C24 196 67 180 67 158Z M175 134C145 115 112 140 122 165C132 190 175 174 175 152Z",
+    "stroke": true
+  },
+  {
+    "id": "butterfly",
+    "name": "Butterfly breeze",
+    "path": "M101 94C35 -13 -28 13 21 95C-6 161 61 179 97 119L100 178L104 119C145 182 208 153 179 96C222 13 160 -9 101 94Z",
+    "stroke": false
+  },
+  {
+    "id": "infinity",
+    "name": "Endless possibilities",
+    "path": "M100 100C65 20 6 38 8 103C10 161 65 175 100 100C135 20 194 38 192 103C190 161 135 175 100 100Z",
+    "stroke": true
+  },
+  {
+    "id": "abstract-flame",
+    "name": "Creative flame",
+    "path": "M105 5C151 51 97 72 149 96C161 78 167 63 168 54C229 147 150 204 101 195C28 205 -7 140 29 90C29 125 50 135 58 135C41 68 114 64 105 5Z",
+    "stroke": false
+  }
+]
