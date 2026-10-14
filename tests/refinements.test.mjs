@@ -169,6 +169,67 @@ test("refinement rejects invalid geometry, unsupported fonts and photo edits out
     /No changes/,
   );
 });
+test("mixed selections accept photo and device frames without exposing their content to unsupported edits", () => {
+  const input = {
+    ...brief,
+    nodes: [
+      ...brief.nodes,
+      { id: "letter", type: "PhotoFrame", parentId: "group" },
+      { id: "laptop", type: "DeviceFrame", parentId: null },
+    ],
+  };
+  const clean = validateRefinement(input);
+  assert.equal(clean.nodes[3].parentId, "group");
+  for (const id of ["letter", "laptop"]) {
+    const edit = {
+      id,
+      left: 20,
+      top: 30,
+      scaleX: 0.6,
+      scaleY: 0.6,
+      angle: 5,
+      opacity: 0.9,
+    };
+    assert.deepEqual(
+      validateRefinementResult({ ...result, edits: [edit] }, clean).edits,
+      [edit],
+    );
+    for (const property of [
+      { width: 500 },
+      { fill: "#302439" },
+      { strokeWidth: 4 },
+      { fontSize: 32 },
+      { brightness: 0.2 },
+    ])
+      assert.throws(
+        () =>
+          validateRefinementResult(
+            { ...result, edits: [{ id, ...property }] },
+            clean,
+          ),
+        /frame/i,
+      );
+    assert.throws(
+      () =>
+        validateRefinementResult(
+          {
+            ...result,
+            imageEdits: [{ id, prompt: "Replace the screen photo" }],
+          },
+          clean,
+        ),
+      /photo/i,
+    );
+  }
+  assert.throws(
+    () =>
+      validateRefinement({
+        ...input,
+        nodes: [...input.nodes, { id: "unknown", type: "UnknownFrame" }],
+      }),
+    /layer/i,
+  );
+});
 for (const tool of ["eraser", "pencil"])
   test(`${tool} requires exactly one existing photo and a mask with the same dimensions`, () => {
     const input = {

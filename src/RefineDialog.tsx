@@ -2,7 +2,8 @@ import { useEffect, useRef, useState } from "react";
 import { ArrowRight, Sparkles, Square } from "lucide-react";
 import type { Editor } from "./editor";
 import { Modal } from "./ui";
-import { designerRequest } from "./ai";
+import { designerRequest, DesignerRequestError } from "./ai";
+import { useBrandGuidance } from "./BrandContext";
 import {
   applyRefinement,
   makeRefinedSelection,
@@ -28,6 +29,7 @@ export function RefineDialog({
     [job, setJob] = useState<RefinementJob | null>(null),
     [candidate, setCandidate] = useState<RefinedSelection | null>(null),
     [working, setWorking] = useState(false);
+  const { brandContext, control: brandControl } = useBrandGuidance(working);
   const alive = useRef(true),
     owned = useRef<{ id: string; token: string } | null>(null);
   const [direction, setDirection] = useState("balanced");
@@ -41,7 +43,10 @@ export function RefineDialog({
         setError("");
       }
     } catch (e) {
-      if (alive.current) setError((e as Error).message);
+      if (alive.current) {
+        setToken("");
+        setError((e as Error).message);
+      }
     }
   };
   useEffect(() => {
@@ -80,6 +85,7 @@ export function RefineDialog({
         body: JSON.stringify({
           prompt,
           direction,
+          brandContext,
           width: snapshot.width,
           height: snapshot.height,
           nodes: snapshot.nodes,
@@ -112,7 +118,15 @@ export function RefineDialog({
         next = await designerRequest(`/refinements/${next.id}`, token);
       }
     } catch (e) {
-      if (alive.current) setError((e as Error).message);
+      if (alive.current) {
+        if (
+          e instanceof TypeError ||
+          (e instanceof DesignerRequestError &&
+            [401, 403, 503].includes(e.status))
+        )
+          setToken("");
+        setError((e as Error).message);
+      }
     } finally {
       if (alive.current) setWorking(false);
     }
@@ -127,6 +141,7 @@ export function RefineDialog({
             : "elements / groups"}{" "}
           · {snapshot.nodes.length} layers
         </p>
+        {brandControl}
         <label className="field">
           <span>Creative direction</span>
           <select
@@ -225,9 +240,11 @@ export function RefineDialog({
         {error && (
           <div role="alert" className="ai-error">
             {error}
-            <button className="text-button" onClick={() => void connect()}>
-              Reconnect
-            </button>
+            {!token && (
+              <button className="text-button" onClick={() => void connect()}>
+                Reconnect
+              </button>
+            )}
           </div>
         )}
         <div className="refine-actions">

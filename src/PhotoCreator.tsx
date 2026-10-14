@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { ChevronDown, Plus, RefreshCw, Sparkles, Square } from "lucide-react";
 import { designerRequest } from "./ai";
+import { useBrandGuidance } from "./BrandContext";
 import { Field } from "./ui";
 import type { Asset } from "./types";
 
@@ -32,6 +33,7 @@ export function PhotoCreator({
     ),
     [job, setJob] = useState<PhotoJob | null>(null),
     [recent, setRecent] = useState<{ id: string; title: string }[]>([]);
+  const { brandContext, control: brandControl } = useBrandGuidance(busy);
   const connect = async () => {
     try {
       setError("");
@@ -84,7 +86,7 @@ export function PhotoCreator({
     try {
       const next: PhotoJob = await designerRequest("/photos", token, {
         method: "POST",
-        body: JSON.stringify({ prompt, format, style }),
+        body: JSON.stringify({ prompt, format, style, brandContext }),
       });
       setJob(next);
       setJobId(next.id);
@@ -99,9 +101,10 @@ export function PhotoCreator({
       <summary className="photo-creator-heading">
         <Sparkles size={18} />
         <h3>Create a photo</h3>
-        {busy ? <span className="spinner"/> : <ChevronDown size={16} />}
+        {busy ? <span className="spinner" /> : <ChevronDown size={16} />}
       </summary>
       <p className="muted small">Describe a scene. Make it yours.</p>
+      {brandControl}
       <Field label="Your photo idea">
         <textarea
           aria-label="AI photo prompt"

@@ -19,6 +19,7 @@ import {
 import { Editor } from "./editor";
 import { presets, type Design, type Asset } from "./types";
 import { Field } from "./ui";
+import { useBrandGuidance } from "./BrandContext";
 
 const examples = [
   "A refined launch poster for a botanical skincare brand. Sage, ivory, and warm editorial typography.",
@@ -52,6 +53,9 @@ export function DesignerPanel({
     [brandName, setBrandName] = useState(""),
     [useBrand, setUseBrand] = useState(false),
     [useLogo, setUseLogo] = useState(true),
+    [referenceMode, setReferenceMode] = useState<"preserve" | "rebuild">(
+      "preserve",
+    ),
     [format, setFormat] = useState(0),
     [pages, setPages] = useState(1),
     [details, setDetails] = useState(false),
@@ -67,7 +71,9 @@ export function DesignerPanel({
   const [recent, setRecent] = useState<
     { id: string; title: string; layers: number }[]
   >([]);
-  const [view, setView] = useState<"create" | "results">(() => sessionStorage.getItem("forma:ai-job") ? "results" : "create");
+  const [view, setView] = useState<"create" | "results">(() =>
+    sessionStorage.getItem("forma:ai-job") ? "results" : "create",
+  );
   const panelRef = useRef<HTMLElement>(null);
   const newDesign = () => {
     setView("create");
@@ -114,9 +120,10 @@ export function DesignerPanel({
     if (reference) {
       setView("create");
       setPrompt(
-        "Rebuild this reference design as sharp, separate editable layers. Preserve its exact visible wording, layout, hierarchy, colors and overall composition. Recreate text as text boxes, dividers and backgrounds as vectors, and use matching botanical or decorative elements from the library. Do not place the whole reference image on the page.",
+        "Create a polished design with this original image. Preserve its visual quality, detail, style and composition. Keep any new text, logo and layout elements separately editable. Do not redraw the photographic content as shapes.",
       );
       setPages(1);
+      setReferenceMode("preserve");
       setDraft(null);
       setProposal(null);
       setJobId("");
@@ -176,6 +183,7 @@ export function DesignerPanel({
       clearTimeout(timer);
     };
   }, [jobId, token]);
+  const { brandContext, control: brandControl } = useBrandGuidance(busy);
   const generate = async (refine = false) => {
     setError("");
     setBusy(true);
@@ -186,15 +194,16 @@ export function DesignerPanel({
         method: "POST",
         body: JSON.stringify({
           prompt,
+          brandContext,
           width: reference?.width || size.width,
           height: reference?.height || size.height,
           pages,
           style,
           audience,
-          brand: brandName,
+          brand: brandName || brandContext?.name || "",
           palette: useBrand ? brand : [],
           ...(useLogo && brandLogo ? { logo: brandLogo } : {}),
-          ...(reference ? { sourceImage: reference.data } : {}),
+          ...(reference ? { sourceImage: reference.data, referenceMode } : {}),
           ...(refine && proposal ? { previous: proposal } : {}),
         }),
       });
@@ -214,309 +223,377 @@ export function DesignerPanel({
       className="asset-panel ai-panel"
       aria-label="AI Designer"
     >
-      <div className="ai-view-tabs" role="tablist" aria-label="AI designer views">
-        <button role="tab" aria-selected={view === "create"} onClick={() => setView("create")}>Create</button>
-        <button role="tab" aria-selected={view === "results"} onClick={() => setView("results")}>Results & history</button>
-      </div>
-      {view === "create" && <>
-      <button
-        className="secondary full ai-new-design"
-        disabled={busy}
-        onClick={newDesign}
+      <div
+        className="ai-view-tabs"
+        role="tablist"
+        aria-label="AI designer views"
       >
-        <Plus size={16} />
-        New AI design
-      </button>
-      <div className="ai-intro">
-        <WandSparkles size={25} />
-        <h3>Your idea. Beautifully made.</h3>
-        <p>
-          A creative partner for complete, editable designs. Tell it what you
-          have in mind.
-        </p>
-      </div>
-      {reference && (
-        <div className="ai-reference">
-          <img
-            src={reference.data}
-            alt="Reference for editable reconstruction"
-          />
-          <div>
-            <strong>Rebuild your image in layers</strong>
-            <p>
-              Recreates visible text and shapes. Artwork may be approximated;
-              hidden original layers cannot be recovered.
-            </p>
-            <button className="text-button" onClick={onClearReference}>
-              Remove reference
-            </button>
-          </div>
-        </div>
-      )}
-      <label className="field ai-brief">
-        <span>Your creative brief</span>
-        <textarea
-          aria-label="AI design brief"
-          rows={6}
-          maxLength={6000}
-          value={prompt}
-          onChange={(e) => {
-            setPrompt(e.target.value);
-            sessionStorage.setItem("forma:ai-prompt", e.target.value);
-          }}
-          placeholder="What are we making? Describe the purpose, mood, colors, and exact words to include…"
-        />
-      </label>
-      {!prompt && !draft && (
-        <div className="ai-examples">
-          {examples.map((example, i) => (
-            <button
-              key={example}
-              onClick={() => {
-                setPrompt(example);
-                if (i === 2) {
-                  setFormat(2);
-                  setPages(3);
-                }
-              }}
-            >
-              <Sparkles size={13} />
-              {
-                [
-                  "A botanical brand launch",
-                  "A playful summer sale",
-                  "An elegant studio presentation",
-                ][i]
-              }
-              <ArrowRight size={12} />
-            </button>
-          ))}
-        </div>
-      )}
-      <div className="field-grid">
-        <Field label="Format">
-          <select
-            aria-label="AI design format"
-            value={format}
-            onChange={(e) => setFormat(+e.target.value)}
-          >
-            {presets.map((p, i) => (
-              <option key={p.name} value={i}>
-                {p.name}
-              </option>
-            ))}
-          </select>
-        </Field>
-        <Field label="Pages">
-          <select
-            aria-label="AI page count"
-            value={pages}
-            onChange={(e) => setPages(+e.target.value)}
-          >
-            {[1, 2, 3, 4, 5, 6].map((n) => (
-              <option key={n}>{n}</option>
-            ))}
-          </select>
-        </Field>
-      </div>
-      <Field label="Art direction">
-        <select
-          aria-label="Art direction"
-          value={style}
-          onChange={(e) => setStyle(e.target.value)}
+        <button
+          role="tab"
+          aria-selected={view === "create"}
+          onClick={() => setView("create")}
         >
-          {[
-            "Art director’s choice",
-            "Refined editorial",
-            "Quiet luxury",
-            "Bold & expressive",
-            "Playful & tactile",
-            "Natural & organic",
-            "Clean & minimal",
-          ].map((s) => (
-            <option key={s}>{s}</option>
-          ))}
-        </select>
-      </Field>
-      <button
-        className="ai-details-toggle"
-        aria-expanded={details}
-        onClick={() => setDetails(!details)}
-      >
-        Fine-tune the brief
-        <ChevronDown size={14} />
-      </button>
-      {details && (
-        <div className="ai-details">
-          <Field label="Brand / business">
-            <input
-              maxLength={120}
-              value={brandName}
-              onChange={(e) => setBrandName(e.target.value)}
-              placeholder="Your brand name"
-            />
-          </Field>
-          <Field label="Audience">
-            <input
-              maxLength={250}
-              value={audience}
-              onChange={(e) => setAudience(e.target.value)}
-              placeholder="Who should this speak to?"
-            />
-          </Field>
-          <label className="check-row">
-            <input
-              type="checkbox"
-              checked={useBrand}
-              onChange={(e) => setUseBrand(e.target.checked)}
-            />{" "}
-            Use my brand palette
-          </label>
-          {useBrand && (
-            <div className="ai-palette">
-              {brand.map((c) => (
-                <i key={c} style={{ background: c }} />
-              ))}
+          Create
+        </button>
+        <button
+          role="tab"
+          aria-selected={view === "results"}
+          onClick={() => setView("results")}
+        >
+          Results & history
+        </button>
+      </div>
+      {view === "create" && (
+        <>
+          <button
+            className="secondary full ai-new-design"
+            disabled={busy}
+            onClick={newDesign}
+          >
+            <Plus size={16} />
+            New AI design
+          </button>
+          <div className="ai-intro">
+            <WandSparkles size={25} />
+            <h3>Your idea. Beautifully made.</h3>
+            <p>
+              A creative partner for complete, editable designs. Tell it what
+              you have in mind.
+            </p>
+          </div>
+          {reference && (
+            <div className="ai-reference">
+              <img src={reference.data} alt="Original design reference" />
+              <div>
+                <strong>Your original image</strong>
+                <label className="field">
+                  <span>Reference treatment</span>
+                  <select
+                    aria-label="Reference treatment"
+                    value={referenceMode}
+                    disabled={busy}
+                    onChange={(e) => {
+                      const mode = e.target.value as "preserve" | "rebuild";
+                      setReferenceMode(mode);
+                      setPrompt(
+                        mode === "preserve"
+                          ? "Create a polished design with this original image. Preserve its visual quality, detail, style and composition. Keep any new text, logo and layout elements separately editable."
+                          : "Rebuild the visible wording and simple artwork of this reference as independent text and vector layers. Preserve the composition and palette. Treat complex imagery as a stylized approximation.",
+                      );
+                    }}
+                  >
+                    <option value="preserve">Keep image quality</option>
+                    <option value="rebuild">Rebuild simple artwork</option>
+                  </select>
+                </label>
+                <p>
+                  {referenceMode === "preserve"
+                    ? "Keeps the original as a photo layer. New text, logo and layout stay editable. Use AI Pencil for changes inside the image."
+                    : "Best for simple posters and flat artwork. Complex photos become stylized; hidden original layers cannot be recovered."}
+                </p>
+                <button className="text-button" onClick={onClearReference}>
+                  Remove reference
+                </button>
+              </div>
             </div>
           )}
-        </div>
-      )}
-      {!busy && (
-        <>
-        {brandLogo && <label className="ai-use-logo check-row"><input type="checkbox" checked={useLogo} onChange={e => setUseLogo(e.target.checked)} /><img src={brandLogo.src} alt="Saved brand logo" /> Use my brand logo</label>}
-          <button
-            className="primary full ai-generate"
-            disabled={!token || prompt.trim().length < 8}
-            onClick={() => void generate()}
-          >
-            <WandSparkles size={17} />{" "}
-            {reference ? "Rebuild in editable layers" : "Create my design"}
-          </button>
-          {proposal && (
-            <button
-              className="secondary full"
-              disabled={!token || prompt.trim().length < 8}
-              onClick={() => void generate(true)}
-            >
-              <RefreshCw size={15} /> Refine the last design
-            </button>
-          )}
-        </>
-      )}
-      </>}
-      {view === "results" && <>
-      {recent.length > 0 && (
-        <Field label="Recent AI designs · original layers">
-          <select
-            aria-label="Recent AI designs"
-            value={recent.some((r) => r.id === jobId) ? jobId : ""}
-            disabled={busy}
-            onChange={(e) => {
-              if (e.target.value) {
-                onClearReference();
-                setDraft(null);
-                setJobId(e.target.value);
-                sessionStorage.setItem("forma:ai-job", e.target.value);
-              }
-            }}
-          >
-            <option value="">Open a previous design…</option>
-            {recent.map((r) => (
-              <option value={r.id} key={r.id}>
-                {r.title} · {r.layers} layers
-              </option>
-            ))}
-          </select>
-        </Field>
-      )}
-      {!busy && <button className="secondary full" onClick={newDesign}><Plus size={16} /> New AI design</button>}
-      {busy && (
-        <div className="ai-progress">
-          <span className="spinner" />
-          <strong>{job?.stage || "Sending your brief…"}</strong>
-          <p>
-            {job?.elapsedSeconds || 0}s · You can keep editing while I work.
-          </p>
-          <button
-            className="text-button"
-            onClick={async () => {
-              if (jobId) {
-                try {
-                  await designerRequest(`/jobs/${jobId}`, token, {
-                    method: "DELETE",
-                  });
-                  setBusy(false);
-                  setJob(null);
-                  sessionStorage.removeItem("forma:ai-job");
-                  setJobId("");
-                } catch (e) {
-                  setError((e as Error).message);
-                }
-              }
-            }}
-          >
-            <Square size={12} /> Cancel generation
-          </button>
-        </div>
-      )}
-      {draft && proposal && (
-        <div className="ai-result">
-          <div className="section-label">
-            <h3>{draft.name}</h3>
-            <span>
-              <Check size={12} /> Ready
-            </span>
-          </div>
-          <button className="primary full" onClick={() => void openDraft()}>
-            Open editable design
-            <ArrowRight size={16} />
-          </button>
-          <div className="ai-layer-count">
-            {draft.pages[previewPage].data.objects instanceof Array
-              ? draft.pages[previewPage].data.objects.length
-              : 0}{" "}
-            editable layers · {draft.width} × {draft.height} px
-          </div>
-          <button
-            className="ai-preview"
-            aria-label="Open generated design as editable layers"
-            onClick={() => void openDraft()}
-          >
-            <img
-              src={draft.pages[previewPage].thumbnail}
-              alt="AI design preview"
-              draggable={false}
+          <label className="field ai-brief">
+            <span>Your creative brief</span>
+            <textarea
+              aria-label="AI design brief"
+              rows={6}
+              maxLength={6000}
+              value={prompt}
+              onChange={(e) => {
+                setPrompt(e.target.value);
+                sessionStorage.setItem("forma:ai-prompt", e.target.value);
+              }}
+              placeholder="What are we making? Describe the purpose, mood, colors, and exact words to include…"
             />
-          </button>
-          {draft.pages.length > 1 && (
-            <div className="ai-page-pills">
-              {draft.pages.map((p, i) => (
+          </label>
+          {!prompt && !draft && (
+            <div className="ai-examples">
+              {examples.map((example, i) => (
                 <button
-                  className={i === previewPage ? "selected" : ""}
-                  key={p.id}
-                  onClick={() => setPreviewPage(i)}
+                  key={example}
+                  onClick={() => {
+                    setPrompt(example);
+                    if (i === 2) {
+                      setFormat(2);
+                      setPages(3);
+                    }
+                  }}
                 >
-                  {i + 1}
+                  <Sparkles size={13} />
+                  {
+                    [
+                      "A botanical brand launch",
+                      "A playful summer sale",
+                      "An elegant studio presentation",
+                    ][i]
+                  }
+                  <ArrowRight size={12} />
                 </button>
               ))}
             </div>
           )}
-          <p>{proposal.description}</p>
-          <div className="ai-palette">
-            {proposal.palette
-              .filter((c) => /^#[0-9a-f]{6}$/i.test(c))
-              .map((c, i) => (
-                <i key={i} style={{ background: c }} title={c} />
-              ))}
+          <div className="field-grid">
+            <Field label="Format">
+              <select
+                aria-label="AI design format"
+                value={format}
+                onChange={(e) => setFormat(+e.target.value)}
+              >
+                {presets.map((p, i) => (
+                  <option key={p.name} value={i}>
+                    {p.name}
+                  </option>
+                ))}
+              </select>
+            </Field>
+            <Field label="Pages">
+              <select
+                aria-label="AI page count"
+                value={pages}
+                onChange={(e) => setPages(+e.target.value)}
+              >
+                {[1, 2, 3, 4, 5, 6].map((n) => (
+                  <option key={n}>{n}</option>
+                ))}
+              </select>
+            </Field>
           </div>
-          <small>
-            Creates a separate design. Your current work stays saved.
-          </small>
-        </div>
+          {brandControl}
+          <Field label="Art direction">
+            <select
+              aria-label="Art direction"
+              value={style}
+              onChange={(e) => setStyle(e.target.value)}
+            >
+              {[
+                "Art director’s choice",
+                "Refined editorial",
+                "Quiet luxury",
+                "Bold & expressive",
+                "Playful & tactile",
+                "Natural & organic",
+                "Clean & minimal",
+              ].map((s) => (
+                <option key={s}>{s}</option>
+              ))}
+            </select>
+          </Field>
+          <button
+            className="ai-details-toggle"
+            aria-expanded={details}
+            onClick={() => setDetails(!details)}
+          >
+            Fine-tune the brief
+            <ChevronDown size={14} />
+          </button>
+          {details && (
+            <div className="ai-details">
+              <Field label="Brand / business">
+                <input
+                  maxLength={120}
+                  value={brandName}
+                  onChange={(e) => setBrandName(e.target.value)}
+                  placeholder="Your brand name"
+                />
+              </Field>
+              <Field label="Audience">
+                <input
+                  maxLength={250}
+                  value={audience}
+                  onChange={(e) => setAudience(e.target.value)}
+                  placeholder="Who should this speak to?"
+                />
+              </Field>
+              <label className="check-row">
+                <input
+                  type="checkbox"
+                  checked={useBrand}
+                  onChange={(e) => setUseBrand(e.target.checked)}
+                />{" "}
+                Use my brand palette
+              </label>
+              {useBrand && (
+                <div className="ai-palette">
+                  {brand.map((c) => (
+                    <i key={c} style={{ background: c }} />
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
+          {!busy && (
+            <>
+              {brandLogo && (
+                <label className="ai-use-logo check-row">
+                  <input
+                    type="checkbox"
+                    checked={useLogo}
+                    onChange={(e) => setUseLogo(e.target.checked)}
+                  />
+                  <img src={brandLogo.src} alt="Saved brand logo" /> Use my
+                  brand logo
+                </label>
+              )}
+              <button
+                className="primary full ai-generate"
+                disabled={!token || prompt.trim().length < 8}
+                onClick={() => void generate()}
+              >
+                <WandSparkles size={17} />{" "}
+                {reference
+                  ? referenceMode === "preserve"
+                    ? "Design with this image"
+                    : "Rebuild simple artwork"
+                  : "Create my design"}
+              </button>
+              {proposal && (
+                <button
+                  className="secondary full"
+                  disabled={!token || prompt.trim().length < 8}
+                  onClick={() => void generate(true)}
+                >
+                  <RefreshCw size={15} /> Refine the last design
+                </button>
+              )}
+            </>
+          )}
+        </>
       )}
-      {!draft && !busy && <p className="muted">Choose a recent design to view its editable result.</p>}
-      {draft && <button className="secondary full" onClick={() => setView("create")}><RefreshCw size={15} /> Refine this design</button>}
-      </>}
+      {view === "results" && (
+        <>
+          {recent.length > 0 && (
+            <Field label="Recent AI designs · original layers">
+              <select
+                aria-label="Recent AI designs"
+                value={recent.some((r) => r.id === jobId) ? jobId : ""}
+                disabled={busy}
+                onChange={(e) => {
+                  if (e.target.value) {
+                    onClearReference();
+                    setDraft(null);
+                    setJobId(e.target.value);
+                    sessionStorage.setItem("forma:ai-job", e.target.value);
+                  }
+                }}
+              >
+                <option value="">Open a previous design…</option>
+                {recent.map((r) => (
+                  <option value={r.id} key={r.id}>
+                    {r.title} · {r.layers} layers
+                  </option>
+                ))}
+              </select>
+            </Field>
+          )}
+          {!busy && (
+            <button className="secondary full" onClick={newDesign}>
+              <Plus size={16} /> New AI design
+            </button>
+          )}
+          {busy && (
+            <div className="ai-progress">
+              <span className="spinner" />
+              <strong>{job?.stage || "Sending your brief…"}</strong>
+              <p>
+                {job?.elapsedSeconds || 0}s · You can keep editing while I work.
+              </p>
+              <button
+                className="text-button"
+                onClick={async () => {
+                  if (jobId) {
+                    try {
+                      await designerRequest(`/jobs/${jobId}`, token, {
+                        method: "DELETE",
+                      });
+                      setBusy(false);
+                      setJob(null);
+                      sessionStorage.removeItem("forma:ai-job");
+                      setJobId("");
+                    } catch (e) {
+                      setError((e as Error).message);
+                    }
+                  }
+                }}
+              >
+                <Square size={12} /> Cancel generation
+              </button>
+            </div>
+          )}
+          {draft && proposal && (
+            <div className="ai-result">
+              <div className="section-label">
+                <h3>{draft.name}</h3>
+                <span>
+                  <Check size={12} /> Ready
+                </span>
+              </div>
+              <button className="primary full" onClick={() => void openDraft()}>
+                Open editable design
+                <ArrowRight size={16} />
+              </button>
+              <div className="ai-layer-count">
+                {draft.pages[previewPage].data.objects instanceof Array
+                  ? draft.pages[previewPage].data.objects.length
+                  : 0}{" "}
+                editable layers · {draft.width} × {draft.height} px
+              </div>
+              <button
+                className="ai-preview"
+                aria-label="Open generated design as editable layers"
+                onClick={() => void openDraft()}
+              >
+                <img
+                  src={draft.pages[previewPage].thumbnail}
+                  alt="AI design preview"
+                  draggable={false}
+                />
+              </button>
+              {draft.pages.length > 1 && (
+                <div className="ai-page-pills">
+                  {draft.pages.map((p, i) => (
+                    <button
+                      className={i === previewPage ? "selected" : ""}
+                      key={p.id}
+                      onClick={() => setPreviewPage(i)}
+                    >
+                      {i + 1}
+                    </button>
+                  ))}
+                </div>
+              )}
+              <p>{proposal.description}</p>
+              <div className="ai-palette">
+                {proposal.palette
+                  .filter((c) => /^#[0-9a-f]{6}$/i.test(c))
+                  .map((c, i) => (
+                    <i key={i} style={{ background: c }} title={c} />
+                  ))}
+              </div>
+              <small>
+                Creates a separate design. Your current work stays saved.
+              </small>
+            </div>
+          )}
+          {!draft && !busy && (
+            <p className="muted">
+              Choose a recent design to view its editable result.
+            </p>
+          )}
+          {draft && (
+            <button
+              className="secondary full"
+              onClick={() => setView("create")}
+            >
+              <RefreshCw size={15} /> Refine this design
+            </button>
+          )}
+        </>
+      )}
       {error && (
         <div className="ai-error" role="alert">
           {error}

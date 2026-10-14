@@ -40,11 +40,13 @@ export function Modal({
   children,
   onClose,
   wide = false,
+  className = "",
 }: {
   title: string;
   children: ReactNode;
   onClose: () => void;
   wide?: boolean;
+  className?: string;
 }) {
   const ref = useRef<HTMLDialogElement>(null);
   useEffect(() => {
@@ -53,7 +55,7 @@ export function Modal({
   return (
     <dialog
       ref={ref}
-      className={`modal ${wide ? "wide" : ""}`}
+      className={`modal ${wide ? "wide" : ""} ${className}`}
       aria-label={title}
       onCancel={(e) => {
         e.preventDefault();
@@ -72,7 +74,15 @@ export function Modal({
   );
 }
 export function TemplatePreview({ template: t }: { template: Template }) {
-  if(t.thumbnail)return <div className="template-art custom-template" style={{background:t.background}}><img loading="lazy" src={t.thumbnail} alt="" draggable={false}/></div>;
+  if (t.thumbnail)
+    return (
+      <div
+        className="template-art custom-template"
+        style={{ background: t.background }}
+      >
+        <img loading="lazy" src={t.thumbnail} alt="" draggable={false} />
+      </div>
+    );
   return (
     <div
       className={`template-art layout-${t.layout}`}

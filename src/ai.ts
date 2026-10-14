@@ -54,6 +54,14 @@ export interface RebuildReference {
   height: number;
 }
 const endpoint = "http://127.0.0.1:5188";
+export class DesignerRequestError extends Error {
+  status: number;
+  constructor(message: string, status: number) {
+    super(message);
+    this.name = "DesignerRequestError";
+    this.status = status;
+  }
+}
 export async function designerRequest(
   route: string,
   token?: string,
@@ -74,8 +82,9 @@ export async function designerRequest(
   });
   const value = await response.json();
   if (!response.ok)
-    throw new Error(
+    throw new DesignerRequestError(
       value.error || "The local designer could not complete that request.",
+      response.status,
     );
   return value;
 }

@@ -1,0 +1,55 @@
+.brand-profile-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin: 20px 0 26px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid #e9e3ee;
+}
+.brand-profile-form h3 {
+  margin: 0;
+  font-size: 15px;
+  color: #493d58;
+}
+.brand-profile-form p,
+.brand-profile-form small {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.6;
+  color: #7b6f88;
+}
+.brand-profile-form .field {
+  margin: 0;
+  min-width: 0;
+}
+.brand-profile-form textarea,
+.brand-profile-form input {
+  width: 100%;
+  min-width: 0;
+  font-size: 12px;
+  line-height: 1.6;
+}
+.brand-profile-form [role="alert"] {
+  color: #b13d52;
+}
+.brand-profile-form [role="status"] {
+  color: #477250;
+}
+.brand-guidance {
+  background: #f4f0f9;
+  border: 1px solid #e5dcec;
+  border-radius: 10px;
+  padding: 10px 12px;
+  margin: 12px 0;
+  font-size: 12px;
+}
+.brand-guidance small {
+  display: block;
+  margin-top: 3px;
+  color: #85738f;
+  font-size: 11px;
+}
+.brand-relevance {
+  font-size: 12px;
+  margin: 10px 0 15px;
+}

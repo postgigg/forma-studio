@@ -34,16 +34,17 @@ try {
     )
     .setInputFiles(".local/rebuild-reference.png");
   await page
-    .getByRole("button", { name: "Rebuild in layers", exact: true })
+    .getByRole("button", { name: "Design with image", exact: true })
     .click();
   await page
-    .getByAltText("Reference for editable reconstruction", { exact: true })
+    .getByAltText("Original design reference", { exact: true })
     .waitFor();
+  await page.getByLabel("Reference treatment").selectOption("rebuild");
   const started = page.waitForResponse(
     (r) => r.url().endsWith("/jobs") && r.request().method() === "POST",
   );
   await page
-    .getByRole("button", { name: "Rebuild in editable layers", exact: true })
+    .getByRole("button", { name: "Rebuild simple artwork", exact: true })
     .click();
   const response = await started;
   const job = await response.json();

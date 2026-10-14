@@ -1,6 +1,11 @@
 import { FabricObject, classRegistry, util } from "fabric";
 import deviceCatalog from "../shared/devices.json";
 import { projectDevice } from "./device-projection";
+import {
+  createLaptopModel,
+  drawLaptopModel,
+  type LaptopModel,
+} from "./laptop-model";
 
 export const devices = deviceCatalog;
 export interface FrameSettings {
@@ -12,6 +17,7 @@ export interface FrameSettings {
   finish: "silver" | "graphite" | "gold";
   tiltX: number;
   tiltY: number;
+  lidAngle: number;
   motion: "none" | "orbit" | "rock" | "float";
 }
 export const defaultFrame = (device = "macbook"): FrameSettings => ({
@@ -21,8 +27,9 @@ export const defaultFrame = (device = "macbook"): FrameSettings => ({
   title: "",
   capturedAt: "",
   finish: "silver",
-  tiltX: 0,
-  tiltY: 0,
+  tiltX: device === "macbook" || device === "laptop" ? 8 : 0,
+  tiltY: device === "macbook" || device === "laptop" ? -20 : 0,
+  lidAngle: 108,
   motion: "none",
 });
 export function frameSettings(raw: Partial<FrameSettings>): FrameSettings {
@@ -38,6 +45,12 @@ export function frameSettings(raw: Partial<FrameSettings>): FrameSettings {
   for (const key of ["tiltX", "tiltY"] as const)
     if (!Number.isFinite(result[key]) || Math.abs(result[key]) > 45)
       throw new Error("Invalid frame perspective.");
+  if (
+    !Number.isFinite(result.lidAngle) ||
+    result.lidAngle < 95 ||
+    result.lidAngle > 130
+  )
+    throw new Error("Choose a screen opening between 95 and 130 degrees.");
   if (
     !["silver", "graphite", "gold"].includes(result.finish) ||
     !["none", "orbit", "rock", "float"].includes(result.motion)
@@ -227,6 +240,7 @@ export class DeviceFrame extends FabricObject {
   static type = "DeviceFrame";
   frame: FrameSettings;
   private texture: HTMLCanvasElement;
+  private laptop?: LaptopModel;
   private phase: number | null = null;
   constructor(
     frame: FrameSettings,
@@ -244,6 +258,13 @@ export class DeviceFrame extends FabricObject {
     });
     this.frame = frame;
     this.texture = surface(frame, image);
+    if (d.kind === "laptop")
+      this.laptop = createLaptopModel(
+        this.texture,
+        d.screen,
+        frame.finish,
+        frame.device === "laptop",
+      );
   }
   static async create(
     value: Partial<FrameSettings>,
@@ -290,6 +311,19 @@ export class DeviceFrame extends FabricObject {
         x += Math.sin(t) * 5;
         lift = -Math.sin(t) * h * 0.025;
       }
+    }
+    if (this.laptop) {
+      drawLaptopModel(
+        ctx,
+        this.laptop,
+        this.width,
+        this.height,
+        x,
+        y,
+        lift,
+        this.frame.lidAngle,
+      );
+      return;
     }
     if (
       projectDevice(

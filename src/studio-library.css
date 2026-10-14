@@ -1,0 +1,33 @@
+.template-entry {
+  min-width: 0;
+}
+.template-entry .template-card {
+  width: 100%;
+}
+.template-entry .template-card small {
+  display: block;
+  text-align: left;
+  font-size: 10px;
+  line-height: 1.5;
+  color: #756c80;
+  padding: 0 4px 8px;
+}
+.template-deck-button {
+  width: 100%;
+  margin-top: 5px;
+  border: 1px solid #e1d8ef;
+  border-radius: 7px;
+  background: #f5f0fc;
+  color: #6844a8;
+  padding: 8px 5px;
+  font-size: 11px;
+}
+.template-size-option {
+  font-size: 12px;
+  margin: 12px 0 4px;
+}
+.template-library-count {
+  font-size: 11px;
+  color: #82758e;
+  margin: 8px 0 12px;
+}

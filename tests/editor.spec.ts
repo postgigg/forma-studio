@@ -297,7 +297,13 @@ test("opens a real completed Codex job as editable layers without replacing the 
     (id) => sessionStorage.setItem("forma:ai-job", id!),
     jobId,
   );
+  const jobResponse = page.waitForResponse((response) =>
+    response.url().endsWith(`/jobs/${jobId}`) && response.request().method() === "GET",
+  );
   await page.getByRole("button", { name: "AI Designer", exact: true }).click();
+  const response = await jobResponse;
+  expect(response.ok(), "Supply a completed job that is still in local history").toBe(true);
+  const { result } = await response.json();
   const open = page.getByRole("button", {
     name: "Open editable design",
     exact: false,
@@ -308,14 +314,14 @@ test("opens a real completed Codex job as editable layers without replacing the 
   );
   await open.click();
   await expect(page.getByLabel("Design title", { exact: true })).toHaveValue(
-    /LEAF & LIGHT/,
+    result.title,
   );
   await expect
     .poll(
       async () =>
         ((await savedDesign(page)).pages[0].data.objects as any[])?.length,
     )
-    .toBeGreaterThan(8);
+    .toBe(result.pages[0].elements.length);
   await page.screenshot({
     path: "test-results/ai-designer.png",
     fullPage: true,
@@ -326,16 +332,14 @@ test("opens a real completed Codex job as editable layers without replacing the 
   await page.getByRole("button", { name: /^Layers/ }).click();
   await page
     .locator(".layer-select")
-    .filter({ hasText: "Brand masthead" })
+    .filter({ hasText: result.pages[0].elements[0].name })
     .click();
   await page.getByRole("button", { name: "Properties", exact: true }).click();
-  await page
-    .getByLabel("Text content", { exact: true })
-    .fill("MY EDITABLE BRAND");
+  await page.getByLabel("Opacity", { exact: true }).fill("0.8");
   await expect
     .poll(async () =>
       ((await savedDesign(page)).pages[0].data.objects as any[]).some(
-        (o) => o.text === "MY EDITABLE BRAND",
+        (o) => o.opacity === 0.8,
       ),
     )
     .toBe(true);

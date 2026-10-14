@@ -3,6 +3,7 @@ import { Eraser, RotateCcw, Sparkles, Square } from "lucide-react";
 import type { Editor } from "./editor";
 import { Modal } from "./ui";
 import { designerRequest } from "./ai";
+import { useBrandGuidance } from "./BrandContext";
 import {
   applyRefinement,
   makeRefinedSelection,
@@ -93,6 +94,7 @@ export function MagicEraser({
     [job, setJob] = useState<RefinementJob | null>(null),
     [candidate, setCandidate] = useState<RefinedSelection | null>(null),
     [after, setAfter] = useState("");
+  const { brandContext, control: brandControl } = useBrandGuidance(working);
   const overlay = useRef<HTMLCanvasElement>(null),
     mask = useRef(document.createElement("canvas")),
     drawing = useRef<Stroke | null>(null),
@@ -240,6 +242,7 @@ export function MagicEraser({
             ? prompt.trim()
             : `Remove the marked object and naturally reconstruct its background. ${prompt.trim()}`,
           width: snapshot.width,
+          brandContext,
           height: snapshot.height,
           nodes: snapshot.nodes,
           images: snapshot.images,
@@ -299,6 +302,7 @@ export function MagicEraser({
   };
   return (
     <Modal title={pencil ? "AI Pencil" : "Magic Eraser"} wide onClose={onClose}>
+      {brandControl}
       <p className="modal-description">
         {pencil
           ? "Circle, outline, or brush over the area you want to change. Describe what belongs there; AI uses the whole image to match its style, light, and perspective."

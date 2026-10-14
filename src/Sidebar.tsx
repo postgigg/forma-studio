@@ -20,6 +20,9 @@ import catalog from "../shared/assets.json";
 import { graphics, GraphicPreview } from "./graphics";
 import { PhotoCreator } from "./PhotoCreator";
 import { PhotoFrameLibrary } from "./PhotoFrames";
+import "./studio-library.css";
+import { BrandProfileEditor, useBrandProfile } from "./BrandContext";
+import { brandAffinity } from "../shared/brand-context.mjs";
 
 export type Panel =
   | "design"
@@ -76,9 +79,24 @@ export function Sidebar({
   const [search, setSearch] = useState(""),
     [category, setCategory] = useState("All"),
     [occasion, setOccasion] = useState("All occasions"),
+    [templateSize, setTemplateSize] = useState(false),
     [elementCategory, setElementCategory] = useState("All"),
     [ink, setInk] = useState("#754adb"),
     [brush, setBrush] = useState(10);
+  const { profile: brandProfile } = useBrandProfile();
+  const [brandRelevant, setBrandRelevant] = useState(true);
+  const relevance = (item: {
+    name: string;
+    description?: string;
+    collection?: string;
+    theme?: string;
+  }) =>
+    brandRelevant
+      ? brandAffinity(
+          `${item.name} ${item.description || ""} ${item.collection || ""} ${item.theme || ""}`,
+          brandProfile,
+        )
+      : 0;
   const input = useRef<HTMLInputElement>(null);
   const [stickerTheme, setStickerTheme] = useState("All themes"),
     [stickerLimit, setStickerLimit] = useState(12);
@@ -97,7 +115,11 @@ export function Sidebar({
           .toLowerCase()
           .includes(search.toLowerCase()),
     )
-    .sort((a, b) => Number(!!b.collection) - Number(!!a.collection));
+    .sort(
+      (a, b) =>
+        relevance(b) - relevance(a) ||
+        Number(!!b.collection) - Number(!!a.collection),
+    );
   const stickers: {
     id: string;
     name: string;
@@ -115,6 +137,7 @@ export function Sidebar({
         .toLowerCase()
         .includes(search.toLowerCase()),
   );
+  filteredStickers.sort((a, b) => relevance(b) - relevance(a));
   useEffect(() => {
     setSearch("");
     setStickerLimit(12);
@@ -192,6 +215,23 @@ export function Sidebar({
               ))}
             </select>
           </Field>
+          <label className="template-size-option check-row">
+            <input
+              type="checkbox"
+              checked={templateSize}
+              onChange={(e) => setTemplateSize(e.target.checked)}
+              disabled={editor.doc.pages.length > 1}
+            />
+            Use template dimensions
+          </label>
+          {editor.doc.pages.length > 1 && (
+            <p className="muted small">
+              Templates fit the current size in multipage designs.
+            </p>
+          )}
+          <p className="template-library-count">
+            {templates.length} editable templates
+          </p>
           <div className="template-grid">
             {templates
               .filter(
@@ -203,17 +243,38 @@ export function Sidebar({
                     .includes(search.toLowerCase()),
               )
               .map((t) => (
-                <button
-                  className="template-card"
-                  key={t.id}
-                  aria-label={`Apply ${t.name} template`}
-                  draggable
-                  onDragStart={(e) => drag(e, { type: "template", id: t.id })}
-                  onClick={() => run(() => editor.applyTemplate(t))}
-                >
-                  <TemplatePreview template={t} />
-                  <span>{t.name}</span>
-                </button>
+                <div className="template-entry" key={t.id}>
+                  <button
+                    className="template-card"
+                    aria-label={`Apply ${t.name} template`}
+                    draggable
+                    onDragStart={(e) => drag(e, { type: "template", id: t.id })}
+                    onClick={() =>
+                      run(() => editor.applyTemplate(t, templateSize))
+                    }
+                  >
+                    <TemplatePreview template={t} />
+                    <span>{t.name}</span>
+                    {t.format && <small>{t.format}</small>}
+                  </button>
+                  {t.deckIds && (
+                    <button
+                      className="template-deck-button"
+                      onClick={() =>
+                        run(() =>
+                          editor.applyTemplateSet(
+                            t.deckIds!.map((id) =>
+                              templates.find((item) => item.id === id)!,
+                            ),
+                            templateSize,
+                          ),
+                        )
+                      }
+                    >
+                      Use 4-page deck
+                    </button>
+                  )}
+                </div>
               ))}
           </div>
           {!templates.some(
@@ -234,12 +295,28 @@ export function Sidebar({
       )}
       {panel === "elements" && (
         <>
-          <div className="category-tabs element-tabs">
+          {brandProfile && (
+            <label className="check-row brand-relevance">
+              <input
+                type="checkbox"
+                aria-label="Prioritize artwork for my business"
+                checked={brandRelevant}
+                onChange={(e) => setBrandRelevant(e.target.checked)}
+              />
+              Prioritize artwork for my business
+            </label>
+          )}
+          <div
+            className="category-tabs element-tabs"
+            role="group"
+            aria-label="Element categories"
+          >
             {["All", "AI stickers", "Graphics", "Shapes", "Photo frames"].map(
               (c) => (
                 <button
                   key={c}
                   className={elementCategory === c ? "selected" : ""}
+                  aria-pressed={elementCategory === c}
                   onClick={() => setElementCategory(c)}
                 >
                   {c}
@@ -250,12 +327,6 @@ export function Sidebar({
           {elementCategory === "Photo frames" && (
             <PhotoFrameLibrary editor={editor} run={run} />
           )}
-          <div className="library-intro">
-            <div>
-              <h3>A little character</h3>
-              <p>Click or drag onto your page.</p>
-            </div>
-          </div>
           {["All", "AI stickers"].includes(elementCategory) && (
             <>
               <h3 className="section-label">
@@ -577,8 +648,9 @@ export function Sidebar({
           <div className="brand-banner">
             <span>f.</span>
             <h3>Beautifully consistent.</h3>
-            <p>Keep your favorite colors close.</p>
+            <p>Your purpose, visual voice, colors and logo.</p>
           </div>
+          <BrandProfileEditor />
           <h3 className="section-label">
             Your palette <span>{brand.length}</span>
           </h3>

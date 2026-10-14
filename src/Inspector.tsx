@@ -493,7 +493,7 @@ export function Inspector({
                     className="primary full rebuild-image"
                     onClick={onRebuild}
                   >
-                    Rebuild in layers with AI
+                    Design with this image
                   </button>
                   <div className="filter-grid">
                     {["original", "mono", "warm", "vivid"].map((f) => (

@@ -9,7 +9,8 @@ import {
   util,
 } from "fabric";
 import { uid } from "./types";
-import occasionTemplates from '../shared/templates-occasions.json';
+import occasionTemplates from "../shared/templates-occasions.json";
+import studioTemplates from "../shared/templates-studio.json";
 export type Template = {
   id: string;
   name: string;
@@ -26,7 +27,9 @@ export type Template = {
   width?: number;
   height?: number;
   thumbnail?: string;
-  composition?: Record<string,any>[];
+  composition?: Record<string, any>[];
+  format?: string;
+  deckIds?: string[];
 };
 export const templates: Template[] = [
   {
@@ -180,20 +183,59 @@ function named<T extends FabricObject>(object: T, name: string): T {
   Object.assign(object, { id: uid(), name });
   return object;
 }
-templates.push(...occasionTemplates as Template[]);
+templates.push(...(occasionTemplates as Template[]));
+templates.unshift(...(studioTemplates as Template[]));
 export async function templateObjects(t: Template, w: number, h: number) {
   if (t.composition) {
-    const scale = Math.min(w / t.width!, h / t.height!), dx = (w-t.width!*scale)/2, dy = (h-t.height!*scale)/2;
-    const result:FabricObject[]=[];
-    for(const layer of t.composition) {
-      let object:FabricObject;
-      if(layer.type==='Photo') {
-        const image=await FabricImage.fromURL(layer.src),fill=Math.max(layer.width/image.width,layer.height/image.height);
-        image.set({left:layer.left,top:layer.top,width:layer.width/fill,height:layer.height/fill,cropX:(image.width-layer.width/fill)/2,cropY:(image.height-layer.height/fill)/2,scaleX:fill,scaleY:fill,strokeWidth:0});
-        object=image;
-      } else [object]=await util.enlivenObjects<FabricObject>([structuredClone(layer)]);
-      object.set({left:dx+object.left*scale,top:dy+object.top*scale,scaleX:object.scaleX*scale,scaleY:object.scaleY*scale});
-      named(object,layer.name);result.push(object);
+    await Promise.all(
+      [
+        ...new Set(
+          t.composition
+            .filter((o) => o.type === "Textbox")
+            .map((o) => o.fontFamily),
+        ),
+      ].map((font) => document.fonts.load(`32px "${font}"`)),
+    );
+    const scale = Math.min(w / t.width!, h / t.height!),
+      dx = (w - t.width! * scale) / 2,
+      dy = (h - t.height! * scale) / 2;
+    const result: FabricObject[] = [];
+    for (const layer of t.composition) {
+      let object: FabricObject;
+      if (layer.type === "Photo") {
+        const image = await FabricImage.fromURL(layer.src),
+          fill = Math.max(
+            layer.width / image.width,
+            layer.height / image.height,
+          );
+        image.set({
+          left: layer.left,
+          top: layer.top,
+          width: layer.width / fill,
+          height: layer.height / fill,
+          cropX: (image.width - layer.width / fill) / 2,
+          cropY: (image.height - layer.height / fill) / 2,
+          scaleX: fill,
+          scaleY: fill,
+          strokeWidth: 0,
+        });
+        object = image;
+      } else
+        [object] = await util.enlivenObjects<FabricObject>([
+          structuredClone(layer),
+        ]);
+      if (object instanceof Textbox && layer.boxHeight) {
+        while (object.height > layer.boxHeight && object.fontSize > 16)
+          object.set("fontSize", object.fontSize - 1);
+      }
+      object.set({
+        left: dx + object.left * scale,
+        top: dy + object.top * scale,
+        scaleX: object.scaleX * scale,
+        scaleY: object.scaleY * scale,
+      });
+      named(object, layer.name);
+      result.push(object);
     }
     return result;
   }

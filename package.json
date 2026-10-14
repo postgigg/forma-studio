@@ -14,7 +14,7 @@
     "local": "node scripts/start-local.mjs",
     "ai:start": "node scripts/start-ai.mjs",
     "ai:stop": "node scripts/stop-ai.mjs",
-    "test:server": "node --test tests/designer.test.mjs tests/photos.test.mjs tests/refinements.test.mjs tests/frames.test.mjs",
+    "test:server": "node --test tests/designer.test.mjs tests/photos.test.mjs tests/refinements.test.mjs tests/frames.test.mjs tests/brand-reference.test.mjs",
     "test:ai-live": "node scripts/test-designer-live.mjs"
   },
   "dependencies": {

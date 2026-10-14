@@ -1,6 +1,10 @@
 import { createStore, del, entries, get, set } from "idb-keyval";
 import type { Asset, Design } from "./types";
 import catalog from "../shared/assets.json";
+import {
+  validateBrandContext,
+  type BrandProfile,
+} from "../shared/brand-context.mjs";
 const db = createStore("forma-studio", "workspace");
 let writes: Promise<unknown> = Promise.resolve();
 export function saveDesign(design: Design) {
@@ -27,7 +31,12 @@ export const putAssets = (assets: Asset[]) => set("assets", assets, db);
 export const getBrand = async (): Promise<string[]> =>
   (await get("brand", db)) || ["#754adb", "#292432", "#f7f2e8", "#d5e2cc"];
 export const putBrand = (brand: string[]) => set("brand", brand, db);
-export const getBrandLogo = async (): Promise<Asset | null> => (await get("brand-logo", db)) || null;
+export const getBrandProfile = async () =>
+  validateBrandContext(await get("brand-profile", db));
+export const putBrandProfile = (profile?: BrandProfile) =>
+  set("brand-profile", profile || null, db);
+export const getBrandLogo = async (): Promise<Asset | null> =>
+  (await get("brand-logo", db)) || null;
 export const putBrandLogo = (logo: Asset | null) => set("brand-logo", logo, db);
 export function validateDesign(raw: unknown): asserts raw is Design {
   if (!raw || typeof raw !== "object")
@@ -79,7 +88,16 @@ export function validateDesign(raw: unknown): asserts raw is Design {
     }
   };
   for (const page of d.pages) {
-    if (page.motion && (!['none','fade','rise','stagger','drift'].includes(page.motion.style) || !Number.isFinite(page.motion.duration) || page.motion.duration < .5 || page.motion.duration > 6)) throw new Error('Invalid page animation.');
+    if (
+      page.motion &&
+      (!["none", "fade", "rise", "stagger", "drift"].includes(
+        page.motion.style,
+      ) ||
+        !Number.isFinite(page.motion.duration) ||
+        page.motion.duration < 0.5 ||
+        page.motion.duration > 6)
+    )
+      throw new Error("Invalid page animation.");
     if (
       !page ||
       typeof page.name !== "string" ||

@@ -194,7 +194,7 @@ export function SelectionMenu({
       {selected instanceof FabricImage && (
         <button role="menuitem" onClick={() => act(onRebuild)}>
           <GroupIcon size={16} />
-          <span>Rebuild in layers with AI</span>
+          <span>Design with this image</span>
         </button>
       )}
       {(multiple || group) && (

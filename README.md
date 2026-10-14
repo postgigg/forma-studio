@@ -13,7 +13,7 @@ Build with draggable layers, original artwork, photo-filled letters, editable ch
 
 | Design                                                                                                     | Compose                                                             | Refine                                                                 | Share                                                    |
 | ---------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------- | ---------------------------------------------------------------------- | -------------------------------------------------------- |
-| **112 templates**, including 100 distinct occasion compositions                                            | **304 transparent AI stickers**, **290 editable graphics**          | AI Designer, selection refinement, AI Pencil, and Magic Eraser         | PNG, JPG, SVG, PDF, editable JSON, GIF, WebM             |
+| **262 editable templates**, including 150 new compositions                                            | **304 transparent AI stickers**, **290 editable graphics**          | AI Designer, selection refinement, AI Pencil, and Magic Eraser         | PNG, JPG, SVG, PDF, editable JSON, GIF, WebM             |
 | Birthdays, weddings, seasonal events, business, retail, hospitality, wellness, education, and celebrations | 250 graphics across 25 brand collections; four original Forma fonts | Groups, alignment, gradients, transparent stops, crop, corner rounding | Multiple pages, Present, motion previews, local accounts |
 
 ## Start locally
@@ -94,6 +94,10 @@ Run `npm run local` to start again. Logs and job files are under `.local/designe
 
 Open **Design**, choose an occasion, and click a template. Titles, shapes, graphics, and photos remain editable layers. Or choose **New design** for social, presentation, print, or custom dimensions.
 
+The new collection includes **24 yard signs, 24 business cards, 24 birthday posters, 24 flyers, 24 business-pitch slides**, and **30 menus, invitations, social campaigns, business documents, community and life-event layouts**. These are distinct compositions with their own hierarchy, geometry and palette. Choose **Use template dimensions** to apply the original format to a single-page design; otherwise the template fits your canvas. Six pitch covers offer **Use 4-page deck**. A deck inserts its other pages after the current page, and one Undo restores the previous document. The color picker includes 32 starting swatches plus custom colors.
+
+![A selection of the new business card and birthday layouts, rendered from editable template objects.](docs/media/studio-template-selection.png)
+
 Change the document title in the header. Browser saving happens automatically. Use the page strip, **Add page**, and **Duplicate page** to build a larger document.
 
 ### 2. Select and compose
@@ -109,6 +113,8 @@ For a rectangle, open **Properties → Appearance → Corner roundness**. Enter 
 ### 3. Add artwork
 
 **Elements** contains stickers, shapes, and vectors. Filter graphics by brand collection or enable **Use my brand palette**. Upload your exact logo under **Brand** for AI-designed artwork. Uploaded photos remain in **Uploads**.
+
+Under **Brand → Your business & mission**, save your company name, business purpose, mission statement, audience and visual voice. AI Designer, refinement, AI Pencil, Magic Eraser and photo creation receive this profile when **Use brand context** is checked. Your explicit request takes priority. Erasing still removes the marked object and restores its surroundings; it does not add brand decorations. Elements can **Prioritize artwork for my business**, bringing relevant graphics and stickers forward while keeping the full library available.
 
 ![Graphic collections beside an editable quarterly report.](docs/media/elements-library.png)
 
@@ -154,6 +160,8 @@ Refinement can add separate editable stars, sparkles, shapes, paths, or text. It
 
 Use **AI Designer** for a new editable composition and **Photos → Create with AI** for a new image.
 
+To design around an existing photo, select it and choose **Design with this image** in Properties or the right-click menu. **Keep image quality** is the default: the actual original is embedded as a photo layer, with new text, logos and layout elements on separate layers. This avoids rebuilding photographic subjects out of primitive shapes. Use AI Pencil for targeted changes within the photo. **Rebuild simple artwork** remains an explicit option for flat posters and simple graphics; it is a stylized approximation and cannot recover hidden original layers. Completed jobs retain the embedded photo and exact logo when reopened or refined.
+
 ### 7. Make a targeted change with AI Pencil
 
 Select a photo or background image, then choose **AI Pencil** in the toolbar, properties, or right-click menu. Mark the desired area with **Circle an area**, **Freehand outline**, or **Paint an area**. Describe the change, including direction, scale, or details that matter.
@@ -169,6 +177,8 @@ The original image supplies context and style; your mask supplies location. Sele
 ### 8. Present a website inside a device
 
 Choose **Frames**, then MacBook, Laptop, iPad, Tablet, or iPhone. Enter an HTTP(S) URL and select **Render website**, or upload a screenshot. Choose a finish, adjust horizontal/vertical perspective, and add Orbit, Rock, or Float movement. **Edit frame** refreshes or replaces the screen later.
+
+Laptop frames use a hinged screen and a solid keyboard base with keys, trackpad, ports and depth. Drag the preview to rotate, choose a view preset, or adjust **Laptop screen opening**. A software renderer retains the same geometry when WebGL is unavailable. The dialog keeps its save controls accessible on smaller screens.
 
 <table><tr><td width="50%"><img src="docs/media/device-macbook.png" alt="A captured website in a perspective MacBook frame" /></td><td width="50%"><img src="docs/media/device-motion.gif" alt="Actual animated GIF export of a moving device frame" /></td></tr></table>
 
@@ -208,7 +218,7 @@ The app uses React, TypeScript, Vite, Fabric, Node, Playwright, nginx/Docker, an
 
 ## Validation and demo regeneration
 
-Verified on Windows on **2026-10-13**: the production Docker build succeeded, **33 browser tests** and **13 server checks** passed, and the editor fit four desktop/mobile viewport sizes. The real AI Pencil ocean demo preserved every pixel outside its marked region and supported one-step Undo. A separate real refinement produced 45 editable stars distributed across a poster while preserving its text. The scripts and example screenshots below make these checks reproducible.
+Verified on Windows on **2026-10-14**: the production build succeeded, **39 browser tests** and **16 server checks** passed, plus the optional live Codex import test against a current completed job. All 150 new template previews were rendered and checked for text overflow. A real photographic reference design retained the original photo and logo byte-for-byte as separate editable layers. The laptop rotation test also passes with WebGL disabled. Earlier real AI Pencil and refinement checks preserved pixels outside the marked region and supported Undo. The scripts and example screenshots below make these checks reproducible.
 
 With the local editor and worker running:
 

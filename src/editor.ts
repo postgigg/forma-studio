@@ -240,7 +240,13 @@ export class Editor {
     const designs = await allDesigns();
     if (this.disposed) return;
     if (designs.length) await this.open(designs[0]);
-    else await this.create("A little growth", 1080, 1080, templates[0]);
+    else
+      await this.create(
+        "A little growth",
+        1080,
+        1080,
+        templates.find((t) => t.id === "botanical")!,
+      );
     this.ready = true;
     this.notify();
   }
@@ -974,16 +980,52 @@ export class Editor {
     }
     this.notify();
   }
-  async applyTemplate(t: Template) {
+  async applyTemplate(t: Template, matchSize = false) {
+    return this.applyTemplateSet([t], matchSize);
+  }
+  async applyTemplateSet(items: Template[], matchSize = false) {
     if (this.busy) return;
+    if (!items.length) return;
+    if (this.doc.pages.length + items.length - 1 > 100)
+      throw new Error("A design can contain up to 100 pages.");
     this.busy = true;
     this.notify();
     try {
-      const objects = await templateObjects(t, this.doc.width, this.doc.height);
+      const t = items[0];
+      const width =
+        matchSize && this.doc.pages.length === 1
+          ? t.width || this.doc.width
+          : this.doc.width;
+      const height =
+        matchSize && this.doc.pages.length === 1
+          ? t.height || this.doc.height
+          : this.doc.height;
+      const pages = await Promise.all(
+        items.map(async (template) => ({
+          template,
+          objects: await templateObjects(template, width, height),
+        })),
+      );
       this.canvas.clear();
+      this.doc.width = width;
+      this.doc.height = height;
       this.canvas.backgroundColor = t.background;
-      this.canvas.add(...objects);
+      this.canvas.add(...pages[0].objects);
       this.page.name = t.name;
+      this.doc.pages.splice(
+        this.pageIndex + 1,
+        0,
+        ...pages.slice(1).map(({ template, objects }) => ({
+          id: uid(),
+          name: template.name,
+          thumbnail: "",
+          data: {
+            background: template.background,
+            objects: objects.map((o) => o.toObject()),
+          },
+        })),
+      );
+      this.setZoom(this.zoom);
       this.busy = false;
       this.commit();
     } finally {

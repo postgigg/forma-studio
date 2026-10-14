@@ -71,6 +71,18 @@ export function FrameDialog({
     upload = useRef<HTMLInputElement>(null),
     capture = useRef<AbortController | null>(null),
     alive = useRef(true);
+  const model = useRef<{
+    device: string;
+    finish: string;
+    src: string;
+    frame: Promise<DeviceFrame>;
+  } | null>(null);
+  const orbit = useRef<{
+    x: number;
+    y: number;
+    tiltX: number;
+    tiltY: number;
+  } | null>(null);
   const destination = useRef({
     doc: editor.doc.id,
     page: editor.page.id,
@@ -88,9 +100,22 @@ export function FrameDialog({
   useEffect(() => {
     let disposed = false,
       request = 0;
-    void DeviceFrame.create(settings)
+    if (
+      !model.current ||
+      model.current.device !== settings.device ||
+      model.current.finish !== settings.finish ||
+      model.current.src !== settings.src
+    )
+      model.current = {
+        device: settings.device,
+        finish: settings.finish,
+        src: settings.src,
+        frame: DeviceFrame.create(settings),
+      };
+    void model.current.frame
       .then((frame) => {
         if (disposed || !preview.current) return;
+        frame.frame = settings;
         const canvas = preview.current,
           ctx = canvas.getContext("2d")!;
         canvas.width = 1000;
@@ -232,44 +257,120 @@ export function FrameDialog({
     <Modal
       title={existing ? "Edit device frame" : "Create device frame"}
       wide
+      className="frame-modal"
       onClose={onClose}
     >
       <div className="frame-editor">
         <div className="frame-preview">
-          <canvas ref={preview} aria-label="Device frame preview" />
+          <div className="frame-preview-heading">
+            <strong>
+              {devices.find((d) => d.id === settings.device)!.name}
+            </strong>
+            <span>Drag to rotate</span>
+          </div>
+          <canvas
+            ref={preview}
+            aria-label="Device frame preview"
+            onPointerDown={(e) => {
+              if (e.button !== 0) return;
+              setPlaying(false);
+              orbit.current = {
+                x: e.clientX,
+                y: e.clientY,
+                tiltX: settings.tiltX,
+                tiltY: settings.tiltY,
+              };
+              e.currentTarget.setPointerCapture(e.pointerId);
+              e.preventDefault();
+            }}
+            onPointerMove={(e) => {
+              const start = orbit.current;
+              if (!start) return;
+              update({
+                tiltX: Math.round(
+                  Math.max(
+                    -35,
+                    Math.min(35, start.tiltX - (e.clientY - start.y) * 0.18),
+                  ),
+                ),
+                tiltY: Math.round(
+                  Math.max(
+                    -40,
+                    Math.min(40, start.tiltY + (e.clientX - start.x) * 0.18),
+                  ),
+                ),
+              });
+            }}
+            onPointerUp={(e) => {
+              orbit.current = null;
+              if (e.currentTarget.hasPointerCapture(e.pointerId))
+                e.currentTarget.releasePointerCapture(e.pointerId);
+            }}
+            onPointerCancel={() => {
+              orbit.current = null;
+            }}
+          />
+          <div
+            className="frame-view-presets"
+            role="group"
+            aria-label="Device view presets"
+          >
+            <button onClick={() => update({ tiltX: 0, tiltY: 0 })}>
+              <RotateCcw size={13} /> Front view
+            </button>
+            <button onClick={() => update({ tiltX: 8, tiltY: -25 })}>
+              Three-quarter
+            </button>
+            <button onClick={() => update({ tiltX: 28, tiltY: 20 })}>
+              Elevated
+            </button>
+          </div>
           <div className="frame-preview-controls">
             <button
               className="secondary"
-              onClick={() => setPlaying((v) => !v)}
-              disabled={settings.motion === "none"}
+              onClick={() => {
+                if (settings.motion === "none") update({ motion: "orbit" });
+                setPlaying((v) => !v);
+              }}
             >
               {playing ? <Pause size={15} /> : <Play size={15} />}{" "}
               {playing ? "Pause 3D preview" : "Play 3D preview"}
             </button>
-            <button
-              className="text-button"
-              onClick={() => update({ tiltX: 0, tiltY: 0 })}
-            >
-              <RotateCcw size={14} /> Front view
-            </button>
           </div>
         </div>
         <div className="frame-settings">
-          <label className="field">
-            <span>Device</span>
-            <select
-              aria-label="Device model"
-              value={settings.device}
-              disabled={working}
-              onChange={(e) => update({ device: e.target.value })}
-            >
-              {devices.map((d) => (
-                <option key={d.id} value={d.id}>
-                  {d.name}
-                </option>
-              ))}
-            </select>
-          </label>
+          <div className="frame-field-pair">
+            <label className="field">
+              <span>Device</span>
+              <select
+                aria-label="Device model"
+                value={settings.device}
+                disabled={working}
+                onChange={(e) => update({ device: e.target.value })}
+              >
+                {devices.map((d) => (
+                  <option key={d.id} value={d.id}>
+                    {d.name}
+                  </option>
+                ))}
+              </select>
+            </label>
+            <label className="field">
+              <span>Finish</span>
+              <select
+                aria-label="Device finish"
+                value={settings.finish}
+                onChange={(e) =>
+                  update({ finish: e.target.value as FrameSettings["finish"] })
+                }
+              >
+                <option value="silver">Silver</option>
+                <option value="graphite">Graphite</option>
+                <option value="gold">Champagne</option>
+              </select>
+            </label>
+          </div>
+          <h3>Your screen</h3>
           <label className="field">
             <span>Website address</span>
             <input
@@ -351,20 +452,7 @@ export function FrameDialog({
             Captures the visible page at this device’s screen size. Login pages
             use a fresh session; you can upload your own screenshot instead.
           </p>
-          <label className="field">
-            <span>Finish</span>
-            <select
-              aria-label="Device finish"
-              value={settings.finish}
-              onChange={(e) =>
-                update({ finish: e.target.value as FrameSettings["finish"] })
-              }
-            >
-              <option value="silver">Silver</option>
-              <option value="graphite">Graphite</option>
-              <option value="gold">Champagne</option>
-            </select>
-          </label>
+          <h3>View & motion</h3>
           <label className="field">
             <span>Tilt up / down · {settings.tiltX}°</span>
             <input
@@ -387,6 +475,19 @@ export function FrameDialog({
               onChange={(e) => update({ tiltY: +e.target.value })}
             />
           </label>
+          {devices.find((d) => d.id === settings.device)!.kind === "laptop" && (
+            <label className="field">
+              <span>Screen opening · {settings.lidAngle}°</span>
+              <input
+                aria-label="Laptop screen opening"
+                type="range"
+                min={95}
+                max={130}
+                value={settings.lidAngle}
+                onChange={(e) => update({ lidAngle: +e.target.value })}
+              />
+            </label>
+          )}
           <label className="field">
             <span>3D movement</span>
             <select
@@ -413,12 +514,12 @@ export function FrameDialog({
           )}
         </div>
       </div>
-      {error && (
-        <p role="alert" className="ai-error">
-          {error}
-        </p>
-      )}
-      <div className="refine-actions">
+      <div className="refine-actions frame-actions">
+        {error && (
+          <p role="alert" className="ai-error">
+            {error}
+          </p>
+        )}
         <button className="secondary" onClick={onClose}>
           Cancel
         </button>

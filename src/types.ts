@@ -1,6 +1,9 @@
 import fontCatalog from "../shared/fonts.json";
 export type CanvasData = Record<string, unknown>;
-export interface PageMotion { style: 'none'|'fade'|'rise'|'stagger'|'drift'; duration: number }
+export interface PageMotion {
+  style: "none" | "fade" | "rise" | "stagger" | "drift";
+  duration: number;
+}
 export interface DesignPage {
   id: string;
   name: string;
@@ -37,6 +40,26 @@ export const colors = [
   "#e9c360",
   "#e2798c",
   "#5486a0",
+  "#1448d8",
+  "#16427d",
+  "#162747",
+  "#2346a1",
+  "#00a7b5",
+  "#124b37",
+  "#d1e65b",
+  "#ffdd29",
+  "#f46a2b",
+  "#df4e34",
+  "#761b2d",
+  "#ff74ac",
+  "#68354d",
+  "#bdb4fa",
+  "#30226e",
+  "#d8a52e",
+  "#f2ddb7",
+  "#f2d9dd",
+  "#b9e0e5",
+  "#e1e8c8",
 ];
 export const fonts: string[] = fontCatalog;
 export const presets = [

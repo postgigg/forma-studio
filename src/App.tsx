@@ -883,7 +883,7 @@ export default function App() {
                       className="toolbar-button rebuild-toolbar"
                       onClick={rebuildImage}
                     >
-                      <Sparkles size={15} /> Rebuild in layers
+                      <Sparkles size={15} /> Design with image
                     </button>
                   )}
                   <IconButton
