@@ -37,6 +37,15 @@ export function validateCapture(value) {
 }
 export async function captureWebsite(value, { signal } = {}) {
   const { url, device } = validateCapture(value);
+  if (process.env.FORMA_CAPTURE_ENDPOINT && process.env.FORMA_CAPTURE_TOKEN) {
+    const response = await fetch(process.env.FORMA_CAPTURE_ENDPOINT, {
+      method: "POST", headers: { "Content-Type": "application/json", "X-Forma-Capture": process.env.FORMA_CAPTURE_TOKEN },
+      body: JSON.stringify({ url, device: device.id }), signal: signal || AbortSignal.timeout(40000),
+    });
+    const result = await response.json();
+    if (!response.ok) throw new Error(result.error || "Website capture failed.");
+    return result;
+  }
   const browser = await chromium.launch({
     ...(process.platform === "win32" ? { channel: "msedge" } : {}),
     headless: true,

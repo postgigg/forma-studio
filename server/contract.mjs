@@ -1,5 +1,6 @@
 import { readFileSync } from "node:fs";
 import { validateBrandContext } from "../shared/brand-context.mjs";
+import { validateDesignIntent } from "../shared/design-intent.mjs";
 import { pngDimensions } from "./photos.mjs";
 import { referenceAsset } from "./reference.mjs";
 export const fontNames = JSON.parse(
@@ -199,6 +200,8 @@ export function validateBrief(value) {
   if (value.logo !== undefined) brief.logo = validateLogo(value.logo);
   const brandContext = validateBrandContext(value.brandContext);
   if (brandContext) brief.brandContext = brandContext;
+  const designIntent = validateDesignIntent(value.designIntent);
+  if (designIntent) brief.designIntent = designIntent;
   if (
     value.referenceMode !== undefined &&
     !["preserve", "rebuild"].includes(value.referenceMode)

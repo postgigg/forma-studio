@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { ChevronDown, Plus, RefreshCw, Sparkles, Square } from "lucide-react";
 import { designerRequest } from "./ai";
 import { useBrandGuidance } from "./BrandContext";
+import { AiEngine, useDesignIntent } from "./DesignIntent";
 import { Field } from "./ui";
 import type { Asset } from "./types";
 
@@ -34,12 +35,13 @@ export function PhotoCreator({
     [job, setJob] = useState<PhotoJob | null>(null),
     [recent, setRecent] = useState<{ id: string; title: string }[]>([]);
   const { brandContext, control: brandControl } = useBrandGuidance(busy);
+  const { designIntent, control: intentControl } = useDesignIntent(busy, "photo");
   const connect = async () => {
     try {
       setError("");
       const session = await designerRequest("/session");
       if (!session.ready)
-        throw new Error("Sign in to Codex on this computer to create photos.");
+        throw new Error(window.formaDesktop ? "Open AI Designer → AI account & connection to sign in, then reconnect here." : "Sign in to Codex on this computer to create photos.");
       setToken(session.token);
       setRecent(await designerRequest("/photos", session.token));
     } catch (e) {
@@ -86,7 +88,7 @@ export function PhotoCreator({
     try {
       const next: PhotoJob = await designerRequest("/photos", token, {
         method: "POST",
-        body: JSON.stringify({ prompt, format, style, brandContext }),
+        body: JSON.stringify({ prompt, format, style, brandContext, designIntent }),
       });
       setJob(next);
       setJobId(next.id);
@@ -118,6 +120,8 @@ export function PhotoCreator({
           }}
         />
       </Field>
+      {intentControl}
+      <AiEngine images />
       <div className="field-grid">
         <Field label="Format">
           <select

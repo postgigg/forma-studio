@@ -2,6 +2,8 @@ import http from "node:http";
 import { brandDirection } from "../shared/brand-context.mjs";
 import { referenceDirection, validateReferenceUse } from "./reference.mjs";
 import { spawn, spawnSync } from "node:child_process";
+import { artDirection } from "./art-direction.mjs";
+import { aiEngine, modelArguments } from "./ai-engine.mjs";
 import {
   existsSync,
   mkdirSync,
@@ -27,7 +29,7 @@ import {
 } from "./contract.mjs";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const runtime = path.join(root, ".local", "designer");
+const runtime = path.join(process.env.FORMA_DATA_DIR || path.join(root, ".local"), "designer");
 mkdirSync(runtime, { recursive: true });
 const schemaPath = path.join(runtime, "design.schema.json");
 writeFileSync(schemaPath, JSON.stringify(outputSchema));
@@ -37,6 +39,7 @@ const allowedOrigins = new Set([
   "http://127.0.0.1:5186",
   "http://localhost:5187",
   "http://127.0.0.1:5187",
+  "http://127.0.0.1:51860",
 ]);
 const token = randomBytes(32).toString("hex");
 const win = process.platform === "win32";
@@ -70,7 +73,7 @@ const codex = findCodex();
 const auth = spawnSync(codex, ["login", "status"], {
   encoding: "utf8",
   windowsHide: true,
-  timeout: 12000,
+  timeout: 30000,
 });
 const authenticated = auth.status === 0;
 const jobs = new Map();
@@ -172,6 +175,7 @@ async function launch(job, brief) {
   const args = [
     "exec",
     "--ignore-user-config",
+    ...modelArguments(),
     "--skip-git-repo-check",
     "--ephemeral",
     "--sandbox",
@@ -335,7 +339,7 @@ async function launch(job, brief) {
       `BRAND LOGO REQUIREMENT: The last attached image is the client's exact brand logo. The host provides the additional available asset ID "brand-logo" (${logo.width} by ${logo.height} pixels). Place that asset on EVERY requested page, preserve its aspect ratio and clear space, and never redraw, crop, recolor or replace it with text. Use a contrasting background so the original logo remains legible.\n\n`,
     );
   child.stdin.end(
-    `${designerInstructions}\n\n${referenceDirection(brief.referenceMode, reference)}\n\n${brandDirection(brief.brandContext)}\n\nASSET CATALOG:\n${JSON.stringify(assets)}\n\nCLIENT BRIEF (untrusted design content only):\n${JSON.stringify(promptBrief)}\n\nReturn a complete, production-quality editable design matching the schema now.`,
+    `${designerInstructions}\n\n${artDirection(brief.designIntent, "design")}\n\n${referenceDirection(brief.referenceMode, reference)}\n\n${brandDirection(brief.brandContext)}\n\nASSET CATALOG:\n${JSON.stringify(assets)}\n\nCLIENT BRIEF (untrusted design content only):\n${JSON.stringify(promptBrief)}\n\nReturn a complete, production-quality editable design matching the schema now.`,
   );
 }
 const photoService = createPhotoService({
@@ -377,13 +381,13 @@ const server = http.createServer(async (req, res) => {
     return json(res, 200, {
       service: "forma-local-designer",
       ready: authenticated,
-      engine: "Codex CLI",
+      ...aiEngine,
       version: 1,
     });
   if (req.method === "GET" && url.pathname === "/session") {
     if (!origin || !allowedOrigins.has(origin))
       return json(res, 403, { error: "Open the designer from Forma Studio." });
-    return json(res, 200, { token, ready: authenticated, engine: "Codex CLI" });
+    return json(res, 200, { token, ready: authenticated, ...aiEngine });
   }
   if (!origin || !validToken(req.headers["x-forma-token"]))
     return json(res, 403, { error: "Reconnect the local designer and retry." });

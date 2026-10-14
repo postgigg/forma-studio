@@ -4,6 +4,7 @@ import type { Editor } from "./editor";
 import { Modal } from "./ui";
 import { designerRequest } from "./ai";
 import { useBrandGuidance } from "./BrandContext";
+import { AiEngine, useDesignIntent } from "./DesignIntent";
 import {
   applyRefinement,
   makeRefinedSelection,
@@ -95,6 +96,7 @@ export function MagicEraser({
     [candidate, setCandidate] = useState<RefinedSelection | null>(null),
     [after, setAfter] = useState("");
   const { brandContext, control: brandControl } = useBrandGuidance(working);
+  const { designIntent, control: intentControl } = useDesignIntent(working);
   const overlay = useRef<HTMLCanvasElement>(null),
     mask = useRef(document.createElement("canvas")),
     drawing = useRef<Stroke | null>(null),
@@ -243,6 +245,7 @@ export function MagicEraser({
             : `Remove the marked object and naturally reconstruct its background. ${prompt.trim()}`,
           width: snapshot.width,
           brandContext,
+          ...(pencil ? { designIntent } : {}),
           height: snapshot.height,
           nodes: snapshot.nodes,
           images: snapshot.images,
@@ -463,6 +466,8 @@ export function MagicEraser({
           }
         />
       </label>
+      {pencil && intentControl}
+      <AiEngine images />
       {working && (
         <div className="ai-progress">
           <span className="spinner" />

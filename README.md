@@ -1,7 +1,7 @@
 <p align="center"><strong>FORMA STUDIO</strong></p>
 <h1 align="center">A little space to create.</h1>
 <p align="center">A local visual design studio for invitations, brand stories, presentations, data, and ideas.</p>
-<p align="center"><a href="#start-locally">Setup</a> · <a href="#take-a-tour">Walkthrough</a> · <a href="#try-an-example">Editable demos</a> · <a href="docs/ROADMAP.md">Roadmap</a></p>
+<p align="center"><a href="#download-the-desktop-app">Download & setup</a> · <a href="#take-a-tour">Walkthrough</a> · <a href="#try-an-example">Editable demos</a> · <a href="docs/ROADMAP.md">Roadmap</a></p>
 
 ![The actual Forma editor with an editable birthday invitation, template library, canvas, properties, and pages.](docs/media/studio-overview.png)
 
@@ -16,7 +16,19 @@ Build with draggable layers, original artwork, photo-filled letters, editable ch
 | **262 editable templates**, including 150 new compositions                                            | **304 transparent AI stickers**, **290 editable graphics**          | AI Designer, selection refinement, AI Pencil, and Magic Eraser         | PNG, JPG, SVG, PDF, editable JSON, GIF, WebM             |
 | Birthdays, weddings, seasonal events, business, retail, hospitality, wellness, education, and celebrations | 250 graphics across 25 brand collections; four original Forma fonts | Groups, alignment, gradients, transparent stops, crop, corner rounding | Multiple pages, Present, motion previews, local accounts |
 
-## Start locally
+## Download the desktop app
+
+**Windows is free.** Download [Forma Studio 1.1.0 for Windows](https://github.com/postgigg/forma-studio/releases/download/v1.1.0/Forma-Studio-Setup-1.1.0.exe), run the installer, and open **Forma Studio** from your desktop or Start menu. Windows 10/11, 64-bit. The current installer is unsigned, so Windows may display an unknown-publisher warning.
+
+The desktop app bundles the editor, its local worker and Codex CLI. No terminal, Node.js or Docker is required for everyday use. Projects save locally; **Export → Forma JSON** creates an editable backup. To move a browser project into the desktop app, export it from the browser and import the JSON file in Forma. Their storage is separate.
+
+For AI, open **AI Designer → AI account & connection → Sign in to Codex**. Complete the sign-in in your browser and return to Forma. Your existing Codex login is also recognized. AI needs a supported account, internet access and available provider usage; those costs are separate from the app. Manual editing and exports work without AI. Website frames use the bundled desktop browser to capture pages in an isolated session.
+
+The Mac app is planned at **$19 once**. Payment delivery and Apple signing/notarization are not configured yet; there is no Mac checkout or verified Mac download in this release.
+
+For developers, `npm run desktop` opens the built desktop app and `npm run desktop:package` builds an installer. `npm run desktop:smoke` checks the app using a separate test profile. Desktop services bind to `127.0.0.1:51860` and `127.0.0.1:51861`; app data and AI job history live in the user's Forma app-data directory.
+
+## Start locally from source
 
 The complete installation has been exercised on **Windows with Docker Desktop and Microsoft Edge**. Install **Node.js 22.12 or newer in the 22.x line**, npm, and Git. Docker Desktop must be running for the complete stack.
 
@@ -160,6 +172,10 @@ Refinement can add separate editable stars, sparkles, shapes, paths, or text. It
 
 Use **AI Designer** for a new editable composition and **Photos → Create with AI** for a new image.
 
+Open **Design intent & quality** to specify the desired outcome, main message, what must remain unchanged and what to avoid. These instructions reach AI Designer, photo creation, selected-layer refinement and AI Pencil. The server also provides guidance on hierarchy, typography, grouping, legibility, palette, exact copy and format-specific design choices. Magic Eraser stays focused on restoring the marked area. The brief and selected region take priority over inferred style.
+
+The local worker explicitly uses **GPT-6 Astra with maximum reasoning** through Codex CLI. Image creation and editing use **Codex native image generation**; the CLI does not expose a separate image-model identifier here. The model name shown in the UI comes from the running worker. Guidance improves the brief, but every AI result still needs review.
+
 To design around an existing photo, select it and choose **Design with this image** in Properties or the right-click menu. **Keep image quality** is the default: the actual original is embedded as a photo layer, with new text, logos and layout elements on separate layers. This avoids rebuilding photographic subjects out of primitive shapes. Use AI Pencil for targeted changes within the photo. **Rebuild simple artwork** remains an explicit option for flat posters and simple graphics; it is a stylized approximation and cannot recover hidden original layers. Completed jobs retain the embedded photo and exact logo when reopened or refined.
 
 ### 7. Make a targeted change with AI Pencil
@@ -184,11 +200,21 @@ Laptop frames use a hinged screen and a solid keyboard base with keys, trackpad,
 
 Frames save a website capture; they are not interactive browsers in the artwork. Reopening does not fetch the site again. Captures use a fresh session, so protected pages may show login; upload a screen image when needed. GIF/WebM include motion, while PNG/PDF/SVG retain the chosen static pose.
 
-### 9. Save and export
+### 9. Add real 3D lettering and objects
+
+Open **3D objects** for 26 letters, 10 numbers and eight shapes. Choose a starting point, type up to 16 characters, select an original Forma letterform, and adjust depth, bevel, color and material. Drag the preview to rotate, use its arrow keys, or enter X/Y/Z degrees. **Front** and **Three-quarter** provide useful starting views.
+
+Add the object, then double-click it or choose **Edit 3D object** to change it later. Geometry settings remain editable in saved projects and Forma JSON; Undo restores earlier settings. Choose **Full turn** or **Gentle rotation** for Present and GIF/WebM exports. PNG, PDF and SVG use the current static pose; SVG embeds a rendered image of the 3D object. All geometry and font outlines are bundled for offline use. A software fallback preserves the shape when WebGL is unavailable, with simpler lighting.
+
+The regular canvas rotation handle also shows live degrees while you drag it.
+
+![The packaged desktop app editing extruded Forma lettering, with material, color, depth, bevel and rotation controls.](docs/media/3d-editor.png)
+
+### 10. Save and export
 
 Use **Animate** or **Present** to preview movement. Export PNG, JPG, SVG, PDF, JSON, GIF, or WebM. Motion renders an independent copy and keeps the source unchanged. SVG embeds bitmap and font assets; custom photo/device frames are rendered images within the SVG.
 
-Browser designs, uploads, and brand settings live in IndexedDB for the current origin. **Export JSON for a portable editable backup.** Account saving uses this installation's Supabase. Clearing browser data removes device-local work that has not been backed up or saved to an account.
+Browser designs, uploads, and brand settings live in IndexedDB for the current origin. **Export JSON for a portable editable backup.** Desktop exports use the native Save dialog; the app saves pending changes before closing. Optional account saving is available in the source installation through Supabase. Clearing browser or app data removes local work that has not been backed up.
 
 ## Try an example
 
@@ -208,6 +234,9 @@ Download a JSON file using GitHub's **Download raw file** button, then drag it o
 | `src/charts.ts`, `src/ChartDesigner.tsx`             | Charts, CSV, and data editor                           |
 | `src/photo-frame.ts`, `src/PhotoFrames.tsx`          | Shape/letter masks and cropping                        |
 | `src/device-frame.ts`, `src/Frames.tsx`              | Device mockups and perspective                         |
+| `src/solid-object.ts`, `src/solid-renderer.ts`, `src/Solids.tsx` | Editable 3D geometry, rendering and controls |
+| `server/art-direction.mjs`, `src/DesignIntent.tsx` | Outcome-driven AI guidance and user constraints |
+| `desktop/`, `scripts/package-desktop.mjs` | Desktop startup, native export, capture and packaging |
 | `src/refinement.ts`, `server/refinements.mjs`        | Selected-layer AI edits and additions                  |
 | `src/MagicEraser.tsx`, `server/pencil-direction.mjs` | Masked erasing and contextual AI Pencil edits          |
 | `server/designer.mjs`                                | Loopback worker, authenticated jobs, origin checks     |
@@ -218,7 +247,11 @@ The app uses React, TypeScript, Vite, Fabric, Node, Playwright, nginx/Docker, an
 
 ## Validation and demo regeneration
 
-Verified on Windows on **2026-10-14**: the production build succeeded, **39 browser tests** and **16 server checks** passed, plus the optional live Codex import test against a current completed job. All 150 new template previews were rendered and checked for text overflow. A real photographic reference design retained the original photo and logo byte-for-byte as separate editable layers. The laptop rotation test also passes with WebGL disabled. Earlier real AI Pencil and refinement checks preserved pixels outside the marked region and supported Undo. The scripts and example screenshots below make these checks reproducible.
+Verified on Windows on **2026-10-14**: the production build succeeded, **41 browser tests** and **17 server checks** passed. The optional live import test was skipped in the final regression run. Two separate live GPT-6 Astra design jobs produced an editable florist yard sign and birthday poster with the supplied copy intact. The 3D checks cover editing, persistence, Undo, nonblank renders, motion frames and GIF export; the rotation readout is checked at two zoom levels.
+
+Earlier checks rendered all 150 new template previews without text overflow, retained a supplied photograph and logo byte-for-byte as editable layers, and exercised laptop rotation with WebGL disabled. Real AI Pencil and refinement checks preserved pixels outside the marked region and supported Undo. The scripts and example screenshots below make these checks reproducible.
+
+The **packaged Windows executable** also passed an isolated-profile check: renderer isolation, the bundled Codex worker reporting GPT-6 Astra, website capture, editable 3D, and native PNG/PDF/JSON saves. The landing page was checked at desktop and mobile widths, including filters, image previews and FAQ controls. The Windows installer is unsigned; Mac packaging and payment delivery remain unverified.
 
 With the local editor and worker running:
 
@@ -244,11 +277,12 @@ The following optional checks make real provider requests through isolated test 
 ```powershell
 node scripts/test-creative-refinement-live.mjs
 node scripts/test-ai-pencil-live.mjs
+node scripts/check-design-quality.mjs
 ```
 
 ## Artwork and scope
 
-Stickers are individual transparent PNGs generated with the built-in image tool. Prompts and provenance live in `shared/sticker-prompts*.json` and `shared/sticker-provenance*.json`. Branded graphics and occasion templates use native editable geometry. The four Forma fonts come from the original geometry in `scripts/build-fonts.py`.
+Stickers are individual transparent PNGs generated with the built-in image tool. Prompts and provenance live in `shared/sticker-prompts*.json` and `shared/sticker-provenance*.json`. Branded graphics and occasion templates use native editable geometry. The four Forma fonts come from the original geometry in `scripts/build-fonts.py`. Regeneration requires Python with `fonttools` and `skia-pathops`; the script emits both TTF files and bundled Three.js outlines, so 3D text does not need a remote font parser.
 
 Sample photographs in the photo library come from Unsplash. You can replace them with your own photographs through Uploads.
 

@@ -3,14 +3,15 @@ import { mkdirSync, writeFileSync, readFileSync, readdirSync, statSync } from 'n
 import path from 'node:path';
 import os from 'node:os';
 import { pngDimensions } from './photos.mjs';
+import { modelArguments } from './ai-engine.mjs';
 
 // Each operation owns one child and one isolated output directory.
-export function runCodex({ codex, workspace, prompt, schema, images = [], generateImage = false, signal, reasoningEffort }) {
+export function runCodex({ codex, workspace, prompt, schema, images = [], generateImage = false, signal }) {
   mkdirSync(workspace, { recursive: true });
   const started = Date.now();
   const output = path.join(workspace, 'answer.json');
   const args = ['exec', '--ignore-user-config', '--skip-git-repo-check', '--ephemeral', '--sandbox', 'read-only', '--json', '--color', 'never', '-c', 'approval_policy="never"', '-c', 'web_search="disabled"'];
-  if(reasoningEffort==='high')args.push('-c','model_reasoning_effort="high"');
+  args.push(...modelArguments());
   if (schema) {
     const schemaPath = path.join(workspace, 'schema.json');
     writeFileSync(schemaPath, JSON.stringify(schema));

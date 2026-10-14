@@ -160,6 +160,8 @@ test("annotation cleanup, full library scrolling, and canvas-only wheel zoom", a
   await page
     .getByLabel("AI design brief")
     .fill("This brief should clear when starting another design.");
+  await expect(page.getByRole("button", { name: "New AI design", exact: true })).toHaveCount(0);
+  await page.getByRole("tab", { name: "Results & history" }).click();
   await page
     .getByRole("button", { name: "New AI design", exact: true })
     .click();

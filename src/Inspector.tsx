@@ -25,6 +25,7 @@ import { colors, fonts } from "./types";
 import { Field, IconButton } from "./ui";
 import { GraphicColor } from "./GraphicColor";
 import { DeviceFrame } from "./device-frame";
+import { SolidObject } from "./solid-object";
 import { PhotoFrame } from "./photo-frame";
 import { isChart } from "./charts";
 
@@ -38,6 +39,7 @@ export function Inspector({
   onFrame,
   onChart,
   onPhotoFrame,
+  onSolid,
 }: {
   editor: Editor;
   run: (fn: () => unknown) => void;
@@ -48,6 +50,7 @@ export function Inspector({
   onFrame: () => void;
   onChart: () => void;
   onPhotoFrame: () => void;
+  onSolid: () => void;
 }) {
   const [tab, setTab] = useState("properties");
   const obj = editor.selected;
@@ -372,6 +375,7 @@ export function Inspector({
                   )}
                 </div>
               )}
+              {obj instanceof SolidObject && <div className="property-section"><h4>3D object</h4><button className="secondary full" disabled={obj.lockMovementX} onClick={onSolid}>Edit lettering, material & rotation</button></div>}
               {obj instanceof DeviceFrame && (
                 <div className="property-section">
                   <h4>Device frame</h4>
@@ -410,6 +414,7 @@ export function Inspector({
               )}
               {!image &&
                 !(obj instanceof DeviceFrame) &&
+                !(obj instanceof SolidObject) &&
                 !(obj instanceof PhotoFrame) &&
                 !isChart(obj) && (
                   <div className="property-section">

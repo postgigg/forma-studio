@@ -1582,3 +1582,4 @@
     padding: 10px 12px;
   }
 }
+.rotation-readout { position: absolute; z-index: 8; pointer-events: none; white-space: nowrap; padding: 5px 9px; border-radius: 6px; color: white; background: #30263e; box-shadow: 0 2px 8px #20152e25; font: 600 12px/1.3 Arial, sans-serif; font-variant-numeric: tabular-nums; }

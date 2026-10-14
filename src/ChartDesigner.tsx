@@ -230,7 +230,7 @@ export function ChartDialog({
                 download(
                   new Blob([chartCSV(data)], { type: "text/csv" }),
                   "chart-data.csv",
-                )
+                ).catch(error => setError(error.message))
               }
             >
               <Download size={14} />

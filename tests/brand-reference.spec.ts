@@ -8,6 +8,7 @@ const brand = {
   audience: "Local gift buyers",
   voice: "Warm, natural and botanical",
 };
+const intent = { outcome: "Invite neighbors to visit the flower shop", message: "Seasonal flowers, thoughtfully chosen", preserve: "Exact business name and original photography", avoid: "Generic gradients and unrelated decorations" };
 
 test("brand profile survives reload, ranks related artwork and reaches every AI request with an opt out", async ({
   page,
@@ -16,6 +17,12 @@ test("brand profile survives reload, ranks related artwork and reaches every AI 
     r.fulfill({ json: { ready: true, token: "qa" } }),
   );
   const requests: Record<string, any[]> = {};
+  await page.route("**/health", r => r.fulfill({ json: { ready: true, modelLabel: "GPT-6 Astra", reasoningEffort: "max" } }));
+  const fillIntent = async () => {
+    await page.locator(".design-intent summary").click();
+    for (const [key, label] of Object.entries({ outcome: "Desired outcome", message: "Main message", preserve: "Keep unchanged", avoid: "Avoid" }))
+      await page.getByLabel(label, { exact: true }).fill(intent[key as keyof typeof intent]);
+  };
   for (const endpoint of ["jobs", "photos", "refinements"])
     await page.route("**/" + endpoint, async (r) => {
       if (r.request().method() === "GET") return r.fulfill({ json: [] });
@@ -64,11 +71,13 @@ test("brand profile survives reload, ranks related artwork and reaches every AI 
   await page
     .getByLabel("Selection refinement brief")
     .fill("Refine the spacing and add relevant botanical artwork.");
+  await fillIntent();
   await page
     .getByRole("button", { name: "Generate refinement", exact: true })
     .click();
   await expect.poll(() => requests.refinements?.length).toBe(1);
   expect(requests.refinements[0].brandContext).toEqual(brand);
+  expect(requests.refinements[0].designIntent).toEqual(intent);
   await page
     .getByRole("dialog")
     .getByRole("button", { name: "Close", exact: true })
@@ -104,6 +113,7 @@ test("brand profile survives reload, ranks related artwork and reaches every AI 
           ? "Add a matching small flower inside the marked region."
           : "Remove the marked object and restore the surrounding background.",
       );
+    if (pencil) await fillIntent();
     await dialog
       .getByRole("button", {
         name: pencil ? "Generate targeted edit" : "Erase with AI",
@@ -112,33 +122,47 @@ test("brand profile survives reload, ranks related artwork and reaches every AI 
       .click();
     await expect.poll(() => requests.refinements?.length).toBe(pencil ? 2 : 3);
     expect(requests.refinements.at(-1).brandContext).toEqual(brand);
+    expect(requests.refinements.at(-1).designIntent).toEqual(pencil ? intent : undefined);
     await dialog.getByRole("button", { name: "Close", exact: true }).click();
   }
   await page.getByRole("button", { name: "Photos", exact: true }).click();
-  await page.locator(".photo-creator summary").click();
+  await page.locator(".photo-creator > summary").click();
   await page
     .getByLabel("AI photo prompt")
     .fill("A seasonal bouquet on the counter in warm window light.");
+  await fillIntent();
   await page
     .getByRole("button", { name: "Generate photo", exact: true })
     .click();
   await expect.poll(() => requests.photos?.length).toBe(1);
   expect(requests.photos[0].brandContext).toEqual(brand);
+  expect(requests.photos[0].designIntent).toEqual(intent);
   await page.getByRole("button", { name: "AI Designer", exact: true }).click();
   await page
     .getByLabel("AI design brief")
     .fill("Design a seasonal shop opening poster with flowers.");
+  await expect(page.getByRole("button", { name: "New AI design", exact: true })).toHaveCount(0);
+  await fillIntent();
+  await expect(page.getByLabel("AI engine")).toContainText("GPT-6 Astra · Maximum reasoning");
   await page
     .getByRole("button", { name: "Create my design", exact: true })
     .click();
   await expect.poll(() => requests.jobs?.length).toBe(1);
   expect(requests.jobs[0].brandContext).toEqual(brand);
+  expect(requests.jobs[0].designIntent).toEqual(intent);
   await page.getByLabel("Use brand context").uncheck();
   await page
     .getByRole("button", { name: "Create my design", exact: true })
     .click();
   await expect.poll(() => requests.jobs?.length).toBe(2);
   expect(requests.jobs[1].brandContext).toBeUndefined();
+  await page.reload();
+  await page.getByRole("button", { name: "AI Designer", exact: true }).click();
+  await page.locator(".design-intent summary").click();
+  await expect(page.getByLabel("Desired outcome")).toHaveValue(intent.outcome);
+  await page.getByRole("tab", { name: "Results & history" }).click();
+  await page.getByRole("button", { name: "New AI design", exact: true }).click();
+  await expect(page.getByLabel("Desired outcome")).toHaveValue("");
 });
 
 test("image design defaults to preserved pixels and opens an independently editable photo and text", async ({

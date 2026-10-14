@@ -3,6 +3,7 @@ import type { RefinementResult } from "../src/refinement";
 export interface RefinementBrief {
   prompt: string;
   brandContext?: import("../shared/brand-context.mjs").BrandProfile;
+  designIntent?: import("../shared/design-intent.mjs").DesignIntent;
   direction: "precise" | "balanced" | "bold";
   width: number;
   height: number;

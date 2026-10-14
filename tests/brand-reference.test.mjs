@@ -19,6 +19,8 @@ import {
 import { validatePhotoBrief } from "../server/photos.mjs";
 import { validateRefinement } from "../server/refinements.mjs";
 import { pencilDirection } from "../server/pencil-direction.mjs";
+import { validateDesignIntent } from "../shared/design-intent.mjs";
+import { artDirection } from "../server/art-direction.mjs";
 const brand = {
   name: "Petal Studio",
   business: "Seasonal florist",
@@ -37,6 +39,24 @@ const input = {
   height: 1080,
   pages: 1,
 };
+test("design intent is bounded, reaches every operation, and cannot broaden erasure scope", () => {
+  const designIntent = { outcome: "Earn a local visit", message: "Seasonal flowers", preserve: "Photo and exact logo", avoid: "Unrelated motifs" };
+  assert.equal(validateDesignIntent({}), undefined);
+  assert.deepEqual(validateDesignIntent({ ...designIntent, unknown: "drop" }), designIntent);
+  assert.throws(() => validateDesignIntent({ outcome: {} }));
+  assert.throws(() => validateDesignIntent({ preserve: "x".repeat(801) }));
+  assert.throws(() => validateDesignIntent([]));
+  assert.deepEqual(validateBrief({ ...input, designIntent }).designIntent, designIntent);
+  assert.deepEqual(validatePhotoBrief({ prompt: input.prompt, format: "Square", style: "Natural light", designIntent }).designIntent, designIntent);
+  for (const marked of [{}, { pencil: { id: "photo", mask: src } }, { eraser: { id: "photo", mask: src } }]) {
+    const brief = validateRefinement({ ...input, designIntent, preview: src, nodes: [{ id: "photo", type: "Image", parentId: null }], images: [{ id: "photo", src }], ...marked });
+    assert.deepEqual(brief.designIntent, designIntent);
+  }
+  const erase = artDirection(designIntent, "erase");
+  assert.match(erase, /never authorizes adding content/);
+  assert.doesNotMatch(erase, /PROFESSIONAL ART DIRECTION/);
+  assert.match(pencilDirection("Add a petal", brand, designIntent), /mask defines WHERE/);
+});
 const sample = JSON.parse(
   readFileSync(new URL("designer.fixture.json", import.meta.url), "utf8"),
 );

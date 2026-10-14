@@ -25,6 +25,7 @@ import { graphics, makeGraphic } from "./graphics";
 import { smartGuides, type Guide } from "./guides";
 import { portableSvg } from "./export-svg";
 import "./device-frame";
+import { SolidObject } from "./solid-object";
 import { PhotoFrame, type PhotoMask } from "./photo-frame";
 
 export type DesignObject = FabricObject & { id?: string; name?: string };
@@ -56,7 +57,18 @@ Object.assign(FabricObject.ownDefaults, {
 });
 FabricImage.ownDefaults.srcFromAttribute = true;
 
-export function download(data: string | Blob, filename: string) {
+export async function download(data: string | Blob, filename: string) {
+  if (window.formaDesktop) {
+    let bytes: ArrayBuffer;
+    if (data instanceof Blob) bytes = await data.arrayBuffer();
+    else {
+      const match = /^data:[^,]*;base64,(.*)$/s.exec(data);
+      if (!match) throw new Error("Unsupported export data.");
+      bytes = Uint8Array.from(atob(match[1]), character => character.charCodeAt(0)).buffer;
+    }
+    if (!await window.formaDesktop.saveFile(filename, bytes)) throw new Error("Export cancelled.");
+    return;
+  }
   const url = typeof data === "string" ? data : URL.createObjectURL(data);
   const a = document.createElement("a");
   a.href = url;
@@ -82,6 +94,7 @@ export class Editor {
     null;
   onContextMenu?: (point: { x: number; y: number }) => void;
   onPhotoFrameEdit?: (frame: PhotoFrame) => void;
+  onSolidEdit?: (object: SolidObject) => void;
   private saveTimer?: ReturnType<typeof setTimeout>;
   private textTimer?: ReturnType<typeof setTimeout>;
   private disposed = false;
@@ -147,6 +160,8 @@ export class Editor {
     this.canvas.on("mouse:dblclick", ({ target }) => {
       if (target instanceof PhotoFrame && !target.lockMovementX)
         this.onPhotoFrameEdit?.(target);
+      if (target instanceof SolidObject && !target.lockMovementX)
+        this.onSolidEdit?.(target);
     });
     this.canvas.on("object:modified", ({ target, transform }) => {
       this.clearGuides();
@@ -1145,7 +1160,7 @@ export class Editor {
     await this.save();
     const file = this.doc.name.replace(/[^a-z0-9 _-]/gi, "").trim() || "design";
     if (format === "json") {
-      download(
+      await download(
         new Blob([JSON.stringify(this.doc)], { type: "application/json" }),
         `${file}.forma.json`,
       );
@@ -1188,7 +1203,7 @@ export class Editor {
             this.doc.height,
           );
         }
-        pdf.save(`${file}.pdf`);
+        await download(pdf.output("blob"), `${file}.pdf`);
       } else {
         for (let i = 0; i < pages.length; i++) {
           await canvas.loadFromJSON(pages[i].data);
@@ -1196,12 +1211,12 @@ export class Editor {
           canvas.renderAll();
           const suffix = pages.length > 1 ? `-${i + 1}` : "";
           if (format === "svg")
-            download(
+            await download(
               new Blob([await portableSvg(canvas)], { type: "image/svg+xml" }),
               `${file}${suffix}.svg`,
             );
           else
-            download(
+            await download(
               canvas.toDataURL({ format, quality: 0.95, multiplier: scale }),
               `${file}${suffix}.${format === "jpeg" ? "jpg" : format}`,
             );

@@ -1,17 +1,20 @@
 import { Group, type FabricObject, type StaticCanvas } from "fabric";
 import { DeviceFrame } from "./device-frame";
+import { SolidObject } from "./solid-object";
 import type { PageMotion } from "./types";
 export function savedDeviceMotion(value: unknown): boolean {
   if (!value || typeof value !== "object") return false;
   const item = value as {
     type?: string;
     frame?: { motion?: string };
+    solid?: { motion?: string };
     objects?: unknown[];
   };
   return (
     (item.type === "DeviceFrame" &&
       !!item.frame?.motion &&
       item.frame.motion !== "none") ||
+    (item.type === "SolidObject" && !!item.solid?.motion && item.solid.motion !== "none") ||
     !!item.objects?.some(savedDeviceMotion)
   );
 }
@@ -29,11 +32,12 @@ export function prepareMotion(canvas: StaticCanvas) {
 }
 type MotionLayers = ReturnType<typeof prepareMotion>;
 export function deviceMotion(object: FabricObject, phase: number | null) {
-  if (object instanceof DeviceFrame) object.setMotionPhase(phase);
+  if (object instanceof DeviceFrame || object instanceof SolidObject) object.setMotionPhase(phase);
   if (object instanceof Group)
     object.getObjects().forEach((child) => deviceMotion(child, phase));
 }
 export function hasDeviceMotion(object: FabricObject): boolean {
+  if (object instanceof SolidObject) return object.solid.motion !== "none";
   return object instanceof DeviceFrame
     ? object.frame.motion !== "none"
     : object instanceof Group && object.getObjects().some(hasDeviceMotion);

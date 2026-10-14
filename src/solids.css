@@ -1,0 +1,26 @@
+.solid-tabs { display: flex; gap: 5px; margin: 20px 0 12px; }
+.solid-tabs button { flex: 1; border: 1px solid #e8e0ef; border-radius: 8px; padding: 9px 4px; background: white; font-size: 11px; color: #6e5c7f; }
+.solid-tabs button[aria-pressed=true] { color: #5931a9; background: #eee6fc; border-color: #c9b5e9; }
+.solid-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 18px; }
+.solid-grid button { overflow: hidden; border-radius: 10px; border: 1px solid #e7dfed; padding: 4px 0 9px; background: #f7f5f9; color: #61516f; font-size: 10px; }
+.solid-grid button:hover { border-color: #9e78d3; background: #f0eaf8; }
+.solid-grid img { display: block; width: 100%; aspect-ratio: 1.1; object-fit: contain; }
+.solid-modal { width: min(1080px, calc(100vw - 32px)); max-height: calc(100dvh - 32px); }
+.solid-editor { display: grid; grid-template-columns: minmax(0,1fr) 285px; gap: 22px; padding: 20px; min-height: 0; overflow-y: auto; }
+.solid-preview { background: #f4f1f6; border: 1px solid #e8e1ee; border-radius: 16px; padding: 18px; align-self: start; position: sticky; top: 0; }
+.solid-preview-caption { display: flex; justify-content: space-between; gap: 12px; font-size: 12px; color: #5d4a6b; }
+.solid-preview-caption span { font-size: 11px; color: #8b7c96; white-space: nowrap; }
+.solid-preview canvas { width: 100%; display: block; aspect-ratio: 1.25; cursor: grab; touch-action: none; }
+.solid-preview canvas:active { cursor: grabbing; }
+.solid-preview-actions { display: flex; justify-content: center; flex-wrap: wrap; gap: 7px; }
+.solid-preview-actions button { font-size: 11px; padding: 9px; }
+.solid-preview p { text-align: center; color: #93849b; font-size: 11px; margin-bottom: 0; }
+.solid-settings .field { margin-bottom: 12px; }
+.solid-settings input[type=color] { width: 100%; height: 38px; border: 1px solid #e8dff0; border-radius: 6px; padding: 3px; background: white; }
+.solid-settings h4 { margin: 22px 0 12px; }
+.solid-swatches { display: flex; gap: 7px; margin-bottom: 20px; }
+.solid-swatches button { width: 25px; height: 25px; border: 2px solid white; border-radius: 50%; box-shadow: 0 0 0 1px #dcd2e6; }
+.solid-rotation > span { display: flex; align-items: center; gap: 5px; }
+.solid-rotation input[type=number] { width: 65px; margin-left: auto; padding: 4px 5px; height: 29px; }
+.solid-rotation b { font-weight: normal; }
+@media(max-width: 760px) { .solid-editor { grid-template-columns: 1fr; padding: 14px; } .solid-preview { position: static; } .solid-preview canvas { max-height: 300px; object-fit: contain; } }

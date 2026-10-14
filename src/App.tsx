@@ -5,6 +5,7 @@ import {
   ArrowLeft,
   ArrowRight,
   BarChart3,
+  Box,
   Scan,
   Check,
   ChevronDown,
@@ -65,6 +66,7 @@ import { IconButton, Modal } from "./ui";
 import { SelectionMenu } from "./SelectionMenu";
 import { DesignerPanel } from "./DesignerPanel";
 import { AlignmentGuides } from "./AlignmentGuides";
+import { RotationReadout } from "./RotationReadout";
 import catalog from "../shared/assets.json";
 import "./features.css";
 import "./data-design.css";
@@ -77,6 +79,8 @@ import { flushSync } from "react-dom";
 import { GraphicColor } from "./GraphicColor";
 import { MagicEraser } from "./MagicEraser";
 import { FrameDialog, FrameLibrary } from "./Frames";
+import { SolidDialog, SolidLibrary } from "./Solids";
+import { SolidObject, type SolidSettings } from "./solid-object";
 import { DeviceFrame } from "./device-frame";
 import { savedDeviceMotion } from "./motion-render";
 import { ChartDialog, ChartLibrary } from "./ChartDesigner";
@@ -89,6 +93,7 @@ const navigation = [
   { id: "design", icon: LayoutTemplate, label: "Design" },
   { id: "elements", icon: Shapes, label: "Elements" },
   { id: "frames", icon: Laptop, label: "Frames" },
+  { id: "solids", icon: Box, label: "3D objects" },
   { id: "charts", icon: BarChart3, label: "Charts" },
   { id: "ai", icon: Sparkles, label: "AI Designer" },
   { id: "text", icon: Type, label: "Text" },
@@ -187,13 +192,17 @@ export default function App() {
     existing?: ChartObject;
   } | null>(null);
   const [photoFraming, setPhotoFraming] = useState<PhotoFrame | null>(null);
+  const [solidEditing, setSolidEditing] = useState<{ initial: SolidSettings; existing?: SolidObject } | null>(null);
   const [areaSelecting, setAreaSelecting] = useState(false);
+  useEffect(() => window.formaDesktop?.onBeforeClose(async () => { await editor?.save(); }), [editor]);
   const finishAreaSelection = useCallback(() => setAreaSelecting(false), []);
   useEffect(() => {
     if (editor) {
       editor.onPhotoFrameEdit = setPhotoFraming;
+      editor.onSolidEdit = object => setSolidEditing({ initial: object.solid, existing: object });
       return () => {
         editor.onPhotoFrameEdit = undefined;
+        editor.onSolidEdit = undefined;
       };
     }
   }, [editor]);
@@ -637,6 +646,7 @@ export default function App() {
         {ready && panelOpen && panel === "frames" && (
           <FrameLibrary onChoose={(device) => setFraming({ device })} />
         )}
+        {ready && panelOpen && panel === "solids" && <SolidLibrary onChoose={initial => setSolidEditing({ initial })} />}
         {ready && panelOpen && panel === "charts" && (
           <ChartLibrary onChoose={(type) => setCharting({ type })} />
         )}
@@ -644,6 +654,7 @@ export default function App() {
           panelOpen &&
           panel !== "ai" &&
           panel !== "frames" &&
+          panel !== "solids" &&
           panel !== "charts" && (
             <Sidebar
               panel={panel}
@@ -809,6 +820,7 @@ export default function App() {
               ) : null}
               {selected && (
                 <>
+                  {selected instanceof SolidObject && <button className="toolbar-button" disabled={selected.lockMovementX} onClick={() => setSolidEditing({ initial: selected.solid, existing: selected })}><Box size={16} /> Edit 3D object</button>}
                   {selected instanceof DeviceFrame && (
                     <button
                       className="toolbar-button"
@@ -851,6 +863,7 @@ export default function App() {
                     !(selected instanceof FabricImage) &&
                     !(selected instanceof PhotoFrame) &&
                     !(selected instanceof DeviceFrame) &&
+                    !(selected instanceof SolidObject) &&
                     !isChart(selected) && <GraphicColor editor={editor!} />}
                   {selected instanceof FabricImage && (
                     <button
@@ -998,6 +1011,7 @@ export default function App() {
               >
                 <canvas ref={canvasRef} />
                 {ready && <AlignmentGuides editor={editor} />}
+                {ready && <RotationReadout editor={editor} />}
                 {editor?.busy && (
                   <div className="canvas-busy">
                     <span className="spinner" />
@@ -1199,6 +1213,7 @@ export default function App() {
               if (editor.selected instanceof PhotoFrame)
                 setPhotoFraming(editor.selected);
             }}
+            onSolid={() => { if (editor.selected instanceof SolidObject) setSolidEditing({ initial: editor.selected.solid, existing: editor.selected }); }}
             onFrame={() => {
               if (editor.selected instanceof DeviceFrame)
                 setFraming({
@@ -1279,6 +1294,7 @@ export default function App() {
           notify={notify}
         />
       )}
+      {ready && solidEditing && <SolidDialog editor={editor} {...solidEditing} notify={notify} onClose={() => setSolidEditing(null)} />}
       {ready && charting && (
         <ChartDialog
           editor={editor}

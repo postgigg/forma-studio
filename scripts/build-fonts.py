@@ -1,5 +1,5 @@
 """Build Forma's original geometric display typefaces from authored stroke paths.
-No third-party font outlines are used. Run with Python and fontTools.
+No third-party font outlines are used. Run with Python, fontTools and skia-pathops.
 """
 from pathlib import Path
 from math import sin, cos, pi, hypot
@@ -8,13 +8,29 @@ from fontTools.fontBuilder import FontBuilder
 from fontTools.pens.ttGlyphPen import TTGlyphPen
 from fontTools.ttLib.tables._k_e_r_n import KernTable_format_0
 from fontTools.ttLib import newTable
+from fontTools.ttLib.removeOverlaps import removeOverlaps
+from fontTools.pens.basePen import BasePen
+
+class OutlinePen(BasePen):
+    def __init__(self, glyphset):
+        super().__init__(glyphset); self.tokens=[]; self.first=None
+    def command(self, kind, *points):
+        self.tokens.append(kind)
+        for point in points: self.tokens.extend(str(round(v * 100 / 72)) for v in point)
+    def _moveTo(self, point): self.first=point; self.command('m', point)
+    def _lineTo(self, point): self.command('l', point)
+    def _qCurveToOne(self, control, end): self.command('q', end, control)
+    def _curveToOne(self, a, b, end): self.command('b', end, a, b)
+    def _closePath(self):
+        if self.first is not None: self.command('l', self.first)
+    def _endPath(self): pass
 
 OUT = Path(__file__).resolve().parents[1] / 'public' / 'fonts'
 OUT.mkdir(parents=True, exist_ok=True)
 def line(*points): return list(points)
-def arc(cx,cy,rx,ry,start=0,end=360,steps=32):
+def arc(cx,cy,rx,ry,start=0,end=360,steps=96):
     return [(cx+rx*cos((start+(end-start)*i/steps)*pi/180), cy+ry*sin((start+(end-start)*i/steps)*pi/180)) for i in range(steps+1)]
-def curve(a,b,c,d,n=22):
+def curve(a,b,c,d,n=64):
     return [((1-t)**3*a[0]+3*(1-t)**2*t*b[0]+3*(1-t)*t*t*c[0]+t**3*d[0],(1-t)**3*a[1]+3*(1-t)**2*t*b[1]+3*(1-t)*t*t*c[1]+t**3*d[1]) for t in [i/n for i in range(n+1)]]
 P={
 'A':[line((20,0),(260,700),(500,0)),line((103,242),(417,242))],
@@ -145,8 +161,9 @@ for family,weight,squeeze,rounded,spacing in families:
                 dx=-(y2-y1)/length*weight/2;dy=(x2-x1)/length*weight/2
                 polygon(pen,[(x1+dx,y1+dy),(x2+dx,y2+dy),(x2-dx,y2-dy),(x1-dx,y1-dy)])
             # Rounded joins avoid seams even in the structured families; only Soft has round terminals.
-            joints=points if rounded else points[1:-1]
-            for x,y in joints:polygon(pen,arc(x,y,weight/2,weight/2,steps=12)[:-1])
+            closed = len(points) > 2 and hypot(points[0][0]-points[-1][0], points[0][1]-points[-1][1]) < .1
+            joints=points if rounded or closed else points[1:-1]
+            for x,y in joints:polygon(pen,arc(x,y,weight/2,weight/2,steps=24)[:-1])
         glyph=pen.glyph()
         if glyph.numberOfContours>0:glyph.flags[0]|=0x40
         name=mapping[ord(char)];glyphs[name]=glyph
@@ -163,7 +180,15 @@ for family,weight,squeeze,rounded,spacing in families:
     kern=newTable('kern');kern.version=0;sub=KernTable_format_0();sub.version=0;sub.coverage=1
     sub.kernTable={(mapping[ord(a)],mapping[ord(b)]):-round(45*squeeze) for a,b in ['AV','AW','AT','AY','FA','LT','LV','LY','PA','TA','To','Te','Ty','VA','Vo','WA','Wo','YA','Yo']}
     kern.kernTables=[sub];builder.font['kern']=kern
+    # Unified contours prevent coincident faces in extruded 3D lettering.
+    removeOverlaps(builder.font)
     filename=slug.lower()+'.ttf';builder.save(OUT/filename)
+    outlines={}; glyphset=builder.font.getGlyphSet()
+    for code,name in mapping.items():
+        pen=OutlinePen(glyphset); glyphset[name].draw(pen)
+        glyph=builder.font['glyf'][name]
+        outlines[chr(code)]={'ha':round(metrics[name][0]*100/72),'x_min':round(getattr(glyph,'xMin',0)*100/72),'x_max':round(getattr(glyph,'xMax',0)*100/72),'o':' '.join(pen.tokens)}
+    (OUT/(slug.lower()+'.json')).write_text(json.dumps({'glyphs':outlines,'familyName':family,'resolution':1000,'ascender':1361,'descender':-361,'underlineThickness':50,'boundingBox':{'xMin':0,'xMax':1200,'yMin':-361,'yMax':1361}},separators=(',',':')),encoding='utf-8')
     manifest.append({'family':family,'file':'/fonts/'+filename,'glyphs':len(glyphs),'source':'Original vector stroke geometry; AI-authored, built with fontTools','license':'Unrestricted use and embedding'})
 (OUT/'manifest.json').write_text(json.dumps(manifest,indent=2),encoding='utf-8')
 print(json.dumps(manifest,indent=2))

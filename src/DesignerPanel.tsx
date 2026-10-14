@@ -20,6 +20,8 @@ import { Editor } from "./editor";
 import { presets, type Design, type Asset } from "./types";
 import { Field } from "./ui";
 import { useBrandGuidance } from "./BrandContext";
+import { AiEngine, useDesignIntent } from "./DesignIntent";
+import { DesktopAI } from "./DesktopAI";
 
 const examples = [
   "A refined launch poster for a botanical skincare brand. Sage, ivory, and warm editorial typography.",
@@ -75,6 +77,7 @@ export function DesignerPanel({
     sessionStorage.getItem("forma:ai-job") ? "results" : "create",
   );
   const panelRef = useRef<HTMLElement>(null);
+  const { designIntent, control: intentControl, reset: resetIntent } = useDesignIntent(busy, "designer");
   const newDesign = () => {
     setView("create");
     onClearReference();
@@ -83,6 +86,7 @@ export function DesignerPanel({
     setDraft(null);
     setProposal(null);
     setPrompt("");
+    resetIntent();
     setError("");
     setPreviewPage(0);
     sessionStorage.removeItem("forma:ai-job");
@@ -98,7 +102,7 @@ export function DesignerPanel({
       const session = await designerRequest("/session");
       if (!session.ready)
         throw new Error(
-          "Sign in to Codex on this computer, then restart the designer.",
+          window.formaDesktop ? "Open AI account & connection below to sign in." : "Sign in to Codex on this computer, then restart the designer.",
         );
       setToken(session.token);
       setConnection("Local designer connected");
@@ -109,13 +113,18 @@ export function DesignerPanel({
       setError(
         e instanceof Error && e.message !== "Failed to fetch"
           ? e.message
-          : "Start the local designer with npm run ai:start in the Forma project.",
+          : window.formaDesktop ? "The designer is starting. Use Reconnect in a moment, or open AI account & connection below." : "Start the local designer with npm run ai:start in the Forma project.",
       );
     }
   };
   useEffect(() => {
     void connect();
   }, []);
+  useEffect(() => {
+    if (!window.formaDesktop || token) return;
+    const timer = setInterval(() => void connect(), 4000);
+    return () => clearInterval(timer);
+  }, [token]);
   useEffect(() => {
     if (reference) {
       setView("create");
@@ -195,6 +204,7 @@ export function DesignerPanel({
         body: JSON.stringify({
           prompt,
           brandContext,
+          designIntent,
           width: reference?.width || size.width,
           height: reference?.height || size.height,
           pages,
@@ -245,14 +255,6 @@ export function DesignerPanel({
       </div>
       {view === "create" && (
         <>
-          <button
-            className="secondary full ai-new-design"
-            disabled={busy}
-            onClick={newDesign}
-          >
-            <Plus size={16} />
-            New AI design
-          </button>
           <div className="ai-intro">
             <WandSparkles size={25} />
             <h3>Your idea. Beautifully made.</h3>
@@ -364,6 +366,7 @@ export function DesignerPanel({
             </Field>
           </div>
           {brandControl}
+          {intentControl}
           <Field label="Art direction">
             <select
               aria-label="Art direction"
@@ -610,6 +613,7 @@ export function DesignerPanel({
           }
         </div>
       )}
+      <DesktopAI />
       <div className="ai-connection">
         <span className={token ? "status-dot" : "status-dot pending"} />
         {connection}
@@ -618,6 +622,7 @@ export function DesignerPanel({
         Uses your signed-in Codex account. Your brief is sent to the AI service;
         your designs stay in your studio.
       </p>
+      <AiEngine />
     </aside>
   );
 }

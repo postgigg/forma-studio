@@ -53,7 +53,7 @@ export interface RebuildReference {
   width: number;
   height: number;
 }
-const endpoint = "http://127.0.0.1:5188";
+const endpoint = window.formaDesktop?.aiEndpoint || "http://127.0.0.1:5188";
 export class DesignerRequestError extends Error {
   status: number;
   constructor(message: string, status: number) {

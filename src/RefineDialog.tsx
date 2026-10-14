@@ -4,6 +4,7 @@ import type { Editor } from "./editor";
 import { Modal } from "./ui";
 import { designerRequest, DesignerRequestError } from "./ai";
 import { useBrandGuidance } from "./BrandContext";
+import { AiEngine, useDesignIntent } from "./DesignIntent";
 import {
   applyRefinement,
   makeRefinedSelection,
@@ -30,6 +31,7 @@ export function RefineDialog({
     [candidate, setCandidate] = useState<RefinedSelection | null>(null),
     [working, setWorking] = useState(false);
   const { brandContext, control: brandControl } = useBrandGuidance(working);
+  const { designIntent, control: intentControl } = useDesignIntent(working);
   const alive = useRef(true),
     owned = useRef<{ id: string; token: string } | null>(null);
   const [direction, setDirection] = useState("balanced");
@@ -86,6 +88,7 @@ export function RefineDialog({
           prompt,
           direction,
           brandContext,
+          designIntent,
           width: snapshot.width,
           height: snapshot.height,
           nodes: snapshot.nodes,
@@ -189,6 +192,8 @@ export function RefineDialog({
             disabled={working}
           />
         </label>
+        {intentControl}
+        <AiEngine images={snapshot.images.length > 0} />
         {!prompt && (
           <div className="refine-suggestions">
             {[

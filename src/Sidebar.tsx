@@ -28,6 +28,7 @@ export type Panel =
   | "design"
   | "elements"
   | "frames"
+  | "solids"
   | "charts"
   | "ai"
   | "text"
@@ -158,6 +159,7 @@ export function Sidebar({
               design: "Design",
               elements: "Elements",
               frames: "Frames",
+              solids: "3D objects",
               charts: "Charts",
               ai: "AI Designer",
               text: "Text",

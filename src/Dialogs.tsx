@@ -238,9 +238,9 @@ export function ExportDialog({ editor, onClose, notify }: Props) {
               await editor.save();controller.current=new AbortController();setProgress(0);
               const copy=structuredClone(editor.doc);
               const blob=await exportMotion(copy,all?copy.pages:[copy.pages[editor.pageIndex]],{format,size:motionSize,fps,style:motionStyle,duration,loop,signal:controller.current.signal,onProgress:setProgress});
-              download(blob,`${editor.doc.name.replace(/[^a-z0-9 _-]/gi,'').trim()||'design'}.${format}`);
+              await download(blob,`${editor.doc.name.replace(/[^a-z0-9 _-]/gi,'').trim()||'design'}.${format}`);
             } else await editor.export(format, scale, transparent, all);
-            notify("Your design is ready. Check your downloads.");
+            notify(window.formaDesktop ? "Your design was saved." : "Your design is ready. Check your downloads.");
             onClose();
           } catch (e) {
             notify((e as Error).message);
