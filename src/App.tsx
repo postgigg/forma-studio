@@ -519,7 +519,7 @@ export default function App() {
           }}
           aria-label="Forma home"
         >
-          <span className="logo-mark">f</span>
+          <img className="logo-mark" src="/brand/forma-mark.svg" alt="" />
           <span>
             forma<span className="wordmark-dot">.</span>
           </span>
@@ -1029,7 +1029,7 @@ export default function App() {
             </div>
             {!ready && (
               <div className="loading-studio">
-                <span className="logo-mark">f</span>
+                <img className="logo-mark" src="/brand/forma-mark.svg" alt="" />
                 <h2>
                   {error
                     ? "Your studio needs a moment"

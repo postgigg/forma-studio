@@ -8,6 +8,8 @@ try {
   const page = await app.firstWindow(); await page.getByLabel('Design title', { exact: true }).waitFor({ timeout: 60000 });
   const errors = []; page.on('pageerror', e => errors.push(e.message));
   await expect(page.getByLabel('Design title', { exact: true })).toBeVisible();
+  await expect(page.locator('.wordmark img')).toHaveAttribute('src', '/brand/forma-mark.svg');
+  expect(await page.evaluate(() => fetch('/brand/forma-mark.svg').then(response => response.text()))).toBe(await readFile('public/brand/forma-mark.svg', 'utf8'));
   const isolation = await page.evaluate(() => ({ endpoint: window.formaDesktop?.aiEndpoint, node: typeof window.require }));
   expect(isolation).toEqual({ endpoint: 'http://127.0.0.1:51861', node: 'undefined' });
   console.log('Desktop editor loaded with isolated renderer.');

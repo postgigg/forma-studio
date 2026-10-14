@@ -1,6 +1,6 @@
 {
   "name": "forma-studio",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "A local visual design studio with editable templates, motion and intent-aware AI tools.",
   "author": "Forma Studio",
   "main": "desktop/main.cjs",

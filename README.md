@@ -18,7 +18,7 @@ Build with draggable layers, original artwork, photo-filled letters, editable ch
 
 ## Download the desktop app
 
-**Windows is free.** Download [Forma Studio 1.1.0 for Windows](https://github.com/postgigg/forma-studio/releases/download/v1.1.0/Forma-Studio-Setup-1.1.0.exe), run the installer, and open **Forma Studio** from your desktop or Start menu. Windows 10/11, 64-bit. The current installer is unsigned, so Windows may display an unknown-publisher warning.
+**Windows is free.** Download [Forma Studio 1.1.1 for Windows](https://github.com/postgigg/forma-studio/releases/download/v1.1.1/Forma-Studio-Setup-1.1.1.exe), run the installer, and open **Forma Studio** from your desktop or Start menu. Windows 10/11, 64-bit. The current installer is unsigned, so Windows may display an unknown-publisher warning.
 
 The desktop app bundles the editor, its local worker and Codex CLI. No terminal, Node.js or Docker is required for everyday use. Projects save locally; **Export → Forma JSON** creates an editable backup. To move a browser project into the desktop app, export it from the browser and import the JSON file in Forma. Their storage is separate.
 

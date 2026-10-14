@@ -161,19 +161,11 @@ kbd {
   color: var(--purple);
 }
 .logo-mark {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: var(--purple);
-  color: white;
+  display: block;
   width: 33px;
   height: 34px;
-  font: italic bold 38px Georgia;
-  line-height: 1;
-  border-radius: 11px;
-  padding-right: 5px;
-  padding-bottom: 4px;
-  box-shadow: 0 3px 7px #754adb16;
+  object-fit: contain;
+  flex-shrink: 0;
 }
 .header-divider {
   height: 22px;
