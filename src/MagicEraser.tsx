@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { Eraser, RotateCcw, Sparkles, Square } from "lucide-react";
 import type { Editor } from "./editor";
 import { Modal } from "./ui";
-import { designerRequest } from "./ai";
+import { designerRequest, isTransientDesignerError } from "./ai";
 import { useBrandGuidance } from "./BrandContext";
 import { AiEngine, useDesignIntent } from "./DesignIntent";
 import {
@@ -295,7 +295,13 @@ export function MagicEraser({
         }
         await new Promise((resolve) => setTimeout(resolve, 1200));
         if (!alive.current || owned.current?.id !== next.id) break;
-        next = await designerRequest(`/refinements/${next.id}`, token);
+        try {
+          next = await designerRequest(`/refinements/${next.id}`, token);
+          if (alive.current) setError("");
+        } catch (error) {
+          if (!isTransientDesignerError(error)) throw error;
+          if (alive.current) setError("Reconnecting to your existing image edit…");
+        }
       }
     } catch (e) {
       if (alive.current) setError((e as Error).message);

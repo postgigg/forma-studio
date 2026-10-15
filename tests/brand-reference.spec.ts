@@ -1,6 +1,7 @@
 import { test, expect } from "@playwright/test";
 import { readFileSync } from "node:fs";
 import { importFixture, saved } from "../scripts/qa-fixture.mjs";
+import { configureStyle, personalStyle } from "./style-fixture";
 const brand = {
   name: "Petal Studio",
   business: "A neighborhood florist selling seasonal bouquets.",
@@ -33,6 +34,7 @@ test("brand profile survives reload, ranks related artwork and reaches every AI 
       });
     });
   await importFixture(page);
+  await configureStyle(page);
   await page.getByRole("button", { name: "Brand", exact: true }).click();
   for (const [key, label] of Object.entries({
     name: "Company name",
@@ -156,6 +158,7 @@ test("brand profile survives reload, ranks related artwork and reaches every AI 
     .click();
   await expect.poll(() => requests.jobs?.length).toBe(2);
   expect(requests.jobs[1].brandContext).toBeUndefined();
+  for (const bodies of Object.values(requests)) for (const body of bodies) expect(body.designProfile).toEqual(personalStyle);
   await page.reload();
   await page.getByRole("button", { name: "AI Designer", exact: true }).click();
   await page.locator(".design-intent summary").click();

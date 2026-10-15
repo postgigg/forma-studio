@@ -1,5 +1,6 @@
 import { readFileSync } from "node:fs";
 import { validateBrandContext } from "../shared/brand-context.mjs";
+import { validateDesignStyle } from "../shared/design-style.mjs";
 import { validateDesignIntent } from "../shared/design-intent.mjs";
 import { pngDimensions } from "./photos.mjs";
 import { referenceAsset } from "./reference.mjs";
@@ -217,6 +218,8 @@ export function validateBrief(value) {
   if (value.logo !== undefined) brief.logo = validateLogo(value.logo);
   const brandContext = validateBrandContext(value.brandContext);
   if (brandContext) brief.brandContext = brandContext;
+  const designProfile = validateDesignStyle(value.designProfile);
+  if (designProfile?.enabled) brief.designProfile = designProfile;
   const designIntent = validateDesignIntent(value.designIntent);
   if (designIntent) brief.designIntent = designIntent;
   if (

@@ -28,15 +28,14 @@ export function runCodex({ codex, workspace, prompt, schema, images = [], genera
   return new Promise((resolve, reject) => {
     if (signal?.aborted) return reject(new Error('Cancelled.'));
     const child = spawn(codex, args, { cwd: workspace, windowsHide: true, shell: false, stdio: ['pipe', 'pipe', 'pipe'] });
-    let stream = '', diagnostic = '', thread = '', timedOut = false;
+    let stream = '', diagnostic = '', thread = '';
     const stop = () => {
       if (!child.pid || child.exitCode !== null) return;
       if (process.platform === 'win32') spawn('taskkill', ['/PID', String(child.pid), '/T', '/F'], { windowsHide: true, stdio: 'ignore' });
       else child.kill('SIGTERM');
     };
-    const timer = setTimeout(() => { timedOut = true; stop(); }, 480000);
     signal?.addEventListener('abort', stop, { once: true });
-    const clean = () => { clearTimeout(timer); signal?.removeEventListener('abort', stop); };
+    const clean = () => { signal?.removeEventListener('abort', stop); };
     child.stdout.on('data', chunk => {
       stream += chunk.toString();
       const lines = stream.split('\n'); stream = lines.pop() || '';
@@ -54,7 +53,6 @@ export function runCodex({ codex, workspace, prompt, schema, images = [], genera
       clean();
       try {
         if (signal?.aborted) throw new Error('Cancelled.');
-        if (timedOut) throw new Error('The refinement took too long. Try a smaller selection or a shorter brief.');
         if (code !== 0) throw new Error(/rate.limit|quota|429|usage.limit/i.test(diagnostic) ? 'Your Codex account has reached a usage limit. Try again when access resets.' : 'The designer could not finish. Check your Codex sign-in or retry.');
         if (!generateImage) return resolve(JSON.parse(readFileSync(output, 'utf8')));
         if (!thread) throw new Error('No image generation session was returned.');

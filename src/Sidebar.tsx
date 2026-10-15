@@ -25,6 +25,7 @@ import { PhotoCreator } from "./PhotoCreator";
 import { PhotoFrameLibrary } from "./PhotoFrames";
 import "./studio-library.css";
 import { BrandProfileEditor, useBrandProfile } from "./BrandContext";
+import { DesignStyleCard } from "./DesignStyle";
 import { brandAffinity } from "../shared/brand-context.mjs";
 
 export type Panel =
@@ -649,6 +650,7 @@ export function Sidebar({
             <p>Your purpose, visual voice, colors and logo.</p>
           </div>
           <BrandProfileEditor />
+          <DesignStyleCard />
           <h3 className="section-label">
             Your palette <span>{brand.length}</span>
           </h3>

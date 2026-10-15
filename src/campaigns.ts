@@ -1,8 +1,14 @@
 import { createStore, entries, get, set } from "idb-keyval";
-import { designerRequest, proposalToDesign, type DesignJob } from "./ai";
+import {
+  designerRequest,
+  proposalToDesign,
+  isTransientDesignerError,
+  type DesignJob,
+} from "./ai";
 import { getDesign, saveDesign } from "./storage";
 import { uid, type Asset } from "./types";
 import type { BrandProfile } from "../shared/brand-context.mjs";
+import type { DesignStyleProfile } from "../shared/design-style.mjs";
 
 export const campaignFormats = [
   {
@@ -11,6 +17,7 @@ export const campaignFormats = [
     width: 1080,
     height: 1350,
     shape: "portrait",
+    category: "Social",
   },
   {
     id: "facebook",
@@ -18,6 +25,7 @@ export const campaignFormats = [
     width: 1200,
     height: 630,
     shape: "landscape",
+    category: "Social",
   },
   {
     id: "linkedin",
@@ -25,6 +33,7 @@ export const campaignFormats = [
     width: 1200,
     height: 627,
     shape: "landscape",
+    category: "Social",
   },
   {
     id: "story",
@@ -32,11 +41,96 @@ export const campaignFormats = [
     width: 1080,
     height: 1920,
     shape: "story",
+    category: "Social",
+  },
+  {
+    id: "poster",
+    name: "Poster",
+    width: 1200,
+    height: 1600,
+    shape: "portrait",
+    category: "Print",
+  },
+  {
+    id: "a4",
+    name: "A4 document",
+    width: 2480,
+    height: 3508,
+    shape: "portrait",
+    category: "Print",
+  },
+  {
+    id: "flyer",
+    name: "Flyer",
+    width: 1748,
+    height: 2480,
+    shape: "portrait",
+    category: "Print",
+  },
+  {
+    id: "yard-sign",
+    name: "Yard sign",
+    width: 2400,
+    height: 1800,
+    shape: "landscape",
+    category: "Print",
+  },
+  {
+    id: "business-card",
+    name: "Business card",
+    width: 1050,
+    height: 600,
+    shape: "landscape",
+    category: "Print",
+  },
+  {
+    id: "square-ad",
+    name: "Square ad",
+    width: 1080,
+    height: 1080,
+    shape: "square",
+    category: "Ads & web",
+  },
+  {
+    id: "landscape-ad",
+    name: "Landscape ad",
+    width: 1200,
+    height: 628,
+    shape: "landscape",
+    category: "Ads & web",
+  },
+  {
+    id: "web-banner",
+    name: "Website banner",
+    width: 1920,
+    height: 640,
+    shape: "landscape",
+    category: "Ads & web",
+  },
+  {
+    id: "presentation",
+    name: "Presentation",
+    width: 1920,
+    height: 1080,
+    shape: "landscape",
+    category: "Presentations",
   },
 ] as const;
-export type Channel = (typeof campaignFormats)[number]["id"];
-export type Counts = Record<Channel, number>;
+type PresetChannel = (typeof campaignFormats)[number]["id"];
+export type Channel = PresetChannel | `custom:${string}`;
+export type Counts = Partial<Record<PresetChannel, number>>;
+export interface CampaignFormat {
+  id: Channel;
+  name: string;
+  width: number;
+  height: number;
+}
+export interface CustomCampaignFormat extends CampaignFormat {
+  id: `custom:${string}`;
+  count: number;
+}
 export interface CampaignBrief {
+  designProfile?: DesignStyleProfile;
   name: string;
   objective: string;
   audience: string;
@@ -56,6 +150,7 @@ export interface CampaignBrief {
 export interface CampaignTask {
   id: string;
   channel: Channel | "photo";
+  format?: CampaignFormat;
   count: number;
   status: "queued" | "running" | "completed" | "failed";
   jobId?: string;
@@ -81,6 +176,7 @@ export interface CampaignFolder {
   cta: string;
   avoid: string;
   counts: Counts;
+  customFormats?: CustomCampaignFormat[];
   images: Asset[];
   generatePhoto: boolean;
   photoPrompt: string;
@@ -156,16 +252,69 @@ export const emptyFolder = (): CampaignFolder => ({
   cta: "",
   avoid: "",
   counts: emptyCounts(),
+  customFormats: [],
   images: [],
   generatePhoto: false,
   photoPrompt: "",
   batches: [],
 });
+export function campaignFolderFormats(folder: CampaignFolder) {
+  return [
+    ...campaignFormats.map((format) => ({
+      ...format,
+      count: folder.counts[format.id] ?? 0,
+    })),
+    ...(folder.customFormats || []),
+  ];
+}
+export function campaignFormatProblem(folder: CampaignFolder): string {
+  const formats = campaignFolderFormats(folder);
+  if ((folder.customFormats?.length || 0) > 6)
+    return "Use up to six custom sizes in one folder.";
+  if (
+    formats.some(
+      (f) => !Number.isInteger(f.count) || f.count < 0 || f.count > 6,
+    ) ||
+    !formats.some((f) => f.count > 0)
+  )
+    return "Choose one to six designs for at least one format.";
+  if (formats.some((f) => !f.name.trim() || f.name.length > 80))
+    return "Give each custom size a name, up to 80 characters.";
+  if (
+    formats.some(
+      (f) =>
+        !Number.isInteger(f.width) ||
+        !Number.isInteger(f.height) ||
+        f.width < 256 ||
+        f.height < 256 ||
+        f.width > 4096 ||
+        f.height > 4096 ||
+        f.width * f.height > 12000000,
+    )
+  )
+    return "Use whole-pixel dimensions from 256 to 4,096 px, up to 12 megapixels.";
+  if (
+    new Set(formats.map((f) => f.id)).size !== formats.length ||
+    folder.customFormats?.some((f) => !/^custom:[a-z0-9-]+$/i.test(f.id))
+  )
+    return "Remove the duplicated or invalid custom size and add it again.";
+  return "";
+}
+function taskFormat(task: CampaignTask): CampaignFormat {
+  const format =
+    task.format || campaignFormats.find((f) => f.id === task.channel);
+  if (!format)
+    throw new Error(
+      "This campaign format is no longer available. Add it to a new collection.",
+    );
+  return format;
+}
 export function makeBatch(
   campaign: Campaign,
   folder: CampaignFolder,
+  designProfile?: DesignStyleProfile,
 ): CampaignBatch {
-  const counts = Object.values(folder.counts);
+  const formats = campaignFolderFormats(folder);
   if (
     !campaign.name.trim() ||
     campaign.objective.trim().length < 8 ||
@@ -175,11 +324,8 @@ export function makeBatch(
     throw new Error(
       "Give the campaign and folder a name and a specific objective.",
     );
-  if (
-    counts.some((n) => !Number.isInteger(n) || n < 0 || n > 6) ||
-    !counts.some(Boolean)
-  )
-    throw new Error("Choose one to six designs for at least one platform.");
+  const formatProblem = campaignFormatProblem(folder);
+  if (formatProblem) throw new Error(formatProblem);
   if (
     folder.images.length > 4 ||
     (folder.generatePhoto && folder.images.length >= 4)
@@ -190,6 +336,7 @@ export function makeBatch(
     createdAt: new Date().toISOString(),
     status: "running",
     brief: structuredClone({
+      designProfile: designProfile?.enabled ? designProfile : undefined,
       name: campaign.name,
       objective: campaign.objective,
       audience: campaign.audience,
@@ -217,12 +364,13 @@ export function makeBatch(
             },
           ]
         : []),
-      ...campaignFormats
-        .filter((f) => folder.counts[f.id] > 0)
+      ...formats
+        .filter((f) => f.count > 0)
         .map((f) => ({
           id: uid(),
           channel: f.id,
-          count: folder.counts[f.id],
+          format: { id: f.id, name: f.name, width: f.width, height: f.height },
+          count: f.count,
           status: "queued" as const,
         })),
     ],
@@ -263,10 +411,11 @@ export async function campaignImage(file: File): Promise<Asset> {
 }
 function jobBody(batch: CampaignBatch, task: CampaignTask) {
   const b = batch.brief;
-  const format = campaignFormats.find((f) => f.id === task.channel)!;
+  const format = taskFormat(task);
   return {
     clientRequestId: task.id,
     campaign: true,
+    designProfile: b.designProfile ?? null,
     prompt: `PARENT CAMPAIGN: ${b.name}\nOverall objective: ${b.objective}\nAudience: ${b.audience}\nSUBCAMPAIGN FOLDER: ${b.folderName}\nFolder intent: ${b.intent}\nRequired message and facts: ${b.message || "Use only facts in the brief."}\nDesired action: ${b.cta || "Choose an appropriate non-factual action from the stated objective."}\nAvoid: ${b.avoid || "Generic layouts and unsupported claims."}\nDELIVERABLE: ${task.count} distinct ${format.name} designs. Each page must be one complete independent design.\n${batch.system ? `APPROVED VISUAL SYSTEM: ${JSON.stringify(batch.system)}` : ""}`,
     width: format.width,
     height: format.height,
@@ -398,6 +547,7 @@ export async function runCampaignBatch(
                       format: "Landscape",
                       style: "Studio product",
                       brandContext: b.brand,
+                      designProfile: b.designProfile ?? null,
                     }
                   : jobBody(batch, task),
               ),
@@ -419,7 +569,14 @@ export async function runCampaignBatch(
               throw new Error(job.error || "The AI job was cancelled.");
             }
             await delay();
-            job = await designerRequest(`${route}/${job.id}`, session.token);
+            try {
+              job = await designerRequest(`${route}/${job.id}`, session.token);
+            } catch (error) {
+              if (!isTransientDesignerError(error)) throw error;
+              await edit((b) => {
+                b.tasks[index].stage = "Reconnecting to the existing AI job";
+              });
+            }
           }
           if (task.channel === "photo") {
             const image = await campaignImage(
@@ -436,7 +593,7 @@ export async function runCampaignBatch(
             });
           } else {
             const result = (job as DesignJob).result!;
-            const format = campaignFormats.find((f) => f.id === task.channel)!;
+            const format = taskFormat(task);
             if (
               result.width !== format.width ||
               result.height !== format.height ||

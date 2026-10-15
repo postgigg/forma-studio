@@ -2,6 +2,7 @@ import { createStore, del, entries, get, set } from "idb-keyval";
 import type { Asset, Design } from "./types";
 import catalog from "../shared/assets.json";
 import { validateFonts } from "./font-data";
+import { validateDesignStyle, type DesignStyleProfile } from "../shared/design-style.mjs";
 import {
   validateBrandContext,
   type BrandProfile,
@@ -38,6 +39,8 @@ export const getBrand = async (): Promise<string[]> =>
 export const putBrand = (brand: string[]) => set("brand", brand, db);
 export const getBrandProfile = async () =>
   validateBrandContext(await get("brand-profile", db));
+export const getDesignStyle = async () => validateDesignStyle(await get("design-style", db));
+export const putDesignStyle = (profile: DesignStyleProfile) => set("design-style", validateDesignStyle(profile), db);
 export const putBrandProfile = (profile?: BrandProfile) =>
   set("brand-profile", profile || null, db);
 export const getBrandLogo = async (): Promise<Asset | null> =>

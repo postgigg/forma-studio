@@ -1,6 +1,7 @@
 import { test, expect, type Page } from "@playwright/test";
 import { readFile } from "node:fs/promises";
 import { saved } from "../scripts/qa-fixture.mjs";
+import { configureStyle, personalStyle } from "./style-fixture";
 
 async function records(page: Page) {
   return page.evaluate(
@@ -21,7 +22,7 @@ async function records(page: Page) {
       }),
   );
 }
-async function setup(page: Page) {
+async function setup(page: Page, personalize = false) {
   const requests: any[] = [],
     jobs = new Map<string, any>();
   let failFacebook = false,
@@ -107,6 +108,7 @@ async function setup(page: Page) {
   await expect(page.getByLabel("Design title", { exact: true })).toHaveValue(
     "A little growth",
   );
+  if (personalize) await configureStyle(page);
   await page.getByRole("button", { name: "Campaigns", exact: true }).click();
   return {
     requests,
@@ -150,6 +152,141 @@ async function brief(page: Page) {
     .fill("Explore the bouquet collection");
   await page.getByRole("button", { name: "Continue", exact: true }).click();
 }
+
+test("print, ads and custom sizes reach the designer and save at their exact dimensions", async ({
+  page,
+}) => {
+  const api = await setup(page, true);
+  await expect(
+    page.getByText("ONE IDEA. EVERY FORMAT.", { exact: true }),
+  ).toHaveCount(0);
+  await brief(page);
+  for (const name of ["Instagram post", "Facebook post", "LinkedIn post"])
+    await page.getByLabel(`${name} count`, { exact: true }).fill("0");
+  for (const name of [
+    "Poster",
+    "A4 document",
+    "Flyer",
+    "Yard sign",
+    "Business card",
+    "Square ad",
+    "Landscape ad",
+    "Website banner",
+    "Presentation",
+  ])
+    await expect(
+      page.getByLabel(`${name} count`, { exact: true }),
+    ).toBeAttached();
+  await page.getByLabel("Poster count", { exact: true }).fill("1");
+  await page.getByLabel("A4 document count", { exact: true }).fill("1");
+  await page.getByLabel("Square ad count", { exact: true }).fill("2");
+  await page
+    .getByRole("button", { name: "Add custom size", exact: true })
+    .click();
+  await page.getByLabel("Custom size 1 name").fill("Storefront display");
+  await page.getByLabel("Custom size 1 width (px)").fill("1460");
+  await page.getByLabel("Custom size 1 height (px)").fill("920");
+  await page.getByLabel("Custom size 1 count").fill("2");
+  await page.getByRole("button", { name: "Continue", exact: true }).click();
+  await expect(page.locator(".campaign-review-formats")).toContainText(
+    "Storefront display · 1460 × 920 px",
+  );
+  await page
+    .getByRole("button", { name: "Create 6 designs", exact: true })
+    .click();
+  await expect(
+    page.getByRole("heading", { name: "Your collection is ready" }),
+  ).toBeVisible();
+  expect(api.requests.map((b) => [b.width, b.height, b.pages])).toEqual([
+    [1200, 1600, 1],
+    [2480, 3508, 1],
+    [1080, 1080, 2],
+    [1460, 920, 2],
+  ]);
+  for (const body of api.requests)
+    expect(body.designProfile).toEqual(personalStyle);
+  const all = await records(page),
+    campaign = all.find((v) => v.folders),
+    folder = campaign.folders[0];
+  expect(folder.batches[0].tasks.at(-1).format).toMatchObject({
+    name: "Storefront display",
+    width: 1460,
+    height: 920,
+  });
+  expect(
+    all
+      .filter((v) => v.campaignId === campaign.id)
+      .map((v) => [v.width, v.height])
+      .sort(),
+  ).toEqual(
+    [
+      [1200, 1600],
+      [2480, 3508],
+      [1080, 1080],
+      [1080, 1080],
+      [1460, 920],
+      [1460, 920],
+    ].sort(),
+  );
+  await page.reload();
+  await page.getByRole("button", { name: "Campaigns", exact: true }).click();
+  await page
+    .locator(".campaign-navigation")
+    .getByRole("button", { name: /Spring flowers/ })
+    .click();
+  await page
+    .locator(".campaign-folder-card")
+    .filter({ hasText: /Mother.*Day/ })
+    .click();
+  await expect(page.locator(".campaign-design-grid article")).toHaveCount(6);
+});
+
+test("custom size validation and draft recovery preserve multiple independent sizes", async ({
+  page,
+}) => {
+  await setup(page);
+  await brief(page);
+  await page
+    .getByRole("button", { name: "Add custom size", exact: true })
+    .click();
+  await page.getByLabel("Custom size 1 width (px)").fill("4096");
+  await page.getByLabel("Custom size 1 height (px)").fill("4096");
+  await expect(page.getByRole("alert")).toContainText("12 megapixels");
+  await expect(
+    page.getByRole("button", { name: "Continue", exact: true }),
+  ).toBeDisabled();
+  await page.getByLabel("Custom size 1 width (px)").fill("255");
+  await page.getByLabel("Custom size 1 height (px)").fill("800");
+  await expect(
+    page.getByRole("button", { name: "Continue", exact: true }),
+  ).toBeDisabled();
+  await page.getByLabel("Custom size 1 width (px)").fill("1600");
+  await page
+    .getByRole("button", { name: "Add custom size", exact: true })
+    .click();
+  await page.getByLabel("Custom size 2 name").fill("Counter display");
+  await page.getByLabel("Custom size 2 count").fill("3");
+  await page.getByRole("button", { name: "Close dialog", exact: true }).click();
+  await page.reload();
+  await page.getByRole("button", { name: "Campaigns", exact: true }).click();
+  await page
+    .getByRole("button", { name: "Continue saved brief", exact: true })
+    .click();
+  await expect(page.getByLabel("Custom size 1 width (px)")).toHaveValue("1600");
+  await expect(page.getByLabel("Custom size 2 name")).toHaveValue(
+    "Counter display",
+  );
+  await expect(page.getByLabel("Custom size 2 count")).toHaveValue("3");
+  await page
+    .getByRole("button", { name: "Remove custom size 1", exact: true })
+    .click();
+  await expect(page.getByLabel("Custom size 1 name")).toHaveValue(
+    "Counter display",
+  );
+  await expect(
+    page.getByRole("button", { name: "Continue", exact: true }),
+  ).toBeEnabled();
+});
 test("campaign and folder intent reach every platform, images remain editable, and collections persist", async ({
   page,
 }) => {

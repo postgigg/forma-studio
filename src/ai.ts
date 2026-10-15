@@ -11,6 +11,7 @@ import {
 import assets from "../shared/assets.json";
 import { makeGraphic } from "./graphics";
 import { fonts, uid, type Design } from "./types";
+import { getDesignStyle } from "./storage";
 export interface DesignElement {
   type: "text" | "rect" | "ellipse" | "triangle" | "line" | "asset" | "graphic";
   name: string;
@@ -62,6 +63,7 @@ export class DesignerRequestError extends Error {
     this.status = status;
   }
 }
+// Status reads are retried by their owning view without resubmitting a job.
 export async function designerRequest(
   route: string,
   token?: string,
@@ -71,6 +73,23 @@ export async function designerRequest(
     throw new Error(
       "AI Designer is available in your local Forma installation.",
     );
+  // One submission path covers design, photos, refinement, Pencil and Eraser.
+  // An explicit snapshot (including null) wins for resumable campaign batches.
+  if (
+    options.method === "POST" &&
+    ["/jobs", "/photos", "/refinements"].includes(route) &&
+    typeof options.body === "string"
+  ) {
+    const body = JSON.parse(options.body);
+    if (!Object.hasOwn(body, "designProfile")) {
+      const profile = await getDesignStyle();
+      if (profile?.enabled)
+        options = {
+          ...options,
+          body: JSON.stringify({ ...body, designProfile: profile }),
+        };
+    }
+  }
   const response = await fetch(endpoint + route, {
     ...options,
     headers: {
@@ -88,8 +107,18 @@ export async function designerRequest(
     );
   return value;
 }
+export function isTransientDesignerError(error: unknown) {
+  return (
+    (error instanceof TypeError &&
+      /fetch|network|load failed/i.test(error.message)) ||
+    (error instanceof DOMException &&
+      ["TimeoutError", "AbortError"].includes(error.name)) ||
+    (error instanceof DesignerRequestError &&
+      (error.status === 408 || error.status >= 500))
+  );
+}
 export async function proposalToDesign(proposal: Proposal): Promise<Design> {
-  await Promise.all(fonts.map(f => document.fonts.load(`16px "${f}"`)));
+  await Promise.all(fonts.map((f) => document.fonts.load(`16px "${f}"`)));
   const design: Design = {
     id: uid(),
     name: proposal.title,
@@ -153,13 +182,19 @@ export async function proposalToDesign(proposal: Proposal): Promise<Design> {
             strokeWidth: Math.max(1, element.radius),
           });
         else if (element.type === "asset") {
-          const asset = [...assets, ...(proposal.extraAssets || [])].find((a) => a.id === element.asset);
+          const asset = [...assets, ...(proposal.extraAssets || [])].find(
+            (a) => a.id === element.asset,
+          );
           if (!asset)
             throw new Error("An image in the proposed design is unavailable.");
           const img = await FabricImage.fromURL(asset.src);
           const w = img.width,
             h = img.height;
-          if (asset.category === "AI stickers" || asset.category === "Brand logo" || asset.category === "Campaign image") {
+          if (
+            asset.category === "AI stickers" ||
+            asset.category === "Brand logo" ||
+            asset.category === "Campaign image"
+          ) {
             const scale = Math.min(element.width / w, element.height / h);
             img.set({
               ...common,

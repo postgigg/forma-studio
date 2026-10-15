@@ -1099,14 +1099,19 @@ export class Editor {
     }
   }
   movePage(offset: number) {
-    const next = this.pageIndex + offset;
-    if (next < 0 || next >= this.doc.pages.length) return;
-    this.capture();
-    [this.doc.pages[next], this.doc.pages[this.pageIndex]] = [
-      this.doc.pages[this.pageIndex],
-      this.doc.pages[next],
-    ];
-    this.pageIndex = next;
+    this.reorderPage(this.page.id, this.pageIndex + offset);
+  }
+  reorderPage(pageId: string, next: number) {
+    if (this.busy || !Number.isInteger(next) || next < 0 || next >= this.doc.pages.length) return;
+    const from = this.doc.pages.findIndex(page => page.id === pageId);
+    if (from < 0 || from === next) return;
+    // Page navigation is not itself an undo step. Capture its current selection
+    // as the baseline so one Undo restores both order and the displayed page.
+    this.commit();
+    const active = this.page;
+    const [page] = this.doc.pages.splice(from, 1);
+    this.doc.pages.splice(next, 0, page);
+    this.pageIndex = this.doc.pages.indexOf(active);
     this.commit();
   }
   resize(width: number, height: number, scaleContent: boolean) {

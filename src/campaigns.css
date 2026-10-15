@@ -269,6 +269,95 @@
   gap: 14px;
   margin-bottom: 30px;
 }
+.campaign-format-group {
+  border: 0;
+  padding: 0;
+  margin: 0;
+  min-width: 0;
+}
+.campaign-format-group legend {
+  font-size: 18px;
+  font-weight: 600;
+  padding: 0;
+  margin: 0 0 16px;
+}
+.campaign-format-icon.square {
+  width: 30px;
+  height: 30px;
+}
+.campaign-custom-formats {
+  margin: 0 0 32px;
+}
+.campaign-custom-formats header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.campaign-custom-formats h3 {
+  margin: 0;
+  font-size: 18px;
+}
+.campaign-custom-formats > p {
+  color: #766a82;
+  font-size: 13px;
+  line-height: 1.6;
+}
+.campaign-custom-row {
+  display: grid;
+  grid-template-columns: minmax(120px, 1.5fr) minmax(70px, 1fr) 10px minmax(
+      70px,
+      1fr
+    ) 70px 30px;
+  gap: 10px;
+  align-items: end;
+  padding: 18px;
+  background: #f6f2ff;
+  border: 1px solid #ddd5e7;
+  border-radius: 10px;
+  margin-top: 12px;
+}
+.campaign-custom-row label {
+  font-size: 12px;
+  color: #655675;
+  min-width: 0;
+}
+.campaign-custom-row input {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  font: inherit;
+  font-size: 14px;
+  border: 1px solid #d8cce8;
+  background: white;
+  color: #27232e;
+  border-radius: 6px;
+  padding: 10px 8px;
+  margin-top: 7px;
+}
+.campaign-custom-row > span {
+  align-self: center;
+  margin-top: 20px;
+  color: #81718c;
+}
+.campaign-custom-row > button {
+  margin-bottom: 7px;
+}
+.campaign-format-problem {
+  color: #a84454;
+  font-size: 14px;
+  line-height: 1.6;
+}
+@media (max-width: 900px) {
+  .campaign-custom-row {
+    grid-template-columns: 1fr 10px 1fr 70px 26px;
+    gap: 8px;
+    padding: 12px;
+  }
+  .campaign-custom-row .custom-name {
+    grid-column: 1 / -1;
+  }
+}
 .campaign-format {
   border: 1px solid #ddd5e7;
   border-radius: 13px;
@@ -742,12 +831,6 @@
   padding: 40px 15px;
   min-height: 660px;
   overflow: hidden;
-}
-.campaign-eyebrow {
-  color: #764bdd;
-  font-size: 13px;
-  letter-spacing: 0.09em;
-  font-weight: 700;
 }
 .campaign-empty h1 {
   font-size: clamp(42px, 5.2vw, 76px);

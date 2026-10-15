@@ -8,8 +8,6 @@ import {
   Scan,
   Check,
   ChevronDown,
-  ChevronLeft,
-  ChevronRight,
   CircleHelp,
   Cloud,
   Copy,
@@ -93,6 +91,8 @@ import { isChart, type ChartType, type ChartObject } from "./charts";
 import { PhotoFrame } from "./photo-frame";
 import { PhotoFrameDialog } from "./PhotoFrames";
 import { MarqueeSelection } from "./MarqueeSelection";
+import { PageThumbnails } from "./PageThumbnails";
+import { DesignStyleButton } from "./DesignStyle";
 
 const navigation = [
   { id: "design", icon: LayoutTemplate, label: "Design" },
@@ -615,6 +615,7 @@ export default function App() {
             </button>
           ))}
           <div className="rail-spacer" />
+          <DesignStyleButton />
           <button onClick={() => setDialog("help")} title="Help & shortcuts">
             <span>
               <CircleHelp size={22} />
@@ -1076,40 +1077,7 @@ export default function App() {
                 id="page-thumbnails"
                 hidden={!pagesOpen}
               >
-                <div className="page-thumbnails">
-                  {editor.doc.pages.map((page, i) => (
-                    <button
-                      className={`page-thumb ${editor.pageIndex === i ? "selected" : ""}`}
-                      key={page.id}
-                      aria-label={`Go to page ${i + 1}`}
-                      onClick={() => run(() => editor.changePage(i))}
-                    >
-                      <img src={page.thumbnail} alt={`Page ${i + 1}`} />
-                      <span>{i + 1}</span>
-                    </button>
-                  ))}
-                  <button
-                    className="page-thumb new-page"
-                    aria-label="Add blank page"
-                    onClick={() => run(() => editor.addPage())}
-                  >
-                    <Plus size={21} />
-                  </button>
-                </div>
-                <div className="page-order">
-                  <IconButton
-                    icon={ChevronLeft}
-                    label="Move page earlier"
-                    disabled={editor.pageIndex === 0}
-                    onClick={() => editor.movePage(-1)}
-                  />
-                  <IconButton
-                    icon={ChevronRight}
-                    label="Move page later"
-                    disabled={editor.pageIndex === editor.doc.pages.length - 1}
-                    onClick={() => editor.movePage(1)}
-                  />
-                </div>
+                <PageThumbnails editor={editor} run={run} />
               </div>
               <footer className="workspace-footer">
                 <button

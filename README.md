@@ -3,7 +3,7 @@
 <p align="center">A local visual design studio for invitations, brand stories, presentations, data, and ideas.</p>
 <p align="center"><a href="#download-the-desktop-app">Download & setup</a> · <a href="#take-a-tour">Walkthrough</a> · <a href="#try-an-example">Editable demos</a> · <a href="docs/ROADMAP.md">Roadmap</a></p>
 
-![The actual Forma editor with an editable birthday invitation, template library, canvas, properties, and pages.](docs/media/studio-overview-v1.3.png)
+![The actual Forma 1.3.1 editor with editable campaign artwork, its layer list, template library and page workspace.](docs/media/studio-overview-v1.3.1.png)
 
 Build with draggable layers, original artwork, photo-filled letters, editable charts, and AI refinement. Save on your device, run the app with Docker, and export still images or motion. These screenshots show the actual editor in an isolated browser; the example projects are editable Forma files.
 
@@ -18,7 +18,7 @@ Build with draggable layers, original artwork, photo-filled letters, editable ch
 
 ## Download the desktop app
 
-**Windows is free.** Download [Forma Studio 1.3.0 for Windows](https://github.com/postgigg/forma-studio/releases/download/v1.3.0/Forma-Studio-Setup-1.3.0.exe), run the installer, and open **Forma Studio** from your desktop or Start menu. Windows 10/11, 64-bit. The current installer is unsigned, so Windows may display an unknown-publisher warning.
+**Windows is free.** Download [Forma Studio 1.3.1 for Windows](https://github.com/postgigg/forma-studio/releases/download/v1.3.1/Forma-Studio-Setup-1.3.1.exe), run the installer, and open **Forma Studio** from your desktop or Start menu. Windows 10/11, 64-bit. The current installer is unsigned, so Windows may display an unknown-publisher warning.
 
 The desktop app bundles the editor, its local worker and Codex CLI. No terminal, Node.js or Docker is required for everyday use. Forma requires no app account or sign-in. Projects save locally; **Export → Forma JSON** creates an editable backup. To move a browser project into the desktop app, export it from the browser and import the JSON file in Forma. Their storage is separate.
 
@@ -107,11 +107,25 @@ Open **Campaigns** in the header or **My designs → Campaigns**. The full-scree
 
 1. Name the campaign, describe its overall objective and audience, and set the visual direction. Your saved brand mission and palette provide context.
 2. Give the first folder a name and its own focused intent. Add exact required copy, facts, a call to action, and anything to avoid. Add more folders with **New folder**; each supports the parent campaign.
-3. Choose **0–6 designs per format**: Instagram post (1080 × 1350), Facebook (1200 × 630), LinkedIn (1200 × 627), and Instagram story (1080 × 1920). Upload up to four PNG/JPG/WebP images, or reserve one slot for an optional AI campaign photo.
+3. Choose **0–6 designs per format**: Instagram, Facebook, LinkedIn, stories, posters, A4 documents, flyers, yard signs, business cards, square or landscape ads, website banners and presentations. Add up to six named **custom sizes**, with exact whole-pixel dimensions from 256 to 4,096 px per side, up to 12 megapixels. Upload up to four PNG/JPG/WebP images, or reserve one slot for an optional AI campaign photo.
 4. Review the brief and press **Create**. The connected local worker creates each format in sequence, carries the first format's palette and typography into the others, and saves every output as a separate editable design in that folder.
 5. Open a result to edit its layers. Use **Move to folder** for an existing design. Completed work remains saved if another format fails; **Resume collection** retries unfinished work. **Pause after current format** preserves the current job, and drafts save on this device.
 
 **AI campaign guide** inside Campaigns explains how to brief a collection. AI uses your own supported Codex account and provider usage. The app itself needs no Forma account. Review generated copy and imagery before publishing.
+
+## Personal design direction
+
+Open **Your style** in the left rail or **Brand → Personalize your AI designer**. The three-step guide combines your preferred styles, spacing, typography and color direction with your business, mission and audience. Choose up to three styles, describe what you like and what to avoid, then save on this device. Edit or disable it in Brand at any time.
+
+The saved profile accompanies AI Designer, campaigns, photo creation, selection refinement, AI Pencil and Magic Eraser. Your current instructions and required brand identity take priority over personal defaults. Pencil matches the existing image inside the mask; Eraser only removes the marked subject and reconstructs the existing background. Campaign batches keep a snapshot of their preferences and exact format dimensions when resumed.
+
+![Personal design-style onboarding in the actual Forma app.](docs/media/design-style-v1.3.1.png)
+
+AI work has no six- or eight-minute generation cutoff. It keeps running while the worker and provider remain available; **Cancel** stops the owned job. Temporary status-read failures reconnect to that same job without starting a duplicate generation. Provider or process failures still show an error for review.
+
+## Arrange your pages
+
+Drag a thumbnail along the bottom page strip and drop it at the purple insertion line. Mouse and touch work, and holding near an edge scrolls a long strip. The displayed page stays selected, including its layers and animation. Use **Undo/Redo**, the move arrows, or focus a thumbnail and press **Alt + Left/Right Arrow**. Escape or dropping outside the strip cancels the move. Order saves locally and determines presentation and export order.
 
 ![The full-screen campaign wizard with platform quantities and an uploaded image.](docs/media/campaign-formats-v1.3.png)
 

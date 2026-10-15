@@ -12,12 +12,19 @@ import {
 } from "lucide-react";
 import { Modal } from "./ui";
 import { Editor } from "./editor";
-import { allDesigns, getBrandProfile, saveDesign } from "./storage";
+import {
+  allDesigns,
+  getBrandProfile,
+  getDesignStyle,
+  saveDesign,
+} from "./storage";
 import { designerRequest } from "./ai";
 import { uid, type Asset, type Design } from "./types";
 import {
   allCampaigns,
   campaignFormats,
+  campaignFolderFormats,
+  campaignFormatProblem,
   campaignImage,
   emptyFolder,
   makeBatch,
@@ -28,6 +35,7 @@ import {
   writeCampaignDraft,
   type Campaign,
   type CampaignFolder,
+  type CustomCampaignFormat,
 } from "./campaigns";
 import "./campaigns.css";
 
@@ -51,7 +59,7 @@ const guides = [
   ],
   [
     "Choose what you need.",
-    "Set a quantity for each platform. Upload the actual products, people, or brand images to include.",
+    "Choose social posts, print, ads, presentations or custom sizes. Upload the actual products, people, or brand images to include.",
     "Each graphic gets its own composition. Typography and color connect the collection.",
   ],
   [
@@ -144,6 +152,14 @@ export function CampaignStudio({
     setWizard((w) => w && { ...w, campaign: { ...w.campaign, [key]: value } });
   const updateFolder = (patch: Partial<CampaignFolder>) =>
     setWizard((w) => w && { ...w, folder: { ...w.folder, ...patch } });
+  const updateCustom = (id: string, patch: Partial<CustomCampaignFormat>) => {
+    if (wizard)
+      updateFolder({
+        customFormats: (wizard.folder.customFormats || []).map((f) =>
+          f.id === id ? { ...f, ...patch } : f,
+        ),
+      });
+  };
   const leaveWizard = async (closeDialog = false) => {
     try {
       if (wizard) {
@@ -157,8 +173,9 @@ export function CampaignStudio({
     }
   };
   const total = wizard
-    ? Object.values(wizard.folder.counts).reduce((a, b) => a + b, 0)
+    ? campaignFolderFormats(wizard.folder).reduce((a, f) => a + f.count, 0)
     : 0;
+  const formatProblem = wizard ? campaignFormatProblem(wizard.folder) : "";
   const valid = !wizard
     ? false
     : wizard.step === 0
@@ -168,7 +185,8 @@ export function CampaignStudio({
       : wizard.step === 1
         ? wizard.folder.name.trim().length > 0 &&
           wizard.folder.intent.trim().length >= 8
-        : total > 0 &&
+        : !formatProblem &&
+          total > 0 &&
           (!wizard.folder.generatePhoto || wizard.folder.images.length < 4);
   const finish = async (generate: boolean) => {
     if (!wizard) return;
@@ -177,7 +195,7 @@ export function CampaignStudio({
     try {
       const c = structuredClone(wizard.campaign),
         f = structuredClone(wizard.folder);
-      const batch = generate ? makeBatch(c, f) : null;
+      const batch = generate ? makeBatch(c, f, await getDesignStyle()) : null;
       if (batch) f.batches.push(batch);
       if (wizard.existing)
         await updateCampaign(c.id, (current) => {
@@ -419,50 +437,184 @@ export function CampaignStudio({
                 <>
                   <h2>Build your design collection.</h2>
                   <p className="campaign-intro">
-                    Choose how many original graphics you need for each
-                    platform.
+                    Choose how many original designs you need for each format.
                   </p>
-                  <div className="campaign-format-grid">
-                    {campaignFormats.map((format) => (
-                      <label
-                        className={`campaign-format ${wizard.folder.counts[format.id] ? "chosen" : ""}`}
-                        key={format.id}
+                  {[...new Set(campaignFormats.map((f) => f.category))].map(
+                    (category) => (
+                      <fieldset
+                        className="campaign-format-group"
+                        key={category}
                       >
-                        <span
-                          className={`campaign-format-icon ${format.shape}`}
-                          aria-hidden="true"
-                        />
-                        <strong>{format.name}</strong>
-                        <small>
-                          {format.width} × {format.height} px
-                        </small>
-                        <span className="campaign-count">
-                          <span>Designs</span>
+                        <legend>{category}</legend>
+                        <div className="campaign-format-grid">
+                          {campaignFormats
+                            .filter((f) => f.category === category)
+                            .map((format) => (
+                              <label
+                                className={`campaign-format ${wizard.folder.counts[format.id] ? "chosen" : ""}`}
+                                key={format.id}
+                              >
+                                <span
+                                  className={`campaign-format-icon ${format.shape}`}
+                                  aria-hidden="true"
+                                />
+                                <strong>{format.name}</strong>
+                                <small>
+                                  {format.width} × {format.height} px
+                                </small>
+                                <span className="campaign-count">
+                                  <span>Designs</span>
+                                  <input
+                                    type="number"
+                                    aria-label={`${format.name} count`}
+                                    min={0}
+                                    max={6}
+                                    value={wizard.folder.counts[format.id] ?? 0}
+                                    onChange={(e) => {
+                                      const count = e.target.valueAsNumber;
+                                      updateFolder({
+                                        counts: {
+                                          ...wizard.folder.counts,
+                                          [format.id]: Number.isFinite(count)
+                                            ? Math.max(
+                                                0,
+                                                Math.min(6, Math.trunc(count)),
+                                              )
+                                            : 0,
+                                        },
+                                      });
+                                    }}
+                                  />
+                                </span>
+                              </label>
+                            ))}
+                        </div>
+                      </fieldset>
+                    ),
+                  )}
+                  <section
+                    className="campaign-custom-formats"
+                    aria-label="Custom sizes"
+                  >
+                    <header>
+                      <h3>Custom sizes</h3>
+                      <button
+                        className="secondary"
+                        disabled={
+                          (wizard.folder.customFormats?.length || 0) >= 6
+                        }
+                        onClick={() =>
+                          updateFolder({
+                            customFormats: [
+                              ...(wizard.folder.customFormats || []),
+                              {
+                                id: `custom:${uid()}`,
+                                name: `Custom design ${(wizard.folder.customFormats?.length || 0) + 1}`,
+                                width: 1200,
+                                height: 1200,
+                                count: 1,
+                              },
+                            ],
+                          })
+                        }
+                      >
+                        <Plus size={16} />
+                        Add custom size
+                      </button>
+                    </header>
+                    <p>
+                      Set exact dimensions in pixels. From 256 to 4,096 px per
+                      side, up to 12 megapixels.
+                    </p>
+                    {(wizard.folder.customFormats || []).map((format, i) => (
+                      <div className="campaign-custom-row" key={format.id}>
+                        <label className="custom-name">
+                          Name
                           <input
+                            aria-label={`Custom size ${i + 1} name`}
+                            value={format.name}
+                            maxLength={80}
+                            onChange={(e) =>
+                              updateCustom(format.id, { name: e.target.value })
+                            }
+                          />
+                        </label>
+                        <label>
+                          Width (px)
+                          <input
+                            aria-label={`Custom size ${i + 1} width (px)`}
                             type="number"
-                            aria-label={`${format.name} count`}
+                            min={256}
+                            max={4096}
+                            step={1}
+                            value={format.width || ""}
+                            onChange={(e) =>
+                              updateCustom(format.id, {
+                                width: e.target.valueAsNumber || 0,
+                              })
+                            }
+                          />
+                        </label>
+                        <span aria-hidden="true">×</span>
+                        <label>
+                          Height (px)
+                          <input
+                            aria-label={`Custom size ${i + 1} height (px)`}
+                            type="number"
+                            min={256}
+                            max={4096}
+                            step={1}
+                            value={format.height || ""}
+                            onChange={(e) =>
+                              updateCustom(format.id, {
+                                height: e.target.valueAsNumber || 0,
+                              })
+                            }
+                          />
+                        </label>
+                        <label>
+                          Designs
+                          <input
+                            aria-label={`Custom size ${i + 1} count`}
+                            type="number"
                             min={0}
                             max={6}
-                            value={wizard.folder.counts[format.id]}
-                            onChange={(e) => {
-                              const count = e.target.valueAsNumber;
-                              updateFolder({
-                                counts: {
-                                  ...wizard.folder.counts,
-                                  [format.id]: Number.isFinite(count)
-                                    ? Math.max(
-                                        0,
-                                        Math.min(6, Math.trunc(count)),
-                                      )
-                                    : 0,
-                                },
-                              });
-                            }}
+                            value={format.count}
+                            onChange={(e) =>
+                              updateCustom(format.id, {
+                                count: Math.max(
+                                  0,
+                                  Math.min(
+                                    6,
+                                    Math.trunc(e.target.valueAsNumber || 0),
+                                  ),
+                                ),
+                              })
+                            }
                           />
-                        </span>
-                      </label>
+                        </label>
+                        <button
+                          className="text-button"
+                          aria-label={`Remove custom size ${i + 1}`}
+                          onClick={() =>
+                            updateFolder({
+                              customFormats:
+                                wizard.folder.customFormats!.filter(
+                                  (f) => f.id !== format.id,
+                                ),
+                            })
+                          }
+                        >
+                          <X size={18} />
+                        </button>
+                      </div>
                     ))}
-                  </div>
+                  </section>
+                  {formatProblem && (
+                    <p className="campaign-format-problem" role="alert">
+                      {formatProblem}
+                    </p>
+                  )}
                   <div className="campaign-upload">
                     <h3>Your images, in the work.</h3>
                     <p>
@@ -573,12 +725,12 @@ export function CampaignStudio({
                       <p>{wizard.folder.intent}</p>
                     </div>
                     <div className="campaign-review-formats">
-                      {campaignFormats
-                        .filter((f) => wizard.folder.counts[f.id])
+                      {campaignFolderFormats(wizard.folder)
+                        .filter((f) => f.count > 0)
                         .map((f) => (
                           <span key={f.id}>
-                            <b>{wizard.folder.counts[f.id]}</b>
-                            {f.name}
+                            <b>{f.count}</b>
+                            {f.name} · {f.width} × {f.height} px
                           </span>
                         ))}
                     </div>
@@ -772,9 +924,6 @@ export function CampaignStudio({
             )}
             {!campaign ? (
               <section className="campaign-empty">
-                <span className="campaign-eyebrow">
-                  ONE IDEA. EVERY FORMAT.
-                </span>
                 <h1>
                   Make your next
                   <br />
@@ -937,9 +1086,11 @@ export function CampaignStudio({
                                 <strong>
                                   {task.channel === "photo"
                                     ? "Campaign photo"
-                                    : campaignFormats.find(
+                                    : task.format?.name ||
+                                      campaignFormats.find(
                                         (f) => f.id === task.channel,
-                                      )!.name}
+                                      )?.name ||
+                                      "Custom design"}
                                 </strong>
                                 <span>{task.stage || "Waiting"}</span>
                               </div>

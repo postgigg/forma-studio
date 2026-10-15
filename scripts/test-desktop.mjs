@@ -1,7 +1,7 @@
 import { _electron as electron, expect } from '@playwright/test';
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
-const folder = path.resolve('.local/desktop-smoke'); await mkdir(folder, { recursive: true });
+const folder = path.resolve(process.env.FORMA_SMOKE_OUTPUT || '.local/desktop-smoke'); await mkdir(folder, { recursive: true });
 const executablePath = process.env.FORMA_PACKAGED_EXE;
 const app = await electron.launch({ ...(executablePath ? { executablePath, args: [] } : { args: ['.'] }), env: { ...process.env, FORMA_DESKTOP_TEST_DATA: folder }, timeout: 60000 });
 try {
@@ -87,8 +87,30 @@ try {
   const fontScreenshot = await app.evaluate(async ({ BrowserWindow }) => (await BrowserWindow.getAllWindows()[0].capturePage(undefined, { stayHidden: true, stayAwake: true })).toPNG().toString('base64'));
   const fontPng = Buffer.from(fontScreenshot, 'base64'); expect(fontPng.length).toBeGreaterThan(10000);
   await writeFile(path.join(folder, 'desktop-fonts.png'), fontPng);
+  await page.getByRole('button', { name: 'Your design style', exact: true }).click();
+  await expect(page.getByRole('button', { name: 'Minimal design style', exact: true })).toHaveAttribute('aria-pressed', 'true');
+  await page.getByRole('button', { name: 'Continue', exact: true }).click();
+  await page.getByLabel('Personal design details').fill('Minimal, considered layouts with confident typography.');
+  await page.getByRole('button', { name: 'Continue', exact: true }).click();
+  await page.getByLabel('Style onboarding Mission statement', { exact: true }).fill('Help local creators communicate their ideas with clarity.');
+  await page.getByRole('button', { name: 'Save my design direction', exact: true }).click();
+  await expect(page.getByRole('dialog')).toHaveCount(0);
+  if (await page.getByRole('button', { name: 'Show page thumbnails', exact: true }).isVisible()) await page.getByRole('button', { name: 'Show page thumbnails', exact: true }).click();
+  await page.getByRole('button', { name: 'Duplicate page', exact: true }).click();
+  await expect(page.locator('[data-page-id]')).toHaveCount(2);
+  const ids = await page.locator('[data-page-id]').evaluateAll(items => items.map(item => item.getAttribute('data-page-id')));
+  const a = await page.locator('[data-page-id]').nth(1).boundingBox(), b = await page.locator('[data-page-id]').first().boundingBox();
+  await page.mouse.move(a.x + a.width / 2, a.y + a.height / 2); await page.mouse.down(); await page.mouse.move(b.x + 5, b.y + b.height / 2, { steps: 12 }); await page.mouse.up();
+  await expect(page.locator('[data-page-id]').first()).toHaveAttribute('data-page-id', ids[1]);
+  await expect(page.locator('[data-page-id]').first()).toHaveAttribute('aria-current', 'page');
+  const reordered = path.join(folder, 'desktop-page-order.json');
+  await app.evaluate(({ dialog }, filePath) => { dialog.showSaveDialog = async () => ({ canceled: false, filePath }); }, reordered);
+  await page.getByRole('button', { name: 'Export', exact: true }).click(); await page.getByLabel('File type', { exact: true }).selectOption('json'); await page.getByRole('button', { name: 'Download', exact: true }).click();
+  await expect(page.getByRole('dialog')).toHaveCount(0);
+  expect(JSON.parse(await readFile(reordered,'utf8')).pages.map(p => p.id)).toEqual([ids[1],ids[0]]);
+  console.log('Packaged personal-style onboarding, page drag ordering and native JSON order passed.');
   expect(errors).toEqual([]);
-  await writeFile(path.join(folder, 'result.json'), JSON.stringify({ testedAt: new Date().toISOString(), packaged: !!executablePath, isolatedRenderer: true, bundledAI: true, engine: 'gpt-6-astra', websiteCapture: true, pngExport: true, customFonts: true, textSpacing: true, errors }, null, 2));
+  await writeFile(path.join(folder, 'result.json'), JSON.stringify({ testedAt: new Date().toISOString(), packaged: !!executablePath, isolatedRenderer: true, bundledAI: true, engine: 'gpt-6-astra', websiteCapture: true, pngExport: true, customFonts: true, textSpacing: true, personalDesignStyle: true, pageDragOrder: true, nativeJsonPageOrder: true, errors }, null, 2));
   console.log('Desktop smoke passed: isolated renderer, bundled AI, website capture, 3D, PNG/PDF/JSON saves.');
 } catch (error) {
   const page = (await app.windows())[0];

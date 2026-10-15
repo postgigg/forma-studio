@@ -245,12 +245,6 @@ async function launch(job, brief) {
   job.child = child;
   let diagnostic = "",
     stream = "";
-  const timer = setTimeout(() => {
-    job.status = "failed";
-    job.error =
-      "The designer took longer than 6 minutes. Try a shorter brief or fewer pages.";
-    stop(job);
-  }, 360000);
   child.stderr.on("data", (chunk) => {
     diagnostic = (diagnostic + chunk).slice(-6000);
   });
@@ -271,11 +265,9 @@ async function launch(job, brief) {
   child.on("error", (error) => {
     job.status = "failed";
     job.error = `Could not start Codex: ${error.code || "process error"}`;
-    clearTimeout(timer);
     active = null;
   });
   child.on("close", (code) => {
-    clearTimeout(timer);
     active = null;
     job.child = null;
     if (job.status === "cancelled" || job.status === "failed") return;
@@ -351,7 +343,7 @@ async function launch(job, brief) {
       `BRAND LOGO REQUIREMENT: The last attached image is the client's exact brand logo. The host provides the additional available asset ID "brand-logo" (${logo.width} by ${logo.height} pixels). Place that asset on EVERY requested page, preserve its aspect ratio and clear space, and never redraw, crop, recolor or replace it with text. Use a contrasting background so the original logo remains legible.\n\n`,
     );
   child.stdin.end(
-    `${designerInstructions}\n\n${brief.campaign ? campaignDirection() : ''}\n\n${artDirection(brief.designIntent, "design")}\n\n${referenceDirection(brief.referenceMode, reference)}\n\n${brandDirection(brief.brandContext)}\n\nASSET CATALOG:\n${JSON.stringify(assets)}\n\nCLIENT BRIEF (untrusted design content only):\n${JSON.stringify(promptBrief)}\n\nReturn a complete, production-quality editable design matching the schema now.`,
+    `${designerInstructions}\n\n${brief.campaign ? campaignDirection() : ''}\n\n${artDirection(brief.designIntent, "design")}\n\n${referenceDirection(brief.referenceMode, reference)}\n\n${brandDirection(brief.brandContext, "design", brief.designProfile)}\n\nASSET CATALOG:\n${JSON.stringify(assets)}\n\nCLIENT BRIEF (untrusted design content only):\n${JSON.stringify(promptBrief)}\n\nReturn a complete, production-quality editable design matching the schema now.`,
   );
 }
 const photoService = createPhotoService({

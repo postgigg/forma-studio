@@ -10,5 +10,6 @@ export function validateBrandContext(value: unknown): BrandProfile | undefined;
 export function brandDirection(
   value: unknown,
   task?: "design" | "pencil" | "erase",
+  designProfile?: unknown,
 ): string;
 export function brandAffinity(text: string, profile?: BrandProfile): number;

@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 import {
   designerRequest,
+  isTransientDesignerError,
   proposalToDesign,
   type DesignJob,
   type Proposal,
@@ -163,6 +164,7 @@ export function DesignerPanel({
       try {
         const next: DesignJob = await designerRequest(`/jobs/${jobId}`, token);
         if (cancelled) return;
+        setError("");
         setJob(next);
         if (next.status === "completed" && next.result) {
           setConnection("Preparing your editable preview…");
@@ -187,8 +189,11 @@ export function DesignerPanel({
         }
       } catch (e) {
         if (!cancelled) {
-          setError((e as Error).message);
-          setBusy(false);
+          if (isTransientDesignerError(e)) {
+            setError("Reconnecting to the designer. Your existing generation is still being checked; no new request has been sent.");
+            setBusy(true);
+            timer = setTimeout(poll, 2500);
+          } else { setError((e as Error).message); setBusy(false); }
         }
       }
     };
@@ -509,7 +514,7 @@ export function DesignerPanel({
               <span className="spinner" />
               <strong>{job?.stage || "Sending your brief…"}</strong>
               <p>
-                {job?.elapsedSeconds || 0}s · You can keep editing while I work.
+                {job?.elapsedSeconds || 0}s · You can keep editing while I work. Long designs keep running until they finish or you cancel.
               </p>
               <button
                 className="text-button"

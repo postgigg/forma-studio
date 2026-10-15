@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { ArrowRight, Sparkles, Square } from "lucide-react";
 import type { Editor } from "./editor";
 import { Modal } from "./ui";
-import { designerRequest, DesignerRequestError } from "./ai";
+import { designerRequest, DesignerRequestError, isTransientDesignerError } from "./ai";
 import { useBrandGuidance } from "./BrandContext";
 import { AiEngine, useDesignIntent } from "./DesignIntent";
 import {
@@ -118,7 +118,13 @@ export function RefineDialog({
         }
         await new Promise((r) => setTimeout(r, 1200));
         if (!alive.current || owned.current?.id !== next.id) break;
-        next = await designerRequest(`/refinements/${next.id}`, token);
+        try {
+          next = await designerRequest(`/refinements/${next.id}`, token);
+          if (alive.current) setError("");
+        } catch (error) {
+          if (!isTransientDesignerError(error)) throw error;
+          if (alive.current) setError("Reconnecting to your existing refinement…");
+        }
       }
     } catch (e) {
       if (alive.current) {

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { ChevronDown, Plus, RefreshCw, Sparkles, Square } from "lucide-react";
-import { designerRequest } from "./ai";
+import { designerRequest, isTransientDesignerError } from "./ai";
 import { useBrandGuidance } from "./BrandContext";
 import { useDesignIntent } from "./DesignIntent";
 import { Field } from "./ui";
@@ -60,6 +60,7 @@ export function PhotoCreator({
       try {
         const next: PhotoJob = await designerRequest(`/photos/${jobId}`, token);
         if (stopped) return;
+        setError("");
         setJob(next);
         setBusy(next.status === "running");
         if (next.error) setError(next.error);
@@ -70,8 +71,10 @@ export function PhotoCreator({
             .catch(() => {});
       } catch (e) {
         if (!stopped) {
-          setError((e as Error).message);
-          setBusy(false);
+          if (isTransientDesignerError(e)) {
+            setError("Reconnecting to your existing photo generation…");
+            setBusy(true); timer = setTimeout(poll, 2500);
+          } else { setError((e as Error).message); setBusy(false); }
         }
       }
     };
