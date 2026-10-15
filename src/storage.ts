@@ -22,6 +22,10 @@ export async function allDesigns(): Promise<Design[]> {
     .map(([, value]) => value)
     .sort((a, b) => b.updatedAt.localeCompare(a.updatedAt));
 }
+export async function getDesign(id: string): Promise<Design | undefined> {
+  await writes.catch(() => {});
+  return get(`design:${id}`, db);
+}
 export async function deleteDesign(id: string) {
   await writes.catch(() => {});
   await del(`design:${id}`, db);

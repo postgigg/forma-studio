@@ -20,6 +20,9 @@ export interface Design {
   pages: DesignPage[];
   updatedAt: string;
   fonts?: StoredFont[];
+  aiJobId?: string;
+  campaignId?: string;
+  folderId?: string;
 }
 export interface Asset {
   id: string;

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ActiveSelection, FabricImage, Group, Textbox, Rect } from "fabric";
 import {
   AlignCenter,
@@ -34,6 +34,7 @@ export function Inspector({
   editor,
   run,
   collapsed,
+  propertiesRequest = 0,
   onRebuild,
   onErase,
   onPencil,
@@ -45,6 +46,7 @@ export function Inspector({
   editor: Editor;
   run: (fn: () => unknown) => void;
   collapsed: boolean;
+  propertiesRequest?: number;
   onRebuild: () => void;
   onErase: () => void;
   onPencil: () => void;
@@ -54,6 +56,7 @@ export function Inspector({
   onSolid: () => void;
 }) {
   const [tab, setTab] = useState("properties");
+  useEffect(() => { if (propertiesRequest) setTab('properties'); }, [propertiesRequest]);
   const { families: fonts } = useFontLibrary();
   const obj = editor.selected;
   const appearance = obj instanceof ActiveSelection ? obj.getObjects()[0] : obj;

@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { ActiveSelection, FabricImage, Group, Textbox } from "fabric";
-import type { User } from "@supabase/supabase-js";
 import {
   ArrowLeft,
   ArrowRight,
@@ -15,6 +14,7 @@ import {
   Cloud,
   Copy,
   Download,
+  Eraser,
   Expand,
   FolderOpen,
   Grid2X2,
@@ -22,6 +22,7 @@ import {
   LayoutTemplate,
   Laptop,
   Maximize2,
+  Megaphone,
   Minus,
   MousePointer2,
   MoreHorizontal,
@@ -51,17 +52,17 @@ import {
   getBrandLogo,
   putBrandLogo,
 } from "./storage";
-import { supabase } from "./cloud";
 import { templates } from "./templates";
 import { uid, type Asset } from "./types";
 import { useFontLibrary, fontLabel } from "./font-library";
 import { TextSpacing } from "./TextSpacing";
 import { DesktopUpdates } from "./DesktopUpdates";
 import { StyleStudio } from "./StyleStudio";
+import { CampaignStudio } from "./CampaignStudio";
+import { resumeCampaigns } from "./campaigns";
 import { Sidebar, photos, shapes, type Panel } from "./Sidebar";
 import { Inspector } from "./Inspector";
 import {
-  AccountDialog,
   ExportDialog,
   ProjectsDialog,
   SizeDialog,
@@ -111,7 +112,7 @@ type Dialog =
   | "resize"
   | "export"
   | "projects"
-  | "account"
+  | "campaigns"
   | "help"
   | "motion"
   | "style"
@@ -175,7 +176,6 @@ export default function App() {
     [assets, setAssets] = useState<Asset[]>([]),
     [brand, setBrand] = useState<string[]>([]),
     [brandLogo, setBrandLogo] = useState<Asset | null>(null),
-    [user, setUser] = useState<User | null>(null),
     [autoFit, setAutoFit] = useState(true),
     [slides, setSlides] = useState<string[]>([]),
     [slide, setSlide] = useState(0),
@@ -200,6 +200,8 @@ export default function App() {
   const [photoFraming, setPhotoFraming] = useState<PhotoFrame | null>(null);
   const [solidEditing, setSolidEditing] = useState<{ initial: SolidSettings; existing?: SolidObject } | null>(null);
   const [areaSelecting, setAreaSelecting] = useState(false);
+  const [propertiesRequest, setPropertiesRequest] = useState(0);
+  useEffect(() => { void resumeCampaigns().catch(() => {}); }, []);
   useEffect(() => window.formaDesktop?.onBeforeClose(async () => { await editor?.save(); }), [editor]);
   const finishAreaSelection = useCallback(() => setAreaSelecting(false), []);
   useEffect(() => {
@@ -294,6 +296,7 @@ export default function App() {
     );
     setEditor(instance);
     instance.onContextMenu = setMenuPoint;
+    instance.onShowProperties = () => { showInspector(true); setPropertiesRequest(value => value + 1); };
     void instance.boot().catch((e) => setError(e.message));
     void getAssets()
       .then(setAssets)
@@ -309,18 +312,6 @@ export default function App() {
       clearTimeout(toastTimer.current);
     };
   }, [notify]);
-  useEffect(() => {
-    if (!supabase) return;
-    void supabase.auth
-      .getSession()
-      .then(({ data }) => setUser(data.session?.user || null));
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange((_event, session) =>
-      setUser(session?.user || null),
-    );
-    return () => subscription.unsubscribe();
-  }, []);
   useEffect(() => {
     if (!editor?.ready || !stageRef.current || !autoFit) return;
     const el = stageRef.current;
@@ -543,6 +534,7 @@ export default function App() {
         >
           <FolderOpen size={17} /> My designs
         </button>
+        <button className="campaign-launch" aria-label="Campaigns" title="Campaigns" disabled={!ready} onClick={() => run(async () => { await editor!.save(); setDialog('campaigns'); })}><Megaphone size={17}/><span>Campaigns</span></button>
         <span className="header-chevron">/</span>
         <div className="design-title">
           {ready ? (
@@ -597,15 +589,6 @@ export default function App() {
             <Download size={17} />
             <span>Export</span>
             <ChevronDown size={13} />
-          </button>
-          <button
-            className="avatar"
-            aria-label="Your account"
-            title={user?.email || "Your account"}
-            disabled={!ready}
-            onClick={() => setDialog("account")}
-          >
-            {user?.email?.[0].toUpperCase() || "Y"}
           </button>
         </div>
       </header>
@@ -708,7 +691,7 @@ export default function App() {
             />
           )}
         <main className="editor-main" aria-label="Design editor">
-          <div className="context-toolbar">
+          <div className={`context-toolbar${selected ? " has-selection" : ""}`}>
             <div className="toolbar-left">
               {panelOpen && (
                 <IconButton
@@ -729,19 +712,25 @@ export default function App() {
                       setAreaSelecting((v) => !v);
                     }}
                   />
+                  <div className="page-toolbar-actions">
                   <button
                     className="toolbar-button"
+                    aria-label="Resize"
+                    title="Resize"
                     onClick={() => setDialog("resize")}
                   >
-                    <Expand size={15} /> Resize <ChevronDown size={12} />
+                    <Expand size={15} /> <span>Resize</span> <ChevronDown className="toolbar-chevron" size={12} />
                   </button>
                   <button
                     className="toolbar-button"
+                    aria-label="Animate"
+                    title="Animate"
                     onClick={() => setDialog("motion")}
                   >
-                    <Play size={14} /> Animate
+                    <Play size={14} /> <span>Animate</span>
                   </button>
-                  <button className="toolbar-button" onClick={() => setDialog('style')}><Palette size={16} /> Page style</button>
+                  <button className="toolbar-button" aria-label="Page style" title="Page style" onClick={() => setDialog('style')}><Palette size={16} /> <span>Page style</span></button>
+                  </div>
                   <span className="toolbar-divider" />
                   <IconButton
                     icon={Undo2}
@@ -828,10 +817,12 @@ export default function App() {
               ) : null}
               {selected && (
                 <>
-                  {selected instanceof SolidObject && <button className="toolbar-button" disabled={selected.lockMovementX} onClick={() => setSolidEditing({ initial: selected.solid, existing: selected })}><Box size={16} /> Edit 3D object</button>}
+                  {selected instanceof SolidObject && <button className="toolbar-button" aria-label="Edit 3D object" title="Edit 3D object" disabled={selected.lockMovementX} onClick={() => setSolidEditing({ initial: selected.solid, existing: selected })}><Box size={16} /> <span>Edit 3D object</span></button>}
                   {selected instanceof DeviceFrame && (
                     <button
                       className="toolbar-button"
+                      aria-label="Edit frame"
+                      title="Edit frame"
                       disabled={selected.lockMovementX}
                       onClick={() =>
                         setFraming({
@@ -840,12 +831,14 @@ export default function App() {
                         })
                       }
                     >
-                      <Laptop size={16} /> Edit frame
+                      <Laptop size={16} /> <span>Edit frame</span>
                     </button>
                   )}
                   {isChart(selected) && (
                     <button
                       className="toolbar-button"
+                      aria-label="Edit data"
+                      title="Edit data"
                       disabled={selected.lockMovementX}
                       onClick={() =>
                         setCharting({
@@ -855,7 +848,7 @@ export default function App() {
                       }
                     >
                       <BarChart3 size={16} />
-                      Edit data
+                      <span>Edit data</span>
                     </button>
                   )}
                   {selected instanceof PhotoFrame && (
@@ -876,28 +869,34 @@ export default function App() {
                   {selected instanceof FabricImage && (
                     <button
                       className="toolbar-button"
+                      aria-label="AI Pencil"
+                      title="AI Pencil"
                       disabled={selected.lockMovementX}
                       onClick={pencilImage}
                     >
                       <Pencil size={15} />
-                      AI Pencil
+                      <span>AI Pencil</span>
                     </button>
                   )}
                   {selected instanceof FabricImage && (
                     <button
                       className="toolbar-button eraser-toolbar"
+                      aria-label="Magic Eraser"
+                      title="Magic Eraser"
                       onClick={eraseImage}
                       disabled={selected.lockMovementX}
                     >
-                      Magic Eraser
+                      <Eraser size={15} /> <span>Magic Eraser</span>
                     </button>
                   )}
                   <button
                     className="toolbar-button improve-toolbar"
+                    aria-label="Improve with AI"
+                    title="Improve with AI"
                     onClick={improveSelection}
                     disabled={editor?.busy}
                   >
-                    <Sparkles size={15} /> Improve with AI
+                    <Sparkles size={15} /> <span>Improve with AI</span>
                   </button>
                   {selected instanceof FabricImage && (
                     <button
@@ -1205,6 +1204,7 @@ export default function App() {
             editor={editor}
             run={run}
             collapsed={!inspectorOpen}
+            propertiesRequest={propertiesRequest}
             onRebuild={rebuildImage}
             onErase={eraseImage}
             onPencil={pencilImage}
@@ -1334,19 +1334,12 @@ export default function App() {
         <ProjectsDialog
           editor={editor}
           notify={notify}
-          user={user}
           onNew={() => setDialog("new")}
+          onCampaigns={() => setDialog("campaigns")}
           onClose={() => setDialog(null)}
         />
       )}
-      {ready && dialog === "account" && (
-        <AccountDialog
-          editor={editor}
-          notify={notify}
-          user={user}
-          onClose={() => setDialog(null)}
-        />
-      )}
+      {ready && dialog === 'campaigns' && <CampaignStudio editor={editor} brand={brand} brandLogo={brandLogo} onClose={() => setDialog(null)} onAISetup={() => { setDialog(null); setPanel('ai'); setPanelOpen(true); }} />}
       {dialog === "help" && (
         <Modal title="A few little shortcuts" onClose={() => setDialog(null)}>
           {window.formaDesktop?.checkForUpdates && <button className="secondary full" onClick={() => { setDialog(null); run(() => window.formaDesktop!.checkForUpdates()); }}><Download size={17} /> Check for updates</button>}

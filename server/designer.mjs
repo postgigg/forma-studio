@@ -3,6 +3,7 @@ import { brandDirection } from "../shared/brand-context.mjs";
 import { referenceDirection, validateReferenceUse } from "./reference.mjs";
 import { spawn, spawnSync } from "node:child_process";
 import { artDirection } from "./art-direction.mjs";
+import { campaignDirection } from "../shared/campaign-direction.mjs";
 import { aiEngine, modelArguments } from "./ai-engine.mjs";
 import {
   existsSync,
@@ -151,11 +152,13 @@ async function launch(job, brief) {
   const workspace = path.join(runtime, job.id);
   mkdirSync(workspace, { recursive: true });
   const output = path.join(workspace, "proposal.json");
-  const { sourceImage, logo: requestedLogo, ...promptBrief } = brief;
+  const { sourceImage, logo: requestedLogo, campaignImages: suppliedImages, clientRequestId, ...promptBrief } = brief;
   const extraAssets = designAssets(brief);
   const logo =
     extraAssets.find((asset) => asset.id === "brand-logo") || requestedLogo;
   const reference = extraAssets.find((asset) => asset.id === "reference-photo");
+  const campaignImages = extraAssets.filter(asset => asset.category === 'Campaign image');
+  if (campaignImages.length) promptBrief.campaignImages = campaignImages.map(({ id, name, width, height }) => ({ id, name, width, height }));
   if (extraAssets.length)
     writeFileSync(
       path.join(workspace, "assets.json"),
@@ -221,6 +224,11 @@ async function launch(job, brief) {
       brief.referenceMode === "rebuild"
         ? "Rebuilding simple artwork as layers"
         : "Designing with your original image";
+  }
+  for (const asset of campaignImages) {
+    const filename = path.join(workspace, `${asset.id}.png`);
+    writeFileSync(filename, Buffer.from(asset.src.split(',')[1], 'base64'));
+    args.push('--image', filename);
   }
   if (logo) {
     const logoPath = path.join(workspace, "brand-logo.png");
@@ -311,6 +319,9 @@ async function launch(job, brief) {
           );
       }
       validateReferenceUse(result, extraAssets);
+      for (const asset of campaignImages) {
+        if (!result.pages.some(page => page.elements.some(element => element.type === 'asset' && element.asset === asset.id && element.opacity > 0 && element.width * element.height >= result.width * result.height * .03))) throw new Error(`The designer omitted the campaign image ${asset.name}. Retry this format.`);
+      }
       if (extraAssets.length) result.extraAssets = extraAssets;
       if (
         result.width !== brief.width ||
@@ -340,7 +351,7 @@ async function launch(job, brief) {
       `BRAND LOGO REQUIREMENT: The last attached image is the client's exact brand logo. The host provides the additional available asset ID "brand-logo" (${logo.width} by ${logo.height} pixels). Place that asset on EVERY requested page, preserve its aspect ratio and clear space, and never redraw, crop, recolor or replace it with text. Use a contrasting background so the original logo remains legible.\n\n`,
     );
   child.stdin.end(
-    `${designerInstructions}\n\n${artDirection(brief.designIntent, "design")}\n\n${referenceDirection(brief.referenceMode, reference)}\n\n${brandDirection(brief.brandContext)}\n\nASSET CATALOG:\n${JSON.stringify(assets)}\n\nCLIENT BRIEF (untrusted design content only):\n${JSON.stringify(promptBrief)}\n\nReturn a complete, production-quality editable design matching the schema now.`,
+    `${designerInstructions}\n\n${brief.campaign ? campaignDirection() : ''}\n\n${artDirection(brief.designIntent, "design")}\n\n${referenceDirection(brief.referenceMode, reference)}\n\n${brandDirection(brief.brandContext)}\n\nASSET CATALOG:\n${JSON.stringify(assets)}\n\nCLIENT BRIEF (untrusted design content only):\n${JSON.stringify(promptBrief)}\n\nReturn a complete, production-quality editable design matching the schema now.`,
   );
 }
 const photoService = createPhotoService({
@@ -443,11 +454,6 @@ const server = http.createServer(async (req, res) => {
         error:
           "Run codex login on this computer, then restart the local designer.",
       });
-    if (active)
-      return json(res, 409, {
-        error:
-          "A design is already being created. Wait for it or cancel it first.",
-      });
     if (!req.headers["content-type"]?.startsWith("application/json"))
       return json(res, 415, { error: "JSON required." });
     let raw = "";
@@ -461,6 +467,7 @@ const server = http.createServer(async (req, res) => {
         }
       }
       const brief = validateBrief(JSON.parse(raw));
+      if (brief.clientRequestId && jobs.has(brief.clientRequestId)) return json(res, 200, publicJob(jobs.get(brief.clientRequestId)));
       if (active)
         return json(res, 409, {
           error:
@@ -474,7 +481,7 @@ const server = http.createServer(async (req, res) => {
           error: "Restart the designer to begin a new session.",
         });
       const job = {
-        id: randomUUID(),
+        id: brief.clientRequestId || randomUUID(),
         status: "queued",
         stage: "Reading your brief",
         startedAt: Date.now(),

@@ -3,7 +3,7 @@
 <p align="center">A local visual design studio for invitations, brand stories, presentations, data, and ideas.</p>
 <p align="center"><a href="#download-the-desktop-app">Download & setup</a> · <a href="#take-a-tour">Walkthrough</a> · <a href="#try-an-example">Editable demos</a> · <a href="docs/ROADMAP.md">Roadmap</a></p>
 
-![The actual Forma editor with an editable birthday invitation, template library, canvas, properties, and pages.](docs/media/studio-overview.png)
+![The actual Forma editor with an editable birthday invitation, template library, canvas, properties, and pages.](docs/media/studio-overview-v1.3.png)
 
 Build with draggable layers, original artwork, photo-filled letters, editable charts, and AI refinement. Save on your device, run the app with Docker, and export still images or motion. These screenshots show the actual editor in an isolated browser; the example projects are editable Forma files.
 
@@ -14,15 +14,15 @@ Build with draggable layers, original artwork, photo-filled letters, editable ch
 | Design                                                                                                     | Compose                                                             | Refine                                                                 | Share                                                    |
 | ---------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------- | ---------------------------------------------------------------------- | -------------------------------------------------------- |
 | **262 editable templates**, including 150 new compositions                                            | **304 transparent AI stickers**, **290 editable graphics**          | AI Designer, selection refinement, AI Pencil, and Magic Eraser         | PNG, JPG, SVG, PDF, editable JSON, GIF, WebM             |
-| Birthdays, weddings, seasonal events, business, retail, hospitality, wellness, education, and celebrations | 250 graphics across 25 brand collections; four original Forma fonts | Groups, alignment, gradients, transparent stops, crop, corner rounding | Multiple pages, Present, motion previews, local accounts |
+| Birthdays, weddings, seasonal events, business, retail, hospitality, wellness, education, and celebrations | 250 graphics across 25 brand collections; four original Forma fonts | Groups, alignment, gradients, transparent stops, crop, corner rounding | Multiple pages, Present, motion previews, local projects |
 
 ## Download the desktop app
 
-**Windows is free.** Download [Forma Studio 1.2.0 for Windows](https://github.com/postgigg/forma-studio/releases/download/v1.2.0/Forma-Studio-Setup-1.2.0.exe), run the installer, and open **Forma Studio** from your desktop or Start menu. Windows 10/11, 64-bit. The current installer is unsigned, so Windows may display an unknown-publisher warning.
+**Windows is free.** Download [Forma Studio 1.3.0 for Windows](https://github.com/postgigg/forma-studio/releases/download/v1.3.0/Forma-Studio-Setup-1.3.0.exe), run the installer, and open **Forma Studio** from your desktop or Start menu. Windows 10/11, 64-bit. The current installer is unsigned, so Windows may display an unknown-publisher warning.
 
-The desktop app bundles the editor, its local worker and Codex CLI. No terminal, Node.js or Docker is required for everyday use. Projects save locally; **Export → Forma JSON** creates an editable backup. To move a browser project into the desktop app, export it from the browser and import the JSON file in Forma. Their storage is separate.
+The desktop app bundles the editor, its local worker and Codex CLI. No terminal, Node.js or Docker is required for everyday use. Forma requires no app account or sign-in. Projects save locally; **Export → Forma JSON** creates an editable backup. To move a browser project into the desktop app, export it from the browser and import the JSON file in Forma. Their storage is separate.
 
-**Updates:** Version 1.2 checks GitHub Releases when you are online. Choose **Download update**, then **Save & restart**. You can keep working until you are ready. Help also has **Check for updates**. There is no Forma update server, subscription or customer GitHub login. Versions 1.1.x need the 1.2 installer once to enable future in-app updates. [Release and minimum-version instructions](updates/README.md) explain how to publish an update and show an **Update required** prompt without locking users out of offline designs.
+**Updates:** Version 1.2 and later check GitHub Releases when you are online. Choose **Download update**, then **Save & restart**. You can keep working until you are ready. Help also has **Check for updates**. There is no Forma update server, subscription or customer GitHub login. Versions 1.1.x need the current installer once to enable future in-app updates. [Release and minimum-version instructions](updates/README.md) explain how to publish an update and show an **Update required** prompt without locking users out of offline designs.
 
 The new identity has a custom folded F symbol and drawn wordmark, shared across the editor, desktop, installer and website. [Identity files and usage](public/brand/README.md) include the source geometry and the limits of the preliminary name/mark search.
 
@@ -50,14 +50,12 @@ npm ci
 npm run local
 ```
 
-The first start downloads Docker images. The script creates the isolated `forma-local` network, starts Supabase, writes public browser settings to `.env.local`, builds the editor container, and starts the local worker in the background. Open **[localhost:5186](http://localhost:5186)**.
+The first start downloads Docker images. The script creates the isolated `forma-local` network, builds the editor container, and starts the local worker in the background. Forma opens without an app account. Open **[localhost:5186](http://localhost:5186)**.
 
 | Service         | Address                | Purpose                          |
 | --------------- | ---------------------- | -------------------------------- |
 | Editor          | http://localhost:5186  | Design in the browser            |
 | Local worker    | http://127.0.0.1:5188  | AI jobs and website captures     |
-| Supabase API    | http://127.0.0.1:57621 | Local accounts and saved designs |
-| Supabase Studio | http://127.0.0.1:57623 | Inspect the database             |
 
 Use the same browser address consistently: `localhost` and `127.0.0.1` have separate browser storage. The editor binds to this computer's loopback interface.
 
@@ -77,14 +75,14 @@ The current capture worker uses Playwright's Microsoft Edge channel. Install Edg
 
 ### Frontend-only development
 
-For editing without Docker/account storage:
+For editing without Docker:
 
 ```powershell
 npm ci
 npm run dev
 ```
 
-Port 5186 must be free. If the Docker editor is running, stop that service first with `docker compose stop studio`. `.env.example` lists the optional public account-storage settings. Never place a service-role key in frontend configuration.
+Port 5186 must be free. If the Docker editor is running, stop that service first with `docker compose stop studio`.
 
 An isolated preview can run alongside the Docker app with `npm run dev -- --port 5190`. The production worker accepts configured local origins on ports 5186 and 5187; other preview origins need deliberate worker configuration. UI tests can use isolated fixture endpoints.
 
@@ -92,17 +90,43 @@ An isolated preview can run alongside the Docker app with `npm run dev -- --port
 
 ```powershell
 # Rebuild after source changes
-docker compose --env-file .env.local up -d --build
+docker compose up -d --build
 
 # Stop without deleting saved database volumes
 docker compose stop
-npm run db:stop
 
 # Stop the worker after active jobs finish
 npm run ai:stop
 ```
 
 Run `npm run local` to start again. Logs and job files are under `.local/designer.log` and `.local/designer`.
+
+## Campaigns & an AI guide
+
+Open **Campaigns** in the header or **My designs → Campaigns**. The full-screen wizard follows the hierarchy **campaign objective → subcampaign folder intent → platform designs**.
+
+1. Name the campaign, describe its overall objective and audience, and set the visual direction. Your saved brand mission and palette provide context.
+2. Give the first folder a name and its own focused intent. Add exact required copy, facts, a call to action, and anything to avoid. Add more folders with **New folder**; each supports the parent campaign.
+3. Choose **0–6 designs per format**: Instagram post (1080 × 1350), Facebook (1200 × 630), LinkedIn (1200 × 627), and Instagram story (1080 × 1920). Upload up to four PNG/JPG/WebP images, or reserve one slot for an optional AI campaign photo.
+4. Review the brief and press **Create**. The connected local worker creates each format in sequence, carries the first format's palette and typography into the others, and saves every output as a separate editable design in that folder.
+5. Open a result to edit its layers. Use **Move to folder** for an existing design. Completed work remains saved if another format fails; **Resume collection** retries unfinished work. **Pause after current format** preserves the current job, and drafts save on this device.
+
+**AI campaign guide** inside Campaigns explains how to brief a collection. AI uses your own supported Codex account and provider usage. The app itself needs no Forma account. Review generated copy and imagery before publishing.
+
+![The full-screen campaign wizard with platform quantities and an uploaded image.](docs/media/campaign-formats-v1.3.png)
+
+This illustrative gardening campaign was created by the real local worker using **GPT-6 Astra, maximum reasoning**, with the uploaded photograph preserved as an image layer. The three outputs have 8, 11 and 8 editable layers across the requested formats; the screenshots are actual editor renders.
+
+| Instagram | Facebook | LinkedIn |
+| --- | --- | --- |
+| ![AI Instagram design](docs/media/campaign-instagram-v1.3.png) | ![AI Facebook design](docs/media/campaign-facebook-v1.3.png) | ![AI LinkedIn design](docs/media/campaign-linkedin-v1.3.png) |
+| [Editable example](docs/examples/campaign-instagram.json) | [Editable example](docs/examples/campaign-facebook.json) | [Editable example](docs/examples/campaign-linkedin.json) |
+
+## Draw, highlight & erase
+
+Open **Draw** and choose **Pencil**, **Marker**, **Paintbrush**, **Highlighter**, or **Stroke eraser**. Ink tools offer custom colors, your brand palette, size and opacity. Each stroke stays editable and travels with the design. The highlighter starts translucent; the paintbrush has a soft edge. The stroke eraser removes touched freehand strokes, and one Undo restores a whole erase gesture. Press **Escape** to return to selecting.
+
+![Drawing tools and color controls in the current editor.](docs/media/drawing-tools-v1.3.png)
 
 ## Take a tour
 
@@ -118,7 +142,7 @@ Change the document title in the header. Browser saving happens automatically. U
 
 ### 2. Select and compose
 
-Click to move, resize, or rotate an object. Drag across empty canvas space to select several objects or groups. Selection can also begin in the surrounding workspace. **Select area** in the top toolbar lets a drag begin over existing artwork. Hold **Shift**, **Ctrl**, or **Cmd** to add to the selection; **Escape** leaves selection mode.
+Click to move, resize, or rotate an object. Double-click an element to reveal its Properties panel, even when the panel is collapsed. Drag across empty canvas space to select several objects or groups. Selection can also begin in the surrounding workspace. **Select area** in the top toolbar lets a drag begin over existing artwork. Hold **Shift**, **Ctrl**, or **Cmd** to add to the selection; **Escape** leaves selection mode.
 
 Right-click for selection actions. Use Layers to select/reorder objects, and purple guides for alignment and equal spacing. Zoom with the canvas wheel or footer.
 
@@ -128,7 +152,7 @@ Select text and open **Spacing** in the top toolbar for line height, letter spac
 
 **Page style** previews palette and layout-spacing changes on the actual page. It preserves locked content and photos, applies changes as editable objects, and supports Undo. **Refine page with AI**, beside the page's duplicate/delete buttons, captures all visible page layers into the normal refinement preview. Unlock locked content before refining the entire page.
 
-![Objects selected together in the editor.](docs/media/area-selection.png)
+![Objects selected together in the editor.](docs/media/area-selection-v1.3.png)
 
 ### 3. Add artwork
 
@@ -136,7 +160,7 @@ Select text and open **Spacing** in the top toolbar for line height, letter spac
 
 Under **Brand → Your business & mission**, save your company name, business purpose, mission statement, audience and visual voice. AI Designer, refinement, AI Pencil, Magic Eraser and photo creation receive this profile when **Use brand context** is checked. Your explicit request takes priority. Erasing still removes the marked object and restores its surroundings; it does not add brand decorations. Elements can **Prioritize artwork for my business**, bringing relevant graphics and stickers forward while keeping the full library available.
 
-![Graphic collections beside an editable quarterly report.](docs/media/elements-library.png)
+![Graphic collections beside an editable quarterly report.](docs/media/elements-library-v1.3.png)
 
 ### 4. Fill a letter or shape with a photo
 
@@ -148,7 +172,7 @@ Under **Brand → Your business & mission**, save your company name, business pu
 
 The image and crop settings remain editable after saving. Remove or replace the photo while keeping the frame. Undo restores the previous crop.
 
-![A photograph clipped to an italic Georgia A, with crop and font controls.](docs/media/photo-frame-crop.png)
+![A photograph clipped to an italic Georgia A, with crop and font controls.](docs/media/photo-frame-crop-v1.3.png)
 
 ### 5. Tell a story with data
 
@@ -166,7 +190,7 @@ Referral,92,65
 
 Charts render as native canvas groups. Keep the group intact for the data editor; ungrouping exposes the individual artwork.
 
-![Chart data editor with numeric values and a live preview.](docs/media/chart-editor.png)
+![Chart data editor with numeric values and a live preview.](docs/media/chart-editor-v1.3.png)
 
 ### 6. Refine selected content with AI
 
@@ -176,7 +200,7 @@ Select objects/groups and choose **Improve with AI**. Give a concrete brief and 
 
 Refinement can add separate editable stars, sparkles, shapes, paths, or text. It validates element geometry and explicit numeric star requests. Existing groups and unselected artwork are preserved; one Undo restores the original. Short design notes explain the visible decisions. Review the AI's work before applying.
 
-![A real AI refinement comparison, generated from the 45-star brief.](docs/media/ai-refinement.png)
+![A real AI refinement result from the 45-star brief, replayed in the current interface.](docs/media/ai-refinement-v1.3.png)
 
 Use **AI Designer** for a new editable composition and **Photos → Create with AI** for a new image.
 
@@ -194,7 +218,7 @@ Select a photo or background image, then choose **AI Pencil** in the toolbar, pr
 
 The original image supplies context and style; your mask supplies location. Select **Generate targeted edit**, review the before/after result, then **Apply targeted edit**. Clear/undo marks to refine the target or try again. Masked compositing preserves pixels outside the marked area in the working image, and Undo restores the original layer. Mark enough room for the new subject and its local shadows or wake.
 
-![AI Pencil's real marked-area and shark result comparison.](docs/media/ai-pencil-review.png)
+![AI Pencil's previously generated shark result, reviewed in the current interface.](docs/media/ai-pencil-review-v1.3.png)
 
 **Magic Eraser** uses the same review-and-apply workflow to remove a painted object and reconstruct the background. AI Pencil and Magic Eraser currently operate on one selected raster image at a time.
 
@@ -204,7 +228,7 @@ Choose **Frames**, then MacBook, Laptop, iPad, Tablet, or iPhone. Enter an HTTP(
 
 Laptop frames use a hinged screen and a solid keyboard base with keys, trackpad, ports and depth. Drag the preview to rotate, choose a view preset, or adjust **Laptop screen opening**. A software renderer retains the same geometry when WebGL is unavailable. The dialog keeps its save controls accessible on smaller screens.
 
-<table><tr><td width="50%"><img src="docs/media/device-macbook.png" alt="A captured website in a perspective MacBook frame" /></td><td width="50%"><img src="docs/media/device-motion.gif" alt="Actual animated GIF export of a moving device frame" /></td></tr></table>
+<table><tr><td width="50%"><img src="docs/media/device-macbook-v1.3.png" alt="An editable quarterly report displayed in a perspective MacBook frame" /></td><td width="50%"><img src="docs/media/device-motion.gif" alt="Actual animated GIF export of a moving device frame" /></td></tr></table>
 
 Frames save a website capture; they are not interactive browsers in the artwork. Reopening does not fetch the site again. Captures use a fresh session, so protected pages may show login; upload a screen image when needed. GIF/WebM include motion, while PNG/PDF/SVG retain the chosen static pose.
 
@@ -216,13 +240,13 @@ Add the object, then double-click it or choose **Edit 3D object** to change it l
 
 The regular canvas rotation handle also shows live degrees while you drag it.
 
-![The packaged desktop app editing extruded Forma lettering, with material, color, depth, bevel and rotation controls.](docs/media/3d-editor.png)
+![The editor displaying extruded Forma lettering, with material, color, depth, bevel and rotation controls.](docs/media/3d-editor-v1.3.png)
 
 ### 10. Save and export
 
 Use **Animate** or **Present** to preview movement. Export PNG, JPG, SVG, PDF, JSON, GIF, or WebM. Motion renders an independent copy and keeps the source unchanged. SVG embeds bitmap and font assets; custom photo/device frames are rendered images within the SVG.
 
-Browser designs, uploads, and brand settings live in IndexedDB for the current origin. **Export JSON for a portable editable backup.** Desktop exports use the native Save dialog; the app saves pending changes before closing. Optional account saving is available in the source installation through Supabase. Clearing browser or app data removes local work that has not been backed up.
+Browser designs, uploads, and brand settings live in IndexedDB for the current origin. **Export JSON for a portable editable backup.** Desktop exports use the native Save dialog; the app saves pending changes before closing. Clearing browser or app data removes local work that has not been backed up.
 
 ## Try an example
 
@@ -304,5 +328,5 @@ The [roadmap](docs/ROADMAP.md) separates working tools from proposed next featur
 | Docker/Supabase will not start | Start Docker Desktop and retry. Set `FORMA_DOCKER_SUBNET` to a free subnet before initial network creation if the default conflicts. |
 | AI unavailable                 | Run `codex login`, start the worker, and inspect `.local/designer.log`. Restart after sign-in once active jobs finish.               |
 | Capture fails                  | Confirm Edge is installed and the HTTP(S) page is reachable. Upload a screenshot for protected pages.                                |
-| Designs appear missing         | Use the same profile and exact origin. Check account storage or import a JSON backup.                                                |
+| Designs appear missing         | Use the same profile and exact origin. Open My designs on the same device or import a JSON backup.                                                |
 | Source changed but app did not | Rebuild the Docker editor, then refresh the browser.                                                                                 |

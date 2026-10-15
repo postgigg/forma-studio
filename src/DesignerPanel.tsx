@@ -22,6 +22,7 @@ import { Field } from "./ui";
 import { useBrandGuidance } from "./BrandContext";
 import { AiEngine, useDesignIntent } from "./DesignIntent";
 import { DesktopAI } from "./DesktopAI";
+import { allDesigns, getDesign } from "./storage";
 
 const examples = [
   "A refined launch poster for a botanical skincare brand. Sage, ivory, and warm editorial typography.",
@@ -143,7 +144,10 @@ export function DesignerPanel({
   const openDraft = async () => {
     if (!draft) return;
     try {
-      await editor.open(draft);
+      await editor.save();
+      // A preview is the original AI proposal; the saved document may now have
+      // extra pages and edits. Reopening must never overwrite that newer work.
+      if (editor.doc.id !== draft.id) await editor.open((await getDesign(draft.id)) || draft);
       notify(
         "Your AI design is open. Text, shapes and images are separate editable layers.",
       );
@@ -162,7 +166,9 @@ export function DesignerPanel({
         setJob(next);
         if (next.status === "completed" && next.result) {
           setConnection("Preparing your editable preview…");
-          const design = await proposalToDesign(next.result);
+          const existing = (await allDesigns()).find(d => d.aiJobId === jobId);
+          const design = existing || await proposalToDesign(next.result);
+          design.aiJobId = jobId;
           if (cancelled) return;
           setDraft(design);
           setProposal(next.result);

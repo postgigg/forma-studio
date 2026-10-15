@@ -159,7 +159,7 @@ export async function proposalToDesign(proposal: Proposal): Promise<Design> {
           const img = await FabricImage.fromURL(asset.src);
           const w = img.width,
             h = img.height;
-          if (asset.category === "AI stickers" || asset.category === "Brand logo") {
+          if (asset.category === "AI stickers" || asset.category === "Brand logo" || asset.category === "Campaign image") {
             const scale = Math.min(element.width / w, element.height / h);
             img.set({
               ...common,

@@ -258,8 +258,17 @@ test("image design defaults to preserved pixels and opens an independently edita
   expect(
     doc.pages[0].data.objects.find((o: any) => o.type === "Textbox").text,
   ).toBe("Seasonal stems");
+  for (let i = 0; i < 3; i++) await page.getByRole('button', { name: 'Add page', exact: true }).click();
+  await expect.poll(async () => (await saved(page)).pages.length).toBe(4);
+  await page.getByRole('button', { name: 'Open generated design as editable layers', exact: true }).click();
+  await expect.poll(async () => (await saved(page)).pages.length).toBe(4);
+  const edited = await saved(page);
   await page.reload();
   await expect
-    .poll(async () => (await saved(page)).pages[0].data.objects)
-    .toEqual(doc.pages[0].data.objects);
+    .poll(async () => (await saved(page)).pages.map(({ thumbnail, ...page }: any) => page))
+    .toEqual(edited.pages.map(({ thumbnail, ...page }: any) => page));
+  await page.getByRole('button', { name: 'AI Designer', exact: true }).click();
+  await page.getByRole('button', { name: 'Open generated design as editable layers', exact: true }).click();
+  await expect.poll(async () => (await saved(page)).id).toBe(edited.id);
+  await expect.poll(async () => (await saved(page)).pages.length).toBe(4);
 });

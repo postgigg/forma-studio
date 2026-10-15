@@ -8,7 +8,6 @@ import {
   Group,
   Line,
   Path,
-  PencilBrush,
   Polygon,
   Point,
   Rect,
@@ -28,8 +27,9 @@ import { initFonts, loadFonts, usedFonts } from "./font-library";
 import "./device-frame";
 import { SolidObject } from "./solid-object";
 import { PhotoFrame, type PhotoMask } from "./photo-frame";
+import { drawingBrush, drawingTools, type DrawingTool } from './drawing';
 
-export type DesignObject = FabricObject & { id?: string; name?: string };
+export type DesignObject = FabricObject & { id?: string; name?: string; inkTool?: DrawingTool };
 FabricObject.customProperties = [
   "id",
   "name",
@@ -42,6 +42,7 @@ FabricObject.customProperties = [
   "lockRotation",
   "srcFromAttribute",
   "chart",
+  "inkTool",
 ];
 Object.assign(FabricObject.ownDefaults, {
   originX: "left",
@@ -91,9 +92,11 @@ export class Editor {
   history: string[] = [];
   historyIndex = -1;
   clipboard: FabricObject | null = null;
+  drawingTool: DrawingTool = 'pencil';
   private textRange: { object: Textbox; start: number; end: number } | null =
     null;
   onContextMenu?: (point: { x: number; y: number }) => void;
+  onShowProperties?: () => void;
   onPhotoFrameEdit?: (frame: PhotoFrame) => void;
   onSolidEdit?: (object: SolidObject) => void;
   private saveTimer?: ReturnType<typeof setTimeout>;
@@ -159,6 +162,7 @@ export class Editor {
       this.textRange = null;
     });
     this.canvas.on("mouse:dblclick", ({ target }) => {
+      if (target) this.onShowProperties?.();
       if (target instanceof PhotoFrame && !target.lockMovementX)
         this.onPhotoFrameEdit?.(target);
       if (target instanceof SolidObject && !target.lockMovementX)
@@ -183,7 +187,8 @@ export class Editor {
     });
     this.canvas.on("mouse:up", () => this.clearGuides());
     this.canvas.on("path:created", ({ path }) => {
-      this.nameObject(path, "Drawing");
+      (path as DesignObject).inkTool = this.drawingTool;
+      this.nameObject(path, drawingTools.find(t => t.id === this.drawingTool)?.name || 'Drawing');
       this.commit();
     });
     this.canvas.on("text:changed", () => {
@@ -988,14 +993,12 @@ export class Editor {
     obj.setCoords();
     this.commit();
   }
-  draw(enabled: boolean, color = "#754adb", width = 8) {
+  draw(enabled: boolean, color = "#754adb", width = 8, tool: DrawingTool = 'pencil', opacity = 100) {
     this.canvas.isDrawingMode = enabled;
     if (enabled) {
       this.canvas.discardActiveObject();
-      const brush = new PencilBrush(this.canvas);
-      brush.color = color;
-      brush.width = width;
-      this.canvas.freeDrawingBrush = brush;
+      this.drawingTool = tool;
+      this.canvas.freeDrawingBrush = drawingBrush(this.canvas,tool,color,width,opacity,() => this.commit());
     }
     this.notify();
   }

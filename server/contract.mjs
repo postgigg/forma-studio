@@ -123,14 +123,20 @@ export function validateLogo(logo) {
     ...dimensions,
   };
 }
+export function campaignAsset(asset, id) {
+  if (!/^campaign-image-[1-4]$/.test(id) || typeof asset?.name !== 'string' || asset.name.length > 160 || typeof asset.src !== 'string' || asset.src.length > 4_000_000) throw new Error('Use a campaign image under 3 MB with a short filename.');
+  return { ...referenceAsset(asset.src), id, name: asset.name, category: 'Campaign image' };
+}
 export function validateDesignAssets(value = []) {
-  if (!Array.isArray(value) || value.length > 2)
+  if (!Array.isArray(value) || value.length > 6)
     throw new Error("Invalid design images.");
   const normalized = value.map((asset) =>
     asset?.id === "reference-photo"
       ? referenceAsset(asset.src)
       : asset?.id === "brand-logo"
         ? validateLogo(asset)
+        : /^campaign-image-[1-4]$/.test(asset?.id)
+          ? campaignAsset(asset, asset.id)
         : (() => {
             throw new Error("Unknown design image.");
           })(),
@@ -144,6 +150,7 @@ export function designAssets(brief) {
     (brief.previous?.extraAssets || []).map((asset) => [asset.id, asset]),
   );
   if (brief.logo) byId.set("brand-logo", brief.logo);
+  for (const asset of brief.campaignImages || []) byId.set(asset.id, asset);
   if (brief.referenceMode === "rebuild") byId.delete("reference-photo");
   else if (brief.sourceImage)
     byId.set("reference-photo", referenceAsset(brief.sourceImage));
@@ -197,6 +204,16 @@ export function validateBrief(value) {
     brand: value.brand || "",
     palette: value.palette || [],
   };
+  if (value.clientRequestId !== undefined) {
+    if (typeof value.clientRequestId !== 'string' || !/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/.test(value.clientRequestId)) throw new Error('Invalid design request ID.');
+    brief.clientRequestId = value.clientRequestId;
+  }
+  if (value.campaign !== undefined && typeof value.campaign !== 'boolean') throw new Error('Invalid campaign request.');
+  if (value.campaign) brief.campaign = true;
+  if (value.campaignImages !== undefined) {
+    if (!Array.isArray(value.campaignImages) || value.campaignImages.length > 4) throw new Error('Use up to four campaign images.');
+    brief.campaignImages = value.campaignImages.map((asset, i) => campaignAsset(asset, `campaign-image-${i + 1}`));
+  }
   if (value.logo !== undefined) brief.logo = validateLogo(value.logo);
   const brandContext = validateBrandContext(value.brandContext);
   if (brandContext) brief.brandContext = brandContext;

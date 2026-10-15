@@ -58,53 +58,51 @@ try {
       ],
       { quiet: true },
     );
-  console.log(
-    "Starting the isolated Forma Supabase stack. The first start may download images.",
-  );
-  const started = await run(
-    "npx",
-    ["supabase", "start", "--network-id", "forma-local"],
-    { quiet: true, allowFailure: true },
-  );
-  if (started.code !== 0) {
-    console.error(
-      started.err.replace(
-        /(?:eyJ[a-zA-Z0-9_.-]+|sb_secret_[a-zA-Z0-9_-]+)/g,
-        "[redacted]",
-      ),
+  if (
+    process.argv.includes("--database-only") ||
+    process.argv.includes("--with-database")
+  ) {
+    console.log(
+      "Starting the isolated Forma Supabase stack. The first start may download images.",
     );
-    throw new Error("Local Supabase did not start.");
+    const started = await run(
+      "npx",
+      ["supabase", "start", "--network-id", "forma-local"],
+      { quiet: true, allowFailure: true },
+    );
+    if (started.code !== 0) {
+      console.error(
+        started.err.replace(
+          /(?:eyJ[a-zA-Z0-9_.-]+|sb_secret_[a-zA-Z0-9_-]+)/g,
+          "[redacted]",
+        ),
+      );
+      throw new Error("Local Supabase did not start.");
+    }
+    const status = await run(
+      "npx",
+      ["supabase", "status", "--output-format", "json"],
+      { quiet: true },
+    );
+    const result = JSON.parse(status.out);
+    const values = result.env || result;
+    const api = values.API_URL || values.api_url;
+    const publicKey =
+      values.ANON_KEY || values.anon_key || values.PUBLISHABLE_KEY;
+    if (!api || !publicKey)
+      throw new Error(
+        "The Supabase CLI did not return a public API URL and key.",
+      );
+    await writeFile(
+      ".env.local",
+      `VITE_SUPABASE_URL=${api}\nVITE_SUPABASE_ANON_KEY=${publicKey}\n`,
+    );
+    console.log(
+      "Supabase is running. Public browser configuration written to .env.local.",
+    );
+    if (process.argv.includes("--database-only")) process.exit(0);
   }
-  const status = await run(
-    "npx",
-    ["supabase", "status", "--output-format", "json"],
-    { quiet: true },
-  );
-  const result = JSON.parse(status.out);
-  const values = result.env || result;
-  const api = values.API_URL || values.api_url;
-  const publicKey =
-    values.ANON_KEY || values.anon_key || values.PUBLISHABLE_KEY;
-  if (!api || !publicKey)
-    throw new Error(
-      "The Supabase CLI did not return a public API URL and key.",
-    );
-  await writeFile(
-    ".env.local",
-    `VITE_SUPABASE_URL=${api}\nVITE_SUPABASE_ANON_KEY=${publicKey}\n`,
-  );
-  console.log(
-    "Supabase is running. Public browser configuration written to .env.local.",
-  );
-  if (process.argv.includes("--database-only")) process.exit(0);
-  await run("docker", [
-    "compose",
-    "--env-file",
-    ".env.local",
-    "up",
-    "--build",
-    "-d",
-  ]);
+  await run("docker", ["compose", "up", "--build", "-d"]);
   const designer = await run(process.execPath, ["scripts/start-ai.mjs"], {
     allowFailure: true,
   });

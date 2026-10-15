@@ -13,6 +13,7 @@ import {
   Upload,
 } from "lucide-react";
 import { Editor } from "./editor";
+import { DrawingPanel } from "./DrawingPanel";
 import { colors, type Asset } from "./types";
 import { useFontLibrary, fontLabel } from "./font-library";
 import { TextLibrary } from "./TextLibrary";
@@ -83,9 +84,7 @@ export function Sidebar({
     [category, setCategory] = useState("All"),
     [occasion, setOccasion] = useState("All occasions"),
     [templateSize, setTemplateSize] = useState(false),
-    [elementCategory, setElementCategory] = useState("All"),
-    [ink, setInk] = useState("#754adb"),
-    [brush, setBrush] = useState(10);
+    [elementCategory, setElementCategory] = useState("All");
   const { profile: brandProfile } = useBrandProfile();
   const { families: fonts } = useFontLibrary();
   const [brandRelevant, setBrandRelevant] = useState(true);
@@ -741,65 +740,7 @@ export function Sidebar({
           </div>
         </>
       )}
-      {panel === "draw" && (
-        <>
-          <div className="draw-preview">
-            <Pencil size={40} />
-            <h3>Make your mark.</h3>
-            <p>A little imperfection goes a long way.</p>
-          </div>
-          <Field label="Ink color">
-            <input
-              type="color"
-              value={ink}
-              onChange={(e) => {
-                setInk(e.target.value);
-                if (editor.drawing) editor.draw(true, e.target.value, brush);
-              }}
-            />
-          </Field>
-          <div className="swatches">
-            {colors.map((c) => (
-              <button
-                key={c}
-                aria-label={`Ink ${c}`}
-                style={{ background: c }}
-                onClick={() => {
-                  setInk(c);
-                  if (editor.drawing) editor.draw(true, c, brush);
-                }}
-              />
-            ))}
-          </div>
-          <Field label={`Brush size · ${brush} px`}>
-            <input
-              type="range"
-              min={1}
-              max={60}
-              value={brush}
-              onChange={(e) => {
-                setBrush(+e.target.value);
-                if (editor.drawing) editor.draw(true, ink, +e.target.value);
-              }}
-            />
-          </Field>
-          <button
-            className={editor.drawing ? "secondary full" : "primary full"}
-            onClick={() => editor.draw(!editor.drawing, ink, brush)}
-          >
-            {editor.drawing ? (
-              <MousePointer2 size={17} />
-            ) : (
-              <Pencil size={17} />
-            )}{" "}
-            {editor.drawing ? "Back to selecting" : "Start drawing"}
-          </button>
-          <p className="muted small">
-            Every stroke becomes an editable layer. Press Escape to return to
-            selecting.
-          </p>
-        </>
-      )}
+      {panel === "draw" && <DrawingPanel editor={editor} brand={brand}/> }
     </aside>
   );
 }

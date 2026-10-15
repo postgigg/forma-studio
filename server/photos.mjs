@@ -38,7 +38,9 @@ export function validatePhotoBrief(input) {
     throw new Error("Choose a photo format and photography style.");
   const brandContext = validateBrandContext(input.brandContext);
   const designIntent = validateDesignIntent(input.designIntent);
+  if (input.clientRequestId !== undefined && (typeof input.clientRequestId !== 'string' || !/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/.test(input.clientRequestId))) throw new Error('Invalid photo request ID.');
   return {
+    ...(input.clientRequestId ? { clientRequestId: input.clientRequestId } : {}),
     prompt: input.prompt.trim(),
     ...(brandContext ? { brandContext } : {}),
     ...(designIntent ? { designIntent } : {}),
@@ -321,12 +323,6 @@ export function createPhotoService({ codex, runtime, json, authenticated }) {
           });
           return true;
         }
-        if (active) {
-          json(res, 409, {
-            error: "A photo is being created. Wait for it or cancel it first.",
-          });
-          return true;
-        }
         if (!req.headers["content-type"]?.startsWith("application/json")) {
           json(res, 415, { error: "JSON required." });
           return true;
@@ -342,6 +338,7 @@ export function createPhotoService({ codex, runtime, json, authenticated }) {
             }
           }
           const brief = validatePhotoBrief(JSON.parse(raw));
+          if (brief.clientRequestId && jobs.has(brief.clientRequestId)) { json(res, 200, publicJob(jobs.get(brief.clientRequestId))); return true; }
           if (active) {
             json(res, 409, {
               error:
@@ -350,7 +347,7 @@ export function createPhotoService({ codex, runtime, json, authenticated }) {
             return true;
           }
           const job = {
-            id: randomUUID(),
+            id: brief.clientRequestId || randomUUID(),
             ...brief,
             status: "running",
             stage: "Creating your photograph",

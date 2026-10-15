@@ -29,6 +29,21 @@ try {
   await expect(page.locator('.ai-connection')).toContainText('connected', { timeout: 30000 });
   await expect(page.getByLabel('AI engine', { exact: true })).toContainText('GPT-6 Astra');
   console.log('Bundled AI engine connected.');
+  await expect(page.getByRole('button', { name: 'Your account', exact: true })).toHaveCount(0);
+  await page.getByRole('button', { name: 'Campaigns', exact: true }).click();
+  await page.getByRole('button', { name: 'New campaign', exact: true }).click();
+  await page.getByLabel('Campaign name', { exact: true }).fill('Desktop campaign proof');
+  await page.getByLabel('Campaign objective', { exact: true }).fill('Introduce the new collection to local studio clients.');
+  await page.getByLabel('Campaign audience', { exact: true }).fill('Local studio clients');
+  await page.getByRole('button', { name: 'Continue', exact: true }).click();
+  await page.getByLabel('Folder name', { exact: true }).fill('Launch collection');
+  await page.getByLabel('Folder intent', { exact: true }).fill('Invite clients to explore the launch collection.');
+  await page.getByRole('button', { name: 'Continue', exact: true }).click();
+  await page.getByRole('button', { name: 'Continue', exact: true }).click();
+  await page.getByRole('button', { name: 'Save folder', exact: true }).click();
+  await expect(page.getByRole('heading', { name: 'Launch collection', exact: true })).toBeVisible();
+  await page.getByRole('button', { name: 'Close dialog', exact: true }).click();
+  console.log('Packaged campaign wizard and account-free workspace passed.');
   await expect(page.getByText('AI account & connection', { exact: true })).toHaveCount(0);
   // Capture the bundled app's own static page through the desktop bridge.
   const captured = await page.evaluate(async () => {
