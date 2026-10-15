@@ -1,4 +1,4 @@
-<p align="center"><strong>FORMA STUDIO</strong></p>
+<p align="center"><img src="public/brand/forma-logo.svg" alt="Forma Studio" width="310"></p>
 <h1 align="center">A little space to create.</h1>
 <p align="center">A local visual design studio for invitations, brand stories, presentations, data, and ideas.</p>
 <p align="center"><a href="#download-the-desktop-app">Download & setup</a> · <a href="#take-a-tour">Walkthrough</a> · <a href="#try-an-example">Editable demos</a> · <a href="docs/ROADMAP.md">Roadmap</a></p>
@@ -18,9 +18,13 @@ Build with draggable layers, original artwork, photo-filled letters, editable ch
 
 ## Download the desktop app
 
-**Windows is free.** Download [Forma Studio 1.1.1 for Windows](https://github.com/postgigg/forma-studio/releases/download/v1.1.1/Forma-Studio-Setup-1.1.1.exe), run the installer, and open **Forma Studio** from your desktop or Start menu. Windows 10/11, 64-bit. The current installer is unsigned, so Windows may display an unknown-publisher warning.
+**Windows is free.** Download [Forma Studio 1.2.0 for Windows](https://github.com/postgigg/forma-studio/releases/download/v1.2.0/Forma-Studio-Setup-1.2.0.exe), run the installer, and open **Forma Studio** from your desktop or Start menu. Windows 10/11, 64-bit. The current installer is unsigned, so Windows may display an unknown-publisher warning.
 
 The desktop app bundles the editor, its local worker and Codex CLI. No terminal, Node.js or Docker is required for everyday use. Projects save locally; **Export → Forma JSON** creates an editable backup. To move a browser project into the desktop app, export it from the browser and import the JSON file in Forma. Their storage is separate.
+
+**Updates:** Version 1.2 checks GitHub Releases when you are online. Choose **Download update**, then **Save & restart**. You can keep working until you are ready. Help also has **Check for updates**. There is no Forma update server, subscription or customer GitHub login. Versions 1.1.x need the 1.2 installer once to enable future in-app updates. [Release and minimum-version instructions](updates/README.md) explain how to publish an update and show an **Update required** prompt without locking users out of offline designs.
+
+The new identity has a custom folded F symbol and drawn wordmark, shared across the editor, desktop, installer and website. [Identity files and usage](public/brand/README.md) include the source geometry and the limits of the preliminary name/mark search.
 
 For AI, open **AI Designer → AI account & connection → Sign in to Codex**. Complete the sign-in in your browser and return to Forma. Your existing Codex login is also recognized. AI needs a supported account, internet access and available provider usage; those costs are separate from the app. Manual editing and exports work without AI. Website frames use the bundled desktop browser to capture pages in an isolated session.
 
@@ -119,6 +123,10 @@ Click to move, resize, or rotate an object. Drag across empty canvas space to se
 Right-click for selection actions. Use Layers to select/reorder objects, and purple guides for alignment and equal spacing. Zoom with the canvas wheel or footer.
 
 For a rectangle, open **Properties → Appearance → Corner roundness**. Enter a pixel radius or choose **Square**, **Soft**, or **Pill**. Text supports individual word styling; text and vector graphics support gradients and transparent stops.
+
+Select text and open **Spacing** in the top toolbar for line height, letter spacing and alignment. Under **Text → Your fonts**, upload TTF, OTF, WOFF or WOFF2 files. They are saved on this device and embedded in Forma JSON and SVG exports when used. **Text kits** saves a selected text style, inserts reusable editable heading/body combinations, and imports or exports kits with their fonts. Font files must be under 8 MB each; the local library holds up to 48 fonts.
+
+**Page style** previews palette and layout-spacing changes on the actual page. It preserves locked content and photos, applies changes as editable objects, and supports Undo. **Refine page with AI**, beside the page's duplicate/delete buttons, captures all visible page layers into the normal refinement preview. Unlock locked content before refining the entire page.
 
 ![Objects selected together in the editor.](docs/media/area-selection.png)
 

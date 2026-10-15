@@ -135,10 +135,10 @@ export function RefineDialog({
     }
   };
   return (
-    <Modal title="Improve with AI" onClose={onClose} wide>
+    <Modal title={snapshot.scope === 'page' ? 'Refine page with AI' : 'Improve with AI'} onClose={onClose} wide>
       <div className="refine-body">
         <p className="refine-lede">
-          Refine {snapshot.roots.length} selected{" "}
+          Refine {snapshot.roots.length} {snapshot.scope === 'page' ? 'page' : 'selected'}{" "}
           {snapshot.roots.length === 1
             ? "element or group"
             : "elements / groups"}{" "}
@@ -166,7 +166,7 @@ export function RefineDialog({
         </label>
         <div className={`refine-previews ${candidate ? "has-after" : ""}`}>
           <figure>
-            <figcaption>Current selection</figcaption>
+            <figcaption>{snapshot.scope === 'page' ? 'Current page' : 'Current selection'}</figcaption>
             <img
               src={snapshot.preview}
               alt="Selected content before refinement"

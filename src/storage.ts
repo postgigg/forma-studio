@@ -1,6 +1,7 @@
 import { createStore, del, entries, get, set } from "idb-keyval";
 import type { Asset, Design } from "./types";
 import catalog from "../shared/assets.json";
+import { validateFonts } from "./font-data";
 import {
   validateBrandContext,
   type BrandProfile,
@@ -42,6 +43,7 @@ export function validateDesign(raw: unknown): asserts raw is Design {
   if (!raw || typeof raw !== "object")
     throw new Error("This is not a Forma design file.");
   const d = raw as Design;
+  validateFonts(d.fonts);
   if (
     typeof d.name !== "string" ||
     !Number.isFinite(d.width) ||

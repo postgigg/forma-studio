@@ -681,6 +681,17 @@
   color: inherit;
   font: inherit;
 }
+.editor-main .workspace-footer{height:56px;min-height:56px;font-size:14px;color:#665a75;gap:16px}
+.workspace-footer .footer-page{min-height:40px;padding:0 10px;gap:9px;font-size:14px}
+.workspace-footer .footer-page svg{width:19px;height:19px}
+.workspace-footer .zoom-control{gap:5px}
+.workspace-footer .zoom-control .icon-button{width:36px;height:36px;min-width:36px}
+.workspace-footer .zoom-control .icon-button svg{width:20px;height:20px}
+.workspace-footer .zoom-control input{width:130px;height:5px;accent-color:#764bdd}
+.workspace-footer .zoom-control select{width:86px;font-size:14px;padding:8px}
+.page-refine-button{display:inline-flex;align-items:center;gap:7px;border:0;border-radius:7px;padding:7px 10px;color:#764bdd;background:#eee7ff;font-size:13px;font-weight:600;white-space:nowrap;margin-right:8px}
+.page-refine-button:hover{background:#e2d5ff}
+@media(max-width:1100px){.workspace-footer .zoom-control input{width:80px}.workspace-footer{padding:0 8px;gap:6px}.workspace-footer .zoom-control{gap:0}.workspace-footer .footer-page{padding:0 3px}}
 .artboard {
   margin-inline: auto;
   flex: none;
@@ -1583,3 +1594,10 @@
   }
 }
 .rotation-readout { position: absolute; z-index: 8; pointer-events: none; white-space: nowrap; padding: 5px 9px; border-radius: 6px; color: white; background: #30263e; box-shadow: 0 2px 8px #20152e25; font: 600 12px/1.3 Arial, sans-serif; font-variant-numeric: tabular-nums; }
+/* Reserve both toolbar rows so selecting text never moves the canvas under the pointer. */
+.editor-main .context-toolbar{display:grid;grid-template-columns:minmax(0,1fr);grid-template-rows:34px 34px;height:91px;min-height:91px;gap:6px;padding:8px 12px}
+.context-toolbar .toolbar-left,.context-toolbar .context-actions{flex-wrap:wrap;width:100%;align-content:center}
+.context-toolbar .context-actions{margin-left:0;justify-content:flex-end}
+.context-toolbar .toolbar-button{font-size:12px;min-height:32px}.context-toolbar .text-spacing{font-size:12px}
+@container(max-width:640px){.editor-main .context-toolbar{height:139px;min-height:139px;grid-template-rows:54px 62px}.context-toolbar .toolbar-button{font-size:11px;min-height:28px;height:28px}.context-toolbar .text-spacing{font-size:11px}}
+@container(max-width:420px){.editor-main .context-toolbar{height:177px;min-height:177px;grid-template-rows:74px 80px}}

@@ -22,6 +22,7 @@ import {
 
 type Serialized = Record<string, any>;
 export interface SelectionSnapshot {
+  scope?: 'selection' | 'page';
   documentId: string;
   pageId: string;
   width: number;
@@ -113,16 +114,18 @@ async function renderSelection(
 }
 export async function captureSelection(
   editor: Editor,
+  scope: 'selection' | 'page' = 'selection',
 ): Promise<SelectionSnapshot> {
-  const selected = editor.canvas.getActiveObjects() as DesignObject[];
+  const selected = (scope === 'page' ? editor.objects.filter(object => object.visible) : editor.canvas.getActiveObjects()) as DesignObject[];
   if (!selected.length)
-    throw new Error("Select the elements or groups you want to improve.");
+    throw new Error(scope === 'page' ? 'Add content to the page before refining it.' : "Select the elements or groups you want to improve.");
   if (selected.some((o) => o.lockMovementX))
     throw new Error("Unlock the selected layers before refining them.");
   const ids = new Set(selected.map((o) => o.id));
   const serialized = editor.canvas.toObject().objects as Serialized[];
   const roots = structuredClone(serialized.filter((o) => ids.has(o.id)));
   const snapshot: SelectionSnapshot = {
+    scope,
     documentId: editor.doc.id,
     pageId: editor.page.id,
     width: editor.doc.width,

@@ -32,6 +32,13 @@ const result = {
   edits: [{ id: "title", fontSize: 42, fill: "#302439" }],
   imageEdits: [],
 };
+test('refinement can preserve an uploaded font without authorizing arbitrary font identifiers', () => {
+  const family = 'FormaUser-' + 'a'.repeat(64);
+  const input = { ...brief, nodes: brief.nodes.map(node => node.id === 'title' ? { ...node, fontFamily: family } : node) };
+  const output = { ...result, edits: [{ id: 'title', fontFamily: family, fontSize: 48 }] };
+  assert.equal(validateRefinementResult(output, input).edits[0].fontFamily, family);
+  assert.throws(() => validateRefinementResult({ ...output, edits: [{ id: 'title', fontFamily: 'FormaUser-' + 'b'.repeat(64) }] }, input), /font/i);
+});
 const star = (i = 0) => ({
   kind: "star",
   name: `Star ${i + 1}`,

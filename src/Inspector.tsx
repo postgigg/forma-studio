@@ -21,7 +21,8 @@ import {
   UnlockKeyhole,
 } from "lucide-react";
 import { Editor } from "./editor";
-import { colors, fonts } from "./types";
+import { colors } from "./types";
+import { useFontLibrary, fontLabel } from "./font-library";
 import { Field, IconButton } from "./ui";
 import { GraphicColor } from "./GraphicColor";
 import { DeviceFrame } from "./device-frame";
@@ -53,6 +54,7 @@ export function Inspector({
   onSolid: () => void;
 }) {
   const [tab, setTab] = useState("properties");
+  const { families: fonts } = useFontLibrary();
   const obj = editor.selected;
   const appearance = obj instanceof ActiveSelection ? obj.getObjects()[0] : obj;
   const paint =
@@ -301,7 +303,7 @@ export function Inspector({
                       }
                     >
                       {fonts.map((f) => (
-                        <option key={f}>{f}</option>
+                        <option value={f} key={f}>{fontLabel(f)}</option>
                       ))}
                     </select>
                   </Field>

@@ -13,7 +13,9 @@ import {
   Upload,
 } from "lucide-react";
 import { Editor } from "./editor";
-import { colors, fonts, type Asset } from "./types";
+import { colors, type Asset } from "./types";
+import { useFontLibrary, fontLabel } from "./font-library";
+import { TextLibrary } from "./TextLibrary";
 import { templates } from "./templates";
 import { Field, IconButton, TemplatePreview } from "./ui";
 import catalog from "../shared/assets.json";
@@ -85,6 +87,7 @@ export function Sidebar({
     [ink, setInk] = useState("#754adb"),
     [brush, setBrush] = useState(10);
   const { profile: brandProfile } = useBrandProfile();
+  const { families: fonts } = useFontLibrary();
   const [brandRelevant, setBrandRelevant] = useState(true);
   const relevance = (item: {
     name: string;
@@ -195,13 +198,6 @@ export function Sidebar({
                 {c}
               </button>
             ))}
-          </div>
-          <div className="library-intro">
-            <div>
-              <h3>A little inspiration</h3>
-              <p>Make something uniquely you.</p>
-            </div>
-            <Sparkles size={17} />
           </div>
           <Field label="Occasion">
             <select
@@ -507,6 +503,7 @@ export function Sidebar({
               </button>
             ))}
           </div>
+          <TextLibrary editor={editor} run={run} />
           <div className="library-intro">
             <h3>A type of your own</h3>
           </div>
@@ -520,7 +517,7 @@ export function Sidebar({
                   editor.set({ fontFamily: font });
                 }}
               >
-                <span>{font}</span>
+                <span>{fontLabel(font)}</span>
                 <ArrowUpRight size={16} />
               </button>
             ))}

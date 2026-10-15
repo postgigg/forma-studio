@@ -1,4 +1,5 @@
 import fontCatalog from "../shared/fonts.json";
+import type { StoredFont } from "./font-data";
 export type CanvasData = Record<string, unknown>;
 export interface PageMotion {
   style: "none" | "fade" | "rise" | "stagger" | "drift";
@@ -18,6 +19,7 @@ export interface Design {
   height: number;
   pages: DesignPage[];
   updatedAt: string;
+  fonts?: StoredFont[];
 }
 export interface Asset {
   id: string;

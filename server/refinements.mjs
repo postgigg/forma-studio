@@ -301,7 +301,7 @@ export function validateRefinementResult(result, brief) {
         throw new Error("Invalid layer styling.");
       if (["fill", "stroke"].includes(key) && !/^#[0-9a-f]{6}$/i.test(value))
         throw new Error("Invalid color.");
-      if (key === "fontFamily" && !refinementFonts.includes(value))
+      if (key === "fontFamily" && !refinementFonts.includes(value) && !(value === node.fontFamily && /^FormaUser-[a-f0-9]{64}$/.test(value)))
         throw new Error("This font is unavailable.");
       if (key === "fontWeight" && !["normal", "bold"].includes(value))
         throw new Error("Invalid font weight.");

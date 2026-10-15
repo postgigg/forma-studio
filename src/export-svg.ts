@@ -1,4 +1,5 @@
 import { FabricImage, FabricObject, Group, StaticCanvas, Textbox } from 'fabric';
+import { getFont } from './font-library';
 function dataUrl(blob:Blob):Promise<string> {return new Promise((resolve,reject)=>{const reader=new FileReader();reader.onload=()=>resolve(String(reader.result));reader.onerror=()=>reject(reader.error);reader.readAsDataURL(blob);});}
 async function embedded(url:string) {const response=await fetch(url);if(!response.ok)throw new Error('An export asset could not be loaded.');const bytes=await response.blob();return dataUrl(url.endsWith('.ttf')?new Blob([bytes],{type:'font/ttf'}):bytes);}
 export async function portableSvg(canvas:StaticCanvas) {
@@ -14,11 +15,14 @@ export async function portableSvg(canvas:StaticCanvas) {
       }
     }
     if(object instanceof Textbox) {
-      if(object.fontFamily.startsWith('Forma '))fonts.add(object.fontFamily);
-      for(const line of Object.values(object.styles))for(const style of Object.values(line))if(style.fontFamily?.startsWith('Forma '))fonts.add(style.fontFamily);
+      if(object.fontFamily.startsWith('Forma ') || getFont(object.fontFamily))fonts.add(object.fontFamily);
+      for(const line of Object.values(object.styles))for(const style of Object.values(line))if(style.fontFamily && (style.fontFamily.startsWith('Forma ') || getFont(style.fontFamily)))fonts.add(style.fontFamily);
     }
   }
-  const styles=await Promise.all([...fonts].map(async family=>`@font-face{font-family:'${family}';src:url('${await embedded('/fonts/'+family.toLowerCase().replaceAll(' ','')+'.ttf')}') format('truetype');}`));
+  const styles=await Promise.all([...fonts].map(async family=>{
+    const custom=getFont(family), format=custom?.format === 'ttf' ? 'truetype' : custom?.format === 'otf' ? 'opentype' : custom?.format;
+    return custom ? `@font-face{font-family:'${family}';src:url('data:font/${custom.format};base64,${custom.data}') format('${format}');}` : `@font-face{font-family:'${family}';src:url('${await embedded('/fonts/'+family.toLowerCase().replaceAll(' ','')+'.ttf')}') format('truetype');}`;
+  }));
   const svg=canvas.toSVG();
   return styles.length?svg.replace(/(<svg\b[^>]*>)/,`$1<defs><style type="text/css">${styles.join('')}</style></defs>`):svg;
 }

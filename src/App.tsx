@@ -53,7 +53,11 @@ import {
 } from "./storage";
 import { supabase } from "./cloud";
 import { templates } from "./templates";
-import { fonts, uid, type Asset } from "./types";
+import { uid, type Asset } from "./types";
+import { useFontLibrary, fontLabel } from "./font-library";
+import { TextSpacing } from "./TextSpacing";
+import { DesktopUpdates } from "./DesktopUpdates";
+import { StyleStudio } from "./StyleStudio";
 import { Sidebar, photos, shapes, type Panel } from "./Sidebar";
 import { Inspector } from "./Inspector";
 import {
@@ -91,14 +95,14 @@ import { MarqueeSelection } from "./MarqueeSelection";
 
 const navigation = [
   { id: "design", icon: LayoutTemplate, label: "Design" },
+  { id: "ai", icon: Sparkles, label: "AI Designer" },
   { id: "elements", icon: Shapes, label: "Elements" },
+  { id: "photos", icon: Image, label: "Photos" },
   { id: "frames", icon: Laptop, label: "Frames" },
   { id: "solids", icon: Box, label: "3D objects" },
   { id: "charts", icon: BarChart3, label: "Charts" },
-  { id: "ai", icon: Sparkles, label: "AI Designer" },
   { id: "text", icon: Type, label: "Text" },
   { id: "uploads", icon: Upload, label: "Uploads" },
-  { id: "photos", icon: Image, label: "Photos" },
   { id: "brand", icon: Palette, label: "Brand" },
   { id: "draw", icon: Pencil, label: "Draw" },
 ] as const;
@@ -110,6 +114,7 @@ type Dialog =
   | "account"
   | "help"
   | "motion"
+  | "style"
   | null;
 
 async function imageAsset(file: File, forcePng = false): Promise<Asset> {
@@ -144,6 +149,7 @@ async function imageAsset(file: File, forcePng = false): Promise<Asset> {
 }
 
 export default function App() {
+  const { families: fonts } = useFontLibrary();
   const canvasRef = useRef<HTMLCanvasElement>(null),
     stageRef = useRef<HTMLDivElement>(null),
     importRef = useRef<HTMLInputElement>(null);
@@ -507,6 +513,8 @@ export default function App() {
     selectedText = selected instanceof Textbox ? selected : null;
   return (
     <div className="studio-app">
+      <DesktopUpdates />
+      {dialog === 'style' && editor && <StyleStudio editor={editor} brand={brand} onClose={() => setDialog(null)} />}
       <header className="topbar">
         <button
           className="wordmark"
@@ -520,9 +528,7 @@ export default function App() {
           aria-label="Forma home"
         >
           <img className="logo-mark" src="/brand/forma-mark.svg" alt="" />
-          <span>
-            forma<span className="wordmark-dot">.</span>
-          </span>
+          <img className="logo-wordmark" src="/brand/forma-wordmark.svg" alt="" />
         </button>
         <span className="header-divider" />
         <button
@@ -735,6 +741,7 @@ export default function App() {
                   >
                     <Play size={14} /> Animate
                   </button>
+                  <button className="toolbar-button" onClick={() => setDialog('style')}><Palette size={16} /> Page style</button>
                   <span className="toolbar-divider" />
                   <IconButton
                     icon={Undo2}
@@ -763,7 +770,7 @@ export default function App() {
                     }
                   >
                     {fonts.map((f) => (
-                      <option key={f}>{f}</option>
+                      <option value={f} key={f}>{fontLabel(f)}</option>
                     ))}
                   </select>
                   <input
@@ -798,6 +805,7 @@ export default function App() {
                   >
                     <b>B</b>
                   </button>
+                  <TextSpacing editor={editor!} text={selectedText} />
                 </>
               ) : selected ? (
                 <>
@@ -983,6 +991,7 @@ export default function App() {
                 </span>
                 {ready && (
                   <div>
+                    <button className="page-refine-button" disabled={editor.busy || !editor.objects.length} onClick={() => run(async () => setRefinement(await captureSelection(editor, 'page')))}><Sparkles size={17} /> Refine page with AI</button>
                     <IconButton
                       icon={Copy}
                       label="Duplicate page"
@@ -1124,9 +1133,6 @@ export default function App() {
                     style={{ transform: pagesOpen ? "none" : "rotate(180deg)" }}
                   />
                 </button>
-                <span className="footer-size">
-                  {editor.doc.width} × {editor.doc.height} px
-                </span>
                 <div className="zoom-control">
                   <IconButton
                     icon={Minus}
@@ -1343,6 +1349,7 @@ export default function App() {
       )}
       {dialog === "help" && (
         <Modal title="A few little shortcuts" onClose={() => setDialog(null)}>
+          {window.formaDesktop?.checkForUpdates && <button className="secondary full" onClick={() => { setDialog(null); run(() => window.formaDesktop!.checkForUpdates()); }}><Download size={17} /> Check for updates</button>}
           <p className="modal-description">Less clicking. More creating.</p>
           <div className="shortcut-list">
             {[

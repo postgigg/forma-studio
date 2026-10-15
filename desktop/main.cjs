@@ -5,12 +5,18 @@ const { existsSync, mkdirSync, appendFileSync } = require('node:fs');
 const { spawn } = require('node:child_process');
 const { randomBytes, timingSafeEqual } = require('node:crypto');
 const path = require('node:path');
-const root = path.resolve(__dirname, '..'), origin = 'http://127.0.0.1:51860';
+const { autoUpdater } = require('electron-updater');
+const { createUpdates } = require('./updates.cjs');
+const testing = !!process.env.FORMA_DESKTOP_TEST_DATA;
+const uiPort = testing ? 51862 : 51860, aiPort = testing ? 51863 : 51861;
+const root = path.resolve(__dirname, '..'), origin = `http://127.0.0.1:${uiPort}`, aiOrigin = `http://127.0.0.1:${aiPort}`;
 const captureToken = randomBytes(32).toString('hex');
-let main, server, worker, login, closing = false, closePending = false, closeTimer;
+let main, server, worker, login, closing = false, closePending = false, closeTimer, installPending = false;
+const updates = createUpdates({ updater: autoUpdater, currentVersion: app.getVersion(), enabled: app.isPackaged && !process.env.FORMA_DESKTOP_TEST_DATA, onChange: state => { if (main && !main.isDestroyed()) main.webContents.send('forma:update-state', state); } });
 if (process.env.FORMA_DESKTOP_TEST_DATA) app.setPath('userData', path.resolve(process.env.FORMA_DESKTOP_TEST_DATA));
 app.setName('Forma Studio');
-if (!app.requestSingleInstanceLock()) app.quit();
+if (process.platform === 'win32') app.setAppUserModelId(testing ? 'studio.forma.desktop.test' : 'studio.forma.desktop');
+if (!testing && !app.requestSingleInstanceLock()) app.quit();
 else {
   app.on('second-instance', () => { if (main) { if (main.isMinimized()) main.restore(); main.show(); main.focus(); } });
   app.whenReady().then(start).catch(error => { dialog.showErrorBox('Forma could not start', error.message); app.quit(); });
@@ -32,12 +38,12 @@ async function startWorker() {
   const runtime = path.join(app.getPath('userData'), 'runtime'); mkdirSync(runtime, { recursive: true });
   worker = utilityProcess.fork(path.join(root, 'server', 'designer.mjs'), [], {
     cwd: runtime, serviceName: 'Forma AI Designer', stdio: 'pipe',
-    env: { ...process.env, FORMA_DATA_DIR: runtime, FORMA_AI_PORT: '51861', FORMA_CODEX_BIN: codexPath(), FORMA_CAPTURE_ENDPOINT: origin + '/desktop/capture', FORMA_CAPTURE_TOKEN: captureToken },
+    env: { ...process.env, FORMA_DATA_DIR: runtime, FORMA_AI_PORT: String(aiPort), FORMA_CODEX_BIN: codexPath(), FORMA_CAPTURE_ENDPOINT: origin + '/desktop/capture', FORMA_CAPTURE_TOKEN: captureToken },
   });
   const log = data => appendFileSync(path.join(runtime, 'designer.log'), data);
   worker.stdout?.on('data', log); worker.stderr?.on('data', log);
   for (let i = 0; i < 160; i++) {
-    try { const r = await fetch('http://127.0.0.1:51861/health', { signal: AbortSignal.timeout(400) }); if (r.ok) return; } catch {}
+    try { const r = await fetch(aiOrigin + '/health', { signal: AbortSignal.timeout(400) }); if (r.ok) return; } catch {}
     await new Promise(resolve => setTimeout(resolve, 250));
   }
   throw new Error('The local AI service could not start. Close another Forma instance, then use Restart AI. Your editor still works.');
@@ -68,7 +74,7 @@ async function startServer() {
   const staticRoot = path.join(root, 'dist');
   server = createServer(async (req, res) => {
     try {
-      if (req.headers.host !== '127.0.0.1:51860') { res.writeHead(403); return res.end(); }
+      if (req.headers.host !== `127.0.0.1:${uiPort}`) { res.writeHead(403); return res.end(); }
       const url = new URL(req.url, origin);
       if (url.pathname === '/desktop/capture' && req.method === 'POST') {
         const supplied = Buffer.from(String(req.headers['x-forma-capture'] || '')), expected = Buffer.from(captureToken);
@@ -83,23 +89,23 @@ async function startServer() {
       if (!(await stat(file)).isFile()) { res.writeHead(404); return res.end(); }
       res.writeHead(200, {
         'Content-Type': mime[path.extname(file)] || 'application/octet-stream', 'X-Content-Type-Options': 'nosniff', 'Cache-Control': 'no-cache',
-        'Content-Security-Policy': "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https:; font-src 'self'; connect-src 'self' http://127.0.0.1:51861 https:; worker-src 'self' blob:; media-src 'self' blob: data:; object-src 'none'; frame-src 'none'; base-uri 'self'",
+        'Content-Security-Policy': `default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https:; font-src 'self'; connect-src 'self' ${aiOrigin} https:; worker-src 'self' blob:; media-src 'self' blob: data:; object-src 'none'; frame-src 'none'; base-uri 'self'`,
       });
       res.end(req.method === 'HEAD' ? undefined : await readFile(file));
     } catch (error) { res.writeHead(error.code === 'ENOENT' ? 404 : 400, { 'Content-Type': 'application/json' }); res.end(JSON.stringify({ error: error.code === 'ENOENT' ? 'Not found' : error.message })); }
   });
-  await new Promise((resolve, reject) => { server.once('error', reject); server.listen(51860, '127.0.0.1', resolve); });
+  await new Promise((resolve, reject) => { server.once('error', reject); server.listen(uiPort, '127.0.0.1', resolve); });
 }
 async function start() {
   await startServer();
   session.defaultSession.setPermissionRequestHandler((_wc, _permission, callback) => callback(false));
   session.defaultSession.setPermissionCheckHandler(() => false);
-  main = new BrowserWindow({ width: 1560, height: 1040, minWidth: 900, minHeight: 650, title: 'Forma Studio', backgroundColor: '#f5f2f9', show: false, icon: path.join(root, 'desktop', 'icon.png'), webPreferences: { preload: path.join(__dirname, 'preload.cjs'), contextIsolation: true, sandbox: true, nodeIntegration: false } });
+  main = new BrowserWindow({ width: 1560, height: 1040, minWidth: 900, minHeight: 650, title: 'Forma Studio', backgroundColor: '#f5f2f9', show: false, icon: path.join(root, 'desktop', 'icon.png'), webPreferences: { preload: path.join(__dirname, 'preload.cjs'), additionalArguments: [`--forma-ai-port=${aiPort}`], contextIsolation: true, sandbox: true, nodeIntegration: false } });
   Menu.setApplicationMenu(Menu.buildFromTemplate([
     ...(process.platform === 'darwin' ? [{ label: 'Forma Studio', submenu: [{ role: 'about' }, { type: 'separator' }, { role: 'quit' }] }] : []),
     { label: 'File', submenu: [{ label: 'Close', accelerator: 'Alt+F4', click: () => main.close() }] },
     { role: 'editMenu' }, { label: 'View', submenu: [{ role: 'togglefullscreen' }] },
-    { label: 'Help', submenu: [{ label: 'Forma walkthrough', click: () => openExternal('https://github.com/postgigg/forma-studio#readme') }] },
+    { label: 'Help', submenu: [{ label: 'Check for updates', click: () => { main.webContents.send('forma:show-updates'); void updates.check(); } }, { label: 'Forma walkthrough', click: () => openExternal('https://github.com/postgigg/forma-studio#readme') }] },
   ]));
   main.webContents.setWindowOpenHandler(({ url }) => { openExternal(url); return { action: 'deny' }; });
   main.webContents.on('will-navigate', (event, url) => { if (new URL(url).origin !== origin) { event.preventDefault(); openExternal(url); } });
@@ -109,7 +115,11 @@ async function start() {
     event.preventDefault(); if (closePending) return; closePending = true;
     main.webContents.send('forma:before-close'); closeTimer = setTimeout(() => void failedSave(), 10000);
   });
-  ipcMain.on('forma:saved', (event, result) => { trusted(event); clearTimeout(closeTimer); if (result?.ok) { closing = true; app.quit(); } else void failedSave(); });
+  ipcMain.on('forma:saved', (event, result) => { trusted(event); clearTimeout(closeTimer); if (result?.ok) { closing = true; if (installPending) updates.install(); else app.quit(); } else void failedSave(); });
+  ipcMain.handle('forma:update-status', event => { trusted(event); return updates.getState(); });
+  ipcMain.handle('forma:update-check', event => { trusted(event); main.webContents.send('forma:show-updates'); return updates.check(); });
+  ipcMain.handle('forma:update-download', event => { trusted(event); return updates.download(); });
+  ipcMain.handle('forma:update-install', event => { trusted(event); if (updates.getState().phase !== 'downloaded') throw new Error('The update is not ready to install.'); installPending = true; main.close(); return true; });
   ipcMain.handle('forma:restart-ai', async event => { trusted(event); await startWorker(); return true; });
   ipcMain.handle('forma:save-file', async (event, value) => {
     trusted(event);
@@ -132,12 +142,14 @@ async function start() {
     await startWorker(); return true;
   });
   await main.loadURL(origin);
+  updates.start();
   void startWorker().catch(error => main.webContents.send('forma:ai-error', error.message));
 }
 async function failedSave() {
   clearTimeout(closeTimer); closePending = false;
   const result = await dialog.showMessageBox(main, { type: 'warning', buttons: ['Keep working', 'Close anyway'], defaultId: 0, cancelId: 0, title: 'Your latest changes may not be saved', message: 'Keep Forma open and export a Forma file to protect your work before closing.' });
-  if (result.response === 1) { closing = true; app.quit(); }
+  if (result.response === 1) { closing = true; if (installPending) updates.install(); else app.quit(); }
+  else installPending = false;
 }
 app.on('window-all-closed', () => app.quit());
-app.on('will-quit', () => { worker?.kill(); login?.kill(); server?.close(); });
+app.on('will-quit', () => { updates.stop(); worker?.kill(); login?.kill(); server?.close(); });

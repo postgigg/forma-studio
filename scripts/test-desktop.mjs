@@ -6,12 +6,15 @@ const executablePath = process.env.FORMA_PACKAGED_EXE;
 const app = await electron.launch({ ...(executablePath ? { executablePath, args: [] } : { args: ['.'] }), env: { ...process.env, FORMA_DESKTOP_TEST_DATA: folder }, timeout: 60000 });
 try {
   const page = await app.firstWindow(); await page.getByLabel('Design title', { exact: true }).waitFor({ timeout: 60000 });
+  await app.evaluate(({ BrowserWindow }) => { for (const window of BrowserWindow.getAllWindows()) window.webContents.setBackgroundThrottling(false); });
   const errors = []; page.on('pageerror', e => errors.push(e.message));
   await expect(page.getByLabel('Design title', { exact: true })).toBeVisible();
-  await expect(page.locator('.wordmark img')).toHaveAttribute('src', '/brand/forma-mark.svg');
+  await expect(page.locator('.wordmark .logo-mark')).toHaveAttribute('src', '/brand/forma-mark.svg');
+  await expect(page.locator('.wordmark .logo-wordmark')).toHaveAttribute('src', '/brand/forma-wordmark.svg');
   expect(await page.evaluate(() => fetch('/brand/forma-mark.svg').then(response => response.text()))).toBe(await readFile('public/brand/forma-mark.svg', 'utf8'));
   const isolation = await page.evaluate(() => ({ endpoint: window.formaDesktop?.aiEndpoint, node: typeof window.require }));
-  expect(isolation).toEqual({ endpoint: 'http://127.0.0.1:51861', node: 'undefined' });
+  expect(isolation).toEqual({ endpoint: 'http://127.0.0.1:51863', node: 'undefined' });
+  expect((await page.evaluate(() => window.formaDesktop.updateStatus())).phase).toBe('unsupported');
   console.log('Desktop editor loaded with isolated renderer.');
   await page.getByRole('button', { name: 'New blank design', exact: true }).click();
   await page.getByLabel('Design name', { exact: true }).fill('Desktop installation proof');
@@ -26,8 +29,7 @@ try {
   await expect(page.locator('.ai-connection')).toContainText('connected', { timeout: 30000 });
   await expect(page.getByLabel('AI engine', { exact: true })).toContainText('GPT-6 Astra');
   console.log('Bundled AI engine connected.');
-  await page.getByText('AI account & connection', { exact: true }).click();
-  await expect(page.getByRole('button', { name: 'Sign in to Codex', exact: true })).toBeVisible();
+  await expect(page.getByText('AI account & connection', { exact: true })).toHaveCount(0);
   // Capture the bundled app's own static page through the desktop bridge.
   const captured = await page.evaluate(async () => {
     const base = window.formaDesktop.aiEndpoint;
@@ -55,8 +57,23 @@ try {
   })).toBeGreaterThan(10000);
   await page.screenshot({ path: path.join(folder, '3d-editor.png') });
   await page.getByRole('button', { name: 'Cancel', exact: true }).click();
+  await page.getByRole('button', { name: 'Text', exact: true }).click();
+  await page.getByRole('button', { name: 'Add a heading', exact: true }).click();
+  await page.getByLabel('Upload font files', { exact: true }).setInputFiles({ name: 'Desktop Brand Font.ttf', mimeType: 'font/ttf', buffer: await readFile('public/fonts/formadeco.ttf') });
+  await expect(page.getByRole('status').filter({ hasText: 'Fonts added' })).toBeVisible();
+  await page.getByLabel('Quick font', { exact: true }).selectOption({ label: 'Desktop Brand Font' });
+  const family = await page.getByLabel('Quick font', { exact: true }).inputValue();
+  expect(await page.evaluate(font => document.fonts.check(`16px "${font}"`), family)).toBe(true);
+  await page.getByLabel('Text spacing', { exact: true }).click();
+  await expect(page.getByLabel('Quick line spacing')).toBeVisible();
+  await page.getByLabel('Quick line spacing').fill('1.5');
+  await page.getByLabel('Text spacing', { exact: true }).click();
+  // Native capture keeps a hidden test window hidden and requests a compositor frame.
+  const fontScreenshot = await app.evaluate(async ({ BrowserWindow }) => (await BrowserWindow.getAllWindows()[0].capturePage(undefined, { stayHidden: true, stayAwake: true })).toPNG().toString('base64'));
+  const fontPng = Buffer.from(fontScreenshot, 'base64'); expect(fontPng.length).toBeGreaterThan(10000);
+  await writeFile(path.join(folder, 'desktop-fonts.png'), fontPng);
   expect(errors).toEqual([]);
-  await writeFile(path.join(folder, 'result.json'), JSON.stringify({ packaged: !!executablePath, isolatedRenderer: true, bundledAI: true, engine: 'gpt-6-astra', websiteCapture: true, pngExport: true, errors }, null, 2));
+  await writeFile(path.join(folder, 'result.json'), JSON.stringify({ testedAt: new Date().toISOString(), packaged: !!executablePath, isolatedRenderer: true, bundledAI: true, engine: 'gpt-6-astra', websiteCapture: true, pngExport: true, customFonts: true, textSpacing: true, errors }, null, 2));
   console.log('Desktop smoke passed: isolated renderer, bundled AI, website capture, 3D, PNG/PDF/JSON saves.');
 } catch (error) {
   const page = (await app.windows())[0];

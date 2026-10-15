@@ -24,6 +24,7 @@ import { uid, fonts, type Design, type DesignPage } from "./types";
 import { graphics, makeGraphic } from "./graphics";
 import { smartGuides, type Guide } from "./guides";
 import { portableSvg } from "./export-svg";
+import { initFonts, loadFonts, usedFonts } from "./font-library";
 import "./device-frame";
 import { SolidObject } from "./solid-object";
 import { PhotoFrame, type PhotoMask } from "./photo-frame";
@@ -251,6 +252,7 @@ export class Editor {
   }
 
   async boot() {
+    await initFonts();
     await Promise.all(fonts.map((f) => document.fonts.load(`16px "${f}"`)));
     const designs = await allDesigns();
     if (this.disposed) return;
@@ -268,6 +270,7 @@ export class Editor {
   private capture() {
     if (!this.doc || !this.page) return;
     this.page.data = this.canvas.toObject();
+    this.doc.fonts = usedFonts(this.doc.pages);
     this.page.thumbnail = this.canvas.toDataURL({
       format: "png",
       multiplier: 200 / (this.doc.width * this.zoom),
@@ -287,6 +290,7 @@ export class Editor {
     this.busy = true;
     this.notify();
     try {
+      await loadFonts(design.fonts);
       this.doc = structuredClone(design);
       this.pageIndex = 0;
       await this.renderPage();

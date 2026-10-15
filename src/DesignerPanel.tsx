@@ -613,7 +613,7 @@ export function DesignerPanel({
           }
         </div>
       )}
-      <DesktopAI />
+      {!token && <DesktopAI />}
       <div className="ai-connection">
         <span className={token ? "status-dot" : "status-dot pending"} />
         {connection}

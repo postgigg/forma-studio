@@ -1,6 +1,6 @@
 {
   "name": "forma-studio",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "description": "A local visual design studio with editable templates, motion and intent-aware AI tools.",
   "author": "Forma Studio",
   "main": "desktop/main.cjs",
@@ -21,6 +21,7 @@
     "test:ai-live": "node scripts/test-designer-live.mjs",
     "desktop": "electron .",
     "desktop:package": "node scripts/package-desktop.mjs",
+    "test:updates": "node --test tests/desktop-updates.test.cjs",
     "desktop:smoke": "node scripts/test-desktop.mjs"
   },
   "build": {
@@ -28,16 +29,50 @@
     "productName": "Forma Studio",
     "electronDist": "node_modules/electron/dist",
     "npmRebuild": false,
-    "directories": { "output": "release" },
-    "files": ["dist/**/*", "server/**/*", "shared/**/*", "desktop/**/*", "package.json"],
-    "asarUnpack": ["node_modules/@openai/codex-*/**/*"],
-    "win": { "target": "nsis", "icon": "desktop/icon.ico", "artifactName": "Forma-Studio-Setup-${version}.${ext}" },
-    "nsis": { "oneClick": false, "perMachine": false, "allowToChangeInstallationDirectory": true, "createDesktopShortcut": true, "createStartMenuShortcut": true, "deleteAppDataOnUninstall": false },
-    "mac": { "target": "dmg", "category": "public.app-category.graphics-design", "hardenedRuntime": true, "artifactName": "Forma-Studio-${version}-${arch}.${ext}" }
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "dist/**/*",
+      "server/**/*",
+      "shared/**/*",
+      "desktop/**/*",
+      "package.json"
+    ],
+    "asarUnpack": [
+      "node_modules/@openai/codex-*/**/*"
+    ],
+    "publish": [{ "provider": "github", "owner": "postgigg", "repo": "forma-studio", "releaseType": "draft" }],
+    "win": {
+      "target": "nsis",
+      "icon": "desktop/icon.ico",
+      "artifactName": "Forma-Studio-Setup-${version}.${ext}"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "deleteAppDataOnUninstall": false,
+      "installerIcon": "desktop/icon.ico",
+      "uninstallerIcon": "desktop/icon.ico",
+      "installerSidebar": "desktop/installer-sidebar.bmp",
+      "uninstallerSidebar": "desktop/installer-sidebar.bmp",
+      "installerHeader": "desktop/installer-header.bmp"
+    },
+    "mac": {
+      "target": ["dmg", "zip"],
+      "icon": "desktop/icon.png",
+      "category": "public.app-category.graphics-design",
+      "hardenedRuntime": true,
+      "artifactName": "Forma-Studio-${version}-${arch}.${ext}"
+    }
   },
   "dependencies": {
     "@openai/codex": "0.162.1",
     "@supabase/supabase-js": "2.117.3",
+    "electron-updater": "6.8.10",
     "fabric": "7.4.0",
     "gifenc": "^1.0.3",
     "idb-keyval": "6.3.0",

@@ -157,9 +157,7 @@ kbd {
   letter-spacing: -1.5px;
   padding: 0;
 }
-.wordmark-dot {
-  color: var(--purple);
-}
+.logo-wordmark { display:block; width:106px; height:29px; object-fit:contain; flex-shrink:0; }
 .logo-mark {
   display: block;
   width: 33px;
@@ -2133,6 +2131,7 @@ kbd {
   .wordmark .logo-mark {
     display: none;
   }
+  .wordmark .logo-wordmark { width:88px; height:25px; }
   .header-divider,
   .projects-link,
   .present-button {

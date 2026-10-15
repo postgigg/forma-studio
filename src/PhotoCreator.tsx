@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { ChevronDown, Plus, RefreshCw, Sparkles, Square } from "lucide-react";
 import { designerRequest } from "./ai";
 import { useBrandGuidance } from "./BrandContext";
-import { AiEngine, useDesignIntent } from "./DesignIntent";
+import { useDesignIntent } from "./DesignIntent";
 import { Field } from "./ui";
 import type { Asset } from "./types";
 
@@ -121,7 +121,6 @@ export function PhotoCreator({
         />
       </Field>
       {intentControl}
-      <AiEngine images />
       <div className="field-grid">
         <Field label="Format">
           <select

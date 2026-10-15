@@ -40,6 +40,7 @@ const allowedOrigins = new Set([
   "http://localhost:5187",
   "http://127.0.0.1:5187",
   "http://127.0.0.1:51860",
+  ...(process.env.FORMA_DESKTOP_TEST_DATA ? ["http://127.0.0.1:51862"] : []),
 ]);
 const token = randomBytes(32).toString("hex");
 const win = process.platform === "win32";
