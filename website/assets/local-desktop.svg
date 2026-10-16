@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="780" viewBox="0 0 1120 780" fill="none" role="img" aria-labelledby="title desc">
+ <title id="title">A creative workspace at home on your desktop</title><desc id="desc">An illustrated desktop computer displays an editable Forma composition, alongside a saved Forma project folder and PNG, PDF, and GIF export files.</desc>
+ <defs>
+  <filter id="shadow" x="-30%" y="-30%" width="160%" height="180%"><feDropShadow dx="0" dy="16" stdDeviation="20" flood-color="#292432" flood-opacity=".12"/></filter>
+  <filter id="small" x="-30%" y="-30%" width="160%" height="170%"><feDropShadow dx="0" dy="7" stdDeviation="10" flood-color="#292432" flood-opacity=".08"/></filter>
+  <style>.ui{font-family:Arial,Helvetica,sans-serif}.serif{font-family:Georgia,'Times New Roman',serif}.export{animation:float 8s ease-in-out infinite}.export-two{animation-delay:-3s}.export-three{animation-delay:-5s}@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}@media(prefers-reduced-motion:reduce){.export{animation:none}}</style>
+ </defs>
+ <ellipse cx="541" cy="656" rx="403" ry="38" fill="#292432" opacity=".05"/><circle cx="503" cy="354" r="267" fill="#eee7f6"/>
+ <g filter="url(#shadow)">
+  <path d="M464 513H638L654 624H446Z" fill="#d6cfdf"/><path d="M464 513H638L644 555H458Z" fill="#b7adca"/><rect x="405" y="619" width="293" height="18" rx="9" fill="#e8e2ec" stroke="#c7bdd5"/>
+  <rect x="195" y="147" width="708" height="389" rx="19" fill="#292432"/><rect x="210" y="162" width="678" height="339" rx="7" fill="#f7f2e8"/>
+  <path d="M210 184Q210 162 220 162H878Q888 162 888 172V202H210Z" fill="#fffdf9"/>
+  <rect x="225" y="172" width="21" height="21" rx="6" fill="#754adb"/><path d="M232 178H241M232 184H238M232 178V188" stroke="white" stroke-width="2" stroke-linecap="round"/>
+  <text x="256" y="188" class="ui" font-size="14" font-weight="700" fill="#292432">Forma</text><text x="545" y="187" class="ui" font-size="11" text-anchor="middle" fill="#92859e">A new perspective</text>
+  <rect x="809" y="171" width="64" height="22" rx="5" fill="#754adb"/><text x="841" y="186" class="ui" font-size="9" font-weight="700" text-anchor="middle" fill="white">Export</text>
+  <path d="M210 202H888M264 203V501" stroke="#e1d8e7"/>
+  <g stroke="#92859e" stroke-width="1.5"><rect x="228" y="224" width="15" height="14" rx="3"/><circle cx="235" cy="298" r="8"/><path d="M228 331H242V345H228ZM228 340L233 334L240 341"/></g><text x="229" y="275" class="serif" font-size="22" fill="#92859e">T</text>
+  <rect x="286" y="220" width="397" height="260" fill="#754adb"/><text x="309" y="248" class="ui" font-size="8" letter-spacing="2" fill="#d9c9f5">FORM &amp; FEEL / DESIGN STUDY</text>
+  <text x="309" y="300" class="serif" font-size="40" letter-spacing="-1" fill="#f7f2e8">A new</text><text x="309" y="342" class="serif" font-size="40" letter-spacing="-1" fill="#f7f2e8">perspective.</text>
+  <path d="M496 412L579 297L657 412Z" fill="#eb947f"/><circle cx="574" cy="398" r="43" fill="#c1c9ad"/>
+  <rect x="490" y="291" width="173" height="156" stroke="#d7c5f6" stroke-width="1.5"/><g fill="white" stroke="#754adb" stroke-width="1.2"><rect x="487" y="288" width="6" height="6"/><rect x="660" y="288" width="6" height="6"/><rect x="487" y="444" width="6" height="6"/><rect x="660" y="444" width="6" height="6"/></g>
+  <path d="M309 449H454" stroke="#b297e3"/><text x="309" y="465" class="ui" font-size="7" letter-spacing="1.6" fill="#d9c9f5">START WITH A SIMPLE IDEA.</text>
+  <text x="708" y="238" class="ui" font-size="9" letter-spacing="1.3" fill="#92859e">LAYERS</text><rect x="701" y="252" width="170" height="30" rx="5" fill="#e8ddf7"/>
+  <circle cx="716" cy="267" r="6" fill="#c1c9ad"/><text x="731" y="270" class="ui" font-size="9" fill="#754adb">Shape composition</text><text x="709" y="304" class="serif" font-size="14" fill="#92859e">T</text><text x="731" y="303" class="ui" font-size="9" fill="#92859e">A new perspective.</text>
+  <rect x="710" y="323" width="12" height="12" rx="2" fill="#754adb"/><text x="731" y="333" class="ui" font-size="9" fill="#92859e">Background</text><circle cx="549" cy="518" r="4" fill="#837690"/>
+ </g>
+ <path d="M172 441C128 441 123 476 123 508" stroke="#a295b4" stroke-width="2" stroke-dasharray="4 7"/>
+ <g filter="url(#small)" transform="rotate(-7 185 574)">
+  <path d="M70 523Q70 513 80 513H135L151 531H287Q298 531 298 542V641Q298 652 287 652H81Q70 652 70 641Z" fill="#b6c29f" stroke="#8f9e79"/><path d="M70 549Q70 539 80 539H288Q298 539 298 549V641Q298 652 287 652H81Q70 652 70 641Z" fill="#c1c9ad"/>
+  <rect x="94" y="565" width="35" height="44" rx="4" fill="#f7f2e8"/><path d="M104 577H119M104 585H116M104 577V597" stroke="#754adb" stroke-width="3" stroke-linecap="round"/>
+  <text x="143" y="582" class="ui" font-size="15" font-weight="700" fill="#3e4c31">Your next idea</text><text x="143" y="602" class="ui" font-size="11" fill="#62734e">.forma.json</text><text x="94" y="631" class="ui" font-size="9" letter-spacing="1.3" fill="#62734e">SAVED PROJECT</text>
+ </g>
+ <path d="M900 389C958 389 968 391 968 442" stroke="#a295b4" stroke-width="2" stroke-dasharray="4 7"/>
+ <g class="export"><g transform="rotate(10 971 192)" filter="url(#small)"><path d="M923 127H991L1020 156V244H923Z" fill="#fffdf9" stroke="#d9cfdf"/><path d="M991 127V156H1020" fill="#efe7f8"/><rect x="939" y="174" width="64" height="33" rx="5" fill="#754adb"/><text x="971" y="197" class="ui" font-size="16" font-weight="700" text-anchor="middle" fill="white">PNG</text><path d="M939 224H1003" stroke="#dfd5e6" stroke-width="3"/></g></g>
+ <g class="export export-two"><g transform="rotate(-8 974 526)" filter="url(#small)"><path d="M925 461H993L1022 490V578H925Z" fill="#fffdf9" stroke="#d9cfdf"/><path d="M993 461V490H1022" fill="#f6e0d9"/><rect x="941" y="508" width="64" height="33" rx="5" fill="#c66857"/><text x="973" y="531" class="ui" font-size="16" font-weight="700" text-anchor="middle" fill="white">PDF</text><path d="M941 558H1005" stroke="#dfd5e6" stroke-width="3"/></g></g>
+ <g class="export export-three"><g transform="rotate(7 833 608)" filter="url(#small)"><path d="M785 543H853L882 572V660H785Z" fill="#fffdf9" stroke="#d9cfdf"/><path d="M853 543V572H882" fill="#e5eadb"/><rect x="801" y="590" width="64" height="33" rx="5" fill="#62734e"/><text x="833" y="613" class="ui" font-size="16" font-weight="700" text-anchor="middle" fill="white">GIF</text><path d="M801 640H865" stroke="#dfd5e6" stroke-width="3"/></g></g>
+</svg>

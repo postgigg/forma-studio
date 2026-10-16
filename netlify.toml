@@ -1,12 +1,17 @@
 [build]
-  command = "npm run build"
-  publish = "dist"
+  base = "website"
+  command = "node ../scripts/verify-marketing-site.mjs"
+  publish = "."
 [build.environment]
   NODE_VERSION = "22"
 [[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
+  from = "/app/*"
+  to = "/#download"
+  status = 302
+[[redirects]]
+  from = "/editor/*"
+  to = "/#download"
+  status = 302
 [[headers]]
   for = "/*"
   [headers.values]

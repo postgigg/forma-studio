@@ -303,7 +303,9 @@ Download a JSON file using GitHub's **Download raw file** button, then drag it o
 | `shared/`, `public/`                                 | Catalogs, contracts, original artwork, fonts, previews |
 | `supabase/`, `tests/`                                | Database configuration and regression checks           |
 
-The app uses React, TypeScript, Vite, Fabric, Node, Playwright, nginx/Docker, and Supabase. `netlify.toml` supplies static build configuration. Publishing this repository does not deploy the application or expose the local worker; hosted services need separate configuration.
+The app uses React, TypeScript, Vite, Fabric, Node, Playwright, nginx/Docker, and Supabase. Netlify publishes the static download landing page in `website/`, using `netlify.toml`; it does not publish the editor's `dist/` directory. Visitors download the desktop software. The editor and AI worker run on the customer's computer.
+
+To update the Netlify landing page from the Forma marketing checkout, run `node scripts/sync-marketing-site.mjs C:/Users/exont/Desktop/forma-studio-site/dist`, then `node scripts/verify-marketing-site.mjs`. Commit the resulting `website/` files. The Netlify build checks the landing entrypoint and assets without building or exposing the application.
 
 ## Validation and demo regeneration
 
