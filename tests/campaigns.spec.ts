@@ -553,3 +553,92 @@ test("the optional campaign photo becomes an editable image in the design reques
       .pages[0].data.objects.some((o: any) => o.type === "Image"),
   ).toBe(true);
 });
+
+test("mixed campaign previews stay above their titles at desktop and phone widths", async ({
+  page,
+}) => {
+  await setup(page);
+  await brief(page);
+  await page.getByLabel("Instagram story count", { exact: true }).fill("1");
+  await page.getByLabel("Square ad count", { exact: true }).fill("1");
+  await page.getByRole("button", { name: "Continue", exact: true }).click();
+  await page
+    .getByRole("button", { name: "Create 5 designs", exact: true })
+    .click();
+  await expect(
+    page.getByRole("heading", { name: "Your collection is ready" }),
+  ).toBeVisible();
+  await expect(page.locator(".campaign-design-grid article")).toHaveCount(5);
+
+  // Exercise a real saved title with a long, unbroken word as well as wrapped copy.
+  await page.locator(".campaign-design-grid article button").first().click();
+  await page
+    .getByLabel("Design title", { exact: true })
+    .fill(
+      "A thoughtful gift for every person who makes your day bloom — SpringFlowerDeliveryCollection2026",
+    );
+  await page.getByRole("button", { name: "Campaigns", exact: true }).click();
+
+  for (const width of [1536, 1280, 900, 600, 390]) {
+    await page.setViewportSize({ width, height: 1000 });
+    await page
+      .locator(".campaign-design-grid img")
+      .evaluateAll(async (images) => {
+        await Promise.all(
+          images.map((image) => (image as HTMLImageElement).decode()),
+        );
+      });
+    const cards = await page
+      .locator(".campaign-design-grid article")
+      .evaluateAll((articles) =>
+        articles.map((article) => {
+          const image = article.querySelector("img")!;
+          const preview = image.parentElement!;
+          const title = article.querySelector("h3")!;
+          const details = article.querySelector("button > span")!;
+          return {
+            card: article.getBoundingClientRect().toJSON(),
+            preview: preview.getBoundingClientRect().toJSON(),
+            image: image.getBoundingClientRect().toJSON(),
+            title: title.getBoundingClientRect().toJSON(),
+            details: details.getBoundingClientRect().toJSON(),
+            titleFits: title.scrollWidth <= title.clientWidth,
+          };
+        }),
+      );
+    for (const card of cards) {
+      expect(card.image.top, `image top at ${width}px`).toBeGreaterThanOrEqual(
+        card.preview.top,
+      );
+      expect(
+        card.image.bottom,
+        `image bottom at ${width}px`,
+      ).toBeLessThanOrEqual(card.preview.bottom);
+      expect(
+        card.image.left,
+        `image left at ${width}px`,
+      ).toBeGreaterThanOrEqual(card.preview.left);
+      expect(card.image.right, `image right at ${width}px`).toBeLessThanOrEqual(
+        card.preview.right,
+      );
+      expect(
+        card.title.top,
+        `title position at ${width}px`,
+      ).toBeGreaterThanOrEqual(card.preview.bottom);
+      expect(
+        card.details.top,
+        `details position at ${width}px`,
+      ).toBeGreaterThanOrEqual(card.title.bottom);
+      expect(
+        card.details.bottom,
+        `card height at ${width}px`,
+      ).toBeLessThanOrEqual(card.card.bottom);
+      expect.soft(card.titleFits, `long title at ${width}px`).toBe(true);
+    }
+    expect(
+      await page
+        .locator(".campaign-content")
+        .evaluate((content) => content.scrollWidth <= content.clientWidth),
+    ).toBe(true);
+  }
+});

@@ -111,6 +111,8 @@ Open **Campaigns** in the header or **My designs → Campaigns**. The full-scree
 4. Review the brief and press **Create**. The connected local worker creates each format in sequence, carries the first format's palette and typography into the others, and saves every output as a separate editable design in that folder.
 5. Open a result to edit its layers. Use **Move to folder** for an existing design. Completed work remains saved if another format fails; **Resume collection** retries unfinished work. **Pause after current format** preserves the current job, and drafts save on this device.
 
+Campaign previews keep the complete artwork inside each card. Portrait, story, square and landscape formats fit above the title; long names wrap without covering the image or dimensions. [See the verified Windows desktop view](docs/media/campaign-layout-v1.4.0.png).
+
 **AI campaign guide** inside Campaigns explains how to brief a collection. AI uses your own supported Codex account and provider usage. The app itself needs no Forma account. Review generated copy and imagery before publishing.
 
 ## Personal design direction

@@ -1157,7 +1157,7 @@ export function CampaignStudio({
                                 }
                               }}
                             >
-                              <div>
+                              <div className="campaign-design-preview">
                                 <img src={d.pages[0].thumbnail} alt={d.name} />
                               </div>
                               <h3>{d.name}</h3>
