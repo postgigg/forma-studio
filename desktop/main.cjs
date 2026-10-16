@@ -38,7 +38,7 @@ async function startWorker() {
   const runtime = path.join(app.getPath('userData'), 'runtime'); mkdirSync(runtime, { recursive: true });
   worker = utilityProcess.fork(path.join(root, 'server', 'designer.mjs'), [], {
     cwd: runtime, serviceName: 'Forma AI Designer', stdio: 'pipe',
-    env: { ...process.env, FORMA_DATA_DIR: runtime, FORMA_AI_PORT: String(aiPort), FORMA_CODEX_BIN: codexPath(), FORMA_CAPTURE_ENDPOINT: origin + '/desktop/capture', FORMA_CAPTURE_TOKEN: captureToken },
+    env: { ...process.env, FORMA_DATA_DIR: runtime, FORMA_AI_PORT: String(aiPort), FORMA_UI_ORIGIN: origin, FORMA_CODEX_BIN: codexPath(), FORMA_CAPTURE_ENDPOINT: origin + '/desktop/capture', FORMA_CAPTURE_TOKEN: captureToken },
   });
   const log = data => appendFileSync(path.join(runtime, 'designer.log'), data);
   worker.stdout?.on('data', log); worker.stderr?.on('data', log);

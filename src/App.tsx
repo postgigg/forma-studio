@@ -991,7 +991,7 @@ export default function App() {
                 </span>
                 {ready && (
                   <div>
-                    <button className="page-refine-button" disabled={editor.busy || !editor.objects.length} onClick={() => run(async () => setRefinement(await captureSelection(editor, 'page')))}><Sparkles size={17} /> Refine page with AI</button>
+                    <button className="page-refine-button" aria-label="Refine page with AI" title="Refine page with AI" disabled={editor.busy || !editor.objects.length} onClick={() => run(async () => setRefinement(await captureSelection(editor, 'page')))}><Sparkles size={17} aria-hidden="true" /></button>
                     <IconButton
                       icon={Copy}
                       label="Duplicate page"

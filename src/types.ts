@@ -1,5 +1,6 @@
 import fontCatalog from "../shared/fonts.json";
 import type { StoredFont } from "./font-data";
+import type { CreativeDirection, QualityReview } from './CreativeDirection';
 export type CanvasData = Record<string, unknown>;
 export interface PageMotion {
   style: "none" | "fade" | "rise" | "stagger" | "drift";
@@ -21,6 +22,8 @@ export interface Design {
   updatedAt: string;
   fonts?: StoredFont[];
   aiJobId?: string;
+  aiDirection?: CreativeDirection;
+  aiReview?: QualityReview;
   campaignId?: string;
   folderId?: string;
 }

@@ -23,6 +23,7 @@ import { Field } from "./ui";
 import { useBrandGuidance } from "./BrandContext";
 import { AiEngine, useDesignIntent } from "./DesignIntent";
 import { DesktopAI } from "./DesktopAI";
+import { DesignEvidence } from './CreativeDirection';
 import { allDesigns, getDesign } from "./storage";
 
 const examples = [
@@ -581,6 +582,7 @@ export function DesignerPanel({
                 </div>
               )}
               <p>{proposal.description}</p>
+              <DesignEvidence direction={proposal.creativeDirection} review={proposal.qualityReview} />
               <div className="ai-palette">
                 {proposal.palette
                   .filter((c) => /^#[0-9a-f]{6}$/i.test(c))

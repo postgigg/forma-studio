@@ -37,6 +37,7 @@ export const putAssets = (assets: Asset[]) => set("assets", assets, db);
 export const getBrand = async (): Promise<string[]> =>
   (await get("brand", db)) || ["#754adb", "#292432", "#f7f2e8", "#d5e2cc"];
 export const putBrand = (brand: string[]) => set("brand", brand, db);
+export const getSavedBrand = async (): Promise<string[] | undefined> => get('brand', db);
 export const getBrandProfile = async () =>
   validateBrandContext(await get("brand-profile", db));
 export const getDesignStyle = async () => validateDesignStyle(await get("design-style", db));

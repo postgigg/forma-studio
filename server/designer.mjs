@@ -1,10 +1,7 @@
 import http from "node:http";
-import { brandDirection } from "../shared/brand-context.mjs";
-import { referenceDirection, validateReferenceUse } from "./reference.mjs";
 import { spawn, spawnSync } from "node:child_process";
-import { artDirection } from "./art-direction.mjs";
-import { campaignDirection } from "../shared/campaign-direction.mjs";
-import { aiEngine, modelArguments } from "./ai-engine.mjs";
+import { aiEngine } from "./ai-engine.mjs";
+import { designPipeline } from "./designer-pipeline.mjs";
 import {
   existsSync,
   mkdirSync,
@@ -20,13 +17,10 @@ import { createPhotoService } from "./photos.mjs";
 import { createRefinementService } from "./refinements.mjs";
 import { createFrameService } from "./frames.mjs";
 import {
-  assets,
-  designerInstructions,
   outputSchema,
   validateBrief,
   validateProposal,
   validateDesignAssets,
-  designAssets,
 } from "./contract.mjs";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
@@ -137,6 +131,7 @@ function validToken(value) {
   );
 }
 function stop(job) {
+  job.controller?.abort();
   if (!job.child) return;
   if (win)
     spawn("taskkill", ["/PID", String(job.child.pid), "/T", "/F"], {
@@ -148,203 +143,21 @@ function stop(job) {
 async function launch(job, brief) {
   active = job.id;
   job.status = "running";
-  job.stage = "Composing your design";
-  const workspace = path.join(runtime, job.id);
-  mkdirSync(workspace, { recursive: true });
-  const output = path.join(workspace, "proposal.json");
-  const { sourceImage, logo: requestedLogo, campaignImages: suppliedImages, clientRequestId, ...promptBrief } = brief;
-  const extraAssets = designAssets(brief);
-  const logo =
-    extraAssets.find((asset) => asset.id === "brand-logo") || requestedLogo;
-  const reference = extraAssets.find((asset) => asset.id === "reference-photo");
-  const campaignImages = extraAssets.filter(asset => asset.category === 'Campaign image');
-  if (campaignImages.length) promptBrief.campaignImages = campaignImages.map(({ id, name, width, height }) => ({ id, name, width, height }));
-  if (extraAssets.length)
-    writeFileSync(
-      path.join(workspace, "assets.json"),
-      JSON.stringify(extraAssets),
-    );
-  if (logo) {
-    promptBrief.logo = {
-      id: logo.id,
-      name: logo.name,
-      width: logo.width,
-      height: logo.height,
-    };
+  job.controller = new AbortController();
+  try {
+    job.result = await designPipeline({ job, brief, codex, runtime });
+    job.status = "completed";
+    job.stage = "Your design is ready";
+    console.log(`Completed design ${job.id}: ${job.result.pages.length} page(s).`);
+  } catch (error) {
+    job.status = job.controller.signal.aborted ? "cancelled" : "failed";
+    job.error = error.message;
+    job.stage = job.status === "cancelled" ? "Cancelled" : "Design needs another try";
+    console.error(`Design ${job.id}: ${job.error}`);
+  } finally {
+    job.finishedAt = Date.now();
+    if (active === job.id) active = null;
   }
-  if (promptBrief.previous) {
-    const { extraAssets: _, ...previous } = promptBrief.previous;
-    promptBrief.previous = previous;
-  }
-  const args = [
-    "exec",
-    "--ignore-user-config",
-    ...modelArguments(),
-    "--skip-git-repo-check",
-    "--ephemeral",
-    "--sandbox",
-    "read-only",
-    "--output-schema",
-    schemaPath,
-    "--output-last-message",
-    output,
-    "--color",
-    "never",
-    "--json",
-    "-c",
-    'approval_policy="never"',
-    "-c",
-    'web_search="disabled"',
-  ];
-  // The model only returns design data. It has no shell, browser, plugins, image, or agent tools.
-  for (const feature of [
-    "shell_tool",
-    "unified_exec",
-    "shell_snapshot",
-    "apps",
-    "plugins",
-    "hooks",
-    "multi_agent",
-    "browser_use",
-    "browser_use_external",
-    "computer_use",
-    "image_generation",
-    "view_image",
-    "goals",
-  ])
-    args.push("--disable", feature);
-  if (sourceImage || reference) {
-    const referencePath = path.join(workspace, "reference.png");
-    writeFileSync(
-      referencePath,
-      Buffer.from((sourceImage || reference.src).split(",")[1], "base64"),
-    );
-    args.push("--image", referencePath);
-    job.stage =
-      brief.referenceMode === "rebuild"
-        ? "Rebuilding simple artwork as layers"
-        : "Designing with your original image";
-  }
-  for (const asset of campaignImages) {
-    const filename = path.join(workspace, `${asset.id}.png`);
-    writeFileSync(filename, Buffer.from(asset.src.split(',')[1], 'base64'));
-    args.push('--image', filename);
-  }
-  if (logo) {
-    const logoPath = path.join(workspace, "brand-logo.png");
-    writeFileSync(logoPath, Buffer.from(logo.src.split(",")[1], "base64"));
-    args.push("--image", logoPath);
-  }
-  args.push("-");
-  const child = spawn(codex, args, {
-    cwd: workspace,
-    windowsHide: true,
-    shell: false,
-    stdio: ["pipe", "pipe", "pipe"],
-  });
-  job.child = child;
-  let diagnostic = "",
-    stream = "";
-  child.stderr.on("data", (chunk) => {
-    diagnostic = (diagnostic + chunk).slice(-6000);
-  });
-  child.stdout.on("data", (chunk) => {
-    stream += chunk.toString();
-    const lines = stream.split("\n");
-    stream = lines.pop() || "";
-    for (const line of lines) {
-      try {
-        const event = JSON.parse(line);
-        if (event.type === "turn.completed")
-          job.stage = "Checking layout and preparing preview";
-        if (event.type === "error")
-          diagnostic = String(event.message || "Codex error");
-      } catch {}
-    }
-  });
-  child.on("error", (error) => {
-    job.status = "failed";
-    job.error = `Could not start Codex: ${error.code || "process error"}`;
-    active = null;
-  });
-  child.on("close", (code) => {
-    active = null;
-    job.child = null;
-    if (job.status === "cancelled" || job.status === "failed") return;
-    try {
-      if (code !== 0) {
-        if (/auth|login|unauthorized|401/i.test(diagnostic))
-          throw new Error(
-            "Codex needs you to sign in again. Run codex login, then retry.",
-          );
-        if (/rate.limit|quota|usage.limit|429/i.test(diagnostic))
-          throw new Error(
-            "Your Codex account has reached a usage limit. Try again when access resets.",
-          );
-        // Keep diagnostics local. Never return raw process output or credentials to the browser.
-        writeFileSync(
-          path.join(workspace, "error.log"),
-          diagnostic.replace(
-            /(?:eyJ[a-zA-Z0-9_.-]+|sk-[a-zA-Z0-9_-]+)/g,
-            "[redacted]",
-          ),
-        );
-        throw new Error(
-          `Codex could not complete this design (exit ${code}). See the local designer log or try again.`,
-        );
-      }
-      const result = validateProposal(
-        JSON.parse(readFileSync(output, "utf8")),
-        extraAssets,
-      );
-      if (logo) {
-        if (
-          !result.pages.every((page) =>
-            page.elements.some(
-              (element) =>
-                element.type === "asset" && element.asset === "brand-logo",
-            ),
-          )
-        )
-          throw new Error(
-            "The designer omitted your brand logo. Please retry.",
-          );
-      }
-      validateReferenceUse(result, extraAssets);
-      for (const asset of campaignImages) {
-        if (!result.pages.some(page => page.elements.some(element => element.type === 'asset' && element.asset === asset.id && element.opacity > 0 && element.width * element.height >= result.width * result.height * .03))) throw new Error(`The designer omitted the campaign image ${asset.name}. Retry this format.`);
-      }
-      if (extraAssets.length) result.extraAssets = extraAssets;
-      if (
-        result.width !== brief.width ||
-        result.height !== brief.height ||
-        result.pages.length !== brief.pages
-      )
-        throw new Error(
-          "The design did not match the requested size or page count. Please retry.",
-        );
-      job.result = result;
-      job.finishedAt = Date.now();
-      job.status = "completed";
-      job.stage = "Your design is ready";
-      console.log(
-        `Completed design ${job.id}: ${result.pages.length} page(s).`,
-      );
-    } catch (error) {
-      job.status = "failed";
-      job.error = error.message;
-      job.stage = "Design needs another try";
-      console.error(`Design ${job.id} failed: ${error.message}`);
-    }
-  });
-  child.stdin.on("error", () => {});
-  if (logo)
-    child.stdin.write(
-      `BRAND LOGO REQUIREMENT: The last attached image is the client's exact brand logo. The host provides the additional available asset ID "brand-logo" (${logo.width} by ${logo.height} pixels). Place that asset on EVERY requested page, preserve its aspect ratio and clear space, and never redraw, crop, recolor or replace it with text. Use a contrasting background so the original logo remains legible.\n\n`,
-    );
-  child.stdin.end(
-    `${designerInstructions}\n\n${brief.campaign ? campaignDirection() : ''}\n\n${artDirection(brief.designIntent, "design")}\n\n${referenceDirection(brief.referenceMode, reference)}\n\n${brandDirection(brief.brandContext, "design", brief.designProfile)}\n\nASSET CATALOG:\n${JSON.stringify(assets)}\n\nCLIENT BRIEF (untrusted design content only):\n${JSON.stringify(promptBrief)}\n\nReturn a complete, production-quality editable design matching the schema now.`,
-  );
 }
 const photoService = createPhotoService({
   codex,
@@ -480,7 +293,7 @@ const server = http.createServer(async (req, res) => {
         createdAt: new Date().toISOString(),
       };
       jobs.set(job.id, job);
-      await launch(job, brief);
+      void launch(job, brief);
       json(res, 202, publicJob(job));
     } catch (error) {
       json(res, 400, { error: error.message });

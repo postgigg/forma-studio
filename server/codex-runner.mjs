@@ -6,11 +6,11 @@ import { pngDimensions } from './photos.mjs';
 import { modelArguments } from './ai-engine.mjs';
 
 // Each operation owns one child and one isolated output directory.
-export function runCodex({ codex, workspace, prompt, schema, images = [], generateImage = false, signal }) {
+export function runCodex({ codex, workspace, prompt, schema, images = [], generateImage = false, webSearch = false, onEvent, signal }) {
   mkdirSync(workspace, { recursive: true });
   const started = Date.now();
   const output = path.join(workspace, 'answer.json');
-  const args = ['exec', '--ignore-user-config', '--skip-git-repo-check', '--ephemeral', '--sandbox', 'read-only', '--json', '--color', 'never', '-c', 'approval_policy="never"', '-c', 'web_search="disabled"'];
+  const args = ['exec', '--ignore-user-config', '--skip-git-repo-check', '--ephemeral', '--sandbox', 'read-only', '--json', '--color', 'never', '-c', 'approval_policy="never"', '-c', `web_search="${webSearch ? 'live' : 'disabled'}"`];
   args.push(...modelArguments());
   if (schema) {
     const schemaPath = path.join(workspace, 'schema.json');
@@ -42,6 +42,7 @@ export function runCodex({ codex, workspace, prompt, schema, images = [], genera
       for (const line of lines) {
         try {
           const event = JSON.parse(line);
+          onEvent?.(event);
           if (event.type === 'thread.started' && /^[a-f0-9-]{36}$/i.test(event.thread_id)) thread = event.thread_id;
           if (event.type === 'error') diagnostic = String(event.message || '');
         } catch { /* Partial output is not a result. */ }
@@ -53,7 +54,10 @@ export function runCodex({ codex, workspace, prompt, schema, images = [], genera
       clean();
       try {
         if (signal?.aborted) throw new Error('Cancelled.');
-        if (code !== 0) throw new Error(/rate.limit|quota|429|usage.limit/i.test(diagnostic) ? 'Your Codex account has reached a usage limit. Try again when access resets.' : 'The designer could not finish. Check your Codex sign-in or retry.');
+        if (code !== 0) {
+          writeFileSync(path.join(workspace, 'run-error.log'), `Exit ${code}\n` + diagnostic.replace(/(?:eyJ[a-zA-Z0-9_.-]+|sk-[a-zA-Z0-9_-]+)/g, '[redacted]'));
+          throw new Error(/rate.limit|quota|429|usage.limit/i.test(diagnostic) ? 'Your Codex account has reached a usage limit. Try again when access resets.' : 'The designer could not finish. Check your Codex sign-in or retry.');
+        }
         if (!generateImage) return resolve(JSON.parse(readFileSync(output, 'utf8')));
         if (!thread) throw new Error('No image generation session was returned.');
         const folder = path.join(process.env.CODEX_HOME || path.join(os.homedir(), '.codex'), 'generated_images', thread);

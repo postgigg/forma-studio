@@ -4,6 +4,7 @@ import { validateDesignStyle } from "../shared/design-style.mjs";
 import { validateDesignIntent } from "../shared/design-intent.mjs";
 import { pngDimensions } from "./photos.mjs";
 import { referenceAsset } from "./reference.mjs";
+export const imageCompositionInstructions = `PHOTO COMPOSITION: Set imageFit to contain to show the complete original photo, or cover for an intentional crop inside the element box. For cover, imagePositionX and imagePositionY are 0..1: 0 aligns left/top, .5 centers, 1 aligns right/bottom. Study the attached client's subject placement; protect faces, products, hands and meaningful details. Cropping changes the displayed frame, never the source image or aspect ratio. If the client requires the whole image, use contain. Brand logos, transparent stickers and preserved reference artwork must use contain and keep clear space. Choose full-bleed imagery, deliberate crops, overlapping type and asymmetric compositions when the concept calls for them; do not default to a small photo above a detached promotion band. Provide all three image fields for every element; for non-image elements use contain and .5/.5.`;
 export const fontNames = JSON.parse(
   readFileSync(new URL("../shared/fonts.json", import.meta.url), "utf8"),
 );
@@ -64,6 +65,9 @@ const elementProperties = {
   fontWeight: { type: "string", enum: ["normal", "bold"] },
   align: { type: "string", enum: ["left", "center", "right"] },
   asset: str,
+  imageFit: { type: 'string', enum: ['contain', 'cover'] },
+  imagePositionX: num,
+  imagePositionY: num,
 };
 export const outputSchema = {
   type: "object",
@@ -332,6 +336,8 @@ export function validateProposal(data, extraAssets = []) {
         throw new Error("Invalid typography settings.");
       if (el.type === "asset" && !assetIds.has(el.asset))
         throw new Error("The designer referenced an unavailable image.");
+      if (el.imageFit !== undefined && !['contain', 'cover'].includes(el.imageFit)) throw new Error('Invalid image fit.');
+      for (const key of ['imagePositionX', 'imagePositionY']) if (el[key] !== undefined && (!Number.isFinite(el[key]) || el[key] < 0 || el[key] > 1)) throw new Error('Invalid image crop position.');
       if (el.type === "graphic" && !graphics.has(el.asset))
         throw new Error("The designer referenced an unavailable graphic.");
     }

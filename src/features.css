@@ -689,8 +689,17 @@
 .workspace-footer .zoom-control .icon-button svg{width:20px;height:20px}
 .workspace-footer .zoom-control input{width:130px;height:5px;accent-color:#764bdd}
 .workspace-footer .zoom-control select{width:86px;font-size:14px;padding:8px}
-.page-refine-button{display:inline-flex;align-items:center;gap:7px;border:0;border-radius:7px;padding:7px 10px;color:#764bdd;background:#eee7ff;font-size:13px;font-weight:600;white-space:nowrap;margin-right:8px}
+.page-refine-button{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;flex-shrink:0;border:0;border-radius:7px;padding:7px;color:#764bdd;background:#eee7ff;margin-right:8px}
 .page-refine-button:hover{background:#e2d5ff}
+.ai-design-evidence{margin:14px 0;border-top:1px solid var(--line);padding-top:12px;font-size:12px;line-height:1.6}
+.ai-design-evidence summary{cursor:pointer;font-weight:600;color:#6540bd}
+.ai-design-evidence h4{margin:14px 0 6px;font-size:13px}
+.ai-design-evidence p{margin:7px 0;overflow-wrap:anywhere}
+.ai-reference-study{padding:10px 0;border-bottom:1px solid var(--line)}
+.ai-reference-study a{color:#6540bd;text-decoration:underline;text-underline-offset:3px}
+.ai-reference-study small{display:block;color:#716b7c;margin-top:4px}
+.ai-review-note{border-left:3px solid #b6a3eb;padding-left:10px;margin:12px 0}
+.ai-review-note.needs-attention{border-color:#c48b30}
 @media(max-width:1100px){.workspace-footer .zoom-control input{width:80px}.workspace-footer{padding:0 8px;gap:6px}.workspace-footer .zoom-control{gap:0}.workspace-footer .footer-page{padding:0 3px}}
 .artboard {
   margin-inline: auto;

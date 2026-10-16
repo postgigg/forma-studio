@@ -15,6 +15,7 @@ import { Editor } from "./editor";
 import {
   allDesigns,
   getBrandProfile,
+  getSavedBrand,
   getDesignStyle,
   saveDesign,
 } from "./storage";
@@ -124,7 +125,7 @@ export function CampaignStudio({
   const folder = campaign?.folders.find((f) => f.id === folderId);
   const start = async (parent?: Campaign, current?: CampaignFolder) => {
     setError("");
-    const profile = await getBrandProfile();
+    const [profile, savedPalette] = await Promise.all([getBrandProfile(), getSavedBrand()]);
     setWizard({
       campaign: structuredClone(
         parent || {
@@ -134,7 +135,7 @@ export function CampaignStudio({
           audience: profile?.audience || "",
           style: profile?.voice || "",
           brand: profile,
-          palette: brand,
+          palette: savedPalette || [],
           ...(brandLogo ? { logo: brandLogo } : {}),
           updatedAt: new Date().toISOString(),
           folders: [],
@@ -385,6 +386,10 @@ export function CampaignStudio({
                       </span>
                     </div>
                   )}
+                  <label className="check-row">
+                    <input type="checkbox" aria-label="Use my brand palette for this campaign" checked={wizard.campaign.palette.length > 0} onChange={event => setWizard(current => current && { ...current, campaign: { ...current.campaign, palette: event.target.checked ? brand : [] } })} />
+                    Use my brand palette
+                  </label>
                 </>
               )}
               {wizard.step === 1 && (

@@ -482,6 +482,16 @@ export function Inspector({
                     </div>
                   </div>
                 )}
+              {text && (
+                <div className="property-section">
+                  <h4>Text background</h4>
+                  <div className="color-input">
+                    <input type="color" aria-label="Text background color" value={typeof text.backgroundColor === 'string' && /^#[0-9a-f]{6}$/i.test(text.backgroundColor) ? text.backgroundColor : '#ffffff'} onChange={event => editor.set({ backgroundColor: event.target.value })} />
+                    <span>{text.backgroundColor ? String(text.backgroundColor).toUpperCase() : 'NONE'}</span>
+                  </div>
+                  <button className="text-button" onClick={() => editor.set({ backgroundColor: text.backgroundColor ? '' : '#ffffff' })}>{text.backgroundColor ? 'Remove text background' : 'Add text background'}</button>
+                </div>
+              )}
               {image && (
                 <div className="property-section">
                   <h4>Edit image</h4>

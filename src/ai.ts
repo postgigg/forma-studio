@@ -12,6 +12,7 @@ import assets from "../shared/assets.json";
 import { makeGraphic } from "./graphics";
 import { fonts, uid, type Design } from "./types";
 import { getDesignStyle } from "./storage";
+import type { CreativeDirection, QualityReview } from './CreativeDirection';
 export interface DesignElement {
   type: "text" | "rect" | "ellipse" | "triangle" | "line" | "asset" | "graphic";
   name: string;
@@ -29,8 +30,13 @@ export interface DesignElement {
   fontWeight: "normal" | "bold";
   align: "left" | "center" | "right";
   asset: string;
+  imageFit?: 'contain' | 'cover';
+  imagePositionX?: number;
+  imagePositionY?: number;
 }
 export interface Proposal {
+  creativeDirection?: CreativeDirection;
+  qualityReview?: QualityReview;
   extraAssets?: { id: string; src: string; name: string; category: string }[];
   title: string;
   description: string;
@@ -125,6 +131,8 @@ export async function proposalToDesign(proposal: Proposal): Promise<Design> {
     width: proposal.width,
     height: proposal.height,
     updatedAt: new Date().toISOString(),
+    aiDirection: proposal.creativeDirection,
+    aiReview: proposal.qualityReview,
     pages: [],
   };
   const canvas = new StaticCanvas(undefined, {
@@ -193,7 +201,8 @@ export async function proposalToDesign(proposal: Proposal): Promise<Design> {
           if (
             asset.category === "AI stickers" ||
             asset.category === "Brand logo" ||
-            asset.category === "Campaign image"
+            (asset.category === "Campaign image" && element.imageFit !== 'cover') ||
+            asset.id === 'reference-photo' || element.imageFit === 'contain'
           ) {
             const scale = Math.min(element.width / w, element.height / h);
             img.set({
@@ -209,8 +218,8 @@ export async function proposalToDesign(proposal: Proposal): Promise<Design> {
               cropHeight = element.height / scale;
             img.set({
               ...common,
-              cropX: (w - cropWidth) / 2,
-              cropY: (h - cropHeight) / 2,
+              cropX: (w - cropWidth) * (element.imagePositionX ?? .5),
+              cropY: (h - cropHeight) * (element.imagePositionY ?? .5),
               width: cropWidth,
               height: cropHeight,
               scaleX: scale,

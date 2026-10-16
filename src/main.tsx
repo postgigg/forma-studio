@@ -3,7 +3,9 @@ import App from "./App";
 import { BrandProvider } from "./BrandContext";
 import { DesignStyleProvider } from "./DesignStyle";
 import "./styles.css";
-createRoot(document.getElementById("root")!).render(
+if (new URLSearchParams(location.search).get('forma-render') === '1') {
+  void import('./render-mode');
+} else createRoot(document.getElementById("root")!).render(
   <BrandProvider>
     <DesignStyleProvider><App /></DesignStyleProvider>
   </BrandProvider>,
