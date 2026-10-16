@@ -1,5 +1,22 @@
 import { test, expect } from '@playwright/test';
 import { readFile } from 'node:fs/promises';
+test('rendered review receives real reduced thumbnails of the editable pages', async ({ page }) => {
+  const proposal = JSON.parse(await readFile('tests/designer.fixture.json', 'utf8'));
+  await page.goto('/?forma-render=1');
+  await page.waitForFunction(() => typeof window.__formaRenderProposal === 'function');
+  const rendered = await page.evaluate(async proposal => {
+    const result = await window.__formaRenderProposal!(proposal);
+    const size = async (src: string) => { const image = new Image(); image.src = src; await image.decode(); return { width: image.naturalWidth, height: image.naturalHeight }; };
+    return { pages: result.images.length, thumbnails: await Promise.all(result.thumbnails.map(size)), full: await Promise.all(result.images.map(size)) };
+  }, proposal);
+  expect(rendered.pages).toBe(proposal.pages.length);
+  for (let i = 0; i < rendered.pages; i++) {
+    const small = rendered.thumbnails[i], full = rendered.full[i];
+    expect(Math.max(small.width, small.height)).toBe(320);
+    expect(Math.max(full.width, full.height)).toBeGreaterThan(320);
+    expect(Math.abs(small.width / small.height - full.width / full.height)).toBeLessThan(.01);
+  }
+});
 
 test('text backgrounds keep their own color through undo, redo, save, reload and JSON export', async ({ page }) => {
   await page.goto('/');

@@ -106,3 +106,21 @@ test("personal style combines with brand intent without overriding current instr
     /PERSONAL DESIGN PREFERENCES/,
   );
 });
+
+test('multi-select craft preferences survive every validated AI operation and retain their meaning', () => {
+  const selected = { ...profile, preferences: ['confident-type', 'generous-space'], avoidances: ['random-shapes', 'filler-labels'] };
+  assert.deepEqual(validateDesignStyle(selected), selected);
+  for (const patch of [{ preferences: ['unknown'] }, { preferences: ['confident-type', 'confident-type'] }, { avoidances: 'random-shapes' }, { avoidances: ['invented'] }])
+    assert.throws(() => validateDesignStyle({ ...selected, ...patch }));
+  assert.deepEqual(validateBrief({ ...input, designProfile: selected }).designProfile, selected);
+  assert.deepEqual(validatePhotoBrief({ ...input, format: 'Portrait', style: 'Natural light', designProfile: selected }).designProfile, selected);
+  for (const operation of [{}, { pencil: { id: 'photo', mask: src } }, { eraser: { id: 'photo', mask: src } }]) {
+    const refined = validateRefinement({ ...input, designProfile: selected, preview: src, nodes: [{ id: 'photo', type: 'Image', parentId: null }], images: [{ id: 'photo', src }], ...operation });
+    assert.deepEqual(refined.designProfile, selected);
+  }
+  const direction = personalStyleDirection(selected);
+  assert.match(direction, /Purposeful type scale/);
+  assert.match(direction, /do not serve the message/);
+  assert.ok(direction.includes(profile.details));
+  assert.ok(direction.includes(profile.avoid));
+});

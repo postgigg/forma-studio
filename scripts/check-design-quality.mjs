@@ -4,7 +4,8 @@ import { mkdirSync, writeFileSync, appendFileSync, existsSync, readFileSync } fr
 import path from "node:path";
 import assert from "node:assert/strict";
 import { chromium } from "@playwright/test";
-const root = process.cwd(), folder = path.join(root, ".local", "professional-design-proof");
+import { aiEngine } from "../server/ai-engine.mjs";
+const root = process.cwd(), folder = path.join(root, ".local", `professional-design-proof-${aiEngine.model}`);
 mkdirSync(folder, { recursive: true });
 const base = "http://127.0.0.1:5191", origin = "http://localhost:5186";
 try { await fetch(base + "/health", { signal: AbortSignal.timeout(800) }); throw new Error("Port 5191 is already in use."); }
@@ -22,7 +23,7 @@ const cases = [
 ];
 try {
   for (let i = 0; i < 50; i++) {
-    try { const session = await (await fetch(base + "/session", { headers: { Origin: origin } })).json(); if (session.ready) { token = session.token; assert.equal(session.model, "gpt-6-astra"); assert.equal(session.reasoningEffort, "max"); break; } } catch {}
+    try { const session = await (await fetch(base + "/session", { headers: { Origin: origin } })).json(); if (session.ready) { assert.equal(session.model, aiEngine.model); assert.equal(session.reasoningEffort, aiEngine.reasoningEffort); token = session.token; break; } } catch {}
     await new Promise(r => setTimeout(r, 300));
   }
   assert.ok(token, "Isolated worker must be authenticated");
@@ -40,7 +41,7 @@ try {
     const started = await fetch(base + "/jobs", { method: "POST", headers, body: JSON.stringify({ ...brief, pages: 1, style: "Art director’s choice" }) });
     const job = await started.json();
     assert.ok(started.ok, job.error);
-    console.log(`Generating ${id}: ${job.id} · GPT-6 Astra / max`);
+    console.log(`Generating ${id}: ${job.id} · ${aiEngine.modelLabel} / ${aiEngine.reasoningEffort}`);
     writeFileSync(path.join(folder, `${id}-job.json`), JSON.stringify({ id: job.id }));
     for (let i = 0; i < 300; i++) {
       await new Promise(r => setTimeout(r, 2000));

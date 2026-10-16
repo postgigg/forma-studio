@@ -1,7 +1,15 @@
-Forma Studio 1.2.0 adds desktop update prompts delivered through GitHub Releases, with download progress and save-before-restart installation. No Forma update server or customer GitHub login is needed. Versions 1.1.x need this installer once to enable future in-app updates.
+Forma's existing AI designer now uses the complete brief, campaign intent, brand purpose and compatible personal preferences to guide its composition and review.
 
-Upload your own TTF, OTF, WOFF and WOFF2 fonts in Text. Save and share text kits, with the fonts embedded in kits, Forma design files and SVG exports. Line and letter spacing are available in the text toolbar.
+The shared worker uses GPT-6.1 Sol with Max reasoning through your own Codex account.
 
-Page style previews editable palette and layout-spacing changes before applying them. Each page has a Refine page with AI button. Page and zoom controls are larger, connected AI account setup is hidden, and the sidebar places AI Designer and Photos nearer the top.
+- Replaces a fixed layout recipe and layer-count target with a brief-specific reading order, connected typography and imagery, and purposeful supporting elements.
+- Keeps audience, style, palette and outcome/message/preserve/avoid instructions visible to art direction and critique. Retained client assets and supported fonts are explicit.
+- Reviews full-page Fabric renders and reduced thumbnails. A craft repair sees the actual page it is correcting and preserves successful relationships.
+- Adds multi-select craft preferences and avoidances alongside freeform notes in Your style. Existing saved profiles remain compatible.
+- Studies credited public Dribbble references, develops three feasible concepts, and retains honest source and review status. Reference artwork does not become a canvas asset.
+- Supports intentional photo crops while preserving source pixels, separate text backgrounds with undo/save/export, explicit campaign palette selection, and an icon-only page-refine control.
+- Keeps mixed-format campaign previews inside their cards and long titles below the artwork.
 
-The app, taskbar, installer, uninstaller and website share a new custom folded F symbol and drawn Forma wordmark. Windows 10/11 x64 is free; this release is unsigned. Manual editing works offline. AI uses your own supported Codex account and provider usage.
+Verified with 40 server/updater/job-lifetime checks, 24 relevant browser cases, real model generation and rendered review, and the packaged Windows app. These checks establish behavior and preservation, not a guarantee of subjective design quality or marketing performance.
+
+Windows is free. AI uses your own supported Codex account and provider usage. Projects and orchestration stay on your device; no Forma-operated design server is required.

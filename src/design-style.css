@@ -37,9 +37,30 @@
   margin: 0;
 }
 .style-onboarding > .modal-header h2 {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+.style-onboarding > .modal-header { justify-content: flex-end; }
+.style-preferences textarea {
+  box-sizing: border-box;
+  width: 100%;
+  margin-top: 12px;
+  border: 1px solid #d9d1e2;
+  border-radius: 8px;
+  background: white;
+  padding: 12px 14px;
+  font: inherit;
   font-size: 14px;
-  font-weight: 500;
-  color: #82748e;
+  line-height: 1.6;
+  resize: vertical;
+}
+.style-preferences button:focus-visible {
+  outline: 2px solid #764bdd;
+  outline-offset: 3px;
 }
 .style-onboarding > .modal-header,
 .style-onboarding-brand,

@@ -1,6 +1,7 @@
 import { _electron as electron, expect } from '@playwright/test';
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
+import { aiEngine } from '../server/ai-engine.mjs';
 const folder = path.resolve(process.env.FORMA_SMOKE_OUTPUT || '.local/desktop-smoke'); await mkdir(folder, { recursive: true });
 const executablePath = process.env.FORMA_PACKAGED_EXE;
 const app = await electron.launch({ ...(executablePath ? { executablePath, args: [] } : { args: ['.'] }), env: { ...process.env, FORMA_DESKTOP_TEST_DATA: folder }, timeout: 60000 });
@@ -27,7 +28,7 @@ try {
   console.log('3D object created.');
   await page.getByRole('button', { name: 'AI Designer', exact: true }).click();
   await expect(page.locator('.ai-connection')).toContainText('connected', { timeout: 30000 });
-  await expect(page.getByLabel('AI engine', { exact: true })).toContainText('GPT-6 Astra');
+  await expect(page.getByLabel('AI engine', { exact: true })).toContainText(aiEngine.modelLabel);
   console.log('Bundled AI engine connected.');
   await expect(page.getByRole('button', { name: 'Your account', exact: true })).toHaveCount(0);
   await page.getByRole('button', { name: 'Campaigns', exact: true }).click();
@@ -110,7 +111,7 @@ try {
   expect(JSON.parse(await readFile(reordered,'utf8')).pages.map(p => p.id)).toEqual([ids[1],ids[0]]);
   console.log('Packaged personal-style onboarding, page drag ordering and native JSON order passed.');
   expect(errors).toEqual([]);
-  await writeFile(path.join(folder, 'result.json'), JSON.stringify({ testedAt: new Date().toISOString(), packaged: !!executablePath, isolatedRenderer: true, bundledAI: true, engine: 'gpt-6-astra', websiteCapture: true, pngExport: true, customFonts: true, textSpacing: true, personalDesignStyle: true, pageDragOrder: true, nativeJsonPageOrder: true, errors }, null, 2));
+  await writeFile(path.join(folder, 'result.json'), JSON.stringify({ testedAt: new Date().toISOString(), packaged: !!executablePath, isolatedRenderer: true, bundledAI: true, engine: aiEngine.model, websiteCapture: true, pngExport: true, customFonts: true, textSpacing: true, personalDesignStyle: true, pageDragOrder: true, nativeJsonPageOrder: true, errors }, null, 2));
   console.log('Desktop smoke passed: isolated renderer, bundled AI, website capture, 3D, PNG/PDF/JSON saves.');
 } catch (error) {
   const page = (await app.windows())[0];

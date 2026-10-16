@@ -107,6 +107,49 @@ test("style onboarding fits a phone with readable choices and reachable navigati
     page.getByRole("button", { name: "Save my design direction", exact: true }),
   ).toBeInViewport();
 });
+
+test('quick craft choices support multiple selections, survive reload and reach the existing designer with freeform notes', async ({ page }) => {
+  await page.goto('/');
+  await page.getByRole('button', { name: 'Your design style', exact: true }).click();
+  const dialog = page.getByRole('dialog', { name: 'Your design style', exact: true });
+  // Keep the accessible name while removing the duplicate visible heading above the logo.
+  expect(await dialog.locator('.modal-header h2').evaluate(el => getComputedStyle(el).clipPath)).toBe('inset(50%)');
+  await page.getByRole('button', { name: 'Continue', exact: true }).click();
+  for (const label of ['Confident typography', 'Generous breathing room', 'Random decoration', 'Tiny filler labels']) {
+    await dialog.getByRole('button', { name: label, exact: true }).click();
+    await expect(dialog.getByRole('button', { name: label, exact: true })).toHaveAttribute('aria-pressed', 'true');
+  }
+  await dialog.getByRole('button', { name: 'Random decoration', exact: true }).press('Space');
+  await expect(dialog.getByRole('button', { name: 'Random decoration', exact: true })).toHaveAttribute('aria-pressed', 'false');
+  await dialog.getByRole('button', { name: 'Random decoration', exact: true }).click();
+  await page.getByLabel('Personal design details').fill('Keep the product visually connected to the headline.');
+  await page.getByLabel('Personal design dislikes').fill('No invented claims.');
+  await page.getByRole('button', { name: 'Continue', exact: true }).click();
+  await page.getByRole('button', { name: 'Save my design direction', exact: true }).click();
+  await expect(dialog).toHaveCount(0);
+  await page.reload();
+  await page.getByRole('button', { name: 'Your design style', exact: true }).click();
+  await page.getByRole('button', { name: 'Continue', exact: true }).click();
+  for (const label of ['Confident typography', 'Generous breathing room', 'Random decoration', 'Tiny filler labels'])
+    await expect(dialog.getByRole('button', { name: label, exact: true })).toHaveAttribute('aria-pressed', 'true');
+  await expect(page.getByLabel('Personal design details')).toHaveValue('Keep the product visually connected to the headline.');
+  await page.setViewportSize({ width: 390, height: 844 });
+  expect(await dialog.evaluate(el => el.scrollWidth <= el.clientWidth)).toBe(true);
+  await dialog.locator('.style-preferences').first().scrollIntoViewIfNeeded();
+  await page.screenshot({ path: 'test-results/personal-style-quick-choices.png', animations: 'disabled' });
+  await page.getByRole('button', { name: 'Close dialog', exact: true }).click();
+  let request: any;
+  await page.route('**/session', route => route.fulfill({ json: { ready: true, token: 'craft-test' } }));
+  await page.route('**/jobs', route => route.request().method() === 'GET' ? route.fulfill({ json: [] }) : (request = route.request().postDataJSON(), route.fulfill({ status: 400, json: { error: 'Captured' } })));
+  await page.setViewportSize({ width: 1512, height: 982 });
+  await page.getByRole('button', { name: 'AI Designer', exact: true }).click();
+  await page.getByLabel('AI design brief').fill('Improve the product and headline relationship in this campaign.');
+  await page.getByRole('button', { name: 'Create my design', exact: true }).click();
+  await expect.poll(() => !!request).toBe(true);
+  expect(request.designProfile.preferences).toEqual(['confident-type', 'generous-space']);
+  expect(request.designProfile.avoidances).toEqual(['filler-labels', 'random-shapes']);
+  expect(request.designProfile.avoid).toBe('No invented claims.');
+});
 test("a design reported beyond six minutes survives a lost status read and completes without resubmission", async ({
   page,
 }) => {

@@ -7,6 +7,8 @@ export const personalStyle = {
   colorMood: "brand",
   details: "Quiet layouts with confident typography and original photography.",
   avoid: "Tiny decorative labels, generic gradients and crowded layouts.",
+  preferences: ["confident-type", "generous-space"],
+  avoidances: ["random-shapes", "filler-labels"],
 };
 export const styleBrand = {
   name: "Petal Studio",
@@ -23,6 +25,8 @@ export async function configureStyle(page: Page) {
     .getByRole("button", { name: "Editorial design style", exact: true })
     .click();
   await page.getByRole("button", { name: "Continue", exact: true }).click();
+  for (const name of ["Confident typography", "Generous breathing room", "Random decoration", "Tiny filler labels"])
+    await page.getByRole("button", { name, exact: true }).click();
   await page.getByLabel("Personal design details").fill(personalStyle.details);
   await page.getByLabel("Personal design dislikes").fill(personalStyle.avoid);
   await page.getByRole("button", { name: "Continue", exact: true }).click();

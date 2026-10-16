@@ -1,8 +1,8 @@
 // Explicitly pinned: --ignore-user-config otherwise falls back to the CLI default.
 export const aiEngine = Object.freeze({
   engine: "Codex CLI",
-  model: "gpt-6-astra",
-  modelLabel: "GPT-6 Astra",
+  model: "gpt-6.1-sol",
+  modelLabel: "GPT-6.1 Sol",
   reasoningEffort: "max",
   imageEngine: "Codex native image generation",
 });

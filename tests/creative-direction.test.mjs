@@ -55,13 +55,56 @@ test('visual review attaches previews but excludes embedded bitmap payloads from
   });
 });
 
+test('direction and critique retain the same audience, palette, intent and saved preferences including approved assets', async () => {
+  const workspace = mkdtempSync(path.resolve('.local/commission-proof-'));
+  const approvedAsset = { id: 'campaign-image-1', name: 'Approved seasonal bouquet', width: 1080, height: 1350, category: 'Campaign image', src: 'data:image/png;base64,ASSET_BYTES' };
+  const brief = {
+    prompt: 'Parent campaign: local gifting. Folder intent: introduce the spring collection.', width: fixture.width, height: fixture.height, pages: 1,
+    audience: 'Local first-time gift buyers', style: 'Warm editorial photography', brand: 'Neighborhood Petal', palette: ['#137654', '#edab79'], campaign: true,
+    brandContext: { business: 'Seasonal florist', mission: 'Connect neighbors with thoughtful gifts' },
+    designProfile: { enabled: true, styles: ['editorial'], density: 'airy', typography: 'mixed', colorMood: 'warm', details: 'Careful optical balance', avoid: 'Clutter', preferences: ['confident-type'], avoidances: ['filler-labels'] },
+    designIntent: { outcome: 'Encourage a thoughtful first order', message: 'Seasonal flowers for a personal gift', preserve: 'Approved crop and exact headline', avoid: 'Discount badges' },
+    previous: { ...fixture, extraAssets: [approvedAsset], creativeDirection: direction },
+  };
+  const checkContext = prompt => {
+    for (const value of [brief.audience, brief.style, brief.brand, ...brief.palette, ...Object.values(brief.designIntent), brief.brandContext.mission, brief.designProfile.details, 'confident-type', 'filler-labels', approvedAsset.name])
+      assert.ok(prompt.includes(value), `Missing commission field: ${value}`);
+    assert.equal(prompt.includes(approvedAsset.src), false);
+  };
+  let calls = 0;
+  const directed = await createCreativeDirection({ codex: 'mock', workspace, brief, visualReferences: async () => [], run: async options => {
+    calls++;
+    checkContext(options.prompt);
+    if (calls === 1) return { sources: [] };
+    assert.ok(options.images.includes(approvedAsset.src));
+    assert.equal(options.prompt.includes('sourceImageAvailable'), false);
+    assert.ok(options.prompt.includes('"availableFonts":["'));
+    return { ...direction, visualStudies: {} };
+  } });
+  assert.equal(calls, 2);
+  assert.equal(directed.routes.length, 3);
+  const full = 'data:image/png;base64,FULL_RENDER', thumbnail = 'data:image/png;base64,SMALL_RENDER';
+  let repairImages;
+  await reviewDesign({ codex: 'mock', workspace, brief, proposal: fixture, direction: directed,
+    render: async () => ({ images: [full], thumbnails: [thumbnail], layouts: [[]] }),
+    onRendered: rendered => { repairImages = rendered.images; },
+    run: async options => {
+      checkContext(options.prompt);
+      assert.deepEqual(options.images, [full, thumbnail]);
+      assert.equal(options.prompt.includes(thumbnail), false);
+      return { verdict: 'ready', summary: 'The message and hierarchy match the commission', strengths: ['Legible main message'], issues: [] };
+    },
+  });
+  assert.deepEqual(repairImages, [full]);
+});
+
 test('pipeline reviews rendered output, repairs once and preserves exact dimensions', async () => {
   const runtime = mkdtempSync(path.resolve('.local/creative-pipeline-'));
   const job = { id: 'proof', controller: new AbortController() };
   let compositions = 0, reviews = 0;
   const result = await designPipeline({ job, codex: 'mock', runtime, brief: { prompt: 'A botanical launch', width: fixture.width, height: fixture.height, pages: fixture.pages.length }, direct: async () => direction,
-    run: async options => { compositions++; assert.equal(options.webSearch, undefined); return structuredClone(fixture); },
-    review: async options => { reviews++; assert.equal(options.proposal.width, fixture.width); return { verdict: reviews === 1 ? 'revise' : 'ready', summary: reviews === 1 ? 'Improve type spacing' : 'Spacing corrected', strengths: ['A clear subject'], issues: reviews === 1 ? [{ page: 1, element: 'Headline', problem: 'Tight spacing', fix: 'Increase separation', priority: 'craft' }] : [] }; },
+    run: async options => { compositions++; assert.equal(options.webSearch, undefined); assert.deepEqual(options.images, compositions === 1 ? [] : ['data:image/png;base64,CURRENT_PAGE']); return structuredClone(fixture); },
+    review: async options => { reviews++; options.onRendered?.({ images: ['data:image/png;base64,CURRENT_PAGE'] }); assert.equal(options.proposal.width, fixture.width); return { verdict: reviews === 1 ? 'revise' : 'ready', summary: reviews === 1 ? 'Improve type spacing' : 'Spacing corrected', strengths: ['A clear subject'], issues: reviews === 1 ? [{ page: 1, element: 'Headline', problem: 'Tight spacing', fix: 'Increase separation', priority: 'craft' }] : [] }; },
   });
   assert.equal(compositions, 2); assert.equal(reviews, 2);
   assert.equal(result.qualityReview.status, 'reviewed'); assert.equal(result.qualityReview.revisions, 1);

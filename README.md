@@ -5,7 +5,7 @@
 
 ![The actual Forma 1.4.0 desktop editor with an editable, reference-informed florist design.](docs/media/studio-overview-v1.4.0.png)
 
-Build with draggable layers, original artwork, photo-filled letters, editable charts, and AI refinement. Save on your device, run the app with Docker, and export still images or motion. These screenshots show the actual editor in an isolated browser; the example projects are editable Forma files.
+Build with draggable layers, original artwork, photo-filled letters, editable charts, and AI refinement. Save on your device, run the app with Docker, and export still images or motion. These screenshots show the actual editor in an isolated test profile; the example projects are editable Forma files.
 
 ![Illustrated workflow: start, compose, refine, and share.](docs/media/workflow.svg)
 
@@ -117,11 +117,11 @@ Campaign previews keep the complete artwork inside each card. Portrait, story, s
 
 ## Personal design direction
 
-Open **Your style** in the left rail or **Brand → Personalize your AI designer**. The three-step guide combines your preferred styles, spacing, typography and color direction with your business, mission and audience. Choose up to three styles, describe what you like and what to avoid, then save on this device. Edit or disable it in Brand at any time.
+Open **Your style** in the left rail or **Brand → Personalize your AI designer**. The three-step guide combines your preferred styles, spacing, typography and color direction with your business, mission and audience. Choose up to three styles. In **The details**, select multiple craft preferences and things to avoid, then add your own written notes. Choices and notes are saved together on this device. Edit or disable them in Brand at any time.
 
 The saved profile accompanies AI Designer, campaigns, photo creation, selection refinement, AI Pencil and Magic Eraser. Your current instructions and required brand identity take priority over personal defaults. Pencil matches the existing image inside the mask; Eraser only removes the marked subject and reconstructs the existing background. Campaign batches keep a snapshot of their preferences and exact format dimensions when resumed.
 
-![Personal design-style onboarding in the actual Forma app.](docs/media/design-style-v1.3.1.png)
+![Multi-select craft preferences and written notes in the actual Forma app.](docs/media/design-style-v1.4.0.png)
 
 AI work has no six- or eight-minute generation cutoff. It keeps running while the worker and provider remain available; **Cancel** stops the owned job. Temporary status-read failures reconnect to that same job without starting a duplicate generation. Provider or process failures still show an error for review.
 
@@ -224,9 +224,9 @@ The designer now studies credited Dribbble references, develops three original c
 
 New campaigns use a palette you have actually saved or let the director choose from the brief; **Use my brand palette** makes the choice explicit. To put a color behind selected text, open **Properties → Text background**. Add, recolor or remove it independently of the text color; it persists in saved designs and exports.
 
-Open **Design intent & quality** to specify the desired outcome, main message, what must remain unchanged and what to avoid. These instructions reach AI Designer, photo creation, selected-layer refinement and AI Pencil. The server also provides guidance on hierarchy, typography, grouping, legibility, palette, exact copy and format-specific design choices. Magic Eraser stays focused on restoring the marked area. The brief and selected region take priority over inferred style.
+Open **Design intent & quality** to specify the desired outcome, main message, what must remain unchanged and what to avoid. These instructions reach AI Designer, photo creation, selected-layer refinement and AI Pencil. The designer resolves a reading order from the current request, campaign/folder objective, brand purpose and compatible taste. It is instructed to connect typography and imagery to that job and use supporting elements only when they help communication, grouping or readability. Its review receives the complete commission and both full-page and reduced previews. A craft correction sees the actual page it is fixing and preserves successful parts of the composition. Magic Eraser stays focused on restoring the marked area. The brief and selected region take priority over inferred style.
 
-The local worker explicitly uses **GPT-6 Astra with maximum reasoning** through Codex CLI. Image creation and editing use **Codex native image generation**; the CLI does not expose a separate image-model identifier here. The model name shown in the UI comes from the running worker. Guidance improves the brief, but every AI result still needs review.
+The local worker explicitly uses **GPT-6.1 Sol with maximum reasoning** through Codex CLI. This shared setting applies to design research, art direction, composition, rendered review, campaigns and image tools. Image creation and editing use **Codex native image generation**; the CLI does not expose a separate image-model identifier here. The model name shown in the UI comes from the running worker. Guidance improves the brief, but every AI result still needs review.
 
 To design around an existing photo, select it and choose **Design with this image** in Properties or the right-click menu. **Keep image quality** is the default: the actual original is embedded as a photo layer, with new text, logos and layout elements on separate layers. This avoids rebuilding photographic subjects out of primitive shapes. Use AI Pencil for targeted changes within the photo. **Rebuild simple artwork** remains an explicit option for flat posters and simple graphics; it is a stylized approximation and cannot recover hidden original layers. Completed jobs retain the embedded photo and exact logo when reopened or refined.
 

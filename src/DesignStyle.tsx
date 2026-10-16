@@ -8,6 +8,8 @@ import { brandLimits, type BrandProfile } from "../shared/brand-context.mjs";
 import {
   designStyles,
   styleOptions,
+  craftPreferences,
+  craftAvoidances,
   type DesignStyleProfile,
 } from "../shared/design-style.mjs";
 import "./design-style.css";
@@ -287,8 +289,19 @@ function StyleOnboarding({
                 </div>
               </fieldset>
             ))}
-            <label className="style-field">
-              <span>What makes a design feel right to you?</span>
+            <fieldset className="style-option-group style-preferences">
+              <legend>What makes a design feel right to you?</legend>
+              <div>
+                {craftPreferences.map(choice => (
+                  <button
+                    key={choice.id}
+                    title={choice.description}
+                    className={draft.preferences?.includes(choice.id) ? "chosen" : ""}
+                    aria-pressed={draft.preferences?.includes(choice.id) || false}
+                    onClick={() => setDraft({ ...draft, preferences: draft.preferences?.includes(choice.id) ? draft.preferences.filter(id => id !== choice.id) : [...(draft.preferences || []), choice.id] })}
+                  >{choice.name}</button>
+                ))}
+              </div>
               <textarea
                 aria-label="Personal design details"
                 value={draft.details}
@@ -299,9 +312,20 @@ function StyleOnboarding({
                   setDraft({ ...draft, details: e.target.value })
                 }
               />
-            </label>
-            <label className="style-field">
-              <span>What should your designer avoid?</span>
+            </fieldset>
+            <fieldset className="style-option-group style-preferences">
+              <legend>What should your designer avoid?</legend>
+              <div>
+                {craftAvoidances.map(choice => (
+                  <button
+                    key={choice.id}
+                    title={choice.description}
+                    className={draft.avoidances?.includes(choice.id) ? "chosen" : ""}
+                    aria-pressed={draft.avoidances?.includes(choice.id) || false}
+                    onClick={() => setDraft({ ...draft, avoidances: draft.avoidances?.includes(choice.id) ? draft.avoidances.filter(id => id !== choice.id) : [...(draft.avoidances || []), choice.id] })}
+                  >{choice.name}</button>
+                ))}
+              </div>
               <textarea
                 aria-label="Personal design dislikes"
                 value={draft.avoid}
@@ -310,7 +334,7 @@ function StyleOnboarding({
                 placeholder="Crowded compositions, generic gradients, tiny decorative labels…"
                 onChange={(e) => setDraft({ ...draft, avoid: e.target.value })}
               />
-            </label>
+            </fieldset>
           </>
         )}
         {step === 2 && (

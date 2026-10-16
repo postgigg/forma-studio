@@ -8,6 +8,8 @@ export interface DesignStyleProfile {
   colorMood: "brand" | "monochrome" | "warm" | "cool" | "vibrant";
   details: string;
   avoid: string;
+  preferences?: string[];
+  avoidances?: string[];
 }
 export const designStyles: {
   id: DesignStyleId;
@@ -19,6 +21,8 @@ export const styleOptions: {
   typography: DesignStyleProfile["typography"][];
   colorMood: DesignStyleProfile["colorMood"][];
 };
+export const craftPreferences: { id: string; name: string; description: string }[];
+export const craftAvoidances: { id: string; name: string; description: string }[];
 export function validateDesignStyle(
   value: unknown,
 ): DesignStyleProfile | undefined;
