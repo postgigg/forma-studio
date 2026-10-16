@@ -85,7 +85,9 @@ test("a four-page pitch is one undoable edit and keeps existing other pages", as
   await expect.poll(async () => (await saved(page)).pages.length).toBe(4);
   await page.getByRole("button", { name: "Use 4-page deck" }).nth(1).click();
   await expect.poll(async () => (await saved(page)).pages.length).toBe(7);
-  expect((await saved(page)).pages.slice(4)).toEqual(deck.pages.slice(1));
+  // Undo is a JSON round trip. Undefined optional Fabric fields and -0 have
+  // the same persisted representation; every actual page value must match.
+  expect(JSON.stringify((await saved(page)).pages.slice(4))).toBe(JSON.stringify(deck.pages.slice(1)));
   await page.reload();
   await expect.poll(async () => (await saved(page)).pages.length).toBe(7);
 });

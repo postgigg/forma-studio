@@ -5,12 +5,16 @@ import {
   Textbox,
   Triangle,
   FabricImage,
+  Group,
   type FabricObject,
   util,
 } from "fabric";
 import { uid } from "./types";
-import occasionTemplates from "../shared/templates-occasions.json";
-import studioTemplates from "../shared/templates-studio.json";
+import modernTemplates from "../shared/templates-modern.json";
+import { templatePhoto } from "./template-media";
+import { makeChart } from "./charts";
+import { SolidObject } from "./solid-object";
+
 export type Template = {
   id: string;
   name: string;
@@ -31,160 +35,13 @@ export type Template = {
   format?: string;
   deckIds?: string[];
 };
-export const templates: Template[] = [
-  {
-    id: "botanical",
-    name: "A little growth",
-    category: "Social",
-    background: "#f6f1e7",
-    accent: "#d3dfc5",
-    ink: "#344936",
-    headline: "Make room\nfor a little\ngrowth.",
-    subtitle: "SLOW DAYS. FRESH PERSPECTIVES.",
-    font: "Georgia",
-    layout: "botanical",
-  },
-  {
-    id: "studio",
-    name: "The creative edit",
-    category: "Social",
-    background: "#dfe1fa",
-    accent: "#ff8f6b",
-    ink: "#332456",
-    headline: "Ideas\nin full\ncolor.",
-    subtitle: "THE CREATIVE EDIT / VOL. 01",
-    font: "Arial",
-    layout: "bold",
-  },
-  {
-    id: "coast",
-    name: "Somewhere slow",
-    category: "Social",
-    background: "#eae6de",
-    accent: "#7499ab",
-    ink: "#fffdf6",
-    headline: "Somewhere\nslow.",
-    subtitle: "A LITTLE FURTHER FROM THE EVERYDAY",
-    font: "Georgia",
-    layout: "photo",
-    photo: "/photos/coast.jpg",
-  },
-  {
-    id: "launch",
-    name: "Something new",
-    category: "Social",
-    background: "#2e2a38",
-    accent: "#d6ed9e",
-    ink: "#f5f2e8",
-    headline: "GOOD\nTHINGS\nAHEAD.",
-    subtitle: "A NEW CHAPTER STARTS HERE",
-    font: "Arial",
-    layout: "bold",
-  },
-  {
-    id: "editorial",
-    name: "Less, but better",
-    category: "Print",
-    background: "#f5ede3",
-    accent: "#b24a36",
-    ink: "#3e3933",
-    headline: "Less,\nbut better.",
-    subtitle: "AN EXERCISE IN INTENTIONAL LIVING",
-    font: "Georgia",
-    layout: "minimal",
-  },
-  {
-    id: "weekend",
-    name: "Weekend club",
-    category: "Social",
-    background: "#ffcbbb",
-    accent: "#d35538",
-    ink: "#983b27",
-    headline: "THE\nWEEKEND\nCLUB",
-    subtitle: "MEET YOU OUTSIDE · SATURDAY, 10 AM",
-    font: "Arial",
-    layout: "bold",
-  },
-  {
-    id: "pitch",
-    name: "A fresh perspective",
-    category: "Presentation",
-    background: "#e7ecde",
-    accent: "#879b7e",
-    ink: "#334d39",
-    headline: "A fresh\nperspective.",
-    subtitle: "YOUR NEXT BIG IDEA STARTS HERE",
-    font: "Georgia",
-    layout: "minimal",
-  },
-  {
-    id: "coffee",
-    name: "Morning ritual",
-    category: "Print",
-    background: "#efe1ca",
-    accent: "#b49575",
-    ink: "#513b2e",
-    headline: "Good days\nstart slow.",
-    subtitle: "THE MORNING RITUAL / DAILY AT 8",
-    font: "Georgia",
-    layout: "botanical",
-  },
-  {
-    id: "sale",
-    name: "The summer edit",
-    category: "Social",
-    background: "#fff19b",
-    accent: "#92b6eb",
-    ink: "#2b3985",
-    headline: "HELLO,\nSUNSHINE.",
-    subtitle: "THE SUMMER EDIT · UP TO 30% OFF",
-    font: "Arial",
-    layout: "bold",
-  },
-  {
-    id: "invite",
-    name: "An evening together",
-    category: "Print",
-    background: "#ded1e4",
-    accent: "#a786b6",
-    ink: "#54355e",
-    headline: "An evening\ntogether.",
-    subtitle: "GOOD COMPANY. GREAT CONVERSATION.",
-    font: "Georgia",
-    layout: "minimal",
-  },
-  {
-    id: "interior",
-    name: "Spaces to be",
-    category: "Presentation",
-    background: "#c5b3a2",
-    accent: "#6d5748",
-    ink: "#ffffff",
-    headline: "Spaces\nto be.",
-    subtitle: "THOUGHTFULLY DESIGNED. BEAUTIFULLY LIVED.",
-    font: "Georgia",
-    layout: "photo",
-    photo: "/photos/interior.jpg",
-  },
-  {
-    id: "notes",
-    name: "Field notes",
-    category: "Print",
-    background: "#eef0e7",
-    accent: "#bfd1a8",
-    ink: "#425444",
-    headline: "FIELD\nNOTES",
-    subtitle: "OBSERVATIONS FROM A SLOWER LIFE",
-    font: "Arial",
-    layout: "botanical",
-  },
-];
+export const templates: Template[] = modernTemplates as Template[];
 function named<T extends FabricObject>(object: T, name: string): T {
   Object.assign(object, { id: uid(), name });
   return object;
 }
-templates.push(...(occasionTemplates as Template[]));
-templates.unshift(...(studioTemplates as Template[]));
+
+
 export async function templateObjects(t: Template, w: number, h: number) {
   if (t.composition) {
     await Promise.all(
@@ -203,30 +60,25 @@ export async function templateObjects(t: Template, w: number, h: number) {
     for (const layer of t.composition) {
       let object: FabricObject;
       if (layer.type === "Photo") {
-        const image = await FabricImage.fromURL(layer.src),
-          fill = Math.max(
-            layer.width / image.width,
-            layer.height / image.height,
-          );
-        image.set({
-          left: layer.left,
-          top: layer.top,
-          width: layer.width / fill,
-          height: layer.height / fill,
-          cropX: (image.width - layer.width / fill) / 2,
-          cropY: (image.height - layer.height / fill) / 2,
-          scaleX: fill,
-          scaleY: fill,
-          strokeWidth: 0,
-        });
-        object = image;
+        object = await templatePhoto(layer);
+      } else if (layer.type === "Chart" || layer.type === "Solid" || layer.type === "Artwork") {
+        object = layer.type === "Chart" ? makeChart(layer.chart) : layer.type === "Solid" ? await SolidObject.create(layer.solid)
+          : new Group(await util.enlivenObjects<FabricObject>(structuredClone(layer.objects)), {subTargetCheck: true, interactive: false});
+        const factor = Math.min(layer.width / object.width, layer.height / object.height);
+        object.set({ left: layer.left + (layer.width - object.width * factor) / 2,
+          top: layer.top + (layer.height - object.height * factor) / 2,
+          scaleX: factor, scaleY: factor });
       } else
         [object] = await util.enlivenObjects<FabricObject>([
           structuredClone(layer),
         ]);
       if (object instanceof Textbox && layer.boxHeight) {
-        while (object.height > layer.boxHeight && object.fontSize > 16)
-          object.set("fontSize", object.fontSize - 1);
+        // Fabric expands a Textbox to its longest word. Fit both axes, including
+        // email addresses and deliberate headline line breaks, before placing it.
+        while ((object.height > layer.boxHeight || object.width > layer.width + 1) && object.fontSize > 16) {
+          object.set({ fontSize: object.fontSize - 1, width: layer.width });
+          object.initDimensions();
+        }
       }
       object.set({
         left: dx + object.left * scale,

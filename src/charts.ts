@@ -13,6 +13,18 @@ export interface ChartData {
   showValues: boolean;
 }
 export type ChartObject = Group & { chart: ChartData };
+
+// Fabric automatically enlivens any custom property with a registered `type`.
+// ChartData.type = "line" would otherwise become a Fabric Line, losing plain
+// data on the next save and making the data editor fail to clone it. Keep the
+// established Group JSON format, but restore chart data outside that process.
+const restoreGroup = Group.fromObject;
+Group.fromObject = async function (object, options) {
+  const { chart, ...serialized } = object as typeof object & { chart?: ChartData };
+  const group = await restoreGroup.call(this, serialized as typeof object, options);
+  if (chart) Object.assign(group, { chart: structuredClone(chart) });
+  return group;
+};
 export const chartPalette = [
   "#754adb",
   "#e9a66e",

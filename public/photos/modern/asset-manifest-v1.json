@@ -1,0 +1,175 @@
+{
+  "name": "Forma Studio modern editorial source assets v1",
+  "generatedWith": "OpenAI built-in image_gen tool",
+  "generatedDate": "2026-10-16",
+  "notes": "AI-generated source photography and sculpture art. No typography, logos, posters or UI baked in. All eight outputs visually inspected. Original PNG resolution preserved; originals retained in Codex generated_images. Focal points normalized from top left. Text and template layout remain editable in the app.",
+  "assets": [
+    {
+      "path": "/photos/modern/florist-cobalt-v1.png",
+      "subject": "Natural bouquet held in two hands against textured cobalt",
+      "uses": [
+        "flower shop",
+        "gift campaign",
+        "social post",
+        "poster",
+        "website hero"
+      ],
+      "focalPoint": {
+        "x": 0.67,
+        "y": 0.49
+      },
+      "width": 1536,
+      "height": 1024,
+      "generatedWith": "built-in image_gen",
+      "inspected": true,
+      "bytes": 2407159,
+      "sha256": "682214f60d4712840b1443fd893fa68489f561c96e9f31fe2537c08319645c06"
+    },
+    {
+      "path": "/photos/modern/cafe-morning-v1.png",
+      "subject": "Tactile croissant and red espresso cup on sunlit walnut",
+      "uses": [
+        "café",
+        "bakery",
+        "hospitality",
+        "menu cover",
+        "social post"
+      ],
+      "focalPoint": {
+        "x": 0.62,
+        "y": 0.61
+      },
+      "width": 1536,
+      "height": 1024,
+      "generatedWith": "built-in image_gen",
+      "inspected": true,
+      "bytes": 2382507,
+      "sha256": "55fc920f91548cc0c00566f27cca2bac69c7e23b5ab6e6ec4a4aaa4844863780"
+    },
+    {
+      "path": "/photos/modern/runner-coral-v1.png",
+      "subject": "Athlete running outdoors in coral shirt with open sky",
+      "uses": [
+        "fitness",
+        "sport",
+        "race",
+        "wellness",
+        "coaching"
+      ],
+      "focalPoint": {
+        "x": 0.75,
+        "y": 0.52
+      },
+      "width": 1536,
+      "height": 1024,
+      "generatedWith": "built-in image_gen",
+      "inspected": true,
+      "bytes": 2215345,
+      "sha256": "9e70cc5e743f4671333accef6e7666743391305fd8bb1e6731b56630abdc2f74"
+    },
+    {
+      "path": "/photos/modern/interior-sunlit-v1.png",
+      "subject": "Sunlit travertine and walnut interior opening to garden",
+      "uses": [
+        "architecture",
+        "real estate",
+        "interior design",
+        "lifestyle",
+        "website"
+      ],
+      "focalPoint": {
+        "x": 0.7,
+        "y": 0.53
+      },
+      "width": 1536,
+      "height": 1024,
+      "generatedWith": "built-in image_gen",
+      "inspected": true,
+      "bytes": 2900720,
+      "sha256": "6f342f1f30da5859a0c7ff6b602f3fffc27bf3d332b227b7777c62e19f35db89"
+    },
+    {
+      "path": "/photos/modern/sculpture-chrome-v1.png",
+      "subject": "Chrome ribbon and cobalt ceramic loop with citrus sphere",
+      "uses": [
+        "music",
+        "creative event",
+        "technology",
+        "art exhibition",
+        "editorial"
+      ],
+      "focalPoint": {
+        "x": 0.53,
+        "y": 0.57
+      },
+      "width": 1024,
+      "height": 1536,
+      "generatedWith": "built-in image_gen",
+      "inspected": true,
+      "bytes": 1903025,
+      "sha256": "be8a9719b425ad5446749936ab1bbd05e1dc9adeac689d3aba5cdafe39fef5a4"
+    },
+    {
+      "path": "/photos/modern/birthday-coral-v1.png",
+      "subject": "Coral buttercream cake and citrus celebration table",
+      "uses": [
+        "birthday",
+        "invitation",
+        "celebration",
+        "event poster"
+      ],
+      "focalPoint": {
+        "x": 0.67,
+        "y": 0.45
+      },
+      "width": 1536,
+      "height": 1024,
+      "generatedWith": "built-in image_gen",
+      "inspected": true,
+      "bytes": 2393030,
+      "sha256": "405e475338ab1e64d2a6de77b2c05764dc670585a9da393ba8d2901ffc11608b"
+    },
+    {
+      "path": "/photos/modern/garden-table-v1.png",
+      "subject": "Airy garden flowers on linen in late daylight",
+      "uses": [
+        "wedding",
+        "stationery",
+        "wellness",
+        "florist",
+        "garden event"
+      ],
+      "focalPoint": {
+        "x": 0.67,
+        "y": 0.63
+      },
+      "width": 1024,
+      "height": 1536,
+      "generatedWith": "built-in image_gen",
+      "inspected": true,
+      "bytes": 2565169,
+      "sha256": "ea1807d3f9c8c129405adcae2e0cf8cc875393e5d726bf8a5d646536dbf6d565"
+    },
+    {
+      "path": "/photos/modern/creative-studio-v1.png",
+      "subject": "Candid creative professional seated in ceramics studio",
+      "uses": [
+        "business",
+        "portfolio",
+        "workshop",
+        "education",
+        "creative agency"
+      ],
+      "focalPoint": {
+        "x": 0.68,
+        "y": 0.47
+      },
+      "width": 1536,
+      "height": 1024,
+      "generatedWith": "built-in image_gen",
+      "inspected": true,
+      "bytes": 2136688,
+      "sha256": "cb4c9954a215a9a99822bc667a86c3402428c89cef563f4b9d6d2d473b3241bf"
+    }
+  ]
+}

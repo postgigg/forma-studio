@@ -3,7 +3,7 @@
 <p align="center">A local visual design studio for invitations, brand stories, presentations, data, and ideas.</p>
 <p align="center"><a href="#download-the-desktop-app">Download & setup</a> · <a href="#take-a-tour">Walkthrough</a> · <a href="#try-an-example">Editable demos</a> · <a href="docs/ROADMAP.md">Roadmap</a></p>
 
-![The actual Forma 1.4.0 desktop editor with an editable, reference-informed florist design.](docs/media/studio-overview-v1.4.0.png)
+![The actual Forma editor with a modern photographic template and separate, editable photo and typography layers.](docs/media/editor-photo-v1.5.png)
 
 Build with draggable layers, original artwork, photo-filled letters, editable charts, and AI refinement. Save on your device, run the app with Docker, and export still images or motion. These screenshots show the actual editor in an isolated test profile; the example projects are editable Forma files.
 
@@ -13,12 +13,12 @@ Build with draggable layers, original artwork, photo-filled letters, editable ch
 
 | Design                                                                                                     | Compose                                                             | Refine                                                                 | Share                                                    |
 | ---------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------- | ---------------------------------------------------------------------- | -------------------------------------------------------- |
-| **262 editable templates**, including 150 new compositions                                            | **304 transparent AI stickers**, **290 editable graphics**          | AI Designer, selection refinement, AI Pencil, and Magic Eraser         | PNG, JPG, SVG, PDF, editable JSON, GIF, WebM             |
+| **262 reworked editable templates**                                            | **304 transparent AI stickers**, **290 editable graphics**          | AI Designer, selection refinement, AI Pencil, and Magic Eraser         | PNG, JPG, SVG, PDF, editable JSON, GIF, WebM             |
 | Birthdays, weddings, seasonal events, business, retail, hospitality, wellness, education, and celebrations | 250 graphics across 25 brand collections; four original Forma fonts | Groups, alignment, gradients, transparent stops, crop, corner rounding | Multiple pages, Present, motion previews, local projects |
 
 ## Download the desktop app
 
-**Windows is free.** Download [Forma Studio 1.4.0 for Windows](https://github.com/postgigg/forma-studio/releases/download/v1.4.0/Forma-Studio-Setup-1.4.0.exe), run the installer, and open **Forma Studio** from your desktop or Start menu. Windows 10/11, 64-bit. The current installer is unsigned, so Windows may display an unknown-publisher warning.
+**Windows is free.** Download [Forma Studio 1.5.0 for Windows](https://github.com/postgigg/forma-studio/releases/download/v1.5.0/Forma-Studio-Setup-1.5.0.exe), run the installer, and open **Forma Studio** from your desktop or Start menu. Windows 10/11, 64-bit. The current installer is unsigned, so Windows may display an unknown-publisher warning.
 
 The desktop app bundles the editor, its local worker and Codex CLI. No terminal, Node.js or Docker is required for everyday use. Forma requires no app account or sign-in. Projects save locally; **Export → Forma JSON** creates an editable backup. To move a browser project into the desktop app, export it from the browser and import the JSON file in Forma. Their storage is separate.
 
@@ -111,7 +111,7 @@ Open **Campaigns** in the header or **My designs → Campaigns**. The full-scree
 4. Review the brief and press **Create**. The connected local worker creates each format in sequence, carries the first format's palette and typography into the others, and saves every output as a separate editable design in that folder.
 5. Open a result to edit its layers. Use **Move to folder** for an existing design. Completed work remains saved if another format fails; **Resume collection** retries unfinished work. **Pause after current format** preserves the current job, and drafts save on this device.
 
-Campaign previews keep the complete artwork inside each card. Portrait, story, square and landscape formats fit above the title; long names wrap without covering the image or dimensions. [See the verified Windows desktop view](docs/media/campaign-layout-v1.4.0.png).
+Campaign previews keep the complete artwork inside each card. Portrait, story, square and landscape formats fit above the title; long names wrap without covering the image or dimensions. [See a current editable template collection](docs/media/campaign-modern-v1.5.png).
 
 **AI campaign guide** inside Campaigns explains how to brief a collection. AI uses your own supported Codex account and provider usage. The app itself needs no Forma account. Review generated copy and imagery before publishing.
 
@@ -150,9 +150,17 @@ Open **Draw** and choose **Pencil**, **Marker**, **Paintbrush**, **Highlighter**
 
 Open **Design**, choose an occasion, and click a template. Titles, shapes, graphics, and photos remain editable layers. Or choose **New design** for social, presentation, print, or custom dimensions.
 
-The new collection includes **24 yard signs, 24 business cards, 24 birthday posters, 24 flyers, 24 business-pitch slides**, and **30 menus, invitations, social campaigns, business documents, community and life-event layouts**. These are distinct compositions with their own hierarchy, geometry and palette. Choose **Use template dimensions** to apply the original format to a single-page design; otherwise the template fits your canvas. Six pitch covers offer **Use 4-page deck**. A deck inserts its other pages after the current page, and one Undo restores the previous document. The color picker includes 32 starting swatches plus custom colors.
+The rebuilt collection retains **24 yard signs, 24 business cards, 24 birthday posters, 24 flyers, 24 business-pitch slides**, and **30 menus, invitations, social campaigns, business documents, community and life-event layouts**. The full 262-template library now uses modern editorial layouts, function-specific documents, editable photography, native illustrations, 3D numerals and charts. Original IDs, formats and example facts remain available. Choose **Use template dimensions** to apply the original format to a single-page design; otherwise the template fits your canvas. Six pitch covers offer **Use 4-page deck**. A deck inserts its other pages after the current page, and one Undo restores the previous document. The color picker includes 32 starting swatches plus custom colors.
 
-![A selection of the new business card and birthday layouts, rendered from editable template objects.](docs/media/studio-template-selection.png)
+![Modern templates rendered directly from the editable native objects.](docs/media/modern-collection-v1.5.png)
+
+**Modern collection:** 62 templates use photography, 41 use editable photo masks or rounded crops, six have native 3D lettering, and six contain real chart data. [How the library was rebuilt and verified](docs/template-modernization.md).
+
+| Native 3D lettering | Editable chart data |
+| --- | --- |
+| ![Actual 3D material and rotation controls](docs/media/editor-solid-v1.5.png) | ![Actual chart editor and its data](docs/media/editor-chart-v1.5.png) |
+
+Open these editable examples in **Import design**: [florist campaign](docs/examples/modern-florist.json), [3D birthday invitation](docs/examples/modern-birthday-3d.json), [pitch with chart data](docs/examples/modern-pitch-chart.json).
 
 Change the document title in the header. Browser saving happens automatically. Use the page strip, **Add page**, and **Duplicate page** to build a larger document.
 

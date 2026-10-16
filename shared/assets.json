@@ -2447,5 +2447,61 @@
     "theme": "Orbit travel",
     "src": "/elements/sticker-300.png",
     "description": "Sculptural enamel mountain funicular cabin in midnight blue; original coordinated Orbit travel collection"
+  },
+  {
+    "id": "modern-florist-cobalt",
+    "name": "Natural bouquet held in two hands against textured cobalt",
+    "category": "Photos",
+    "src": "/photos/modern/florist-cobalt-v1.png",
+    "description": "AI-generated editorial source image: Natural bouquet held in two hands against textured cobalt. flower shop, gift campaign, social post, poster, website hero. Text and layout are separate editable layers."
+  },
+  {
+    "id": "modern-cafe-morning",
+    "name": "Tactile croissant and red espresso cup on sunlit walnut",
+    "category": "Photos",
+    "src": "/photos/modern/cafe-morning-v1.png",
+    "description": "AI-generated editorial source image: Tactile croissant and red espresso cup on sunlit walnut. café, bakery, hospitality, menu cover, social post. Text and layout are separate editable layers."
+  },
+  {
+    "id": "modern-runner-coral",
+    "name": "Athlete running outdoors in coral shirt with open sky",
+    "category": "Photos",
+    "src": "/photos/modern/runner-coral-v1.png",
+    "description": "AI-generated editorial source image: Athlete running outdoors in coral shirt with open sky. fitness, sport, race, wellness, coaching. Text and layout are separate editable layers."
+  },
+  {
+    "id": "modern-interior-sunlit",
+    "name": "Sunlit travertine and walnut interior opening to garden",
+    "category": "Photos",
+    "src": "/photos/modern/interior-sunlit-v1.png",
+    "description": "AI-generated editorial source image: Sunlit travertine and walnut interior opening to garden. architecture, real estate, interior design, lifestyle, website. Text and layout are separate editable layers."
+  },
+  {
+    "id": "modern-sculpture-chrome",
+    "name": "Chrome ribbon and cobalt ceramic loop with citrus sphere",
+    "category": "Photos",
+    "src": "/photos/modern/sculpture-chrome-v1.png",
+    "description": "AI-generated editorial source image: Chrome ribbon and cobalt ceramic loop with citrus sphere. music, creative event, technology, art exhibition, editorial. Text and layout are separate editable layers."
+  },
+  {
+    "id": "modern-birthday-coral",
+    "name": "Coral buttercream cake and citrus celebration table",
+    "category": "Photos",
+    "src": "/photos/modern/birthday-coral-v1.png",
+    "description": "AI-generated editorial source image: Coral buttercream cake and citrus celebration table. birthday, invitation, celebration, event poster. Text and layout are separate editable layers."
+  },
+  {
+    "id": "modern-garden-table",
+    "name": "Airy garden flowers on linen in late daylight",
+    "category": "Photos",
+    "src": "/photos/modern/garden-table-v1.png",
+    "description": "AI-generated editorial source image: Airy garden flowers on linen in late daylight. wedding, stationery, wellness, florist, garden event. Text and layout are separate editable layers."
+  },
+  {
+    "id": "modern-creative-studio",
+    "name": "Candid creative professional seated in ceramics studio",
+    "category": "Photos",
+    "src": "/photos/modern/creative-studio-v1.png",
+    "description": "AI-generated editorial source image: Candid creative professional seated in ceramics studio. business, portfolio, workshop, education, creative agency. Text and layout are separate editable layers."
   }
 ]
