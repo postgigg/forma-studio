@@ -85,6 +85,6 @@ The rebuilt 1.6 Windows package passed native runtime checks for renderer isolat
 
 Keep the zero-Forma-server model. Customer projects, queues, previews, version history and backups can remain local. AI inference still uses the customer's provider account and internet connection.
 
-The installer is unsigned. A verified publisher signature remains a concrete distribution improvement. Existing origin/token checks, renderer isolation, import validation, dependency checks and update hash verification are useful controls; this review is not a penetration test or an assurance that the product is free of vulnerabilities.
+The installer is unsigned. A verified publisher signature remains a concrete distribution improvement. The refreshed production dependency audit reported zero known advisories. An [unpatched moderate development-only advisory](https://github.com/advisories/GHSA-hp3w-g68c-fv3c) remains open in the packaging toolchain; ASAR inspection verified that the affected packages are absent from the shipped app. See [SECURITY.md](../SECURITY.md). Existing origin/token checks, renderer isolation, import validation, dependency checks and update hash verification are useful controls; this review is not a penetration test or an assurance that the product is free of vulnerabilities.
 
 Video/audio timelines, bulk creation, collaboration and connected charts remain useful future work. The current user's intent places design quality, continuity and everyday usability ahead of expanding that feature list.

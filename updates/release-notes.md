@@ -4,14 +4,14 @@ Forma Studio 1.6.0 adds reviewed website-to-business onboarding and strengthens 
 - Website drafting blocks private, loopback, link-local and reserved destinations, validates redirects, pins public DNS results, bounds responses and never executes website scripts or sends browser cookies.
 - Website AI jobs continue beyond six minutes, recover status reads and support explicit cancellation. No Forma-operated AI server is used.
 - The campaign welcome uses actual design imagery with motion that respects reduced-motion preferences.
-- AI results distinguish Reviewed, Needs review and Not reviewed. Outstanding findings open automatically and the report includes every issue.
+- AI Designer results distinguish Reviewed, Needs review and Not reviewed. Outstanding findings open automatically and the report includes every issue.
 - Normal edits capture their thumbnail once instead of twice while keeping saves immediate. Undo, explicit Save and save-error reporting retain their existing behavior.
 - Hardened Electron release fuses, a narrower desktop content policy, blocked remote editor navigation, and stronger imported-design validation for remote patterns, prototype properties and nonfinite numbers.
 - Netlify now serves the download landing page. The showcase includes AI campaigns alongside photos, 3D and charts; the oversized footer wordmark is removed, hero designs use distinct colors, and the illustrative studio image shows Forma in use on a desktop.
 
 Validation for 1.6: 37 server contract/security tests, 23 onboarding/campaign/template checks, 27 editing/page-order/quality checks, six updater tests, responsive landing checks at four widths, and a real GPT-6.1 Sol/Max website draft with source evidence. The optional live-generation editor case was skipped. A production title-edit measurement reduced thumbnail captures from 46 to 23 while retaining all 23 immediate saves; this is not a claim of twice the overall application speed. The packaged app passed native editing/isolation checks and its files, updater hashes and release fuses were verified. Production dependency audit: zero known advisories at the time of checking.
 
-The installer remains unsigned; Windows publisher signing is still outstanding. Security controls reduce risk; they are not a guarantee or an independent penetration test. See SECURITY.md for boundaries and reporting.
+The installer remains unsigned; Windows publisher signing is still outstanding. One unpatched moderate development-only advisory affects the packaging toolchain. Its affected packages were verified absent from the packaged application; the production audit reports zero known advisories. The development alert remains open. Security controls reduce risk; they are not a guarantee or an independent penetration test. See SECURITY.md for boundaries and reporting.
 
 The modern 262-template collection from 1.5 is included, with modern editorial layouts, richer photography, clearer typography and editable native objects:
 

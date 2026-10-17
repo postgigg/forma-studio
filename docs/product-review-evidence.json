@@ -224,7 +224,7 @@
                                                    "GrantFileProtocolExtraPrivileges":  false
                                                },
                                  "version":  "1.6.0",
-                                 "testedAt":  "2026-10-17T15:34:34.858Z",
+                                 "testedAt":  "2026-10-17T15:58:51.025Z",
                                  "sha256":  "b3f5a68924f46217cb27feed63b67daa909c762f49540e05c099e48b61d24402",
                                  "assets":  [
                                                 {
@@ -265,7 +265,27 @@
                                  "sourceImages":  8,
                                  "compiledBundleMatches":  true,
                                  "canonicalBrandMatches":  true,
-                                 "packagedUpdater":  true
+                                 "packagedUpdater":  true,
+                                 "developmentAdvisory":  {
+                                                             "id":  "GHSA-hp3w-g68c-fv3c",
+                                                             "url":  "https://github.com/advisories/GHSA-hp3w-g68c-fv3c",
+                                                             "scope":  "development",
+                                                             "upstreamPatchAvailable":  false,
+                                                             "checkedPackages":  [
+                                                                                     "sprintf-js",
+                                                                                     "roarr",
+                                                                                     "global-agent",
+                                                                                     "@electron/get",
+                                                                                     "electron-builder",
+                                                                                     "app-builder-lib",
+                                                                                     "dmg-builder",
+                                                                                     "electron-builder-squirrel-windows"
+                                                                                 ],
+                                                             "foundInPackagedArchive":  [
+
+                                                                                        ],
+                                                             "githubAlertLeftOpen":  true
+                                                         }
                              },
     "nativeVerification":  {
                                "version":  "1.6.0",
@@ -289,5 +309,23 @@
 
                                           ]
                            },
-    "windowsPublisherSignature":  "NotSigned"
+    "windowsPublisherSignature":  "NotSigned",
+    "dependencyAudit":  {
+                            "checkedDate":  "2026-10-17",
+                            "productionCommand":  "npm audit --omit=dev --json",
+                            "productionExitCode":  0,
+                            "productionKnownAdvisories":  0,
+                            "fullAuditModerateEntries":  8,
+                            "underlyingDevelopmentAdvisory":  "GHSA-hp3w-g68c-fv3c",
+                            "upstreamPatchedVersion":  null,
+                            "githubAlertState":  "open",
+                            "chain":  [
+                                          "electron-builder@26.15.3",
+                                          "app-builder-lib@26.15.3",
+                                          "@electron/get@3.1.0",
+                                          "global-agent@3.0.0",
+                                          "roarr@2.15.4",
+                                          "sprintf-js@1.1.3"
+                                      ]
+                        }
 }
