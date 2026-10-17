@@ -113,7 +113,7 @@
     "electron": "44.7.2",
     "electron-builder": "26.15.3",
     "prettier": "3.9.10",
-    "supabase": "2.120.0",
+    "supabase": "2.121.0",
     "typescript": "7.0.2",
     "vite": "8.3.4"
   }
