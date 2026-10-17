@@ -39,7 +39,7 @@ export function DesktopUpdates() {
       {error && <p role="alert" className="error-text">{error}</p>}
       <div className="update-actions">
         <button className="secondary" onClick={() => setOpen(false)}>Keep working</button>
-        {state.phase === 'downloaded' ? <button className="primary" onClick={() => void action('installUpdate')}><RefreshCw size={17} /> Save & restart</button> : available && ['available', 'error'].includes(state.phase) ? <button className="primary" onClick={() => void action('downloadUpdate')}><Download size={17} /> Download update</button> : !['checking', 'downloading', 'unsupported'].includes(state.phase) ? <button className="primary" onClick={() => void action('checkForUpdates')}>Check for updates</button> : null}
+        {state.canInstall === false && available && state.releaseUrl ? <button className="primary" onClick={() => window.open(state.releaseUrl, '_blank', 'noopener,noreferrer')}>View release</button> : state.canInstall !== false && state.phase === 'downloaded' ? <button className="primary" onClick={() => void action('installUpdate')}><RefreshCw size={17} /> Save & restart</button> : available && state.canInstall !== false && ['available', 'error'].includes(state.phase) ? <button className="primary" onClick={() => void action('downloadUpdate')}><Download size={17} /> Download update</button> : !['checking', 'downloading', 'unsupported'].includes(state.phase) ? <button className="primary" onClick={() => void action('checkForUpdates')}>Check for updates</button> : null}
       </div>
     </Modal>}
   </>;

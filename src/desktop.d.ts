@@ -7,6 +7,9 @@ export interface DesktopUpdateState {
   reason: string;
   percent: number;
   message: string;
+  canInstall?: boolean;
+  releaseUrl?: string;
+  checkedAt?: string;
 }
 declare global {
   interface Window {

@@ -5,6 +5,7 @@ import { createRequire } from 'node:module';
 import desktopPlatform from '../desktop/platform.cjs';
 import { aiEngine } from '../server/ai-engine.mjs';
 import { saved } from './qa-fixture.mjs';
+import { checkUpdateDialog } from './qa-desktop-updates.mjs';
 const folder = path.resolve(process.env.FORMA_SMOKE_OUTPUT || '.local/desktop-smoke'); await mkdir(folder, { recursive: true });
 const localPackagedExe = process.platform === 'darwin'
   ? path.resolve('release', process.arch === 'arm64' ? 'mac-arm64' : 'mac', 'Forma Studio.app/Contents/MacOS/Forma Studio')
@@ -13,6 +14,7 @@ const packagedExe = process.env.FORMA_PACKAGED_EXE || (process.argv.includes('--
 const executablePath = packagedExe || createRequire(import.meta.url)(desktopPlatform.electronPackage());
 const pkg = JSON.parse(await readFile('package.json', 'utf8'));
 const app = await electron.launch({ executablePath, args: packagedExe ? [] : ['.'], env: { ...process.env, FORMA_DESKTOP_TEST_DATA: folder }, timeout: 60000 });
+async function run() {
 try {
   const runtimeVersion = await app.evaluate(() => process.versions.electron);
   expect(runtimeVersion).toBe(desktopPlatform.electronVersion(pkg));
@@ -25,38 +27,14 @@ try {
   expect(await page.evaluate(() => fetch('/brand/forma-mark.svg').then(response => response.text()))).toBe(await readFile('public/brand/forma-mark.svg', 'utf8'));
   const isolation = await page.evaluate(() => ({ endpoint: window.formaDesktop?.aiEndpoint, platform: window.formaDesktop?.platform, node: typeof window.require }));
   expect(isolation).toEqual({ endpoint: 'http://127.0.0.1:51863', platform: process.platform, node: 'undefined' });
-  expect((await page.evaluate(() => window.formaDesktop.updateStatus())).phase).toBe('unsupported');
   console.log('Desktop editor loaded with isolated renderer.');
-  await page.getByTitle('Help & shortcuts', { exact: true }).click();
-  await page.getByRole('button', { name: 'Check for updates', exact: true }).click();
-  const updateDialog = page.getByRole('dialog', { name: 'Forma updates', exact: true });
-  await expect(updateDialog).toBeVisible();
-  await expect(updateDialog).toContainText('Update checks aren’t available for this build yet.');
-  await expect(updateDialog.getByRole('button', { name: 'Check for updates', exact: true })).toHaveCount(0);
-  await page.screenshot({ path: path.join(folder, 'updates.png') });
-  await updateDialog.getByRole('button', { name: 'Keep working', exact: true }).click();
-  await app.evaluate(({ Menu }) => Menu.getApplicationMenu().items.find(item => item.label === 'Help').submenu.items.find(item => item.label === 'Check for updates').click());
-  await expect(updateDialog).toBeVisible();
-  await updateDialog.getByRole('button', { name: 'Keep working', exact: true }).click();
-  // Simulate updater events without contacting a release feed or downloading.
-  const updateEvent = (event, ...args) => app.evaluate(({ app }, values) => {
-    const require = process.getBuiltinModule('node:module').createRequire(app.getAppPath() + '/package.json');
-    require('electron-updater').autoUpdater.emit(...values);
-  }, [event, ...args]);
-  await updateEvent('checking-for-update');
-  await page.getByTitle('Help & shortcuts', { exact: true }).click();
-  await page.getByRole('button', { name: 'Check for updates', exact: true }).click();
-  await expect(updateDialog).toBeVisible();
-  await expect(updateDialog.getByRole('status')).toHaveText('Checking for updates…');
-  await updateEvent('update-not-available', { version: pkg.version });
-  await expect(updateDialog.getByRole('status')).toHaveText('You have the latest version.');
-  await expect(updateDialog).toBeVisible();
-  await updateEvent('error', 'Simulated offline update check');
-  await expect(updateDialog.getByRole('status')).toContainText('Check your connection and try again.');
-  await expect(updateDialog.getByRole('button', { name: 'Check for updates', exact: true })).toBeVisible();
-  await updateDialog.getByRole('button', { name: 'Keep working', exact: true }).click();
-  await expect(page.getByRole('dialog')).toHaveCount(0);
-  console.log('Manual update dialog stayed visible for unsupported, checking, current and offline states.');
+  const updateProof = await checkUpdateDialog({ app, page, folder, currentVersion: pkg.version, live: process.argv.includes('--live-updates') });
+  console.log(updateProof.manualReleaseCheck ? 'Mac update dialog passed native entry points, GitHub release results and offline retry.' : 'Unsupported build update dialog passed native entry points.');
+  if (process.argv.includes('--updates-only')) {
+    expect(errors).toEqual([]);
+    await writeFile(path.join(folder, 'updates-result.json'), JSON.stringify({ testedAt: new Date().toISOString(), scope: 'desktop-updates', platform: process.platform, arch: process.arch, runtimeVersion, packaged: !!packagedExe, isolatedRenderer: true, manualUpdateDialog: true, updateStatusFeedback: true, ...updateProof, errors }, null, 2));
+    return;
+  }
   await page.getByRole('button', { name: 'New blank design', exact: true }).click();
   await page.getByLabel('Design name', { exact: true }).fill('Desktop installation proof');
   await page.getByRole('button', { name: 'Create design', exact: true }).click();
@@ -197,10 +175,12 @@ try {
     console.log('Mac close saved the workspace; Dock activation reopened it.');
   }
   expect(errors).toEqual([]);
-  await writeFile(path.join(folder, 'result.json'), JSON.stringify({ testedAt: new Date().toISOString(), platform: process.platform, arch: process.arch, runtimeVersion, packaged: !!packagedExe, isolatedRenderer: true, manualUpdateDialog: true, updateStatusFeedback: true, nativeEditMenu: true, platformShortcuts: true, macReopen, bundledReviewBrowser: true, bundledAI: true, engine: aiEngine.model, websiteCapture: true, pngExport: true, pdfExport: true, jsonExport: true, customFonts: true, textSpacing: true, personalDesignStyle: true, pageDragOrder: true, nativeJsonPageOrder: true, errors }, null, 2));
+  await writeFile(path.join(folder, 'result.json'), JSON.stringify({ testedAt: new Date().toISOString(), platform: process.platform, arch: process.arch, runtimeVersion, packaged: !!packagedExe, isolatedRenderer: true, manualUpdateDialog: true, updateStatusFeedback: true, ...updateProof, nativeEditMenu: true, platformShortcuts: true, macReopen, bundledReviewBrowser: true, bundledAI: true, engine: aiEngine.model, websiteCapture: true, pngExport: true, pdfExport: true, jsonExport: true, customFonts: true, textSpacing: true, personalDesignStyle: true, pageDragOrder: true, nativeJsonPageOrder: true, errors }, null, 2));
   console.log('Desktop smoke passed: isolated renderer, bundled AI, website capture, 3D, PNG/PDF/JSON saves.');
 } catch (error) {
   const page = (await app.windows())[0];
   if (page) { console.error('Desktop diagnostic:', await page.locator('[role=alert]').allTextContents()); await page.screenshot({ path: path.join(folder, 'failure.png') }).catch(() => {}); }
   throw error;
 } finally { await app.close(); }
+}
+await run();

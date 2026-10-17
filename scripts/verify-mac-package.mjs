@@ -34,7 +34,7 @@ assert.equal(frameworkInfo.CFBundleVersion, runtimeVersion);
 const buildInfo = execFileSync('xcrun', ['vtool', '-show-build', path.join(frameworkPath, 'Electron Framework')], { encoding: 'utf8' });
 const runtimeMinimumSystemVersion = /\bminos\s+(\d+\.\d+(?:\.\d+)?)/.exec(buildInfo)?.[1];
 assert.equal(runtimeMinimumSystemVersion?.split('.').slice(0, 2).join('.'), pkg.build.mac.minimumSystemVersion, 'The actual Electron binary must support the configured Mac baseline.');
-for (const filename of ['desktop/main.cjs', 'desktop/preload.cjs', 'desktop/platform.cjs', 'desktop/render.cjs', 'server/design-review.mjs', 'server/designer.mjs']) {
+for (const filename of ['desktop/main.cjs', 'desktop/preload.cjs', 'desktop/platform.cjs', 'desktop/render.cjs', 'desktop/updates.cjs', 'desktop/mac-releases.cjs', 'server/design-review.mjs', 'server/designer.mjs']) {
   assert.deepEqual(extractFile(archive, filename), await readFile(path.join(root, filename)), `Packaged source differs: ${filename}`);
 }
 for (const filename of ['forma-mark.svg', 'forma-wordmark.svg', 'forma-logo.svg']) {

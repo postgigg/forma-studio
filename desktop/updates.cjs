@@ -18,8 +18,8 @@ async function fetchPolicy(version) {
   if (text.length > 8192) return null;
   return JSON.parse(text);
 }
-function createUpdates({ updater, currentVersion, enabled, onChange, policy = fetchPolicy }) {
-  let state = { phase: enabled ? 'idle' : 'unsupported', currentVersion, availableVersion: '', required: false, reason: '', percent: 0, message: '' };
+function createUpdates({ updater, currentVersion, enabled, onChange, policy = fetchPolicy, releaseCheck }) {
+  let state = { phase: enabled || releaseCheck ? 'idle' : 'unsupported', currentVersion, availableVersion: '', required: false, reason: '', percent: 0, canInstall: enabled, releaseUrl: '', message: !enabled && releaseCheck ? 'Check GitHub for a newer Mac release.' : '' };
   let checking, downloading, startup, interval;
   const publish = patch => { state = { ...state, ...patch }; onChange({ ...state }); return { ...state }; };
   updater.autoDownload = false;
@@ -40,9 +40,13 @@ function createUpdates({ updater, currentVersion, enabled, onChange, policy = fe
   updater.on('update-downloaded', info => publish({ phase: 'downloaded', availableVersion: info.version, percent: 100, message: '' }));
   updater.on('error', () => publish({ phase: 'error', message: 'The update could not finish. Check your connection and try again. Your designs are safe on this device.' }));
   async function check() {
-    if (!enabled || ['downloading', 'downloaded'].includes(state.phase)) return { ...state };
+    if ((!enabled && !releaseCheck) || ['downloading', 'downloaded'].includes(state.phase)) return { ...state };
     if (checking) return checking;
-    checking = updater.checkForUpdates().catch(() => publish({ phase: 'error', message: 'Could not check for updates. You can keep working offline and try again later.' })).then(() => ({ ...state })).finally(() => { checking = null; });
+    checking = Promise.resolve().then(async () => {
+      publish({ phase: 'checking', message: '', ...(!enabled ? { availableVersion: '', releaseUrl: '', required: false, reason: '', checkedAt: '' } : {}) });
+      if (enabled) await updater.checkForUpdates();
+      else publish(await releaseCheck());
+    }).catch(() => publish({ phase: 'error', message: 'Could not check for updates. You can keep working offline and try again later.' })).then(() => ({ ...state })).finally(() => { checking = null; });
     return checking;
   }
   async function download() {
@@ -54,7 +58,7 @@ function createUpdates({ updater, currentVersion, enabled, onChange, policy = fe
   }
   return {
     getState: () => ({ ...state }), check, download,
-    install() { if (state.phase !== 'downloaded') throw new Error('Download the update before restarting.'); updater.quitAndInstall(false, true); },
+    install() { if (!enabled || state.phase !== 'downloaded') throw new Error('Download the update before restarting.'); updater.quitAndInstall(false, true); },
     start() { if (!enabled) return; startup = setTimeout(() => void check(), 12000); startup.unref?.(); interval = setInterval(() => void check(), 6 * 60 * 60 * 1000); interval.unref?.(); },
     stop() { clearTimeout(startup); clearInterval(interval); },
   };
