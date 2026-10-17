@@ -19,7 +19,7 @@ export function DesktopUpdates() {
     const off = desktop.onUpdateState(receive), offShow = desktop.onShowUpdates(() => setOpen(true));
     return () => { off(); offShow(); };
   }, []);
-  if (!state || state.phase === 'unsupported') return null;
+  if (!state) return null;
   const action = async (kind: 'checkForUpdates' | 'downloadUpdate' | 'installUpdate') => {
     setError('');
     try { await window.formaDesktop![kind](); } catch (e) { setError((e as Error).message); }
@@ -31,6 +31,7 @@ export function DesktopUpdates() {
       <div className="update-brand"><img src="/brand/forma-mark.svg" width="56" height="56" alt="" /><div><strong>Forma Studio</strong><p>{state.currentVersion}{available && <> → {state.availableVersion}</>}</p></div></div>
       {state.reason && <p>{state.reason}</p>}
       {state.message && <p role="status">{state.message}</p>}
+      {state.phase === 'unsupported' && <p role="status">Update checks aren’t available for this build yet.</p>}
       {state.phase === 'checking' && <p role="status">Checking for updates…</p>}
       {state.phase === 'downloading' && <div className="update-progress"><progress value={state.percent} max={100} aria-label="Update download progress" /><p>{Math.round(state.percent)}% downloaded. You can keep designing.</p></div>}
       {state.phase === 'downloaded' && <p>Your design will save before Forma restarts to install the update.</p>}
@@ -38,7 +39,7 @@ export function DesktopUpdates() {
       {error && <p role="alert" className="error-text">{error}</p>}
       <div className="update-actions">
         <button className="secondary" onClick={() => setOpen(false)}>Keep working</button>
-        {state.phase === 'downloaded' ? <button className="primary" onClick={() => void action('installUpdate')}><RefreshCw size={17} /> Save & restart</button> : available && ['available', 'error'].includes(state.phase) ? <button className="primary" onClick={() => void action('downloadUpdate')}><Download size={17} /> Download update</button> : !['checking', 'downloading'].includes(state.phase) ? <button className="primary" onClick={() => void action('checkForUpdates')}>Check for updates</button> : null}
+        {state.phase === 'downloaded' ? <button className="primary" onClick={() => void action('installUpdate')}><RefreshCw size={17} /> Save & restart</button> : available && ['available', 'error'].includes(state.phase) ? <button className="primary" onClick={() => void action('downloadUpdate')}><Download size={17} /> Download update</button> : !['checking', 'downloading', 'unsupported'].includes(state.phase) ? <button className="primary" onClick={() => void action('checkForUpdates')}>Check for updates</button> : null}
       </div>
     </Modal>}
   </>;
