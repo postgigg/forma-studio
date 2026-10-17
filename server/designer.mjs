@@ -111,13 +111,13 @@ function json(res, status, data) {
   });
   res.end(JSON.stringify(data));
 }
-function publicJob(job) {
+function publicJob(job, includeResult = true) {
   return {
     id: job.id,
     status: job.status,
     stage: job.stage,
     createdAt: job.createdAt,
-    result: job.result || null,
+    result: includeResult ? job.result || null : null,
     error: job.error || null,
     elapsedSeconds: Math.round(
       ((job.finishedAt || Date.now()) - job.startedAt) / 1000,
@@ -249,7 +249,7 @@ const server = http.createServer(async (req, res) => {
       return json(res, 404, {
         error: "This design session has ended. Start a new design.",
       });
-    if (req.method === "GET") return json(res, 200, publicJob(job));
+    if (req.method === "GET") return json(res, 200, publicJob(job, url.searchParams.get("summary") !== "1"));
     if (req.method === "DELETE") {
       job.status = "cancelled";
       job.stage = "Cancelled";

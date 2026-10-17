@@ -17,10 +17,14 @@ export const styleBrand = {
   audience: "Local gift buyers",
   voice: "Warm, natural and botanical",
 };
+export async function openBrandSetup(page: Page, step = 0) {
+  const setup = page.getByRole("button", { name: "Set up brand and style", exact: true });
+  if (!await setup.isVisible()) await page.getByRole("button", { name: "Brand", exact: true }).click();
+  await setup.click();
+  for (let i = 0; i < step; i++) await page.getByRole("button", { name: "Continue", exact: true }).click();
+}
 export async function configureStyle(page: Page) {
-  await page
-    .getByRole("button", { name: "Your design style", exact: true })
-    .click();
+  await openBrandSetup(page);
   await page
     .getByRole("button", { name: "Editorial design style", exact: true })
     .click();
@@ -38,12 +42,12 @@ export async function configureStyle(page: Page) {
     voice: "Brand visual style & voice",
   }))
     await page
-      .getByLabel(`Style onboarding ${label}`, { exact: true })
+      .getByLabel(label, { exact: true })
       .fill(styleBrand[key as keyof typeof styleBrand]);
   await page
-    .getByRole("button", { name: "Save my design direction", exact: true })
+    .getByRole("button", { name: "Save brand & style", exact: true })
     .click();
   await expect(
-    page.getByRole("dialog", { name: "Your design style", exact: true }),
+    page.getByRole("dialog", { name: "Brand & style", exact: true }),
   ).toHaveCount(0);
 }

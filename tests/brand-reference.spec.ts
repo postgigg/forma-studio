@@ -1,7 +1,7 @@
 import { test, expect } from "@playwright/test";
 import { readFileSync } from "node:fs";
 import { importFixture, saved } from "../scripts/qa-fixture.mjs";
-import { configureStyle, personalStyle } from "./style-fixture";
+import { configureStyle, openBrandSetup, personalStyle } from "./style-fixture";
 const brand = {
   name: "Petal Studio",
   business: "A neighborhood florist selling seasonal bouquets.",
@@ -35,25 +35,11 @@ test("brand profile survives reload, ranks related artwork and reaches every AI 
     });
   await importFixture(page);
   await configureStyle(page);
-  await page.getByRole("button", { name: "Brand", exact: true }).click();
-  for (const [key, label] of Object.entries({
-    name: "Company name",
-    business: "What your business does",
-    mission: "Mission statement",
-    audience: "Who you serve",
-    voice: "Visual style & voice",
-  }))
-    await page
-      .getByLabel(label, { exact: true })
-      .fill(brand[key as keyof typeof brand]);
-  await page.getByRole("button", { name: "Save brand profile" }).click();
-  await expect(
-    page.getByText("Brand profile saved on this device."),
-  ).toBeVisible();
   await page.reload();
-  await page.getByRole("button", { name: "Brand", exact: true }).click();
+  await openBrandSetup(page, 2);
   await expect(page.getByLabel("Mission statement")).toHaveValue(brand.mission);
   await page.screenshot({ path: "test-results/brand-mission.png" });
+  await page.getByRole("button", { name: "Close dialog", exact: true }).click();
   await page.getByRole("button", { name: "Elements", exact: true }).click();
   await expect(
     page.getByLabel("Prioritize artwork for my business"),

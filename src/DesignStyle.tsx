@@ -1,7 +1,7 @@
 import { useEffect, useState, type ReactNode } from "react";
 import { ArrowLeft, ArrowRight, Check, Palette } from "lucide-react";
 import { Modal } from "./ui";
-import { getDesignStyle, putDesignStyle } from "./storage";
+import { getDesignStyle, putDesignStyle, putBrandAndDesignStyle } from "./storage";
 import { DesignStyleContext, useDesignStyle } from "./design-style-context";
 import { useBrandProfile } from "./BrandContext";
 import { BrandWebsiteImport } from "./BrandWebsiteImport";
@@ -46,6 +46,7 @@ const labels: Record<string, string> = {
 };
 
 export function DesignStyleProvider({ children }: { children: ReactNode }) {
+  const { ready: brandReady, setSaved: setSavedBrand } = useBrandProfile();
   const [profile, setProfile] = useState<DesignStyleProfile>(),
     [ready, setReady] = useState(false),
     [opened, setOpened] = useState(false),
@@ -56,20 +57,20 @@ export function DesignStyleProvider({ children }: { children: ReactNode }) {
       .catch(() => setFailure("Could not load your design preferences."))
       .finally(() => setReady(true));
   }, []);
-  const save = async (value: DesignStyleProfile) => {
-    const previous = profile;
-    setProfile(value);
-    try {
+  const save = async (value: DesignStyleProfile, brand?: BrandProfile) => {
+    if (brand) {
+      const saved = await putBrandAndDesignStyle(brand, value);
+      setSavedBrand(saved.brand);
+      setProfile(saved.style);
+    } else {
       await putDesignStyle(value);
-      setFailure("");
-    } catch (error) {
-      setProfile(previous);
-      throw error;
+      setProfile(value);
     }
+    setFailure("");
   };
   return (
     <DesignStyleContext.Provider
-      value={{ profile, ready, open: () => setOpened(true), save }}
+      value={{ profile, ready: ready && brandReady, open: () => setOpened(true), save }}
     >
       {children}
       {opened && (
@@ -77,8 +78,8 @@ export function DesignStyleProvider({ children }: { children: ReactNode }) {
           initial={profile || defaults}
           failure={failure}
           onClose={() => setOpened(false)}
-          onSave={async (value) => {
-            await save(value);
+          onSave={async (value, brand) => {
+            await save(value, brand);
             setOpened(false);
           }}
         />
@@ -86,56 +87,23 @@ export function DesignStyleProvider({ children }: { children: ReactNode }) {
     </DesignStyleContext.Provider>
   );
 }
-export function DesignStyleButton() {
-  const { open } = useDesignStyle();
-  return (
-    <button
-      className="design-style-launch"
-      title="Your design style"
-      aria-label="Your design style"
-      onClick={open}
-    >
-      <span>
-        <Palette size={22} />
-      </span>
-      <small>Your style</small>
-    </button>
-  );
-}
 export function DesignStyleCard() {
-  const { profile, ready, open, save } = useDesignStyle();
-  const [error, setError] = useState(""),
-    [saving, setSaving] = useState(false);
+  const { profile, ready, open } = useDesignStyle();
+  const { profile: brand, error } = useBrandProfile();
   return (
     <section className="design-style-card">
       <Palette size={22} />
-      <h3>Your taste. Your brand.</h3>
+      <h3>{brand?.name || "Your design direction"}</h3>
+      {brand?.mission && <p>{brand.mission}</p>}
       <p>
         {profile
           ? `${profile.styles.map((id) => designStyles.find((s) => s.id === id)!.name).join(" + ")} · ${labels[profile.density]}`
-          : "Show your AI designer what feels right, then connect it to your business and mission."}
+          : "Bring your business, mission and design preferences together."}
       </p>
-      <button className="secondary full" onClick={open} disabled={!ready}>
-        {profile ? "Edit design preferences" : "Personalize your AI designer"}
+      <button className="secondary full" aria-label="Set up brand and style" onClick={open} disabled={!ready}>
+        {profile || brand ? "Edit brand & style" : "Set up brand & style"}
       </button>
-      {profile && (
-        <label className="check-row">
-          <input
-            type="checkbox"
-            aria-label="Use personal design preferences"
-            checked={profile.enabled}
-            disabled={saving}
-            onChange={(e) => {
-              setSaving(true);
-              setError("");
-              void save({ ...profile, enabled: e.target.checked })
-                .catch((e) => setError(e.message))
-                .finally(() => setSaving(false));
-            }}
-          />
-          Use my preferences for AI
-        </label>
-      )}
+      {profile && <small>Design preferences {profile.enabled ? "on" : "off"} for AI</small>}
       {error && <p role="alert">{error}</p>}
     </section>
   );
@@ -149,9 +117,9 @@ function StyleOnboarding({
   initial: DesignStyleProfile;
   failure: string;
   onClose: () => void;
-  onSave: (value: DesignStyleProfile) => Promise<void>;
+  onSave: (value: DesignStyleProfile, brand: BrandProfile) => Promise<void>;
 }) {
-  const { profile: brand, save: saveBrand } = useBrandProfile();
+  const { profile: brand } = useBrandProfile();
   const [draft, setDraft] = useState<DesignStyleProfile>(() =>
     structuredClone(initial),
   );
@@ -175,7 +143,7 @@ function StyleOnboarding({
     <label className="style-field">
       <span>{title}</span>
       <textarea
-        aria-label={`Style onboarding ${title}`}
+        aria-label={title}
         value={business[key]}
         maxLength={brandLimits[key]}
         rows={key === "mission" ? 3 : 2}
@@ -186,7 +154,7 @@ function StyleOnboarding({
   );
   return (
     <Modal
-      title="Your design style"
+      title="Brand & style"
       className="style-onboarding"
       onClose={() => {
         if (!busy) onClose();
@@ -355,6 +323,7 @@ function StyleOnboarding({
                 {labels[draft.colorMood]}
               </span>
             </div>
+            <label className="check-row"><input type="checkbox" aria-label="Use personal design preferences" checked={draft.enabled} onChange={event => setDraft({...draft, enabled:event.target.checked})}/>Use my design preferences for AI</label>
             <BrandWebsiteImport value={business} onApply={fields => setBusiness(current => ({ ...current, ...fields }))} />
             {field("name", "Company name", "Petal Studio")}
             {field(
@@ -381,7 +350,7 @@ function StyleOnboarding({
               Used across AI designs, campaigns, photos, refinement and AI
               Pencil. Magic Eraser keeps the existing image style and only
               removes what you mark. Your settings stay on this device and can
-              be edited in Brand.
+              be edited together in Brand.
             </p>
           </>
         )}
@@ -413,8 +382,7 @@ function StyleOnboarding({
             setBusy(true);
             setError("");
             try {
-              await saveBrand(business);
-              await onSave({ ...draft, enabled: true });
+              await onSave(draft, business);
             } catch (e) {
               setError((e as Error).message);
             } finally {
@@ -426,7 +394,7 @@ function StyleOnboarding({
             ? "Saving…"
             : step < 2
               ? "Continue"
-              : "Save my design direction"}
+              : "Save brand & style"}
           <ArrowRight size={16} />
         </button>
       </footer>

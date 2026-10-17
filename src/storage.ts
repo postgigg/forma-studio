@@ -44,6 +44,24 @@ export const getDesignStyle = async () => validateDesignStyle(await get("design-
 export const putDesignStyle = (profile: DesignStyleProfile) => set("design-style", validateDesignStyle(profile), db);
 export const putBrandProfile = (profile?: BrandProfile) =>
   set("brand-profile", profile || null, db);
+export async function putBrandAndDesignStyle(brand: BrandProfile, style: DesignStyleProfile) {
+  const nextBrand = validateBrandContext(brand);
+  const nextStyle = validateDesignStyle(style);
+  if (!nextStyle) throw new Error("Choose your design preferences before saving.");
+  await db("readwrite", store => new Promise<void>((resolve, reject) => {
+    const transaction = store.transaction;
+    transaction.oncomplete = () => resolve();
+    transaction.onabort = () => reject(transaction.error || new Error("Brand and style could not be saved."));
+    try {
+      store.put(nextBrand || null, "brand-profile");
+      store.put(nextStyle, "design-style");
+    } catch (error) {
+      transaction.abort();
+      reject(error);
+    }
+  }));
+  return { brand: nextBrand, style: nextStyle };
+}
 export const getBrandLogo = async (): Promise<Asset | null> =>
   (await get("brand-logo", db)) || null;
 export const putBrandLogo = (logo: Asset | null) => set("brand-logo", logo, db);

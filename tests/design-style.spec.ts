@@ -1,6 +1,6 @@
 import { test, expect } from "@playwright/test";
 import { readFileSync } from "node:fs";
-import { configureStyle, personalStyle, styleBrand } from "./style-fixture";
+import { configureStyle, openBrandSetup, personalStyle, styleBrand } from "./style-fixture";
 
 test("onboarding saves taste and mission, can be edited, and supports a persistent global opt out", async ({
   page,
@@ -9,16 +9,7 @@ test("onboarding saves taste and mission, can be edited, and supports a persiste
   await expect(page.getByLabel("Design title", { exact: true })).toBeVisible();
   await configureStyle(page);
   await page.reload();
-  await page.getByRole("button", { name: "Brand", exact: true }).click();
-  await expect(
-    page.getByLabel("Mission statement", { exact: true }),
-  ).toHaveValue(styleBrand.mission);
-  await expect(
-    page.getByLabel("Use personal design preferences"),
-  ).toBeChecked();
-  await page
-    .getByRole("button", { name: "Edit design preferences", exact: true })
-    .click();
+  await openBrandSetup(page);
   await expect(
     page.getByRole("button", { name: "Minimal design style", exact: true }),
   ).toHaveAttribute("aria-pressed", "true");
@@ -48,12 +39,13 @@ test("onboarding saves taste and mission, can be edited, and supports a persiste
   );
   await page.getByRole("button", { name: "Continue", exact: true }).click();
   await expect(
-    page.getByLabel("Style onboarding Mission statement", { exact: true }),
+    page.getByLabel("Mission statement", { exact: true }),
   ).toHaveValue(styleBrand.mission);
-  await page
-    .getByRole("button", { name: "Save my design direction", exact: true })
-    .click();
+  await expect(page.getByLabel("Use personal design preferences")).toBeChecked();
   await page.getByLabel("Use personal design preferences").uncheck();
+  await page
+    .getByRole("button", { name: "Save brand & style", exact: true })
+    .click();
   let brief: any;
   await page.route("**/session", (r) =>
     r.fulfill({ json: { ready: true, token: "style-test" } }),
@@ -75,7 +67,7 @@ test("onboarding saves taste and mission, can be edited, and supports a persiste
   expect(brief.designProfile).toBeUndefined();
   expect(brief.brandContext.mission).toBe(styleBrand.mission);
   await page.reload();
-  await page.getByRole("button", { name: "Brand", exact: true }).click();
+  await openBrandSetup(page, 2);
   await expect(
     page.getByLabel("Use personal design preferences"),
   ).not.toBeChecked();
@@ -86,15 +78,13 @@ test("style onboarding fits a phone with readable choices and reachable navigati
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto("/");
   await expect(page.getByLabel("Design title", { exact: true })).toBeVisible();
-  await page
-    .getByRole("button", { name: "Your design style", exact: true })
-    .click();
+  await openBrandSetup(page);
   await expect(
     page.getByRole("heading", { name: "What feels like you?", exact: true }),
   ).toBeVisible();
   expect(
     await page
-      .getByRole("dialog", { name: "Your design style", exact: true })
+      .getByRole("dialog", { name: "Brand & style", exact: true })
       .evaluate((el) => el.scrollWidth <= el.clientWidth),
   ).toBe(true);
   await page.screenshot({
@@ -104,14 +94,14 @@ test("style onboarding fits a phone with readable choices and reachable navigati
   await page.getByRole("button", { name: "Continue", exact: true }).click();
   await page.getByRole("button", { name: "Continue", exact: true }).click();
   await expect(
-    page.getByRole("button", { name: "Save my design direction", exact: true }),
+    page.getByRole("button", { name: "Save brand & style", exact: true }),
   ).toBeInViewport();
 });
 
 test('quick craft choices support multiple selections, survive reload and reach the existing designer with freeform notes', async ({ page }) => {
   await page.goto('/');
-  await page.getByRole('button', { name: 'Your design style', exact: true }).click();
-  const dialog = page.getByRole('dialog', { name: 'Your design style', exact: true });
+  await openBrandSetup(page);
+  const dialog = page.getByRole('dialog', { name: 'Brand & style', exact: true });
   // Keep the accessible name while removing the duplicate visible heading above the logo.
   expect(await dialog.locator('.modal-header h2').evaluate(el => getComputedStyle(el).clipPath)).toBe('inset(50%)');
   await page.getByRole('button', { name: 'Continue', exact: true }).click();
@@ -125,10 +115,10 @@ test('quick craft choices support multiple selections, survive reload and reach 
   await page.getByLabel('Personal design details').fill('Keep the product visually connected to the headline.');
   await page.getByLabel('Personal design dislikes').fill('No invented claims.');
   await page.getByRole('button', { name: 'Continue', exact: true }).click();
-  await page.getByRole('button', { name: 'Save my design direction', exact: true }).click();
+  await page.getByRole('button', { name: 'Save brand & style', exact: true }).click();
   await expect(dialog).toHaveCount(0);
   await page.reload();
-  await page.getByRole('button', { name: 'Your design style', exact: true }).click();
+  await openBrandSetup(page);
   await page.getByRole('button', { name: 'Continue', exact: true }).click();
   for (const label of ['Confident typography', 'Generous breathing room', 'Random decoration', 'Tiny filler labels'])
     await expect(dialog.getByRole('button', { name: label, exact: true })).toHaveAttribute('aria-pressed', 'true');

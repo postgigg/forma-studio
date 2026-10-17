@@ -148,6 +148,14 @@ kbd {
   border-bottom: 1px solid var(--line);
   z-index: 25;
 }
+.topbar[hidden] { display: none; }
+.designer-rail-spinner { animation: designer-rail-spin 1s linear infinite; color: var(--purple); }
+@keyframes designer-rail-spin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .designer-rail-spinner { animation: none; } }
+.compact-design-actions { display: grid; gap: 12px; padding: 20px 24px; }
+.compact-design-actions label { display: grid; gap: 8px; }
+.compact-design-actions input { width: 100%; }
+.compact-design-actions p { margin: 0; color: var(--muted); font-size: 12px; }
 .wordmark {
   display: flex;
   align-items: center;

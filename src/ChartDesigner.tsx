@@ -5,6 +5,10 @@ import {
   ChartArea,
   ChartPie,
   CircleDot,
+  ChartBar,
+  ChartColumnStacked,
+  Hexagon,
+  ChartScatter,
   Plus,
   Trash2,
   Upload,
@@ -16,6 +20,7 @@ import {
   chartCSV,
   chartPalette,
   chartTypes,
+  chartLabels,
   defaultChart,
   importChartCSV,
   makeChart,
@@ -24,7 +29,13 @@ import {
   type ChartType,
 } from "./charts";
 
-const icons = [BarChart3, LineChart, ChartArea, ChartPie, CircleDot];
+const icons = [BarChart3, LineChart, ChartArea, ChartPie, CircleDot, ChartBar, ChartColumnStacked, Hexagon, ChartScatter];
+const descriptions: Record<ChartType, string> = {
+  bar: "Compare values and trends", line: "Compare values and trends", area: "Compare values and trends",
+  pie: "Compare parts of a whole", donut: "Compare parts of a whole",
+  "horizontal-bar": "Rank categories with room for labels", "stacked-bar": "Compare totals and their composition",
+  radar: "Compare profiles across several measures", scatter: "Explore relationships with numeric X and Y",
+};
 export function ChartLibrary({
   onChoose,
 }: {
@@ -44,12 +55,8 @@ export function ChartLibrary({
           return (
             <button key={type} onClick={() => onChoose(type)}>
               <Icon size={56} strokeWidth={1.4} />
-              <strong>{type[0].toUpperCase() + type.slice(1)} chart</strong>
-              <small>
-                {i > 2
-                  ? "Compare parts of a whole"
-                  : "Compare values and trends"}
-              </small>
+              <strong>{chartLabels[type]} chart</strong>
+              <small>{descriptions[type]}</small>
             </button>
           );
         })}
@@ -127,7 +134,7 @@ export function ChartDialog({
             1,
           ),
         );
-        editor.add(chart, `${data.type} chart`);
+        editor.add(chart, `${chartLabels[data.type].toLowerCase()} chart`);
       }
       onClose();
     } catch (e) {
@@ -159,11 +166,14 @@ export function ChartDialog({
               <select
                 aria-label="Chart style"
                 value={data.type}
-                onChange={(e) => update({ type: e.target.value as ChartType })}
+                onChange={(e) => {
+                  const type = e.target.value as ChartType;
+                  update({ type, ...(type === "scatter" && !data.xValues ? { xValues: data.labels.map((_, i) => i + 1) } : {}) });
+                }}
               >
                 {chartTypes.map((t) => (
                   <option key={t} value={t}>
-                    {t[0].toUpperCase() + t.slice(1)}
+                    {chartLabels[t]}
                   </option>
                 ))}
               </select>
@@ -226,6 +236,7 @@ export function ChartDialog({
             </button>
             <button
               className="text-button"
+              disabled={!!error}
               onClick={() =>
                 download(
                   new Blob([chartCSV(data)], { type: "text/csv" }),
@@ -254,7 +265,7 @@ export function ChartDialog({
                 aria-label="CSV data"
                 value={csv}
                 onChange={(e) => setCSV(e.target.value)}
-                placeholder={"Category,Sales\nJanuary,42\nFebruary,68"}
+                placeholder={data.type === "scatter" ? "Label,X,Sales\nLaunch,10,42\nGrowth,40,68" : "Category,Sales\nJanuary,42\nFebruary,68"}
               />
               <button className="secondary" onClick={() => importCSV(csv)}>
                 Use CSV data
@@ -267,11 +278,15 @@ export function ChartDialog({
               switching styles.
             </p>
           )}
+          {data.type === "radar" && <p className="muted small">Use 3–12 non-negative measures on a comparable scale.</p>}
+          {data.type === "scatter" && <p className="muted small">X uses a numeric scale. Each series supplies Y values. Import Label,X,Y or X,Y columns.</p>}
+          {data.type === "stacked-bar" && <p className="muted small">Positive and negative values stack separately from zero.</p>}
           <div className="chart-table-wrap">
             <table className="chart-table">
               <thead>
                 <tr>
-                  <th>Category</th>
+                  <th>{data.type === "scatter" ? "Point label" : "Category"}</th>
+                  {data.type === "scatter" && <th>Numeric X</th>}
                   {data.series.map((s, j) => (
                     <th key={j}>
                       <div className="series-heading">
@@ -334,6 +349,9 @@ export function ChartDialog({
                         }
                       />
                     </td>
+                    {data.type === "scatter" && <td><input type="number" aria-label={`Row ${i + 1} X value`}
+                      value={Number.isFinite(data.xValues?.[i]) ? data.xValues![i] : ""}
+                      onChange={e => update({ xValues: data.xValues!.map((v, k) => k === i ? (e.target.value === "" ? NaN : Number(e.target.value)) : v) })} /></td>}
                     {data.series.map((s, j) => (
                       <td key={j}>
                         <input
@@ -370,6 +388,7 @@ export function ChartDialog({
                         onClick={() =>
                           update({
                             labels: data.labels.filter((_, k) => k !== i),
+                            ...(data.xValues ? { xValues: data.xValues.filter((_, k) => k !== i) } : {}),
                             series: data.series.map((s) => ({
                               ...s,
                               values: s.values.filter((_, k) => k !== i),
@@ -395,6 +414,7 @@ export function ChartDialog({
                     ...data.labels,
                     `Category ${data.labels.length + 1}`,
                   ],
+                  ...(data.xValues ? { xValues: [...data.xValues, data.labels.length + 1] } : {}),
                   series: data.series.map((s) => ({
                     ...s,
                     values: [...s.values, 0],

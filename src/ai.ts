@@ -111,6 +111,12 @@ export async function designerRequest(
       value.error || "The local designer could not complete that request.",
       response.status,
     );
+  if (/^\/jobs(?:\/[^/?]+)?(?:\?|$)/.test(route) && value?.id &&
+    ["queued", "running", "completed", "failed", "cancelled"].includes(value.status)) {
+    window.dispatchEvent(new CustomEvent("forma:designer-activity", {
+      detail: { id: value.id, status: value.status, stage: value.stage || "Designing" },
+    }));
+  }
   return value;
 }
 export function isTransientDesignerError(error: unknown) {

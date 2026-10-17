@@ -18,6 +18,7 @@ import {
   Grid2X2,
   Image,
   LayoutTemplate,
+  LoaderCircle,
   Laptop,
   Maximize2,
   Megaphone,
@@ -28,6 +29,8 @@ import {
   PanelLeftClose,
   PanelRightClose,
   PanelRightOpen,
+  PanelTopClose,
+  PanelTopOpen,
   Pencil,
   Play,
   Plus,
@@ -92,7 +95,7 @@ import { PhotoFrame } from "./photo-frame";
 import { PhotoFrameDialog } from "./PhotoFrames";
 import { MarqueeSelection } from "./MarqueeSelection";
 import { PageThumbnails } from "./PageThumbnails";
-import { DesignStyleButton } from "./DesignStyle";
+import { useDesignerActivity } from "./designer-activity";
 
 const navigation = [
   { id: "design", icon: LayoutTemplate, label: "Design" },
@@ -108,6 +111,7 @@ const navigation = [
   { id: "draw", icon: Pencil, label: "Draw" },
 ] as const;
 type Dialog =
+  | "actions"
   | "new"
   | "resize"
   | "export"
@@ -150,6 +154,15 @@ async function imageAsset(file: File, forcePng = false): Promise<Asset> {
 }
 
 export default function App() {
+  const designerActivity = useDesignerActivity();
+  const [headerCollapsed, setHeaderCollapsed] = useState(() => {
+    try { return localStorage.getItem("forma:header-collapsed") === "true"; }
+    catch { return false; }
+  });
+  const toggleHeader = () => setHeaderCollapsed(value => {
+    try { localStorage.setItem("forma:header-collapsed", String(!value)); } catch { /* Optional preference. */ }
+    return !value;
+  });
   const { families: fonts } = useFontLibrary();
   const canvasRef = useRef<HTMLCanvasElement>(null),
     stageRef = useRef<HTMLDivElement>(null),
@@ -503,10 +516,10 @@ export default function App() {
     selected = editor?.selected,
     selectedText = selected instanceof Textbox ? selected : null;
   return (
-    <div className="studio-app">
+    <div className={`studio-app${headerCollapsed ? " header-collapsed" : ""}`}>
       <DesktopUpdates />
       {dialog === 'style' && editor && <StyleStudio editor={editor} brand={brand} onClose={() => setDialog(null)} />}
-      <header className="topbar">
+      <header className="topbar" id="studio-header" hidden={headerCollapsed}>
         <button
           className="wordmark"
           onClick={() => {
@@ -606,16 +619,19 @@ export default function App() {
                 setPanelOpen(panel === id ? !panelOpen : true);
                 if (id !== "draw") editor?.draw(false);
               }}
-              title={label}
+              title={id === "ai" && designerActivity.count ? designerActivity.stage : label}
+              aria-label={label}
+              aria-busy={id === "ai" ? designerActivity.count > 0 : undefined}
             >
               <span>
-                <Icon size={23} strokeWidth={1.65} />
+                {id === "ai" && designerActivity.count ?
+                  <LoaderCircle size={23} strokeWidth={1.65} className="designer-rail-spinner" /> :
+                  <Icon size={23} strokeWidth={1.65} />}
               </span>
               <small>{label}</small>
             </button>
           ))}
           <div className="rail-spacer" />
-          <DesignStyleButton />
           <button onClick={() => setDialog("help")} title="Help & shortcuts">
             <span>
               <CircleHelp size={22} />
@@ -694,6 +710,10 @@ export default function App() {
         <main className="editor-main" aria-label="Design editor">
           <div className={`context-toolbar${selected ? " has-selection" : ""}`}>
             <div className="toolbar-left">
+              <IconButton icon={headerCollapsed ? PanelTopOpen : PanelTopClose}
+                label={headerCollapsed ? "Show top bar" : "Hide top bar"}
+                onClick={toggleHeader} expanded={!headerCollapsed} controls="studio-header" />
+              {headerCollapsed && <IconButton icon={MoreHorizontal} label="Design actions" disabled={!ready} onClick={() => setDialog("actions")} />}
               {panelOpen && (
                 <IconButton
                   icon={PanelLeftClose}
@@ -1246,6 +1266,19 @@ export default function App() {
           e.target.value = "";
         }}
       />
+      {ready && dialog === "actions" && (
+        <Modal title="Design actions" onClose={() => setDialog(null)}>
+          <div className="compact-design-actions">
+            <label>Design title<input aria-label="Design title" maxLength={250} value={editor.doc.name} onChange={e => editor.rename(e.target.value)} /></label>
+            <p role="status">{editor.saveStatus}</p>
+            <button className="secondary" onClick={() => run(async () => { await editor.save(); setDialog("projects"); })}><FolderOpen size={17} /> My designs</button>
+            <button className="secondary" onClick={() => run(async () => { await editor.save(); setDialog("campaigns"); })}><Megaphone size={17} /> Campaigns</button>
+            <button className="secondary" aria-label="New blank design" onClick={() => setDialog("new")}><Plus size={17} /> New design</button>
+            <button className="secondary" disabled={editor.busy} onClick={() => run(async () => { setSlides(await editor.presentationImages()); setSlide(0); setDialog(null); })}><Play size={17} /> Present</button>
+            <button className="primary" onClick={() => setDialog("export")}><Download size={17} /> Export</button>
+          </div>
+        </Modal>
+      )}
       {ready && dialog === "new" && (
         <SizeDialog
           editor={editor}

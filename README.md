@@ -121,7 +121,7 @@ Campaign previews keep the complete artwork inside each card. Portrait, story, s
 
 ## Personal design direction
 
-Open **Your style** in the left rail or **Brand → Personalize your AI designer**. The three-step guide combines your preferred styles, spacing, typography and color direction with your business, mission and audience. Choose up to three styles. In **The details**, select multiple craft preferences and things to avoid, then add your own written notes. Choices and notes are saved together on this device. Edit or disable them in Brand at any time.
+Open **Brand → Set up brand & style**. One three-step guide combines your preferred styles, spacing, typography and color direction with your business, mission and audience. Existing saved brand and style profiles are preserved. Choose up to three styles. In **The details**, select multiple craft preferences and things to avoid, then add your own written notes. Save both profiles together on this device; edit them or disable personal design preferences from this same guide. Logo and palette tools remain in Brand.
 
 The saved profile accompanies AI Designer, campaigns, photo creation, selection refinement, AI Pencil and Magic Eraser. Your current instructions and required brand identity take priority over personal defaults. Pencil matches the existing image inside the mask; Eraser only removes the marked subject and reconstructs the existing background. Campaign batches keep a snapshot of their preferences and exact format dimensions when resumed.
 
@@ -204,9 +204,9 @@ The image and crop settings remain editable after saving. Remove or replace the 
 
 ### 5. Tell a story with data
 
-Open **Charts** and choose **Bar**, **Line**, **Area**, **Pie**, or **Donut**. Enter values, paste CSV, or import a `.csv` file. Add up to **20 categories and four series**, then edit titles, colors, background, and value labels.
+Open **Charts** and choose **Bar**, **Line**, **Area**, **Pie**, **Donut**, **Horizontal bar**, **Stacked bar**, **Radar**, or **Scatter**. Enter values, paste CSV, or import a `.csv` file. Add up to **20 categories and four series** (radar uses 3–12 categories), then edit titles, colors, background, and value labels.
 
-Select the chart and choose **Edit data** to revise it later. Switching styles preserves the dataset. Pie/donut display the first series and require non-negative values with a positive total. Bar, line, and area support negative values. **CSV** downloads the data again.
+Select the chart and choose **Edit data** to revise it later. Switching styles preserves the dataset. Pie/donut display the first series and require non-negative values with a positive total. Bar, line, area and horizontal bars support negative values; stacked bars accumulate positive and negative values separately from zero. Radar compares non-negative measures on a shared scale. Scatter uses actual numeric X values, with `Label,X,Y` or `X,Y` CSV input. **CSV** downloads the data again, including scatter X values.
 
 ```csv
 Category,2026,2025
@@ -218,7 +218,9 @@ Referral,92,65
 
 Charts render as native canvas groups. Keep the group intact for the data editor; ungrouping exposes the individual artwork.
 
-![Chart data editor with numeric values and a live preview.](docs/media/chart-editor-v1.3.png)
+Use **Hide top bar** in the canvas toolbar for more canvas space. **Show top bar** restores it; **Design actions** keeps your title, projects, campaigns, presentation and export accessible while it is hidden. The AI Designer rail icon shows active design work even when another library panel is open, and stops when that work finishes, fails or is cancelled.
+
+![Numeric scatter data and live preview in the editable chart dialog.](docs/media/advanced-chart-editor-v1.6.png)
 
 ### 6. Refine selected content with AI
 

@@ -24,7 +24,7 @@ import { graphics, GraphicPreview } from "./graphics";
 import { PhotoCreator } from "./PhotoCreator";
 import { PhotoFrameLibrary } from "./PhotoFrames";
 import "./studio-library.css";
-import { BrandProfileEditor, useBrandProfile } from "./BrandContext";
+import { useBrandProfile } from "./BrandContext";
 import { DesignStyleCard } from "./DesignStyle";
 import { brandAffinity } from "../shared/brand-context.mjs";
 
@@ -168,7 +168,7 @@ export function Sidebar({
               text: "Text",
               uploads: "Your uploads",
               photos: "Photos",
-              brand: "Brand kit",
+              brand: "Brand & style",
               draw: "Draw",
             }[panel]
           }
@@ -644,12 +644,6 @@ export function Sidebar({
       )}
       {panel === "brand" && (
         <>
-          <div className="brand-banner">
-            <span>f.</span>
-            <h3>Beautifully consistent.</h3>
-            <p>Your purpose, visual voice, colors and logo.</p>
-          </div>
-          <BrandProfileEditor />
           <DesignStyleCard />
           <h3 className="section-label">
             Your palette <span>{brand.length}</span>
