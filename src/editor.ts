@@ -379,7 +379,9 @@ export class Editor {
     this.doc.updatedAt = new Date().toISOString();
     this.saveStatus = "Saving…";
     clearTimeout(this.saveTimer);
-    void this.save().catch(() => {});
+    // capture() already prepared the document and thumbnail for this edit.
+    // Persist it immediately without encoding the same thumbnail a second time.
+    void this.persist().catch(() => {});
     this.notify();
   }
   async save() {
@@ -387,6 +389,9 @@ export class Editor {
     clearTimeout(this.saveTimer);
     clearTimeout(this.textTimer);
     this.capture();
+    await this.persist();
+  }
+  private async persist() {
     const id = this.doc.id,
       version = this.doc.updatedAt;
     try {

@@ -89,7 +89,9 @@ async function startServer() {
       if (!(await stat(file)).isFile()) { res.writeHead(404); return res.end(); }
       res.writeHead(200, {
         'Content-Type': mime[path.extname(file)] || 'application/octet-stream', 'X-Content-Type-Options': 'nosniff', 'Cache-Control': 'no-cache',
-        'Content-Security-Policy': `default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https:; font-src 'self'; connect-src 'self' ${aiOrigin} https:; worker-src 'self' blob:; media-src 'self' blob: data:; object-src 'none'; frame-src 'none'; base-uri 'self'`,
+        'Content-Security-Policy': `default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; connect-src 'self' ${aiOrigin}; worker-src 'self' blob:; media-src 'self' blob: data:; object-src 'none'; frame-src 'none'; frame-ancestors 'none'; base-uri 'none'; form-action 'none'`,
+        'Referrer-Policy': 'no-referrer', 'X-Frame-Options': 'DENY',
+        'Permissions-Policy': 'camera=(), microphone=(), geolocation=(), payment=(), usb=()',
       });
       res.end(req.method === 'HEAD' ? undefined : await readFile(file));
     } catch (error) { res.writeHead(error.code === 'ENOENT' ? 404 : 400, { 'Content-Type': 'application/json' }); res.end(JSON.stringify({ error: error.code === 'ENOENT' ? 'Not found' : error.message })); }
@@ -108,7 +110,8 @@ async function start() {
     { label: 'Help', submenu: [{ label: 'Check for updates', click: () => { main.webContents.send('forma:show-updates'); void updates.check(); } }, { label: 'Forma walkthrough', click: () => openExternal('https://github.com/postgigg/forma-studio#readme') }] },
   ]));
   main.webContents.setWindowOpenHandler(({ url }) => { openExternal(url); return { action: 'deny' }; });
-  main.webContents.on('will-navigate', (event, url) => { if (new URL(url).origin !== origin) { event.preventDefault(); openExternal(url); } });
+  main.webContents.on('will-navigate', (event, url) => { if (new URL(url).origin !== origin) event.preventDefault(); });
+  main.webContents.on('will-attach-webview', event => event.preventDefault());
   main.once('ready-to-show', () => { if (!process.env.FORMA_DESKTOP_TEST_DATA) main.show(); });
   main.on('close', event => {
     if (closing) return;

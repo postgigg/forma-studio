@@ -16,6 +16,7 @@ import { randomBytes, randomUUID, timingSafeEqual } from "node:crypto";
 import { createPhotoService } from "./photos.mjs";
 import { createRefinementService } from "./refinements.mjs";
 import { createFrameService } from "./frames.mjs";
+import { createBrandImportService } from "./brand-imports.mjs";
 import {
   outputSchema,
   validateBrief,
@@ -172,6 +173,7 @@ const refinementService = createRefinementService({
   authenticated,
 });
 const frameService = createFrameService({ json });
+const brandImportService = createBrandImportService({ codex, runtime, json, authenticated });
 const server = http.createServer(async (req, res) => {
   const host = req.headers.host || "";
   if (!["127.0.0.1:" + port, "localhost:" + port].includes(host))
@@ -211,6 +213,7 @@ const server = http.createServer(async (req, res) => {
   if (await frameService.handle(req, res, url)) return;
   if (await photoService.handle(req, res, url)) return;
   if (await refinementService.handle(req, res, url)) return;
+  if (await brandImportService.handle(req, res, url)) return;
   if (req.method === "GET" && url.pathname === "/jobs")
     return json(
       res,
@@ -234,6 +237,7 @@ const server = http.createServer(async (req, res) => {
     for (const job of jobs.values()) stop(job);
     photoService.shutdown();
     refinementService.shutdown();
+    brandImportService.shutdown();
     server.close(() => process.exit(0));
     setTimeout(() => process.exit(0), 2000).unref();
     return;
@@ -316,5 +320,6 @@ for (const signal of ["SIGINT", "SIGTERM"])
     for (const job of jobs.values()) stop(job);
     photoService.shutdown();
     refinementService.shutdown();
+    brandImportService.shutdown();
     server.close(() => process.exit(0));
   });

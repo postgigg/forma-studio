@@ -700,6 +700,8 @@
 .ai-reference-study small{display:block;color:#716b7c;margin-top:4px}
 .ai-review-note{border-left:3px solid #b6a3eb;padding-left:10px;margin:12px 0}
 .ai-review-note.needs-attention{border-color:#c48b30}
+.ai-result .section-label > span[data-review-status="needs-attention"]{background:#fff0d5;color:#7a4700}
+.ai-result .section-label > span[data-review-status="unavailable"]{background:#efedf3;color:#51465e}
 @media(max-width:1100px){.workspace-footer .zoom-control input{width:80px}.workspace-footer{padding:0 8px;gap:6px}.workspace-footer .zoom-control{gap:0}.workspace-footer .footer-page{padding:0 3px}}
 .artboard {
   margin-inline: auto;

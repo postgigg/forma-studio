@@ -18,7 +18,11 @@ Build with draggable layers, original artwork, photo-filled letters, editable ch
 
 ## Download the desktop app
 
-**Windows is free.** Download [Forma Studio 1.5.0 for Windows](https://github.com/postgigg/forma-studio/releases/download/v1.5.0/Forma-Studio-Setup-1.5.0.exe), run the installer, and open **Forma Studio** from your desktop or Start menu. Windows 10/11, 64-bit. The current installer is unsigned, so Windows may display an unknown-publisher warning.
+**Windows is free.** Download [Forma Studio 1.6.0 for Windows](https://github.com/postgigg/forma-studio/releases/download/v1.6.0/Forma-Studio-Setup-1.6.0.exe), run the installer, and open **Forma Studio** from your desktop or Start menu. Windows 10/11, 64-bit. The current installer is unsigned, so Windows may display an unknown-publisher warning.
+
+**Business setup:** In **Your style → Brand & intent** or **Brand**, choose **Enter manually** or **Use my website**. AI drafts the company, business, mission, audience and voice from public pages, with source excerpts and clearly labelled suggestions. Review the draft, choose which fields to fill, then save. Existing values are preserved by default. Your personal design preferences stay separate and combine with the reviewed brand context across AI tools.
+
+**Security:** [Read the security boundaries and verification notes](SECURITY.md). The desktop renderer is sandboxed and isolated; the local AI API checks origins and session tokens. Website drafting validates public network destinations, and the download site serves static marketing content. [Report a vulnerability privately](https://github.com/postgigg/forma-studio/security/advisories/new).
 
 The desktop app bundles the editor, its local worker and Codex CLI. No terminal, Node.js or Docker is required for everyday use. Forma requires no app account or sign-in. Projects save locally; **Export → Forma JSON** creates an editable backup. To move a browser project into the desktop app, export it from the browser and import the JSON file in Forma. Their storage is separate.
 

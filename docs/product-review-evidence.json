@@ -1,0 +1,293 @@
+﻿{
+    "before":  {
+                   "version":  "1.6.0",
+                   "testedAt":  "2026-10-17T15:01:11.977Z",
+                   "environment":  "Production build, fresh isolated browser context, Windows Edge; host under observed memory pressure. No live AI generation.",
+                   "readyMs":  1139,
+                   "layouts":  [
+                                   {
+                                       "width":  1440,
+                                       "height":  900,
+                                       "documentWidth":  1440,
+                                       "buttons":  6
+                                   },
+                                   {
+                                       "width":  1366,
+                                       "height":  768,
+                                       "documentWidth":  1366,
+                                       "buttons":  6
+                                   },
+                                   {
+                                       "width":  1024,
+                                       "height":  768,
+                                       "documentWidth":  1024,
+                                       "buttons":  6
+                                   }
+                               ],
+                   "saveMeasurement":  {
+                                           "action":  "Clear the title and type 22 characters with 20ms between keystrokes",
+                                           "designWrites":  23,
+                                           "pngCaptures":  46,
+                                           "serializedCharacters":  2637341
+                                       },
+                   "qualityPresentation":  {
+                                               "controlledFixture":  true,
+                                               "inputReviewStatus":  "needs-attention",
+                                               "inputCriticalIssues":  1,
+                                               "visibleReady":  "Ready",
+                                               "reviewDetailsOpen":  false,
+                                               "criticalIssueVisible":  false
+                                           },
+                   "scripts":  [
+                                   {
+                                       "url":  "/assets/index-B5XG8TVv.js",
+                                       "bytes":  2186340,
+                                       "duration":  313
+                                   }
+                               ],
+                   "errors":  [
+
+                              ]
+               },
+    "after":  {
+                  "version":  "1.6.0",
+                  "testedAt":  "2026-10-17T15:26:41.152Z",
+                  "environment":  "Production build, fresh isolated browser context, Windows Edge; host under observed memory pressure. No live AI generation.",
+                  "readyMs":  746,
+                  "layouts":  [
+                                  {
+                                      "width":  1440,
+                                      "height":  900,
+                                      "documentWidth":  1440,
+                                      "stage":  {
+                                                    "x":  370,
+                                                    "y":  124,
+                                                    "width":  818,
+                                                    "height":  629,
+                                                    "top":  124,
+                                                    "right":  1188,
+                                                    "bottom":  753,
+                                                    "left":  370
+                                                },
+                                      "canvas":  {
+                                                     "x":  514.5,
+                                                     "y":  180,
+                                                     "width":  519,
+                                                     "height":  519,
+                                                     "top":  180,
+                                                     "right":  1033.5,
+                                                     "bottom":  699,
+                                                     "left":  514.5
+                                                 },
+                                      "labelSizes":  [
+                                                         {
+                                                             "selector":  ".tool-rail small",
+                                                             "fontSize":  "10px"
+                                                         },
+                                                         {
+                                                             "selector":  ".template-card span",
+                                                             "fontSize":  "10px"
+                                                         },
+                                                         {
+                                                             "selector":  ".template-card small",
+                                                             "fontSize":  "10px"
+                                                         },
+                                                         {
+                                                             "selector":  ".save-status",
+                                                             "fontSize":  "10px"
+                                                         }
+                                                     ]
+                                  },
+                                  {
+                                      "width":  1366,
+                                      "height":  768,
+                                      "documentWidth":  1366,
+                                      "stage":  {
+                                                    "x":  370,
+                                                    "y":  124,
+                                                    "width":  744,
+                                                    "height":  497,
+                                                    "top":  124,
+                                                    "right":  1114,
+                                                    "bottom":  621,
+                                                    "left":  370
+                                                },
+                                      "canvas":  {
+                                                     "x":  543.5,
+                                                     "y":  180,
+                                                     "width":  387,
+                                                     "height":  387,
+                                                     "top":  180,
+                                                     "right":  930.5,
+                                                     "bottom":  567,
+                                                     "left":  543.5
+                                                 },
+                                      "labelSizes":  [
+                                                         {
+                                                             "selector":  ".tool-rail small",
+                                                             "fontSize":  "10px"
+                                                         },
+                                                         {
+                                                             "selector":  ".template-card span",
+                                                             "fontSize":  "10px"
+                                                         },
+                                                         {
+                                                             "selector":  ".template-card small",
+                                                             "fontSize":  "10px"
+                                                         },
+                                                         {
+                                                             "selector":  ".save-status",
+                                                             "fontSize":  "10px"
+                                                         }
+                                                     ]
+                                  },
+                                  {
+                                      "width":  1024,
+                                      "height":  768,
+                                      "documentWidth":  1024,
+                                      "stage":  {
+                                                    "x":  325,
+                                                    "y":  124,
+                                                    "width":  475,
+                                                    "height":  497,
+                                                    "top":  124,
+                                                    "right":  800,
+                                                    "bottom":  621,
+                                                    "left":  325
+                                                },
+                                      "canvas":  {
+                                                     "x":  375,
+                                                     "y":  185,
+                                                     "width":  365,
+                                                     "height":  365,
+                                                     "top":  185,
+                                                     "right":  740,
+                                                     "bottom":  550,
+                                                     "left":  375
+                                                 },
+                                      "labelSizes":  [
+                                                         {
+                                                             "selector":  ".tool-rail small",
+                                                             "fontSize":  "10px"
+                                                         },
+                                                         {
+                                                             "selector":  ".template-card span",
+                                                             "fontSize":  "10px"
+                                                         },
+                                                         {
+                                                             "selector":  ".template-card small",
+                                                             "fontSize":  "10px"
+                                                         },
+                                                         {
+                                                             "selector":  ".save-status",
+                                                             "fontSize":  "10px"
+                                                         }
+                                                     ]
+                                  }
+                              ],
+                  "saveMeasurement":  {
+                                          "action":  "Clear the title and type 22 characters with 20ms between keystrokes",
+                                          "designWrites":  23,
+                                          "pngCaptures":  23,
+                                          "serializedCharacters":  2637341
+                                      },
+                  "qualityPresentation":  {
+                                              "controlledFixture":  true,
+                                              "inputReviewStatus":  "needs-attention",
+                                              "inputCriticalIssues":  1,
+                                              "visibleStatus":  "Needs review",
+                                              "reviewDetailsOpen":  true,
+                                              "criticalIssueVisible":  true
+                                          },
+                  "scripts":  [
+                                  {
+                                      "url":  "/assets/index-euIS-ag8.js",
+                                      "bytes":  2187050,
+                                      "duration":  36
+                                  }
+                              ],
+                  "errors":  [
+
+                             ]
+              },
+    "browserRegressionChecksPassed":  27,
+    "optionalLiveGenerationTestSkipped":  1,
+    "limits":  "Fresh isolated browser profiles. Review-status scenario uses a controlled fixture. Startup measurements are individual runs, not a general benchmark. Saves remain immediate; database write count is unchanged.",
+    "packagedVerification":  {
+                                 "fuseState":  {
+                                                   "RunAsNode":  false,
+                                                   "EnableCookieEncryption":  true,
+                                                   "EnableNodeOptionsEnvironmentVariable":  false,
+                                                   "EnableNodeCliInspectArguments":  false,
+                                                   "EnableEmbeddedAsarIntegrityValidation":  true,
+                                                   "OnlyLoadAppFromAsar":  true,
+                                                   "GrantFileProtocolExtraPrivileges":  false
+                                               },
+                                 "version":  "1.6.0",
+                                 "testedAt":  "2026-10-17T15:34:34.858Z",
+                                 "sha256":  "b3f5a68924f46217cb27feed63b67daa909c762f49540e05c099e48b61d24402",
+                                 "assets":  [
+                                                {
+                                                    "name":  "Forma-Studio-Setup-1.6.0.exe",
+                                                    "size":  689342362,
+                                                    "sha256":  "b3f5a68924f46217cb27feed63b67daa909c762f49540e05c099e48b61d24402"
+                                                },
+                                                {
+                                                    "name":  "Forma-Studio-Setup-1.6.0.exe.blockmap",
+                                                    "size":  718085,
+                                                    "sha256":  "65f00a915ca67a2548d21f07ae9b8ddc8e3406d32acb37fad18c4353996cec0f"
+                                                },
+                                                {
+                                                    "name":  "latest.yml",
+                                                    "size":  353,
+                                                    "sha256":  "82325b558fb021445d28c47170c71be7dbc8eb46d604d051799db0c0be2eee19"
+                                                },
+                                                {
+                                                    "name":  "update-policy.json",
+                                                    "size":  208,
+                                                    "sha256":  "36d8051e2c4f2f8421f40410b46e3cce0fe0993b0c41506b1a0feecf05881342"
+                                                },
+                                                {
+                                                    "name":  "SHA256SUMS.txt",
+                                                    "size":  95,
+                                                    "sha256":  "f6dae06800ec239d01ca867a4b876be3925afefa79dfc6df97fa4783d47547e8"
+                                                }
+                                            ],
+                                 "engine":  {
+                                                "engine":  "Codex CLI",
+                                                "model":  "gpt-6.1-sol",
+                                                "modelLabel":  "GPT-6.1 Sol",
+                                                "reasoningEffort":  "max",
+                                                "imageEngine":  "Codex native image generation"
+                                            },
+                                 "templates":  262,
+                                 "thumbnails":  262,
+                                 "sourceImages":  8,
+                                 "compiledBundleMatches":  true,
+                                 "canonicalBrandMatches":  true,
+                                 "packagedUpdater":  true
+                             },
+    "nativeVerification":  {
+                               "version":  "1.6.0",
+                               "testedAt":  "2026-10-17T15:35:49.305Z",
+                               "packaged":  true,
+                               "rendererNodeUnavailable":  true,
+                               "restrictedBridge":  true,
+                               "cspBlocksExternalFetch":  true,
+                               "hostRebindingBlocked":  true,
+                               "sessionOriginRequired":  true,
+                               "brandWebsiteChoices":  true,
+                               "campaignIllustration":  true,
+                               "photoMask":  true,
+                               "native3DRotation":  true,
+                               "savedLineChartEditing":  true,
+                               "engine":  {
+                                              "model":  "gpt-6.1-sol",
+                                              "reasoningEffort":  "max"
+                                          },
+                               "errors":  [
+
+                                          ]
+                           },
+    "windowsPublisherSignature":  "NotSigned"
+}

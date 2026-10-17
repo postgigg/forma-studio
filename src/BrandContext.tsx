@@ -12,6 +12,7 @@ import {
   type BrandProfile,
 } from "../shared/brand-context.mjs";
 import "./brand-context.css";
+import { BrandWebsiteImport } from "./BrandWebsiteImport";
 const empty: BrandProfile = {
   name: "",
   business: "",
@@ -111,6 +112,7 @@ export function BrandProfileEditor() {
         Give AI a clear sense of who you are and what your designs should
         express.
       </p>
+      <BrandWebsiteImport value={draft} onApply={fields => { setDraft(current => ({ ...current, ...fields })); setStatus(""); }} />
       {field("name", "Company name", "Petal Studio")}
       {field(
         "business",

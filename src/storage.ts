@@ -53,7 +53,9 @@ export function validateDesign(raw: unknown): asserts raw is Design {
   const d = raw as Design;
   validateFonts(d.fonts);
   if (
+    typeof d.id !== "string" || !/^[A-Za-z0-9_-]{1,120}$/.test(d.id) ||
     typeof d.name !== "string" ||
+    d.name.length > 500 ||
     !Number.isFinite(d.width) ||
     !Number.isFinite(d.height) ||
     d.width < 64 ||
@@ -65,10 +67,14 @@ export function validateDesign(raw: unknown): asserts raw is Design {
     d.pages.length > 100
   )
     throw new Error("Invalid design size or pages.");
+  let nodes = 0;
   const walk = (value: unknown, depth = 0) => {
+    if (++nodes > 1_000_000) throw new Error("This design contains too much nested data.");
     if (depth > 40) throw new Error("This design is too deeply nested.");
     if (!value || typeof value !== "object") return;
     for (const [key, item] of Object.entries(value)) {
+      if (["__proto__", "constructor", "prototype"].includes(key)) throw new Error("This design contains an unsafe object property.");
+      if (typeof item === "number" && !Number.isFinite(item)) throw new Error("Design numbers must be finite.");
       if (key === "src" && typeof item === "string" && /^https?:/.test(item)) {
         const url = new URL(item);
         if (
@@ -85,10 +91,10 @@ export function validateDesign(raw: unknown): asserts raw is Design {
         }
       }
       if (
-        key === "src" &&
+        ["src", "source"].includes(key) &&
         typeof item === "string" &&
         item !== "" &&
-        !/^data:image\/(png|jpeg|webp|gif);base64,/.test(item) &&
+        !/^data:image\/(png|jpeg|webp|gif);base64,[A-Za-z0-9+/]+={0,2}$/.test(item) &&
         !catalog.some((asset) => asset.src === item)
       )
         throw new Error(
@@ -98,6 +104,7 @@ export function validateDesign(raw: unknown): asserts raw is Design {
     }
   };
   for (const page of d.pages) {
+    if (!page || typeof page !== "object") throw new Error("Invalid page contents.");
     if (
       page.motion &&
       (!["none", "fade", "rise", "stagger", "drift"].includes(

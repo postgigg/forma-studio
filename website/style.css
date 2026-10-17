@@ -12,3 +12,5 @@
 img{height:auto}.campaigns{display:block}.campaign-copy{display:grid;grid-template-columns:1fr 1fr;gap:24px 8%;align-items:start}.campaign-copy h2{grid-row:1/4}.campaign-copy>p,.campaign-copy p.supporting{margin:0}.campaign-copy .text-link{justify-self:start}.campaign-image{margin-top:55px;transform:none}.campaign-image img{height:auto}
 @media(max-width:760px){.campaign-copy{display:block}.campaign-copy>p{margin:30px 0}.campaign-copy p.supporting{margin:25px 0 0}.campaign-image{margin-top:40px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{animation:none!important;transition:none!important}.js .enter{opacity:1;transform:none}}
+.studio-tabs{flex-wrap:wrap}
+.footer-top{padding-bottom:0}footer{padding-bottom:48px}@media(max-width:760px){.human-section{display:flex;flex-direction:column;min-height:0}.human-section>img{position:relative;inset:auto;width:100%;height:auto;object-fit:contain}.human-section:after{display:none}.human-copy{width:100%;padding:40px 6% 48px}.human-copy h2{font-size:55px}.human-copy p{max-width:none}}

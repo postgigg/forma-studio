@@ -1,8 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import {
   ArrowRight,
+  AlertTriangle,
   Check,
   ChevronDown,
+  CircleHelp,
   Plus,
   RefreshCw,
   Sparkles,
@@ -543,8 +545,13 @@ export function DesignerPanel({
             <div className="ai-result">
               <div className="section-label">
                 <h3>{draft.name}</h3>
-                <span>
-                  <Check size={12} /> Ready
+                <span
+                  role="status"
+                  data-review-status={proposal.qualityReview?.status || "unavailable"}
+                >
+                  {proposal.qualityReview?.status === "reviewed" ? <><Check size={12} /> Reviewed</> :
+                    proposal.qualityReview?.status === "needs-attention" ? <><AlertTriangle size={12} /> Needs review</> :
+                    <><CircleHelp size={12} /> Not reviewed</>}
                 </span>
               </div>
               <button className="primary full" onClick={() => void openDraft()}>

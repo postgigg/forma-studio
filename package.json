@@ -1,6 +1,6 @@
 {
   "name": "forma-studio",
-  "version": "1.5.0",
+  "version": "1.6.0",
   "description": "A local visual design studio with editable templates, motion and intent-aware AI tools.",
   "author": "Forma Studio",
   "main": "desktop/main.cjs",
@@ -17,7 +17,7 @@
     "local": "node scripts/start-local.mjs",
     "ai:start": "node scripts/start-ai.mjs",
     "ai:stop": "node scripts/stop-ai.mjs",
-    "test:server": "node --test tests/designer.test.mjs tests/photos.test.mjs tests/refinements.test.mjs tests/frames.test.mjs tests/brand-reference.test.mjs tests/campaigns.test.mjs tests/design-style.test.mjs tests/creative-direction.test.mjs",
+    "test:server": "node --test tests/designer.test.mjs tests/photos.test.mjs tests/refinements.test.mjs tests/frames.test.mjs tests/brand-reference.test.mjs tests/campaigns.test.mjs tests/design-style.test.mjs tests/creative-direction.test.mjs tests/brand-imports.test.mjs",
     "test:ai-live": "node scripts/test-designer-live.mjs",
     "desktop": "electron .",
     "desktop:package": "node scripts/package-desktop.mjs",
@@ -30,6 +30,15 @@
     "productName": "Forma Studio",
     "electronDist": "node_modules/electron/dist",
     "npmRebuild": false,
+    "electronFuses": {
+      "runAsNode": false,
+      "enableCookieEncryption": true,
+      "enableNodeOptionsEnvironmentVariable": false,
+      "enableNodeCliInspectArguments": false,
+      "enableEmbeddedAsarIntegrityValidation": true,
+      "onlyLoadAppFromAsar": true,
+      "grantFileProtocolExtraPrivileges": false
+    },
     "directories": {
       "output": "release"
     },

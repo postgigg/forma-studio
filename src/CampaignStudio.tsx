@@ -944,9 +944,10 @@ export function CampaignStudio({
                   Create a campaign
                 </button>
                 <div className="campaign-empty-art" aria-hidden="true">
-                  <div>Instagram</div>
-                  <div>Facebook</div>
-                  <div>LinkedIn</div>
+                  <svg className="campaign-art-trail" viewBox="0 0 800 370" fill="none"><path d="M20 250C165 350 194 32 380 73S560 358 779 100" stroke="#bca4f5" strokeWidth="2" strokeDasharray="5 9"/><path d="m755 96 27-3-7 27" stroke="#764bdd" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                  <figure className="campaign-art-card campaign-art-social"><img src="/templates/modern-studio-011.webp" alt=""/><figcaption>Instagram</figcaption></figure>
+                  <figure className="campaign-art-card campaign-art-print"><img src="/templates/modern-occasion-075.webp" alt=""/><figcaption>Print & posters</figcaption></figure>
+                  <figure className="campaign-art-card campaign-art-deck"><img src="/templates/modern-studio-131.webp" alt=""/><figcaption>Presentations</figcaption></figure>
                 </div>
               </section>
             ) : (

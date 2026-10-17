@@ -4,6 +4,7 @@ import { Modal } from "./ui";
 import { getDesignStyle, putDesignStyle } from "./storage";
 import { DesignStyleContext, useDesignStyle } from "./design-style-context";
 import { useBrandProfile } from "./BrandContext";
+import { BrandWebsiteImport } from "./BrandWebsiteImport";
 import { brandLimits, type BrandProfile } from "../shared/brand-context.mjs";
 import {
   designStyles,
@@ -354,6 +355,7 @@ function StyleOnboarding({
                 {labels[draft.colorMood]}
               </span>
             </div>
+            <BrandWebsiteImport value={business} onApply={fields => setBusiness(current => ({ ...current, ...fields }))} />
             {field("name", "Company name", "Petal Studio")}
             {field(
               "business",

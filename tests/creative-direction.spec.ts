@@ -71,7 +71,8 @@ test('AI results expose the original concept, credited references and honest vis
   await page.goto('/');await page.getByRole('button',{name:'AI Designer',exact:true}).click();
   await page.getByLabel('AI design brief',{exact:true}).fill('An original florist launch for everyday gifting.');
   await page.getByRole('button',{name:'Create my design',exact:true}).click();
-  await page.getByText('Design direction & review',{exact:true}).click();
+  await expect(page.locator('.ai-result [role="status"]')).toHaveText('Needs review');
+  await expect(page.locator('.ai-design-evidence')).toHaveAttribute('open','');
   await expect(page.getByRole('heading',{name:'Everyday stems',exact:true})).toBeVisible();
   await expect(page.getByText('Review these details',{exact:true})).toBeVisible();
   await expect(page.getByRole('link',{name:'Phren Craft',exact:true})).toHaveAttribute('href',result.creativeDirection.sources[0].url);

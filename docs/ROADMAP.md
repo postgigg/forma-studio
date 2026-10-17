@@ -2,6 +2,10 @@
 
 This is a proposed roadmap, not a list of shipped features. It follows the goal of a capable local Canva-style editor and is grounded in the current code.
 
+**Current priority, October 17:** Improve results, reliability and everyday use in the existing product. The [evidence-based product review](product-review-2026-10-17.md) sets the order: richer validated AI composition, testable brief requirements, campaign direction approval, restart-safe AI jobs, lighter large projects/downloads, clearer contextual tools, and workspace recovery/print preflight. Review-status messaging and duplicate thumbnail capture are addressed in the current working build.
+
+The feature expansion below follows that quality work.
+
 | Priority | Capability                    | Current evidence                                                                          | Useful next version                                                                                  |
 | -------- | ----------------------------- | ----------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
 | 1        | Video timeline and audio      | `Motion.tsx` and `export-motion.ts` provide page/device animation, GIF, and silent WebM.  | Trim clips, arrange scenes, add audio, synchronize duration, and export MP4 through a local encoder. |
@@ -17,4 +21,4 @@ Selection refinement now supports editable additions and creative direction. AI 
 
 Canva's [feature overview](https://www.canva.com/features/) documents a broader suite of video, collaboration, and image tools. Its [graphs documentation](https://www.canva.com/graphs/) covers chart/data workflows and connected data. Those sources inform the comparison; Forma's implementation and tests establish what this repository currently supports.
 
-Recommended next build: **video timeline with audio**, followed by **dedicated background removal** and **smart format adaptation**.
+After the current quality priorities, the proposed feature sequence is **video timeline with audio**, **dedicated background removal**, then **smart format adaptation**.

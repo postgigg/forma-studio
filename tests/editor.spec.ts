@@ -395,9 +395,12 @@ test("opens a complete editor without runtime errors and renders editable templa
   page.on("pageerror", (e) => errors.push(e.message));
   await ready(page);
   const doc = await savedDesign(page);
-  expect(doc.pages[0].data.objects).toHaveLength(13);
+  expect(doc.pages[0].data.objects).toEqual(expect.arrayContaining([
+    expect.objectContaining({type:"Image",src:"/photos/modern/florist-cobalt-v1.png"}),
+    expect.objectContaining({type:"Textbox",text:"Make room\nfor a little\ngrowth."}),
+  ]));
   await page.getByRole("button", { name: /^Layers/ }).click();
-  await page.locator(".layer-select").filter({ hasText: "Headline" }).click();
+  await page.locator(".layer-select").filter({ hasText: "Make room for a little growth." }).click();
   await page.getByRole("button", { name: "Properties", exact: true }).click();
   await expect(page.getByLabel("Text content", { exact: true })).toHaveValue(
     "Make room\nfor a little\ngrowth.",
@@ -727,7 +730,7 @@ test("annotation: sidebar collapses, retains selection and tab, remembers prefer
     page.getByText("Let’s make something great.", { exact: true }),
   ).toHaveCount(0);
   await page.getByRole("button", { name: /^Layers/ }).click();
-  await page.locator(".layer-select").filter({ hasText: "Headline" }).click();
+  await page.locator(".layer-select").filter({ hasText: "Make room for a little growth." }).click();
   const width = (await page.locator(".canvas-stage").boundingBox())!.width;
   await page
     .getByRole("button", { name: "Hide properties and layers", exact: true })
@@ -744,7 +747,7 @@ test("annotation: sidebar collapses, retains selection and tab, remembers prefer
     (await page.locator(".canvas-stage").boundingBox())!.width,
   ).toBeGreaterThan(width + 200);
   await show.click();
-  await expect(page.locator(".layer-row.selected")).toContainText("Headline");
+  await expect(page.locator(".layer-row.selected")).toContainText("Make room for a little growth.");
   await page.getByRole("button", { name: "Properties", exact: true }).click();
   await expect(page.getByLabel("Text content", { exact: true })).toHaveValue(
     "Make room\nfor a little\ngrowth.",
