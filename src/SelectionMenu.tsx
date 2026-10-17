@@ -22,6 +22,7 @@ import {
   UnlockKeyhole,
 } from "lucide-react";
 import { Editor, type DesignObject } from "./editor";
+import { commandKey, isMac, shortcut } from "./platform";
 
 export function SelectionMenu({
   editor,
@@ -77,28 +78,28 @@ export function SelectionMenu({
     {
       label: "Copy",
       icon: Copy,
-      shortcut: "Ctrl+C",
+      shortcut: shortcut('C'),
       action: () => editor.copy(),
       disabled: !selected,
     },
     {
       label: "Cut",
       icon: Scissors,
-      shortcut: "Ctrl+X",
+      shortcut: shortcut('X'),
       action: () => editor.cut(),
       disabled: !selected,
     },
     {
       label: "Paste",
       icon: ClipboardPaste,
-      shortcut: "Ctrl+V",
+      shortcut: shortcut('V'),
       action: () => editor.paste(),
       disabled: !editor.clipboard,
     },
     {
       label: "Duplicate",
       icon: CopyPlus,
-      shortcut: "Ctrl+D",
+      shortcut: shortcut('D'),
       action: () => editor.duplicate(),
       disabled: !selected,
     },
@@ -201,7 +202,7 @@ export function SelectionMenu({
         <button role="menuitem" onClick={() => act(() => editor.group())}>
           {multiple ? <GroupIcon size={16} /> : <Ungroup size={16} />}
           <span>{multiple ? "Group selection" : "Ungroup"}</span>
-          <kbd>Ctrl+G</kbd>
+          <kbd>{shortcut('G')}</kbd>
         </button>
       )}
       {selected && (
@@ -265,7 +266,7 @@ export function SelectionMenu({
       <button role="menuitem" onClick={() => act(() => editor.selectAll())}>
         <SquareDashedMousePointer size={16} />
         <span>Select all</span>
-        <kbd>Ctrl+A</kbd>
+        <kbd>{shortcut('A')}</kbd>
       </button>
       {selected && (
         <button
@@ -275,10 +276,10 @@ export function SelectionMenu({
         >
           <Trash2 size={16} />
           <span>Delete selection</span>
-          <kbd>Del</kbd>
+          <kbd>{isMac ? '⌫' : 'Del'}</kbd>
         </button>
       )}
-      <div className="menu-hint">Shift / Ctrl-click to select several</div>
+      <div className="menu-hint">Shift / {commandKey}-click to select several</div>
     </div>,
     document.body,
   );

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { ActiveSelection, FabricImage, Group, Textbox, Rect } from "fabric";
+import { commandKey } from './platform';
 import {
   AlignCenter,
   AlignLeft,
@@ -117,7 +118,7 @@ export function Inspector({
       {tab === "layers" ? (
         <div className="layers-panel">
           <p className="muted small">
-            Front to back. Shift or Ctrl-click to select several.
+            Front to back. Shift or {commandKey}-click to select several.
           </p>
           <div className="layer-list">
             {[...editor.objects].reverse().map((layer, i) => (

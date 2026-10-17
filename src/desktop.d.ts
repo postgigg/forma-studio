@@ -1,3 +1,4 @@
+export type DesktopEditCommand = 'undo' | 'redo' | 'cut' | 'copy' | 'paste' | 'selectAll';
 export interface DesktopUpdateState {
   phase: 'idle' | 'unsupported' | 'checking' | 'available' | 'downloading' | 'downloaded' | 'error';
   currentVersion: string;
@@ -10,7 +11,10 @@ export interface DesktopUpdateState {
 declare global {
   interface Window {
     formaDesktop?: {
+      platform: string;
       aiEndpoint: string;
+      editText(command: DesktopEditCommand): void;
+      onEditCommand(callback: (command: DesktopEditCommand) => void): () => void;
       signIn(): Promise<boolean>;
       restartAI(): Promise<boolean>;
       saveFile(filename: string, bytes: ArrayBuffer): Promise<boolean>;

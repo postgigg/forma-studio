@@ -2,7 +2,7 @@
 
 The desktop app uses `electron-updater` with the public `postgigg/forma-studio` GitHub Releases feed. GitHub hosts the installers and update metadata. Forma checks after launch, every six hours while open, and from Help → Check for updates. No customer GitHub account, embedded token, running Forma backend or push-notification service is required.
 
-An available update opens a popup. The user downloads it, then chooses Save & restart. Downloads use the updater's release checksum validation. Automatic download and installation on ordinary app exit are disabled. Unsigned Windows releases remain unsigned; checksums do not provide an Authenticode publisher signature. Mac updates require a signed/notarized Mac release and are not available yet.
+An available update opens a popup. The user downloads it, then chooses Save & restart. Downloads use the updater's release checksum validation. Automatic download and installation on ordinary app exit are disabled. Unsigned Windows releases remain unsigned; checksums do not provide an Authenticode publisher signature. Mac updates require a signed/notarized Mac release and are disabled in ad-hoc development builds. No public Mac release is available yet. [Mac build and verification instructions](../docs/macos.md) cover both architectures and the signing path.
 
 `stable.json` supplies a release-specific minimum version. Set `minimumSupportedVersion` to the oldest supported version to label older installations **Update required**, and explain the change in `message`. The app only accepts a policy matching the available release. Users can save and keep working before restarting; losing internet access never locks away their designs. An invalid or missing policy leaves the normal update prompt available.
 

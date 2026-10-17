@@ -96,6 +96,7 @@ import { PhotoFrameDialog } from "./PhotoFrames";
 import { MarqueeSelection } from "./MarqueeSelection";
 import { PageThumbnails } from "./PageThumbnails";
 import { useDesignerActivity } from "./designer-activity";
+import { commandKey, shortcut } from "./platform";
 
 const navigation = [
   { id: "design", icon: LayoutTemplate, label: "Design" },
@@ -325,6 +326,28 @@ export default function App() {
       clearTimeout(toastTimer.current);
     };
   }, [notify]);
+  useEffect(() => {
+    const desktop = window.formaDesktop;
+    if (!desktop?.onEditCommand) return;
+    return desktop.onEditCommand(command => {
+      const target = document.activeElement;
+      if (target?.closest('input,textarea,[contenteditable="true"]')) {
+        desktop.editText(command);
+        return;
+      }
+      if (!editor?.ready || editor.busy || dialog || refinement || slides.length || target?.closest('[role="dialog"],[role="menu"]')) return;
+      run(() => {
+        switch (command) {
+          case 'undo': return editor.undo();
+          case 'redo': return editor.undo(true);
+          case 'cut': return editor.cut();
+          case 'copy': return editor.copy();
+          case 'paste': return editor.paste();
+          case 'selectAll': return editor.selectAll();
+        }
+      });
+    });
+  }, [editor, dialog, refinement, slides, run]);
   useEffect(() => {
     if (!editor?.ready || !stageRef.current || !autoFit) return;
     const el = stageRef.current;
@@ -755,13 +778,13 @@ export default function App() {
                   <span className="toolbar-divider" />
                   <IconButton
                     icon={Undo2}
-                    label="Undo (Ctrl+Z)"
+                    label={`Undo (${shortcut('Z')})`}
                     onClick={() => run(() => editor.undo())}
                     disabled={!editor.canUndo}
                   />
                   <IconButton
                     icon={Redo2}
-                    label="Redo (Ctrl+Shift+Z)"
+                    label={`Redo (${shortcut('Shift+Z')})`}
                     onClick={() => run(() => editor.undo(true))}
                     disabled={!editor.canRedo}
                   />
@@ -1347,13 +1370,13 @@ export default function App() {
           <p className="modal-description">Less clicking. More creating.</p>
           <div className="shortcut-list">
             {[
-              ["Undo", "Ctrl / ⌘ + Z"],
-              ["Redo", "Ctrl / ⌘ + Shift + Z"],
-              ["Copy / paste", "Ctrl / ⌘ + C / V"],
-              ["Duplicate", "Ctrl / ⌘ + D"],
-              ["Select all", "Ctrl / ⌘ + A"],
-              ["Group / ungroup", "Ctrl / ⌘ + G"],
-              ["Save on this device", "Ctrl / ⌘ + S"],
+              ["Undo", shortcut('Z')],
+              ["Redo", shortcut('Shift+Z')],
+              ["Copy / paste", shortcut('C / V')],
+              ["Duplicate", shortcut('D')],
+              ["Select all", shortcut('A')],
+              ["Group / ungroup", shortcut('G')],
+              ["Save on this device", shortcut('S')],
               ["Add text / rectangle / circle", "T / R / C"],
               ["Move an element", "Arrow keys"],
               ["Move 10 pixels", "Shift + Arrow"],
@@ -1376,7 +1399,7 @@ export default function App() {
             <Upload size={17} /> Import a Forma design file
           </button>
           <p className="muted small">
-            Shift or Ctrl-click elements or layers to select several. Drag a
+            Shift or {commandKey}-click elements or layers to select several. Drag a
             selection box across the canvas to select an area. Right-click a
             selection for actions, or press Shift+F10. All edits save on this
             device automatically.

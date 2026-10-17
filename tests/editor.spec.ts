@@ -427,7 +427,7 @@ test("edits text, drags, resizes, rotates, undoes, redoes, and restores after re
   await page.getByLabel("Font size", { exact: true }).fill("70");
   await page.getByLabel("Rotation", { exact: true }).fill("12");
   await page
-    .getByRole("button", { name: "Undo (Ctrl+Z)", exact: true })
+    .getByRole("button", { name: /^Undo \((?:Ctrl|⌘)\+Z\)$/, exact: true })
     .click();
   await page.getByRole("button", { name: /^Layers/ }).click();
   await page
@@ -437,7 +437,7 @@ test("edits text, drags, resizes, rotates, undoes, redoes, and restores after re
   await page.getByRole("button", { name: "Properties", exact: true }).click();
   await expect(page.getByLabel("Rotation", { exact: true })).toHaveValue("0");
   await page
-    .getByRole("button", { name: "Redo (Ctrl+Shift+Z)", exact: true })
+    .getByRole("button", { name: /^Redo \((?:Ctrl|⌘)\+Shift\+Z\)$/, exact: true })
     .click();
   await page.getByRole("button", { name: /^Layers/ }).click();
   await page

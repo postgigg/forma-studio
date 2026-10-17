@@ -28,6 +28,7 @@ import "./device-frame";
 import { SolidObject } from "./solid-object";
 import { PhotoFrame, type PhotoMask } from "./photo-frame";
 import { drawingBrush, drawingTools, type DrawingTool } from './drawing';
+import { shortcut } from './platform';
 
 export type DesignObject = FabricObject & { id?: string; name?: string; inkTool?: DrawingTool };
 FabricObject.customProperties = [
@@ -843,7 +844,7 @@ export class Editor {
   async copy() {
     if (this.selected) {
       this.clipboard = await this.selected.clone();
-      this.report("Copied. Press Ctrl+V to paste.");
+      this.report(`Copied. Press ${shortcut('V')} to paste.`);
       this.notify();
     }
   }

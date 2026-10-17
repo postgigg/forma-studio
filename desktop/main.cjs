@@ -7,24 +7,24 @@ const { randomBytes, timingSafeEqual } = require('node:crypto');
 const path = require('node:path');
 const { autoUpdater } = require('electron-updater');
 const { createUpdates } = require('./updates.cjs');
+const { bundledCodexPath, editCommands, menuTemplate, updatesEnabled } = require('./platform.cjs');
+const { renderProposal } = require('./render.cjs');
 const testing = !!process.env.FORMA_DESKTOP_TEST_DATA;
 const uiPort = testing ? 51862 : 51860, aiPort = testing ? 51863 : 51861;
 const root = path.resolve(__dirname, '..'), origin = `http://127.0.0.1:${uiPort}`, aiOrigin = `http://127.0.0.1:${aiPort}`;
 const captureToken = randomBytes(32).toString('hex');
-let main, server, worker, login, closing = false, closePending = false, closeTimer, installPending = false;
-const updates = createUpdates({ updater: autoUpdater, currentVersion: app.getVersion(), enabled: app.isPackaged && !process.env.FORMA_DESKTOP_TEST_DATA, onChange: state => { if (main && !main.isDestroyed()) main.webContents.send('forma:update-state', state); } });
+let main, server, worker, login, closing = false, closePending = false, closeTimer, installPending = false, quitRequested = false, started = false;
+const updates = createUpdates({ updater: autoUpdater, currentVersion: app.getVersion(), enabled: updatesEnabled({ platform: process.platform, packaged: app.isPackaged, testing, macDistribution: require('../package.json').formaMacDistribution }), onChange: state => { if (main && !main.isDestroyed()) main.webContents.send('forma:update-state', state); } });
 if (process.env.FORMA_DESKTOP_TEST_DATA) app.setPath('userData', path.resolve(process.env.FORMA_DESKTOP_TEST_DATA));
 app.setName('Forma Studio');
 if (process.platform === 'win32') app.setAppUserModelId(testing ? 'studio.forma.desktop.test' : 'studio.forma.desktop');
 if (!testing && !app.requestSingleInstanceLock()) app.quit();
 else {
-  app.on('second-instance', () => { if (main) { if (main.isMinimized()) main.restore(); main.show(); main.focus(); } });
+  app.on('second-instance', () => { void showWindow(); });
   app.whenReady().then(start).catch(error => { dialog.showErrorBox('Forma could not start', error.message); app.quit(); });
 }
 function codexPath() {
-  const triplet = `${process.arch === 'arm64' ? 'aarch64' : 'x86_64'}-${process.platform === 'win32' ? 'pc-windows-msvc' : process.platform === 'darwin' ? 'apple-darwin' : 'unknown-linux-musl'}`;
-  const unpacked = root.endsWith('app.asar') ? root + '.unpacked' : root;
-  const binary = path.join(unpacked, 'node_modules', '@openai', `codex-${process.platform}-${process.arch}`, 'vendor', triplet, 'bin', process.platform === 'win32' ? 'codex.exe' : 'codex');
+  const binary = bundledCodexPath(root);
   if (!existsSync(binary)) throw new Error('The bundled AI engine is missing. Please reinstall Forma Studio.');
   return binary;
 }
@@ -38,7 +38,7 @@ async function startWorker() {
   const runtime = path.join(app.getPath('userData'), 'runtime'); mkdirSync(runtime, { recursive: true });
   worker = utilityProcess.fork(path.join(root, 'server', 'designer.mjs'), [], {
     cwd: runtime, serviceName: 'Forma AI Designer', stdio: 'pipe',
-    env: { ...process.env, FORMA_DATA_DIR: runtime, FORMA_AI_PORT: String(aiPort), FORMA_UI_ORIGIN: origin, FORMA_CODEX_BIN: codexPath(), FORMA_CAPTURE_ENDPOINT: origin + '/desktop/capture', FORMA_CAPTURE_TOKEN: captureToken },
+    env: { ...process.env, FORMA_DATA_DIR: runtime, FORMA_AI_PORT: String(aiPort), FORMA_UI_ORIGIN: origin, FORMA_CODEX_BIN: codexPath(), FORMA_CAPTURE_ENDPOINT: origin + '/desktop/capture', FORMA_CAPTURE_TOKEN: captureToken, FORMA_RENDER_ENDPOINT: origin + '/desktop/render', FORMA_RENDER_TOKEN: captureToken },
   });
   const log = data => appendFileSync(path.join(runtime, 'designer.log'), data);
   worker.stdout?.on('data', log); worker.stderr?.on('data', log);
@@ -76,11 +76,16 @@ async function startServer() {
     try {
       if (req.headers.host !== `127.0.0.1:${uiPort}`) { res.writeHead(403); return res.end(); }
       const url = new URL(req.url, origin);
-      if (url.pathname === '/desktop/capture' && req.method === 'POST') {
-        const supplied = Buffer.from(String(req.headers['x-forma-capture'] || '')), expected = Buffer.from(captureToken);
+      if (['/desktop/capture', '/desktop/render'].includes(url.pathname) && req.method === 'POST') {
+        const rendering = url.pathname === '/desktop/render';
+        const supplied = Buffer.from(String(req.headers[rendering ? 'x-forma-render' : 'x-forma-capture'] || '')), expected = Buffer.from(captureToken);
         if (supplied.length !== expected.length || !timingSafeEqual(supplied, expected)) { res.writeHead(403); return res.end(); }
-        let body = ''; for await (const chunk of req) { body += chunk; if (body.length > 5000) throw new Error('Invalid capture request.'); }
-        const result = await capture(JSON.parse(body));
+        const chunks = []; let size = 0;
+        for await (const chunk of req) { size += chunk.length; if (size > (rendering ? 32 * 1024 * 1024 : 5000)) throw new Error('Oversized desktop request.'); chunks.push(chunk); }
+        const value = JSON.parse(Buffer.concat(chunks).toString('utf8'));
+        const controller = new AbortController();
+        res.once('close', () => { if (!res.writableEnded) controller.abort(); });
+        const result = rendering ? await renderProposal({ BrowserWindow, session, origin, proposal: value, signal: controller.signal }) : await capture(value);
         res.writeHead(200, { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' }); return res.end(JSON.stringify(result));
       }
       if (!['GET', 'HEAD'].includes(req.method)) { res.writeHead(405); return res.end(); }
@@ -98,17 +103,9 @@ async function startServer() {
   });
   await new Promise((resolve, reject) => { server.once('error', reject); server.listen(uiPort, '127.0.0.1', resolve); });
 }
-async function start() {
-  await startServer();
-  session.defaultSession.setPermissionRequestHandler((_wc, _permission, callback) => callback(false));
-  session.defaultSession.setPermissionCheckHandler(() => false);
+async function createWindow() {
+  closing = false; closePending = false;
   main = new BrowserWindow({ width: 1560, height: 1040, minWidth: 900, minHeight: 650, title: 'Forma Studio', backgroundColor: '#f5f2f9', show: false, icon: path.join(root, 'desktop', 'icon.png'), webPreferences: { preload: path.join(__dirname, 'preload.cjs'), additionalArguments: [`--forma-ai-port=${aiPort}`], contextIsolation: true, sandbox: true, nodeIntegration: false } });
-  Menu.setApplicationMenu(Menu.buildFromTemplate([
-    ...(process.platform === 'darwin' ? [{ label: 'Forma Studio', submenu: [{ role: 'about' }, { type: 'separator' }, { role: 'quit' }] }] : []),
-    { label: 'File', submenu: [{ label: 'Close', accelerator: 'Alt+F4', click: () => main.close() }] },
-    { role: 'editMenu' }, { label: 'View', submenu: [{ role: 'togglefullscreen' }] },
-    { label: 'Help', submenu: [{ label: 'Check for updates', click: () => { main.webContents.send('forma:show-updates'); void updates.check(); } }, { label: 'Forma walkthrough', click: () => openExternal('https://github.com/postgigg/forma-studio#readme') }] },
-  ]));
   main.webContents.setWindowOpenHandler(({ url }) => { openExternal(url); return { action: 'deny' }; });
   main.webContents.on('will-navigate', (event, url) => { if (new URL(url).origin !== origin) event.preventDefault(); });
   main.webContents.on('will-attach-webview', event => event.preventDefault());
@@ -118,7 +115,33 @@ async function start() {
     event.preventDefault(); if (closePending) return; closePending = true;
     main.webContents.send('forma:before-close'); closeTimer = setTimeout(() => void failedSave(), 10000);
   });
-  ipcMain.on('forma:saved', (event, result) => { trusted(event); clearTimeout(closeTimer); if (result?.ok) { closing = true; if (installPending) updates.install(); else app.quit(); } else void failedSave(); });
+  main.on('closed', () => { main = null; clearTimeout(closeTimer); });
+  await main.loadURL(origin);
+}
+async function showWindow() {
+  if (!started) return;
+  if (!main) await createWindow();
+  if (main.isMinimized()) main.restore();
+  main.show(); main.focus();
+}
+function finishClose() {
+  closing = true;
+  if (installPending) updates.install();
+  else if (process.platform !== 'darwin' || quitRequested) app.quit();
+  else main.close();
+}
+async function start() {
+  await startServer();
+  session.defaultSession.setPermissionRequestHandler((_wc, _permission, callback) => callback(false));
+  session.defaultSession.setPermissionCheckHandler(() => false);
+  Menu.setApplicationMenu(Menu.buildFromTemplate(menuTemplate({
+    edit: command => main?.webContents.send('forma:edit-command', command),
+    close: () => main?.close(),
+    checkForUpdates: async () => { await showWindow(); main.webContents.send('forma:show-updates'); void updates.check(); },
+    walkthrough: () => openExternal('https://github.com/postgigg/forma-studio#readme'),
+  })));
+  ipcMain.on('forma:edit-text', (event, command) => { trusted(event); if (editCommands.includes(command)) main.webContents[command](); });
+  ipcMain.on('forma:saved', (event, result) => { trusted(event); clearTimeout(closeTimer); if (result?.ok) finishClose(); else void failedSave(); });
   ipcMain.handle('forma:update-status', event => { trusted(event); return updates.getState(); });
   ipcMain.handle('forma:update-check', event => { trusted(event); main.webContents.send('forma:show-updates'); return updates.check(); });
   ipcMain.handle('forma:update-download', event => { trusted(event); return updates.download(); });
@@ -144,15 +167,18 @@ async function start() {
     });
     await startWorker(); return true;
   });
-  await main.loadURL(origin);
+  await createWindow();
+  started = true;
   updates.start();
-  void startWorker().catch(error => main.webContents.send('forma:ai-error', error.message));
+  void startWorker().catch(error => main?.webContents.send('forma:ai-error', error.message));
 }
 async function failedSave() {
   clearTimeout(closeTimer); closePending = false;
   const result = await dialog.showMessageBox(main, { type: 'warning', buttons: ['Keep working', 'Close anyway'], defaultId: 0, cancelId: 0, title: 'Your latest changes may not be saved', message: 'Keep Forma open and export a Forma file to protect your work before closing.' });
-  if (result.response === 1) { closing = true; if (installPending) updates.install(); else app.quit(); }
-  else installPending = false;
+  if (result.response === 1) finishClose();
+  else { installPending = false; quitRequested = false; }
 }
-app.on('window-all-closed', () => app.quit());
+app.on('activate', () => { void showWindow(); });
+app.on('before-quit', () => { quitRequested = true; });
+app.on('window-all-closed', () => { if (process.platform !== 'darwin') app.quit(); });
 app.on('will-quit', () => { updates.stop(); worker?.kill(); login?.kill(); server?.close(); });

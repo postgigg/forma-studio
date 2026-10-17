@@ -39,7 +39,7 @@ try {
  await page.locator('.canvas-container').screenshot({path:'test-results/refinement-applied.png'});
  writeFileSync('.local/refinement-input.json',JSON.stringify(submitted));
  writeFileSync('.local/refinement-output.json',JSON.stringify(after));
- await page.getByRole('button',{name:'Undo (Ctrl+Z)',exact:true}).click();
+ await page.getByRole('button',{name:/^Undo \((?:Ctrl|⌘)\+Z\)$/,exact:true}).click();
  await page.waitForTimeout(600);const undo=await saved(page);assert.deepEqual(undo.pages[0].data.objects,old);
  console.log('PASS: real AI photo edit, two editable groups, unselected content unchanged, one-step Undo.');
  const brandJob=await api('/jobs',{prompt:'Create a refined original botanical brand launch poster for PETAL STUDIO. Exact wording: PETAL STUDIO; Small rituals. Beautiful days.; Botanical essentials. Use Forma Deco for the main headline and Arial for details. Warm ivory, deep forest and muted terracotta. Thoughtful negative space and confident professional editorial composition. Include the provided brand logo exactly as supplied.',width:1080,height:1080,pages:1,logo,brand:'PETAL STUDIO',palette:['#f7f2e8','#284637','#bd7558']});

@@ -1,0 +1,85 @@
+name: Build Mac
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      signed:
+        description: Build with Developer ID signing and Apple notarization
+        type: boolean
+        default: false
+permissions:
+  contents: read
+concurrency:
+  group: forma-mac-${{ github.ref }}-${{ github.event_name }}
+  cancel-in-progress: true
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - runner: macos-15-intel
+            arch: x64
+            output: mac
+          - runner: macos-15
+            arch: arm64
+            output: mac-arm64
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: '22'
+          cache: npm
+      - name: Check native build architecture
+        env:
+          EXPECTED_ARCH: ${{ matrix.arch }}
+        run: node -e "require('node:assert/strict').equal(process.arch, process.env.EXPECTED_ARCH)"
+      - run: npm ci
+      - run: npm audit --omit=dev --audit-level=high
+      - run: mkdir -p .local
+      - run: npm run test:server
+      - run: npm run test:desktop
+      - run: node scripts/verify-marketing-site.mjs
+      - name: Package the native app for functional checks
+        run: npm run desktop:package:mac -- --dir
+      - name: Verify bundle architecture, AI binary, icon and signature
+        run: node scripts/verify-mac-package.mjs
+      - name: Exercise the packaged editor
+        env:
+          FORMA_PACKAGED_EXE: ${{ github.workspace }}/release/${{ matrix.output }}/Forma Studio.app/Contents/MacOS/Forma Studio
+          FORMA_SMOKE_OUTPUT: .local/desktop-smoke
+        run: npm run desktop:smoke
+      - name: Package the Mac installers
+        env:
+          CSC_IDENTITY_AUTO_DISCOVERY: ${{ inputs.signed && 'true' || 'false' }}
+          CSC_LINK: ${{ inputs.signed && secrets.MAC_CSC_LINK || '' }}
+          CSC_KEY_PASSWORD: ${{ inputs.signed && secrets.MAC_CSC_KEY_PASSWORD || '' }}
+          APPLE_ID: ${{ inputs.signed && secrets.APPLE_ID || '' }}
+          APPLE_APP_SPECIFIC_PASSWORD: ${{ inputs.signed && secrets.APPLE_APP_SPECIFIC_PASSWORD || '' }}
+          APPLE_TEAM_ID: ${{ inputs.signed && secrets.APPLE_TEAM_ID || '' }}
+        run: npm run desktop:package:mac -- ${{ inputs.signed && '--signed' || '' }}
+      - name: Verify final installer bundle
+        run: node scripts/verify-mac-package.mjs ${{ inputs.signed && '--signed' || '' }}
+      - name: Keep installers and verification evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: forma-mac-${{ matrix.arch }}
+          if-no-files-found: warn
+          include-hidden-files: true
+          path: |
+            release/Forma-Studio-*.dmg
+            release/Forma-Studio-*.zip
+            release/*.blockmap
+            release/latest-mac.yml
+            release/update-policy.json
+            release/SHA256SUMS-mac-*.txt
+            .local/desktop-smoke/result.json
+            .local/desktop-smoke/*.png
+            .local/mac-package-verification.json

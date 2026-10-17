@@ -19,8 +19,9 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm audit --omit=dev --audit-level=high
+      - run: New-Item -ItemType Directory -Force .local
       - run: npm run test:server
-      - run: npm run test:updates
+      - run: npm run test:desktop
       - run: npm run desktop:package
       - name: Publish complete update files
         shell: pwsh

@@ -32,7 +32,7 @@ The new identity has a custom folded F symbol and drawn wordmark, shared across 
 
 For AI, open **AI Designer → AI account & connection → Sign in to Codex**. Complete the sign-in in your browser and return to Forma. Your existing Codex login is also recognized. AI needs a supported account, internet access and available provider usage; those costs are separate from the app. Manual editing and exports work without AI. Website frames use the bundled desktop browser to capture pages in an isolated session.
 
-The Mac app is planned at **$19 once**. Payment delivery and Apple signing/notarization are not configured yet; there is no Mac checkout or verified Mac download in this release.
+The Mac edition is planned at **$49 as a one-time payment**. It shares the existing editor and Forma branding, with native Intel and Apple Silicon build paths for macOS 12 and later. [Mac build and verification instructions](docs/macos.md) cover development packages, signing, notarization and the evidence still needed before distribution. There is no Mac checkout or public Mac download in this release.
 
 For developers, `npm run desktop` opens the built desktop app and `npm run desktop:package` builds an installer. `npm run desktop:smoke` checks the app using a separate test profile. Desktop services bind to `127.0.0.1:51860` and `127.0.0.1:51861`; app data and AI job history live in the user's Forma app-data directory.
 
@@ -323,7 +323,7 @@ Verified on Windows on **2026-10-14**: the production build succeeded, **41 brow
 
 Earlier checks rendered all 150 new template previews without text overflow, retained a supplied photograph and logo byte-for-byte as editable layers, and exercised laptop rotation with WebGL disabled. Real AI Pencil and refinement checks preserved pixels outside the marked region and supported Undo. The scripts and example screenshots below make these checks reproducible.
 
-The **packaged Windows executable** also passed an isolated-profile check: renderer isolation, the bundled Codex worker reporting GPT-6 Astra, website capture, editable 3D, and native PNG/PDF/JSON saves. The landing page was checked at desktop and mobile widths, including filters, image previews and FAQ controls. The Windows installer is unsigned; Mac packaging and payment delivery remain unverified.
+The **packaged Windows executable** also passed an isolated-profile check: renderer isolation, the bundled Codex worker reporting GPT-6 Astra, website capture, editable 3D, and native PNG/PDF/JSON saves. The landing page was checked at desktop and mobile widths, including filters, image previews and FAQ controls. The Windows installer is unsigned. [Mac compatibility evidence and remaining runtime checks](docs/macos.md#verification-evidence) are recorded separately; Mac paid delivery is not configured.
 
 With the local editor and worker running:
 
