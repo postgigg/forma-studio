@@ -10,7 +10,7 @@ if (!html.includes('Good ideas.') || !html.includes('Download for Windows') || /
 }
 const destination = path.join(root, 'website');
 await mkdir(destination, { recursive: true });
-for (const name of ['index.html', 'style.css', 'site.js', 'assets']) {
+for (const name of ['index.html', 'style.css', 'site.js', 'walkthrough.html', 'walkthrough.css', 'assets']) {
   await cp(path.join(source, name), path.join(destination, name), { recursive: true });
 }
 console.log(`Copied the landing page into ${destination}. Run node scripts/verify-marketing-site.mjs before publishing.`);

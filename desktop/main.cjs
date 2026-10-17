@@ -107,7 +107,7 @@ async function start() {
     ...(process.platform === 'darwin' ? [{ label: 'Forma Studio', submenu: [{ role: 'about' }, { type: 'separator' }, { role: 'quit' }] }] : []),
     { label: 'File', submenu: [{ label: 'Close', accelerator: 'Alt+F4', click: () => main.close() }] },
     { role: 'editMenu' }, { label: 'View', submenu: [{ role: 'togglefullscreen' }] },
-    { label: 'Help', submenu: [{ label: 'Check for updates', click: () => { main.webContents.send('forma:show-updates'); void updates.check(); } }, { label: 'Forma walkthrough', click: () => openExternal('https://github.com/postgigg/forma-studio#readme') }] },
+    { label: 'Help', submenu: [{ label: 'Check for updates', click: () => { main.webContents.send('forma:show-updates'); void updates.check(); } }, { label: 'Forma walkthrough', click: () => openExternal('https://tryformastudio.netlify.app/walkthrough.html') }] },
   ]));
   main.webContents.setWindowOpenHandler(({ url }) => { openExternal(url); return { action: 'deny' }; });
   main.webContents.on('will-navigate', (event, url) => { if (new URL(url).origin !== origin) event.preventDefault(); });

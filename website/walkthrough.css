@@ -1,0 +1,16 @@
+.guide-main{max-width:1440px;margin:auto;padding:0 clamp(24px,5vw,88px)}
+.guide-intro{padding:clamp(64px,9vw,128px) 0 80px;max-width:900px}
+.guide-kicker{font-size:14px;letter-spacing:.12em;text-transform:uppercase;margin-bottom:24px}
+.guide-intro h1{font-size:clamp(64px,8vw,112px);line-height:.98;letter-spacing:-.06em;margin:0 0 32px}
+.guide-intro>p:not(.guide-kicker){font-size:22px;line-height:1.5;margin-bottom:32px}
+.guide-section{display:grid;grid-template-columns:1fr 1.1fr;gap:clamp(32px,6vw,88px);padding:64px 0;border-top:1px solid #22222230;align-items:start;scroll-margin-top:120px}
+.guide-copy h2{font-size:clamp(36px,4vw,56px);line-height:1.04;letter-spacing:-.045em;margin:20px 0 28px}
+.guide-number{font-size:16px;color:#6556a8}
+.guide-copy p,.guide-note p{font-size:18px;line-height:1.65;margin:0 0 20px;max-width:64ch}
+.guide-note{background:#e9e4f4;border-radius:20px;padding:clamp(24px,3vw,40px)}
+.guide-note h3{font-size:25px;line-height:1.2;letter-spacing:-.025em;margin:0 0 16px}
+.guide-note h3:not(:first-child){margin-top:32px}
+.guide-section figure{margin:0}.guide-section img{display:block;width:100%;height:auto;border-radius:12px}.guide-section figcaption{font-size:14px;margin-top:14px;color:#59545e}
+.guide-page .site-header{position:relative}.guide-page .button{white-space:normal;text-align:center}.guide-page footer{margin-top:40px}
+@media(max-width:850px){.guide-section{grid-template-columns:1fr}.guide-page .site-header nav{display:none}.guide-intro{padding-bottom:56px}.guide-section{padding:40px 0}}
+@media(prefers-reduced-motion:no-preference){.guide-intro{animation:guide-arrive .7s ease-out both}@keyframes guide-arrive{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}}

@@ -4,7 +4,6 @@ Submission type: **Showcase**. This is not a sale listing.
 
 Website: https://tryformastudio.netlify.app/
 
-Source: https://github.com/postgigg/forma-studio
 
 ## Short description
 

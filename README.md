@@ -18,15 +18,15 @@ Build with draggable layers, original artwork, photo-filled letters, editable ch
 
 ## Download the desktop app
 
-**Windows is free.** Download [Forma Studio 1.6.0 for Windows](https://github.com/postgigg/forma-studio/releases/download/v1.6.0/Forma-Studio-Setup-1.6.0.exe), run the installer, and open **Forma Studio** from your desktop or Start menu. Windows 10/11, 64-bit. The current installer is unsigned, so Windows may display an unknown-publisher warning.
+**Windows is free.** Download [Forma Studio 1.6.1 for Windows](https://tryformastudio.netlify.app/downloads/v1.6.1/Forma-Studio-Setup-1.6.1.exe), run the installer, and open **Forma Studio** from your desktop or Start menu. Windows 10/11, 64-bit. The current installer is unsigned, so Windows may display an unknown-publisher warning.
 
 **Business setup:** In **Your style → Brand & intent** or **Brand**, choose **Enter manually** or **Use my website**. AI drafts the company, business, mission, audience and voice from public pages, with source excerpts and clearly labelled suggestions. Review the draft, choose which fields to fill, then save. Existing values are preserved by default. Your personal design preferences stay separate and combine with the reviewed brand context across AI tools.
 
-**Security:** [Read the security boundaries and verification notes](SECURITY.md). The desktop renderer is sandboxed and isolated; the local AI API checks origins and session tokens. Website drafting validates public network destinations, and the download site serves static marketing content. [Report a vulnerability privately](https://github.com/postgigg/forma-studio/security/advisories/new).
+**Security:** [Read the security boundaries and verification notes](SECURITY.md). The desktop renderer is sandboxed and isolated; the local AI API checks origins and session tokens. Website drafting validates public network destinations, and the download site serves static marketing content. [Report a vulnerability privately](https://tryformastudio.netlify.app/security/report).
 
 The desktop app bundles the editor, its local worker and Codex CLI. No terminal, Node.js or Docker is required for everyday use. Forma requires no app account or sign-in. Projects save locally; **Export → Forma JSON** creates an editable backup. To move a browser project into the desktop app, export it from the browser and import the JSON file in Forma. Their storage is separate.
 
-**Updates:** Version 1.2 and later check GitHub Releases when you are online. Choose **Download update**, then **Save & restart**. You can keep working until you are ready. Help also has **Check for updates**. There is no Forma update server, subscription or customer GitHub login. Versions 1.1.x need the current installer once to enable future in-app updates. [Release and minimum-version instructions](updates/README.md) explain how to publish an update and show an **Update required** prompt without locking users out of offline designs.
+**Updates:** Version 1.2 and later check for releases when you are online. Choose **Download update**, then **Save & restart**. You can keep working until you are ready. Help also has **Check for updates**. There is no Forma update server, subscription or customer release-host account. Versions 1.1.x need the current installer once to enable future in-app updates. [Release and minimum-version instructions](updates/README.md) explain how to publish an update and show an **Update required** prompt without locking users out of offline designs.
 
 The new identity has a custom folded F symbol and drawn wordmark, shared across the editor, desktop, installer and website. [Identity files and usage](public/brand/README.md) include the source geometry and the limits of the preliminary name/mark search.
 
@@ -40,10 +40,9 @@ For developers, `npm run desktop` opens the built desktop app and `npm run deskt
 
 The complete installation has been exercised on **Windows with Docker Desktop and Microsoft Edge**. Install **Node.js 22.12 or newer in the 22.x line**, npm, and Git. Docker Desktop must be running for the complete stack.
 
-### 1. Get the project
+### 1. Open a maintainer source checkout
 
 ```powershell
-git clone https://github.com/postgigg/forma-studio.git
 cd forma-studio
 npm ci
 ```
@@ -288,7 +287,7 @@ Browser designs, uploads, and brand settings live in IndexedDB for the current o
 
 ## Try an example
 
-Download a JSON file using GitHub's **Download raw file** button, then drag it onto Forma. All three are original editable samples.
+Save a sample JSON file, then drag it onto Forma. All three are original editable samples.
 
 | Birthday invitation                                     | Quarterly report                                     | Photo-filled letter                                        |
 | ------------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------------- |

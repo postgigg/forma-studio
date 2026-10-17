@@ -4,6 +4,23 @@
   publish = "."
 [build.environment]
   NODE_VERSION = "22"
+[build.processing.html]
+  pretty_urls = false
+[[redirects]]
+  from = "/downloads/v1.6.2/Forma-Studio-Setup-1.6.2.exe"
+  to = "https://github.com/postgigg/forma-studio/releases/download/v1.6.2/Forma-Studio-Setup-1.6.2.exe"
+  status = 302
+  force = true
+[[redirects]]
+  from = "/security/report"
+  to = "https://github.com/postgigg/forma-studio/security/advisories/new"
+  status = 302
+  force = true
+[[redirects]]
+  from = "/downloads/v1.6.1/Forma-Studio-Setup-1.6.1.exe"
+  to = "https://github.com/postgigg/forma-studio/releases/download/v1.6.1/Forma-Studio-Setup-1.6.1.exe"
+  status = 302
+  force = true
 [[redirects]]
   from = "/app/*"
   to = "/#download"
