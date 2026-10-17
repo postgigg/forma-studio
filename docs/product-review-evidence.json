@@ -406,5 +406,82 @@
       "githubAlertLeftOpen": true
     },
     "windowsPublisherSignature": "NotSigned"
+  },
+  "patch161": {
+    "targetedBrowserChecks": 1,
+    "viewportWidths": [
+      1440,
+      1366,
+      1024,
+      390
+    ],
+    "campaignActionPlacement": true,
+    "noDuplicateCampaignAction": true,
+    "native": {
+      "version": "1.6.1",
+      "testedAt": "2026-10-17T20:03:34.203Z",
+      "packaged": true,
+      "rendererNodeUnavailable": true,
+      "restrictedBridge": true,
+      "cspBlocksExternalFetch": true,
+      "hostRebindingBlocked": true,
+      "sessionOriginRequired": true,
+      "brandWebsiteChoices": true,
+      "combinedBrandAndStyle": true,
+      "summaryCheck": {
+        "fullStatus": "completed",
+        "fullPages": 1,
+        "summaryStatus": "completed",
+        "summaryResult": null
+      },
+      "headerCollapse": true,
+      "campaignActionPlacement": true,
+      "chartStyles": 9,
+      "savedScatterX": true,
+      "campaignIllustration": true,
+      "photoMask": true,
+      "native3DRotation": true,
+      "savedLineChartEditing": true,
+      "engine": {
+        "model": "gpt-6.1-sol",
+        "reasoningEffort": "max"
+      },
+      "errors": []
+    },
+    "installer": {
+      "name": "Forma-Studio-Setup-1.6.1.exe",
+      "size": 689346450,
+      "sha256": "8feb6674c84d4864b9191ae37e21353b443da3dc1ed54710ee9c65e2f80d70ee"
+    },
+    "compiledBundleMatches": true,
+    "canonicalBrandMatches": true,
+    "fuseState": {
+      "RunAsNode": false,
+      "EnableCookieEncryption": true,
+      "EnableNodeOptionsEnvironmentVariable": false,
+      "EnableNodeCliInspectArguments": false,
+      "EnableEmbeddedAsarIntegrityValidation": true,
+      "OnlyLoadAppFromAsar": true,
+      "GrantFileProtocolExtraPrivileges": false
+    },
+    "developmentAdvisory": {
+      "id": "GHSA-hp3w-g68c-fv3c",
+      "url": "https://github.com/advisories/GHSA-hp3w-g68c-fv3c",
+      "scope": "development",
+      "upstreamPatchAvailable": false,
+      "checkedPackages": [
+        "sprintf-js",
+        "roarr",
+        "global-agent",
+        "@electron/get",
+        "electron-builder",
+        "app-builder-lib",
+        "dmg-builder",
+        "electron-builder-squirrel-windows"
+      ],
+      "foundInPackagedArchive": [],
+      "githubAlertLeftOpen": true
+    },
+    "windowsPublisherSignature": "NotSigned"
   }
 }

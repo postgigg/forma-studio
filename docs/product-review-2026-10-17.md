@@ -27,6 +27,8 @@ The rebuilt Windows package passed isolated native checks for the shared brand s
 
 The 15:25 follow-up annotation moves the existing Campaigns action into the right-hand header group, before New design, Present and Export. The 1.6.1 source preserves the existing handler and collapsed-header access. Its targeted browser regression passed at 1440, 1366, 1024 and 390 pixels without page overflow. [Actual header screenshot](media/header-actions-v1.6.1.png). Version 1.6.0 remains an immutable public release.
 
+The 1.6.1 packaged desktop run also passed campaign placement, the shared brand setup, collapsed-header actions, saved numeric scatter and reopened line charts, native photo masks and 3D rotation, status summaries and renderer/request isolation, with no runtime errors. Its installer, updater metadata, canonical artwork and security fuses were verified; the new digest is recorded under `patch161` in [the evidence](product-review-evidence.json).
+
 ## Recommended build order
 
 These are proposed improvements, not a list of shipped capabilities.
