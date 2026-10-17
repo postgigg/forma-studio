@@ -547,7 +547,6 @@ export default function App() {
         >
           <FolderOpen size={17} /> My designs
         </button>
-        <button className="campaign-launch" aria-label="Campaigns" title="Campaigns" disabled={!ready} onClick={() => run(async () => { await editor!.save(); setDialog('campaigns'); })}><Megaphone size={17}/><span>Campaigns</span></button>
         <span className="header-chevron">/</span>
         <div className="design-title">
           {ready ? (
@@ -573,6 +572,7 @@ export default function App() {
           <span>{editor?.saveStatus || "Opening studio…"}</span>
         </div>
         <div className="header-actions">
+          <button className="campaign-launch" aria-label="Campaigns" title="Campaigns" disabled={!ready} onClick={() => run(async () => { await editor!.save(); setDialog('campaigns'); })}><Megaphone size={17}/><span>Campaigns</span></button>
           <button
             className="secondary new-design-button"
             disabled={!ready}

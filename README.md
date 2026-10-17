@@ -220,6 +220,10 @@ Charts render as native canvas groups. Keep the group intact for the data editor
 
 Use **Hide top bar** in the canvas toolbar for more canvas space. **Show top bar** restores it; **Design actions** keeps your title, projects, campaigns, presentation and export accessible while it is hidden. The AI Designer rail icon shows active design work even when another library panel is open, and stops when that work finishes, fails or is cancelled.
 
+**Campaigns** sits beside **New design**, **Present** and **Export** in the right-hand header actions.
+
+![Actual editor with Campaigns in the right-hand action group.](docs/media/header-actions-v1.6.1.png)
+
 ![Numeric scatter data and live preview in the editable chart dialog.](docs/media/advanced-chart-editor-v1.6.png)
 
 ### 6. Refine selected content with AI

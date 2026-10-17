@@ -1,6 +1,8 @@
-Forma Studio 1.6.0 adds reviewed website-to-business onboarding and strengthens desktop and publishing security.
+Forma Studio 1.6.1 moves Campaigns beside New design, Present and Export, matching the October 17 header annotation. The existing action also remains in the collapsed-header Design actions menu. The public 1.6.0 installer is unchanged.
 
-- Choose Enter manually or Use my website in Your style → Brand & intent and the Brand panel. The local AI reads public pages, drafts supported business details, labels suggestions and shows source evidence. Choose fields, edit them and save after review; existing details are preserved by default.
+Includes these verified improvements from 1.6.0:
+
+- Choose Enter manually or Use my website in Brand → Set up brand & style → Brand & intent. The local AI reads public pages, drafts supported business details, labels suggestions and shows source evidence. Choose fields, edit them and save after review; existing details are preserved by default.
 - Website drafting blocks private, loopback, link-local and reserved destinations, validates redirects, pins public DNS results, bounds responses and never executes website scripts or sends browser cookies.
 - Website AI jobs continue beyond six minutes, recover status reads and support explicit cancellation. No Forma-operated AI server is used.
 - Brand and personal style now share one setup in Brand. Existing saved values are retained; company, mission and design preferences save together in one transaction. Logo and palette tools remain in the same Brand entry.

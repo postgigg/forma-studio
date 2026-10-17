@@ -49,9 +49,15 @@ test("legacy brand and taste share one editor; cancel and a failed combined save
   expect((await profiles(page)).style.enabled).toBe(false);
 });
 
-test("collapsing the header reclaims canvas height, preserves artwork and keeps actions and restore accessible", async ({ page }) => {
+test("Campaigns sits beside design actions and the collapsed header preserves canvas, actions and restore", async ({ page }) => {
   await page.goto("/");
   await page.getByLabel("Design title", { exact: true }).waitFor();
+  const campaigns = page.locator(".header-actions").getByRole("button", { name: "Campaigns", exact: true });
+  await expect(campaigns).toHaveCount(1);
+  expect(await page.locator(".header-actions > button").evaluateAll(buttons => buttons.map(button => button.getAttribute("aria-label") || button.textContent?.trim()))).toEqual(["Campaigns", "New blank design", "Present", "Export"]);
+  await campaigns.click();
+  await expect(page.getByRole("dialog", { name: "Campaign studio", exact: true })).toBeVisible();
+  await page.getByRole("dialog", { name: "Campaign studio", exact: true }).getByRole("button", { name: "Close dialog", exact: true }).click();
   const before = await saved(page), height = (await page.locator(".canvas-stage").boundingBox())!.height;
   await page.getByRole("button", { name: "Hide top bar", exact: true }).click();
   await expect(page.locator("#studio-header")).toBeHidden();
@@ -68,6 +74,15 @@ test("collapsing the header reclaims canvas height, preserves artwork and keeps 
   await page.getByRole("button", { name: "Show top bar", exact: true }).click();
   await expect(page.getByLabel("Design title", { exact: true })).toHaveValue("Compact workspace");
   await expect(page.getByRole("button", { name: "Hide top bar", exact: true })).toBeFocused();
+  for (const width of [1440, 1366, 1024, 390]) {
+    await page.setViewportSize({ width, height: 900 });
+    await expect(campaigns).toBeVisible();
+    expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(width);
+    const bounds = (await campaigns.boundingBox())!;
+    expect(bounds.x).toBeGreaterThanOrEqual(0); expect(bounds.x + bounds.width).toBeLessThanOrEqual(width);
+  }
+  await page.setViewportSize({ width: 1366, height: 768 });
+  await page.screenshot({ path: "test-results/header-actions-v1.6.1.png", animations: "disabled" });
 });
 
 for (const terminal of ["completed", "failed", "cancelled"]) test(`AI rail tracks work outside its panel and stops on ${terminal}`, async ({ page }) => {

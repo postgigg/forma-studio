@@ -25,6 +25,8 @@ The screenshot-driven follow-up passed 31 browser regressions: 21 across shared 
 
 The rebuilt Windows package passed isolated native checks for the shared brand setup, collapsed-header actions, nine chart options, saved numeric scatter data, reopened line-chart editing and summary-only job status. Renderer isolation, blocked external fetches, local Host/Origin checks, native photo masks and 3D rotation also passed. Its compiled bundle, canonical artwork, updater hashes and seven Electron fuses match the release evidence. The installer is unsigned; the open build-tool advisory remains excluded from the packaged app. Details and the exact installer digest are in [the measured evidence](product-review-evidence.json).
 
+The 15:25 follow-up annotation moves the existing Campaigns action into the right-hand header group, before New design, Present and Export. The 1.6.1 source preserves the existing handler and collapsed-header access. Its targeted browser regression passed at 1440, 1366, 1024 and 390 pixels without page overflow. [Actual header screenshot](media/header-actions-v1.6.1.png). Version 1.6.0 remains an immutable public release.
+
 ## Recommended build order
 
 These are proposed improvements, not a list of shipped capabilities.
