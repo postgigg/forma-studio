@@ -1,6 +1,13 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
+import { mkdtemp, rm } from 'node:fs/promises';
+import { spawn } from 'node:child_process';
+import { once } from 'node:events';
+import { tmpdir } from 'node:os';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+import desktopPlatform from '../desktop/platform.cjs';
 import { validateBrief, validateProposal } from "../server/contract.mjs";
 const sample = JSON.parse(
   readFileSync(new URL("./designer.fixture.json", import.meta.url), "utf8"),
@@ -42,8 +49,29 @@ test("rejects oversized briefs, invalid geometry, external assets, and unsupport
     assert.throws(() => validateProposal(invalid));
   }
 });
-test("local worker rejects missing credentials and foreign web origins without revealing its session token", async () => {
-  const base = "http://127.0.0.1:5188";
+test("local worker rejects missing credentials and foreign web origins without revealing its session token", { timeout: 45000 }, async t => {
+  const root = fileURLToPath(new URL('..', import.meta.url));
+  const runtime = await mkdtemp(path.join(tmpdir(), 'forma-worker-test-'));
+  const worker = spawn(process.execPath, [path.join(root, 'server/designer.mjs')], {
+    cwd: root, windowsHide: true, stdio: ['ignore', 'pipe', 'pipe'],
+    env: { ...process.env, FORMA_DATA_DIR: runtime, FORMA_AI_PORT: '0', FORMA_CODEX_BIN: desktopPlatform.bundledCodexPath(root) },
+  });
+  t.after(async () => {
+    if (worker.exitCode === null && worker.signalCode === null) { const stopped = once(worker, 'exit'); worker.kill(); await stopped; }
+    await rm(runtime, { recursive: true, force: true });
+  });
+  const base = await new Promise((resolve, reject) => {
+    let output = '';
+    const timeout = setTimeout(() => reject(new Error('The isolated test worker did not start. ' + output)), 35000);
+    worker.stdout.on('data', chunk => {
+      output += chunk;
+      const match = /http:\/\/127\.0\.0\.1:\d+/.exec(output);
+      if (match) { clearTimeout(timeout); resolve(match[0]); }
+    });
+    worker.stderr.on('data', chunk => { output += chunk; });
+    worker.once('error', error => { clearTimeout(timeout); reject(error); });
+    worker.once('exit', code => { clearTimeout(timeout); reject(new Error(`The test worker exited with ${code}. ${output}`)); });
+  });
   assert.equal((await fetch(base + "/session")).status, 403);
   assert.equal(
     (

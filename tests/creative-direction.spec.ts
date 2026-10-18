@@ -28,8 +28,8 @@ test('text backgrounds keep their own color through undo, redo, save, reload and
   await expect(color).toHaveValue('#ffffff');
   await color.evaluate(input=>{Object.getOwnPropertyDescriptor(HTMLInputElement.prototype,'value')!.set!.call(input,'#174c40');input.dispatchEvent(new Event('input',{bubbles:true}));});
   await expect(color).toHaveValue('#174c40');
-  await page.getByRole('button',{name:'Undo (Ctrl+Z)',exact:true}).click();await reselect();await expect(color).toHaveValue('#ffffff');
-  await page.getByRole('button',{name:'Redo (Ctrl+Shift+Z)',exact:true}).click();await reselect();await expect(color).toHaveValue('#174c40');
+  await page.getByRole('button',{name:/^Undo \((?:Ctrl|⌘)\+Z\)$/,exact:true}).click();await reselect();await expect(color).toHaveValue('#ffffff');
+  await page.getByRole('button',{name:/^Redo \((?:Ctrl|⌘)\+Shift\+Z\)$/,exact:true}).click();await reselect();await expect(color).toHaveValue('#174c40');
   await page.getByRole('button',{name:'Export',exact:true}).click();await page.getByLabel('File type',{exact:true}).selectOption('json');
   const download=page.waitForEvent('download');await page.getByRole('button',{name:'Download',exact:true}).click();
   const data=JSON.parse(await readFile((await (await download).path())!,'utf8'));

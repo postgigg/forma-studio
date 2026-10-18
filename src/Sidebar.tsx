@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { commandKey } from './platform';
 import {
   ArrowUpRight,
   Check,
@@ -472,7 +473,7 @@ export function Sidebar({
           <div className="panel-note">
             <MousePointer2 size={22} />
             <p>
-              Shift or Ctrl-click to select several. Right-click your selection
+              Shift or {commandKey}-click to select several. Right-click your selection
               for group actions.
             </p>
           </div>

@@ -1,7 +1,14 @@
 const { contextBridge, ipcRenderer } = require('electron');
 const aiPort = process.argv.includes('--forma-ai-port=51863') ? 51863 : 51861;
 contextBridge.exposeInMainWorld('formaDesktop', {
+  platform: process.platform,
   aiEndpoint: `http://127.0.0.1:${aiPort}`,
+  editText: command => ipcRenderer.send('forma:edit-text', command),
+  onEditCommand: callback => {
+    const handler = (_event, command) => callback(command);
+    ipcRenderer.on('forma:edit-command', handler);
+    return () => ipcRenderer.removeListener('forma:edit-command', handler);
+  },
   signIn: () => ipcRenderer.invoke('forma:sign-in'),
   restartAI: () => ipcRenderer.invoke('forma:restart-ai'),
   saveFile: (filename, bytes) => ipcRenderer.invoke('forma:save-file', { filename, bytes }),

@@ -45,7 +45,7 @@ test('page styles preview and apply real changes, preserve locked layers, and un
   const result = JSON.parse(await exported(page)); expect(result.pages[0].data.background).toBe('#ff633e');
   expect(result.pages[0].data.objects.find((o: any) => o.id === 'locked')).toEqual(original.pages[0].data.objects.find((o: any) => o.id === 'locked'));
   expect(result.pages[0].data.objects.find((o: any) => o.id === 'headline').top).not.toBe(original.pages[0].data.objects.find((o: any) => o.id === 'headline').top);
-  await page.getByRole('button', { name: 'Undo (Ctrl+Z)', exact: true }).click(); const undone = JSON.parse(await exported(page)); expect(undone.pages[0].data).toEqual(original.pages[0].data);
+  await page.getByRole('button', { name: /^Undo \((?:Ctrl|⌘)\+Z\)$/, exact: true }).click(); const undone = JSON.parse(await exported(page)); expect(undone.pages[0].data).toEqual(original.pages[0].data);
 });
 test('page refinement captures the page without selecting layers and respects locked content', async ({ page }) => {
   await page.route('**/session', route => route.fulfill({ json: { ready: true, token: 'test' } }));

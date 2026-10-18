@@ -176,7 +176,8 @@ const frameService = createFrameService({ json });
 const brandImportService = createBrandImportService({ codex, runtime, json, authenticated });
 const server = http.createServer(async (req, res) => {
   const host = req.headers.host || "";
-  if (!["127.0.0.1:" + port, "localhost:" + port].includes(host))
+  const listeningPort = server.address().port;
+  if (!["127.0.0.1:" + listeningPort, "localhost:" + listeningPort].includes(host))
     return json(res, 403, { error: "Local requests only." });
   const origin = req.headers.origin;
   if (origin && !allowedOrigins.has(origin))
@@ -308,7 +309,7 @@ const server = http.createServer(async (req, res) => {
 });
 server.listen(port, "127.0.0.1", () =>
   console.log(
-    `Forma AI Designer: http://127.0.0.1:${port} · Codex ${authenticated ? "signed in" : "needs login"}`,
+    `Forma AI Designer: http://127.0.0.1:${server.address().port} · Codex ${authenticated ? "signed in" : "needs login"}`,
   ),
 );
 server.on("error", (error) => {

@@ -19,8 +19,11 @@
     "ai:stop": "node scripts/stop-ai.mjs",
     "test:server": "node --test tests/designer.test.mjs tests/photos.test.mjs tests/refinements.test.mjs tests/frames.test.mjs tests/brand-reference.test.mjs tests/campaigns.test.mjs tests/design-style.test.mjs tests/creative-direction.test.mjs tests/brand-imports.test.mjs",
     "test:ai-live": "node scripts/test-designer-live.mjs",
-    "desktop": "electron .",
+    "desktop": "node scripts/start-desktop.cjs",
     "desktop:package": "node scripts/package-desktop.mjs",
+    "desktop:package:mac": "node scripts/package-desktop.mjs --mac",
+    "desktop:package:win": "node scripts/package-desktop.mjs --win",
+    "test:desktop": "node --test tests/desktop-platform.test.cjs tests/desktop-updates.test.cjs tests/desktop-render.test.mjs",
     "test:updates": "node --test tests/desktop-updates.test.cjs",
     "desktop:smoke": "node scripts/test-desktop.mjs",
     "test:ai-lifetime": "node --experimental-test-module-mocks --test tests/job-lifetime.test.mjs"
@@ -28,7 +31,6 @@
   "build": {
     "appId": "studio.forma.desktop",
     "productName": "Forma Studio",
-    "electronDist": "node_modules/electron/dist",
     "npmRebuild": false,
     "electronFuses": {
       "runAsNode": false,
@@ -86,6 +88,10 @@
       "icon": "desktop/icon.png",
       "category": "public.app-category.graphics-design",
       "hardenedRuntime": true,
+      "minimumSystemVersion": "12.0",
+      "entitlements": "desktop/entitlements.mac.plist",
+      "entitlementsInherit": "desktop/entitlements.mac.plist",
+      "notarize": true,
       "artifactName": "Forma-Studio-${version}-${arch}.${ext}"
     }
   },
@@ -112,6 +118,7 @@
     "@vitejs/plugin-react": "6.1.2",
     "electron": "44.7.2",
     "electron-builder": "26.15.3",
+    "electron-mac": "npm:electron@43.8.0",
     "prettier": "3.9.10",
     "supabase": "2.120.0",
     "typescript": "7.0.2",

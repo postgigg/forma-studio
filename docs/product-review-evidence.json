@@ -488,7 +488,7 @@
     "intent": "Improve Forma without duplicating its existing intent: $49 once for one Mac, Windows free; one paid key activates one device; clearer AI status and action spacing; branded public downloads and a verified sticker ZIP.",
     "testedAt": "2026-10-18T17:21:44.069Z",
     "version": "1.7.0",
-    "state": "verified locally; publication in progress",
+    "state": "Main merged; earlier Windows build is superseded and must be rebuilt.",
     "packaged": {
       "fuseState": {
         "RunAsNode": false,
@@ -657,6 +657,7 @@
     "productionDependencyAudits": {
       "desktop": 0,
       "payments": 0
-    }
+    },
+    "preMergeSourceCommit": "6eba8c6"
   }
 }

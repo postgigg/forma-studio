@@ -29,6 +29,15 @@ export function validateReview(value, pageCount) {
 export async function renderProposal(proposal, { signal, origin = process.env.FORMA_UI_ORIGIN || 'http://127.0.0.1:5186' } = {}) {
   const url = new URL(origin);
   if (!['localhost', '127.0.0.1'].includes(url.hostname) || url.protocol !== 'http:') throw new Error('The design preview must be local.');
+  if (process.env.FORMA_RENDER_ENDPOINT && process.env.FORMA_RENDER_TOKEN) {
+    const response = await fetch(process.env.FORMA_RENDER_ENDPOINT, {
+      method: 'POST', headers: { 'Content-Type': 'application/json', 'X-Forma-Render': process.env.FORMA_RENDER_TOKEN },
+      body: JSON.stringify(proposal), signal: signal || AbortSignal.timeout(50000),
+    });
+    const result = await response.json();
+    if (!response.ok) throw new Error(result.error || 'The desktop design preview failed.');
+    return result;
+  }
   const browser = await chromium.launch({ ...(process.platform === 'win32' ? { channel: 'msedge' } : {}), headless: true, timeout: 15000 });
   const abort = () => void browser.close();
   signal?.addEventListener('abort', abort, { once: true });

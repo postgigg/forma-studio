@@ -54,9 +54,9 @@ test('edits capture one thumbnail and retain immediate saving, undo, redo and re
   await page.getByLabel('Design title',{exact:true}).fill('Fast save proof');
   await expect.poll(async () => (await saved(page))?.name).toBe('Fast save proof');
   expect(await page.evaluate(() => (window as any).__thumbnailCaptures)-before).toBe(1);
-  await page.getByRole('button',{name:'Undo (Ctrl+Z)',exact:true}).click();
+  await page.getByRole('button',{name:/^Undo \((?:Ctrl|⌘)\+Z\)$/,exact:true}).click();
   await expect(page.getByLabel('Design title',{exact:true})).toHaveValue('A little growth');
-  await page.getByRole('button',{name:'Redo (Ctrl+Shift+Z)',exact:true}).click();
+  await page.getByRole('button',{name:/^Redo \((?:Ctrl|⌘)\+Shift\+Z\)$/,exact:true}).click();
   await expect.poll(async () => (await saved(page))?.name).toBe('Fast save proof');
   await page.getByRole('button',{name:'Design',exact:true}).focus();
   await page.keyboard.press('Control+s');

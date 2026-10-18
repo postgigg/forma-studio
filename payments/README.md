@@ -18,6 +18,8 @@ The Stripe plugin was already installed in Claude, its MCP endpoint was configur
 
 Refunds and disputes block unused keys and mark existing entitlements revoked in the database. A previously activated offline app does **not** receive instant remote revocation. This is a perpetual local license, not a claim of unbreakable DRM. Keychain behavior, hardware identity and code signing must be tested on an actual Mac before release.
 
+Signed retail Mac packages require activation before the editor starts. Windows and unpackaged source builds stay free. Explicitly marked `formaMacDistribution: development` Mac artifacts are for CI and local QA, skip the retail gate, and must never be offered as the paid download. The test profile environment cannot bypass activation in a signed retail package.
+
 ## Deployment and required configuration
 
 The root `netlify.toml` uses this directory as its build base, bundles `netlify/functions/mac-api.mjs`, and publishes only `../website`. Installing the database SDK enables [Netlify Database provisioning](https://docs.netlify.com/build/data-and-storage/netlify-database/getting-started/). SQL migrations are additive and live in `netlify/database/migrations`; [Netlify applies them before publishing](https://docs.netlify.com/build/data-and-storage/netlify-database/migrations/).

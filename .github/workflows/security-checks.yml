@@ -49,6 +49,6 @@ jobs:
       - run: npm audit --omit=dev --audit-level=high
       - run: mkdir -p .local
       - run: npm run test:server
-      - run: npm run test:updates
+      - run: npm run test:desktop
       - run: node scripts/verify-marketing-site.mjs
       - run: npm run build
