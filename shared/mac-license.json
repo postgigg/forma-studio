@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "product": "forma-studio-mac",
+  "apiOrigin": "https://tryformastudio.netlify.app",
+  "purchaseUrl": "https://tryformastudio.netlify.app/mac.html",
+  "currentIssuerId": "forma-mac-2026-10-18",
+  "issuers": [
+    {
+      "id": "forma-mac-2026-10-18",
+      "publicKey": "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEA4+KaS6Lc/QjKFKXmaOZGe7DJddrY+BihvLPIRT+0ego=\n-----END PUBLIC KEY-----\n"
+    }
+  ]
+}

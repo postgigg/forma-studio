@@ -483,5 +483,180 @@
       "githubAlertLeftOpen": true
     },
     "windowsPublisherSignature": "NotSigned"
+  },
+  "patch170": {
+    "intent": "Improve Forma without duplicating its existing intent: $49 once for one Mac, Windows free; one paid key activates one device; clearer AI status and action spacing; branded public downloads and a verified sticker ZIP.",
+    "testedAt": "2026-10-18T17:21:44.069Z",
+    "version": "1.7.0",
+    "state": "verified locally; publication in progress",
+    "packaged": {
+      "fuseState": {
+        "RunAsNode": false,
+        "EnableCookieEncryption": true,
+        "EnableNodeOptionsEnvironmentVariable": false,
+        "EnableNodeCliInspectArguments": false,
+        "EnableEmbeddedAsarIntegrityValidation": true,
+        "OnlyLoadAppFromAsar": true,
+        "GrantFileProtocolExtraPrivileges": false
+      },
+      "version": "1.7.0",
+      "testedAt": "2026-10-18T16:42:05.774Z",
+      "sha256": "8a1e9c79f44c9acc6159148a49d993729708f34672ac53dd96531b581f5be06d",
+      "assets": [
+        {
+          "name": "Forma-Studio-Setup-1.7.0.exe",
+          "size": 689353911,
+          "sha256": "8a1e9c79f44c9acc6159148a49d993729708f34672ac53dd96531b581f5be06d"
+        },
+        {
+          "name": "Forma-Studio-Setup-1.7.0.exe.blockmap",
+          "size": 719593,
+          "sha256": "c0202398481bb5fdae7a36b69d906fdf56b71dc2bea6b0215a9699a72be8ee5c"
+        },
+        {
+          "name": "latest.yml",
+          "size": 353,
+          "sha256": "5e3b3270b8b9ec60570cca8b286736b8816820a458ba089c03a1a3356d83025d"
+        },
+        {
+          "name": "update-policy.json",
+          "size": 164,
+          "sha256": "b4a11a7a800c8b3578b79bb3ca64550d1c29562614bb619cb09f225efdafb3b2"
+        },
+        {
+          "name": "SHA256SUMS.txt",
+          "size": 95,
+          "sha256": "39903da3ee88e9f009e0ae060a3764052533148454683139fa0ff27e6317ba93"
+        }
+      ],
+      "engine": {
+        "engine": "Codex CLI",
+        "model": "gpt-6.1-sol",
+        "modelLabel": "GPT-6.1 Sol",
+        "reasoningEffort": "max",
+        "imageEngine": "Codex native image generation"
+      },
+      "templates": 262,
+      "thumbnails": 262,
+      "sourceImages": 8,
+      "compiledBundleMatches": true,
+      "canonicalBrandMatches": true,
+      "packagedUpdater": true,
+      "developmentAdvisory": {
+        "id": "GHSA-hp3w-g68c-fv3c",
+        "url": "https://github.com/advisories/GHSA-hp3w-g68c-fv3c",
+        "scope": "development",
+        "upstreamPatchAvailable": false,
+        "checkedPackages": [
+          "sprintf-js",
+          "roarr",
+          "global-agent",
+          "@electron/get",
+          "electron-builder",
+          "app-builder-lib",
+          "dmg-builder",
+          "electron-builder-squirrel-windows"
+        ],
+        "foundInPackagedArchive": [],
+        "githubAlertLeftOpen": true
+      }
+    },
+    "native": {
+      "version": "1.7.0",
+      "testedAt": "2026-10-18T16:46:43.912Z",
+      "packaged": true,
+      "rendererNodeUnavailable": true,
+      "restrictedBridge": true,
+      "cspBlocksExternalFetch": true,
+      "hostRebindingBlocked": true,
+      "sessionOriginRequired": true,
+      "brandWebsiteChoices": true,
+      "combinedBrandAndStyle": true,
+      "summaryCheck": {
+        "fullStatus": "completed",
+        "fullPages": 1,
+        "summaryStatus": "completed",
+        "summaryResult": null
+      },
+      "headerCollapse": true,
+      "campaignActionPlacement": true,
+      "chartStyles": 9,
+      "savedScatterX": true,
+      "campaignIllustration": true,
+      "aiFooter": {
+        "connected": "Connected",
+        "disconnected": "Disconnected",
+        "refineTopGap": 12
+      },
+      "photoMask": true,
+      "native3DRotation": true,
+      "savedLineChartEditing": true,
+      "engine": {
+        "model": "gpt-6.1-sol",
+        "reasoningEffort": "max"
+      },
+      "errors": []
+    },
+    "paymentUI": {
+      "testedAt": "2026-10-18T16:31:30.253Z",
+      "price": 49,
+      "comingSoonCheckoutDisabled": true,
+      "viewports": [
+        1440,
+        390
+      ],
+      "horizontalOverflow": false,
+      "imagesDecoded": true,
+      "purchaseKeyReadOnly": true,
+      "unverifiedSessionIgnored": true,
+      "noUnverifiedMacDownload": true,
+      "failedPaymentHasNoKey": true,
+      "activationUsedKeyMessage": true,
+      "activationUIUsesMockBridge": true,
+      "actualMacRuntimeTested": false,
+      "errors": []
+    },
+    "paymentVerification": {
+      "passed": 12,
+      "realPostgreSQL": true,
+      "concurrentActivationSingleWinner": true,
+      "signedWebhookVerification": true,
+      "duplicatePaymentIdempotency": true,
+      "nonceReplayProtection": true,
+      "encryptedCrashRecovery": true,
+      "actualStripeSandboxPurchase": false,
+      "stripePlanner": "Installed plugin requires OAuth; official fallback skills installed",
+      "actualMacRuntimeTested": false,
+      "checkoutEnabled": false,
+      "macInstallerVerified": false
+    },
+    "assetDelivery": {
+      "zip": {
+        "testedAt": "2026-10-17T21:26:38.0017124Z",
+        "version": "1.6.1",
+        "archive": "Forma-Studio-Stickers-1.6.1.zip",
+        "files": 304,
+        "originalsBytes": 446869493,
+        "zipBytes": 431499261,
+        "savedBytes": 15370232,
+        "savingsPercent": 3.44,
+        "verifiedImageHashes": 304,
+        "zipSha256": "3c558b3c78acb5da99fcd87890c0a9704f1d444d042b5f63c7e2dedb4eb44f0e"
+      },
+      "imagesUnchanged": true,
+      "installerStillBundlesStickers": true,
+      "publicSourcePromotionRemoved": true,
+      "publicRepositoryRemainsPublic": true,
+      "brandedDownloadUsesRedirect": true
+    },
+    "database": {
+      "provisioned": true,
+      "directConnectionReadOnly": true,
+      "managedGitDeploymentMigrationPending": true
+    },
+    "productionDependencyAudits": {
+      "desktop": 0,
+      "payments": 0
+    }
   }
 }

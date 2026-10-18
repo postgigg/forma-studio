@@ -555,6 +555,9 @@
   font-size: 10px;
   color: #93859e;
 }
+.ai-refine-design { margin-top: 12px; }
+.ai-connection[data-state="connected"] .status-dot { background: #29834a; }
+.ai-connection[data-state="disconnected"] .status-dot { background: #c03535; }
 .ai-disclosure {
   color: #aa9fb4;
   line-height: 1.6;

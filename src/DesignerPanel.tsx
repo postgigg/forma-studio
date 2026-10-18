@@ -23,7 +23,7 @@ import { Editor } from "./editor";
 import { presets, type Design, type Asset } from "./types";
 import { Field } from "./ui";
 import { useBrandGuidance } from "./BrandContext";
-import { AiEngine, useDesignIntent } from "./DesignIntent";
+import { useDesignIntent } from "./DesignIntent";
 import { DesktopAI } from "./DesktopAI";
 import { DesignEvidence } from './CreativeDirection';
 import { allDesigns, getDesign } from "./storage";
@@ -609,7 +609,7 @@ export function DesignerPanel({
           )}
           {draft && (
             <button
-              className="secondary full"
+              className="secondary full ai-refine-design"
               onClick={() => setView("create")}
             >
               <RefreshCw size={15} /> Refine this design
@@ -634,15 +634,10 @@ export function DesignerPanel({
         </div>
       )}
       {!token && <DesktopAI />}
-      <div className="ai-connection">
-        <span className={token ? "status-dot" : "status-dot pending"} />
-        {connection}
+      <div className="ai-connection" role="status" data-state={token && connection === "Local designer connected" ? "connected" : "disconnected"}>
+        <span className="status-dot" aria-hidden="true" />
+        {token && connection === "Local designer connected" ? "Connected" : "Disconnected"}
       </div>
-      <p className="ai-disclosure">
-        Uses your signed-in Codex account. Your brief is sent to the AI service;
-        your designs stay in your studio.
-      </p>
-      <AiEngine />
     </aside>
   );
 }

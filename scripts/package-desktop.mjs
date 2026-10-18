@@ -5,6 +5,10 @@ import { createReadStream } from 'node:fs';
 import updateRules from '../desktop/updates.cjs';
 const pkg = JSON.parse(await readFile('package.json', 'utf8'));
 const policy = JSON.parse(await readFile('updates/stable.json', 'utf8'));
+if (process.platform === 'darwin') {
+  const license = JSON.parse(await readFile('shared/mac-license.json', 'utf8'));
+  if (!license.currentIssuerId || !license.issuers.some(issuer => issuer.id === license.currentIssuerId)) throw new Error('Configure the public Mac license issuer before packaging. Never ship a Mac build with activation disabled.');
+}
 if (policy.version !== pkg.version) throw new Error('Update updates/stable.json to match the release version.');
 if (updateRules.compareVersions(policy.minimumSupportedVersion, pkg.version) > 0) throw new Error('The minimum supported version cannot be newer than this release.');
 const env = { ...process.env, VITE_SUPABASE_URL: '', VITE_SUPABASE_ANON_KEY: '', RAYON_NUM_THREADS: '1' };

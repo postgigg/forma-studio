@@ -1,5 +1,5 @@
 {
-  "version": "1.6.2",
+  "version": "1.7.0",
   "minimumSupportedVersion": "1.2.0",
-  "message": "Open the Forma walkthrough from Help and use Forma-branded download links."
+  "message": "Clearer AI connection status, better action spacing and a branded Forma walkthrough."
 }

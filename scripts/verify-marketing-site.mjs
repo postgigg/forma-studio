@@ -19,6 +19,18 @@ assert.match(downloads[0], /^https:\/\/tryformastudio\.netlify\.app\/downloads\/
 const routing = await readFile(path.join(root, 'netlify.toml'), 'utf8');
 assert.ok(routing.includes(`from = "${new URL(downloads[0]).pathname}"`), 'The branded installer URL must have a distribution route.');
 const guide = await readFile(path.join(site, 'walkthrough.html'), 'utf8');
+const mac = await readFile(path.join(site, 'mac.html'), 'utf8');
+const price = JSON.parse(await readFile(path.join(root, 'payments/config/product.json'), 'utf8'));
+assert.equal(price.amount, 4900);
+assert.match(html, /Mac · \$49 once/);
+assert.match(mac, /\$49/);
+assert.doesNotMatch(html + mac, /\$19\b/);
+assert.doesNotMatch(mac, /github(?:usercontent)?\.com|\bgithub\b|[sr]k_(?:live|test)_[a-zA-Z0-9]{20}/i);
+for (const match of mac.matchAll(/(?:src|href)="([^"#][^"]*)"/g)) {
+  const reference = match[1].split(/[?#]/)[0];
+  if (/^https?:/.test(reference)) continue;
+  assert.ok((await stat(path.join(site, reference))).isFile(), `Missing Mac page asset: ${reference}`);
+}
 assert.doesNotMatch(guide, /github(?:usercontent)?\.com|\bgithub\b/i);
 assert.ok(guide.includes(downloads[0]), 'Guide and homepage must link the same Windows release.');
 for (const match of guide.matchAll(/(?:src|href)="([^"#][^"]*)"/g)) {

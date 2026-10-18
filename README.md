@@ -32,7 +32,7 @@ The new identity has a custom folded F symbol and drawn wordmark, shared across 
 
 For AI, open **AI Designer → AI account & connection → Sign in to Codex**. Complete the sign-in in your browser and return to Forma. Your existing Codex login is also recognized. AI needs a supported account, internet access and available provider usage; those costs are separate from the app. Manual editing and exports work without AI. Website frames use the bundled desktop browser to capture pages in an isolated session.
 
-The Mac app is planned at **$19 once**. Payment delivery and Apple signing/notarization are not configured yet; there is no Mac checkout or verified Mac download in this release.
+The Mac app is **$49 once for one Mac**. The payment and single-device activation implementation is in place, with [setup and verification notes](payments/README.md). Purchasing stays closed until merchant configuration and a signed/notarized Mac installer are ready. There is no verified Mac download in this Windows release.
 
 For developers, `npm run desktop` opens the built desktop app and `npm run desktop:package` builds an installer. `npm run desktop:smoke` checks the app using a separate test profile. Desktop services bind to `127.0.0.1:51860` and `127.0.0.1:51861`; app data and AI job history live in the user's Forma app-data directory.
 

@@ -1,7 +1,10 @@
-Forma Studio 1.6.2 opens the branded Forma walkthrough from desktop Help. Public landing pages and showcase copy no longer promote the source repository; Windows download buttons use Forma's own URLs.
+Forma Studio 1.7.0 improves the AI Designer panel and desktop help. Windows remains free.
 
-- Adds a branded getting-started guide with actual editor screenshots, brand and style setup, AI account guidance, campaigns, AI Pencil and export instructions.
-- Keeps the existing public release host and in-app update compatibility. The download URL redirects to that host; this change does not make the repository private.
-- Provides a maintainer script for packaging the 304 sticker PNGs into a verified ZIP. The current desktop installer already bundles these stickers and automatically extracts its compressed application files.
+- Adds spacing between New AI design and Refine this design.
+- Simplifies the AI footer to green Connected or red Disconnected.
+- Opens the branded getting-started walkthrough from Help, with actual editor screenshots and AI Pencil guidance.
+- Uses Forma-branded Windows download URLs and removes public source-host promotion from the product website. The download redirects to the existing public release host; the repository remains public.
+- Adds the Mac payment and single-device activation implementation at $49 once. Mac checkout remains closed until a signed/notarized Mac installer and verified merchant configuration are ready. No Mac download is included in this Windows release.
+- Adds a utility for packaging and hash-verifying the 304 sticker PNGs as a separate ZIP. The installer already compresses and extracts its bundled assets.
 
-Windows 10/11, 64-bit. This release remains unsigned. Projects stay on your device. AI requires your own supported Codex account, internet access and available provider usage.
+Windows 10/11, 64-bit. The Windows installer remains unsigned. Your projects stay local. AI requires your own supported provider account, internet access and available usage.

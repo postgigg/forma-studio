@@ -16,10 +16,14 @@ const updates = createUpdates({ updater: autoUpdater, currentVersion: app.getVer
 if (process.env.FORMA_DESKTOP_TEST_DATA) app.setPath('userData', path.resolve(process.env.FORMA_DESKTOP_TEST_DATA));
 app.setName('Forma Studio');
 if (process.platform === 'win32') app.setAppUserModelId(testing ? 'studio.forma.desktop.test' : 'studio.forma.desktop');
-if (!testing && !app.requestSingleInstanceLock()) app.quit();
+if ((!testing || (process.platform === 'darwin' && app.isPackaged)) && !app.requestSingleInstanceLock()) app.quit();
 else {
   app.on('second-instance', () => { if (main) { if (main.isMinimized()) main.restore(); main.show(); main.focus(); } });
-  app.whenReady().then(start).catch(error => { dialog.showErrorBox('Forma could not start', error.message); app.quit(); });
+  app.whenReady().then(async () => {
+    const activation = process.platform === 'darwin' && app.isPackaged ? await require('./mac-license.cjs').ensureMacLicense() : null;
+    await start();
+    activation?.destroy();
+  }).catch(error => { if (error.code !== 'LICENSE_CANCELLED') dialog.showErrorBox('Forma could not start', error.message); app.quit(); });
 }
 function codexPath() {
   const triplet = `${process.arch === 'arm64' ? 'aarch64' : 'x86_64'}-${process.platform === 'win32' ? 'pc-windows-msvc' : process.platform === 'darwin' ? 'apple-darwin' : 'unknown-linux-musl'}`;

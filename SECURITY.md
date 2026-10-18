@@ -4,7 +4,7 @@ Report a suspected vulnerability through the [private vulnerability-reporting ch
 
 ## Boundaries
 
-- The public site is a static marketing and download page. The desktop editor and AI service run on the customer's device. Forma operates no customer application or AI server.
+- The public site serves static marketing and download pages. Mac payments and activation use a managed Netlify Function and Netlify Database, with Stripe-hosted Checkout. The desktop editor and AI worker run on the customer's device; design files are not stored in the payment database.
 - The AI HTTP service binds to loopback, checks its Host and Origin headers, and requires a random session token for protected operations. The token is returned only to permitted local origins. Request bodies and document imports have size and structure limits.
 - The Electron renderer has context isolation and process sandboxing enabled, Node integration disabled, denied permission requests, a restricted preload bridge, and sender/frame/origin checks for desktop IPC. Remote navigation cannot replace the editor.
 - Desktop content policy permits requests to its own origin and its local AI service. Remote websites for device screenshots use an isolated session without access to the editor's cookies, files or preload bridge.
@@ -16,11 +16,11 @@ Report a suspected vulnerability through the [private vulnerability-reporting ch
 
 ## Verification and limits
 
-The production npm audit on 2026-10-17 reported zero known advisories. Repeat `npm audit --omit=dev`; this result does not cover unknown vulnerabilities, every native binary, or constitute an independent penetration test. CI checks production advisories, server contracts, update rules, the marketing entrypoint and the application build. Dependabot proposes updates for review; it does not merge them automatically.
+The production npm audit on 2026-10-18 reported zero known advisories. Repeat `npm audit --omit=dev`; this result does not cover unknown vulnerabilities, every native binary, or constitute an independent penetration test. CI checks production advisories, server contracts, update rules, the marketing entrypoint and the application build. Dependabot proposes updates for review; it does not merge them automatically.
 
 **Open development advisory:** GHSA-hp3w-g68c-fv3c affects `sprintf-js` 1.1.3 through electron-builder's development-only download/logging dependencies. The upstream advisory lists no patched version. The full npm audit reports eight moderate affected dependency entries from this one underlying advisory; the production-only audit reports zero. Packaged ASAR inspection found none of the eight affected build-tool packages in the shipped app, including unpacked entries. The GitHub alert remains open for an upstream fix or a separately tested build-tool migration. Build only trusted sources with the pinned lockfile; exclusion from the app does not fix the development dependency itself. The [release evidence](docs/product-review-evidence.json) records the package inspection.
 
-The current Windows installer is **unsigned**. A public CA-issued Windows signing identity and signed releases remain necessary for publisher verification. No certificate has been purchased or claimed. A checksum is an integrity check, not a substitute for publisher authentication. Mac signing and payment delivery are not yet available.
+The current Windows installer is **unsigned**. A public CA-issued Windows signing identity and signed releases remain necessary for publisher verification. No certificate has been purchased or claimed. A checksum is an integrity check, not a substitute for publisher authentication. The Mac payment and activation implementation has automated local verification, but Mac signing/notarization, an actual Mac runtime check, and a real Stripe sandbox purchase are still required before opening checkout. See [payment boundaries and setup](payments/README.md).
 
 Projects are stored locally, without a Forma account or application-level encryption. Protect the device and use OS disk encryption and backups where appropriate. AI features send the requested brief and relevant content to the user's provider account. Local malware running as the same user, stolen GitHub publishing credentials, provider security and OS/browser vulnerabilities remain outside the protections described above.
 
