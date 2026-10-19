@@ -488,7 +488,7 @@
     "intent": "Improve the existing Forma platform and preserve its single shared brand/style context. Rebuild the landing page around the supplied WonderKids reference with expressive typography, original branded compositions and purposeful motion, without decorative asterisks or promotional hint labels. Add optional direct backups of saved workspace data to the customer’s private Wasabi account, with encrypted desktop keys and reviewed recovery. Retain $49 once for one Mac, free Windows, clearer AI status and branded downloads.",
     "testedAt": "2026-10-19T02:25:34.201Z",
     "version": "1.7.0",
-    "state": "verified locally; publication in progress",
+    "state": "published and verified; customer Wasabi setup, Stripe authentication and signed retail Mac release remain external setup",
     "packaged": {
       "fuseState": {
         "RunAsNode": false,
@@ -635,7 +635,24 @@
       "stripePlanner": "Installed plugin requires OAuth; official fallback skills installed",
       "actualMacRuntimeTested": false,
       "checkoutEnabled": false,
-      "macInstallerVerified": false
+      "macInstallerVerified": false,
+      "production": {
+        "testedAt": "2026-10-19T02:37:08.156Z",
+        "origin": "https://tryformastudio.netlify.app",
+        "status": {
+          "available": false,
+          "price": {
+            "amount": 4900,
+            "currency": "usd",
+            "name": "Forma Studio for Mac",
+            "type": "one_time"
+          },
+          "download": null
+        },
+        "checkoutClosed503": true,
+        "untrustedOriginBlocked403": true,
+        "macPageExact": true
+      }
     },
     "assetDelivery": {
       "zip": {
@@ -659,7 +676,20 @@
     "database": {
       "provisioned": true,
       "directConnectionReadOnly": true,
-      "managedGitDeploymentMigrationPending": true
+      "managedGitDeploymentMigrationPending": false,
+      "managedProductionMigrationVerified": true,
+      "verifiedAt": "2026-10-19T02:42:19.444Z",
+      "tables": [
+        "forma_mac_activation_challenges",
+        "forma_mac_checkout_attempts",
+        "forma_mac_licenses",
+        "forma_mac_payment_blocks",
+        "forma_mac_payments",
+        "forma_mac_rate_limits",
+        "forma_mac_webhook_events"
+      ],
+      "productionDeploy": "6ad581e9d986e980d4762ba4",
+      "productionSourceCommit": "8f32a875a64ae14cf0f3da90016d79cfa5879213"
     },
     "productionDependencyAudits": {
       "desktop": 0,
@@ -705,7 +735,40 @@
         "horizontalOverflow": false,
         "browserErrors": []
       },
-      "published": false
+      "published": true,
+      "netlify": {
+        "url": "https://tryformastudio.netlify.app/",
+        "testedAt": "2026-10-19T02:37:09.745Z",
+        "status": 200,
+        "landingPage": true,
+        "editorEntrypoint": false,
+        "campaignSectionRemoved": true,
+        "publicRepositoryLinks": false,
+        "brandedDownload": true,
+        "releaseHostRetained": true,
+        "privateSecurityReportReachable": true,
+        "downloadRedirect": 302,
+        "installerStatus": 200,
+        "installerBytes": 689619740,
+        "walkthroughStatus": 200,
+        "htmlSha256": "f8158e00632dbcfe20edd5f7c989583ae27eea56a01008259b322044f3965d40",
+        "assetsVerified": 22,
+        "textLineEndingsNormalized": [],
+        "installer": "https://tryformastudio.netlify.app/downloads/v1.7.0/Forma-Studio-Setup-1.7.0.exe"
+      },
+      "sites": {
+        "url": "https://forma-studio.pastel-mars-3499.chatgpt.site",
+        "status": 200,
+        "version": 15,
+        "siteVersionId": "appgprj_6acf9bd8e0708191afef0b36ef21dbdf~appgver_cb8fab22e448819187459c0a7f8d1d4a",
+        "sourceCommit": "547c85893020085c1ef086398daec2946d7808f6",
+        "testedAt": "2026-10-19T02:39:20.664Z",
+        "newLanding": true,
+        "downloadLinks": 3,
+        "installerVersion": "1.7.0",
+        "cloudWalkthrough": true,
+        "publicSourcePromotion": false
+      }
     },
     "cloudStorage": {
       "protocolTests": 6,
@@ -773,6 +836,60 @@
       "retainedMacNativeMenusAndRendering": true,
       "desktopAndCloudTests": 27,
       "serverContracts": 37
+    },
+    "publishedAt": "2026-10-19T02:42:19.440Z",
+    "release": {
+      "version": "1.7.0",
+      "publishedAt": "2026-10-19T02:34:06.825Z",
+      "sourceCommit": "77c6e425332f01c109c592dc8071698601034d4c",
+      "public": true,
+      "assets": [
+        {
+          "name": "Forma-Studio-Setup-1.7.0.exe",
+          "size": 689619740,
+          "sha256": "fc2a8dbf20dfadfd5ec71b0070f5f902f6460c178f6fdf999aab82846d73d38a"
+        },
+        {
+          "name": "Forma-Studio-Setup-1.7.0.exe.blockmap",
+          "size": 718064,
+          "sha256": "864ba71ead8f015c8597e5d8455d4f0655ef65c6e9635a14090e68baf3d7332b"
+        },
+        {
+          "name": "latest.yml",
+          "size": 353,
+          "sha256": "4b2f8cce00b423b1ba278f3e13aa68fa9528d30c74ae5fa5571f93c9c712f51c"
+        },
+        {
+          "name": "update-policy.json",
+          "size": 164,
+          "sha256": "b4a11a7a800c8b3578b79bb3ca64550d1c29562614bb619cb09f225efdafb3b2"
+        },
+        {
+          "name": "SHA256SUMS.txt",
+          "size": 361,
+          "sha256": "d440f2ce6e525653710531691bb9cb75c29fc58a403efcb5ad83cbd40a710968"
+        }
+      ],
+      "uploadedDigestsMatch": true,
+      "releaseTagMatchesSource": true,
+      "installer": "https://tryformastudio.netlify.app/downloads/v1.7.0/Forma-Studio-Setup-1.7.0.exe"
+    },
+    "finalValidation": {
+      "desktopAndCloudTests": 27,
+      "serverContracts": 37,
+      "paymentAndActivationTests": 12,
+      "totalAutomatedTests": 76,
+      "landingViewports": [
+        1440,
+        768,
+        390,
+        360
+      ],
+      "productionDependencyAdvisories": 0,
+      "actualWindowsKeyProtection": true,
+      "actualWasabiTransaction": false,
+      "actualStripeSandboxPurchase": false,
+      "actualMacRuntimeTested": false
     }
   }
 }
