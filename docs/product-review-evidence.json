@@ -1527,6 +1527,108 @@
         "githubAlertLeftOpen": true
       }
     },
-    "published": false
+    "published": true,
+    "release": {
+      "version": "1.9.0",
+      "publishedAt": "2026-10-19T17:02:32.414Z",
+      "sourceCommit": "44b192623bacfc11a5a53fe197c9600e61e6417e",
+      "public": true,
+      "assets": [
+        {
+          "name": "Forma-Studio-Setup-1.9.0.exe",
+          "size": 692941745,
+          "sha256": "7d6d8146765cb5ae794f06c7d1277188b5abe2e8d77fdc68b2116a9567bd0a98"
+        },
+        {
+          "name": "Forma-Studio-Setup-1.9.0.exe.blockmap",
+          "size": 722407,
+          "sha256": "be919d409b8d1a45e28f7983c8e3a67739f7a834817225114506a5deac91300d"
+        },
+        {
+          "name": "latest.yml",
+          "size": 353,
+          "sha256": "f77f55a4b957b0e6d6fd2f526691c1fb0ad8fb7e88ba33841443ac1ed3065774"
+        },
+        {
+          "name": "update-policy.json",
+          "size": 246,
+          "sha256": "4b9702b4f7082464bc8aa6a3db7c5fd815d97c667e3de4ab22ecb23ad6c49a96"
+        },
+        {
+          "name": "SHA256SUMS.txt",
+          "size": 361,
+          "sha256": "66616f8ef07b02d4e2337295c2b21c774f2db6f1e8a589363619c6efe80444bc"
+        }
+      ],
+      "uploadedDigestsMatch": true,
+      "releaseTagMatchesSource": true,
+      "installer": "https://tryformastudio.netlify.app/downloads/v1.9.0/Forma-Studio-Setup-1.9.0.exe"
+    },
+    "netlify": {
+      "url": "https://tryformastudio.netlify.app/",
+      "testedAt": "2026-10-19T17:15:41.345Z",
+      "status": 200,
+      "landingPage": true,
+      "editorEntrypoint": false,
+      "campaignSectionRemoved": true,
+      "publicRepositoryLinks": false,
+      "brandedDownload": true,
+      "releaseHostRetained": true,
+      "privateSecurityReportReachable": true,
+      "downloadRedirect": 302,
+      "installerStatus": 200,
+      "installerBytes": 692941745,
+      "walkthroughStatus": 200,
+      "htmlSha256": "f27ce7a4962875a69aef5a5a06cc47345f73773ce19be3d5ef0a902acf606ac7",
+      "assetsVerified": 26,
+      "textLineEndingsNormalized": [],
+      "installer": "https://tryformastudio.netlify.app/downloads/v1.9.0/Forma-Studio-Setup-1.9.0.exe",
+      "deploymentId": "6ad64fea8ef742ef8a596d79"
+    },
+    "landingBrowser": {
+      "testedAt": "2026-10-19T16:18:50.830Z",
+      "viewports": [
+        1440,
+        768,
+        390,
+        360
+      ],
+      "noHorizontalOverflow": true,
+      "canonicalLogo": true,
+      "noDecorativeArrows": true,
+      "uprightType": true,
+      "selfHostedBodyFont": true,
+      "springInteractions": true,
+      "homeDownloadButtons": 3,
+      "carousel": true,
+      "filters": true,
+      "previewDialog": true,
+      "editorTabs": true,
+      "threeDRotation": true,
+      "motionPause": true,
+      "reducedMotion": true,
+      "errors": []
+    },
+    "guideBrowser": {
+      "testedAt": "2026-10-19T17:13:16.437Z",
+      "homeDownloadButtons": 3,
+      "repositoryLinks": 0,
+      "guideNavigation": true,
+      "guideImagesDecoded": true,
+      "viewports": [
+        1440,
+        390
+      ],
+      "horizontalOverflow": false,
+      "browserErrors": []
+    },
+    "sites": {
+      "version": 17,
+      "savedVersionId": "appgprj_6acf9bd8e0708191afef0b36ef21dbdf~appgver_0f9263409b588191a683f05df5871524",
+      "sourceCommit": "2fd43bab5f922710d5231198f1fd5851d10aedba",
+      "deploymentId": "appgdep_6ad6503f71488191b6d236a196bab10a",
+      "status": "succeeded",
+      "url": "https://forma-studio.pastel-mars-3499.chatgpt.site"
+    }
   }
 }
