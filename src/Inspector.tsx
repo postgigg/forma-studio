@@ -30,6 +30,7 @@ import { DeviceFrame } from "./device-frame";
 import { SolidObject } from "./solid-object";
 import { PhotoFrame } from "./photo-frame";
 import { isChart } from "./charts";
+import { PhotoFilters } from './PhotoFilters';
 
 export function Inspector({
   editor,
@@ -516,25 +517,7 @@ export function Inspector({
                   >
                     Design with this image
                   </button>
-                  <div className="filter-grid">
-                    {["original", "mono", "warm", "vivid"].map((f) => (
-                      <button key={f} onClick={() => editor.imageFilter(f)}>
-                        {f}
-                      </button>
-                    ))}
-                  </div>
-                  <Field label="Brightness">
-                    <input
-                      type="range"
-                      aria-label="Brightness"
-                      min={-0.5}
-                      max={0.5}
-                      step={0.05}
-                      defaultValue={0}
-                      key={obj.id}
-                      onChange={(e) => editor.brightness(+e.target.value)}
-                    />
-                  </Field>
+                  <PhotoFilters editor={editor} image={image} />
                   <div className="stack-actions">
                     <button
                       className="secondary"

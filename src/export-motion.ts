@@ -1,8 +1,10 @@
 import { StaticCanvas } from "fabric";
 import { fonts, type Design, type DesignPage, type PageMotion } from "./types";
 import { prepareMotion, drawMotion, motionLength } from "./motion-render";
+import { audioLength } from '../shared/audio.mjs';
+import { decodeClips, scheduleClips } from './audio';
 export interface MotionExportOptions {
-  format: "gif" | "webm";
+  format: "gif" | "webm" | "mp4";
   size: number;
   fps: number;
   style: PageMotion["style"] | "page";
@@ -22,8 +24,8 @@ export async function exportMotion(
     1,
     options.size / Math.max(design.width, design.height),
   );
-  const width = Math.max(2, Math.round(design.width * scale)),
-    height = Math.max(2, Math.round(design.height * scale));
+  const width = Math.max(2, format==='mp4'?Math.round(design.width*scale/2)*2:Math.round(design.width*scale)),
+    height = Math.max(2, format==='mp4'?Math.round(design.height*scale/2)*2:Math.round(design.height*scale));
   const fps = Math.min(24, Math.max(8, options.fps));
   const canvas = new StaticCanvas(undefined, {
     width,
@@ -32,6 +34,9 @@ export async function exportMotion(
   });
   canvas.setZoom(scale);
   let stream: MediaStream | undefined, recorder: MediaRecorder | undefined;
+  let audio: AudioContext | undefined, destination: MediaStreamAudioDestinationNode | undefined;
+  let stopAudio: (() => void) | undefined;
+  const pageAudioBuffers=new Map<DesignPage,Map<string,AudioBuffer>>();
   const check = () => {
     if (signal.aborted) throw new Error("Animation export cancelled.");
   };
@@ -41,15 +46,25 @@ export async function exportMotion(
     const gif = gifenc?.GIFEncoder();
     const chunks: BlobPart[] = [];
     let recording: Promise<Blob> | undefined;
-    if (format === "webm") {
-      const mime = [
-        "video/webm;codecs=vp9",
-        "video/webm;codecs=vp8",
+    if (format !== "gif") {
+      const withAudio=pages.some(page=>page.audio?.length);
+      const mime = (format==='mp4'?[
+        withAudio ? 'video/mp4;codecs=avc1,mp4a.40.2' : 'video/mp4;codecs=avc1',
+        withAudio ? 'video/mp4;codecs=avc1.420028,mp4a.40.2' : 'video/mp4;codecs=avc1.420028',
+        'video/mp4',
+      ]:[
+        withAudio ? "video/webm;codecs=vp9,opus" : "video/webm;codecs=vp9",
+        withAudio ? "video/webm;codecs=vp8,opus" : "video/webm;codecs=vp8",
         "video/webm",
-      ].find((type) => MediaRecorder.isTypeSupported(type));
+      ]).find((type) => MediaRecorder.isTypeSupported(type));
       if (!mime)
-        throw new Error("This browser cannot export WebM. Choose GIF instead.");
+        throw new Error(`This device cannot encode ${format.toUpperCase()}. Choose ${format==='mp4'?'WebM':'GIF'} instead.`);
       stream = canvas.lowerCanvasEl.captureStream(fps);
+      if(pages.some(page=>page.audio?.length)) {
+        audio=new AudioContext();await audio.resume();destination=audio.createMediaStreamDestination();
+        destination.stream.getAudioTracks().forEach(track=>stream!.addTrack(track));
+        for(const page of pages)if(page.audio?.length){check();pageAudioBuffers.set(page,await decodeClips(audio,page.audio));}
+      }
       recorder = new MediaRecorder(stream, {
         mimeType: mime,
         videoBitsPerSecond: 6000000,
@@ -59,7 +74,7 @@ export async function exportMotion(
           if (e.data.size) chunks.push(e.data);
         };
         recorder!.onstop = () =>
-          resolve(new Blob(chunks, { type: "video/webm" }));
+          resolve(new Blob(chunks, { type: format==='mp4'?'video/mp4':'video/webm' }));
         recorder!.onerror = () =>
           reject(new Error("The browser could not encode the animation."));
       });
@@ -72,7 +87,7 @@ export async function exportMotion(
           ? pages[p].motion || { style: "fade", duration: options.duration }
           : { style: options.style, duration: options.duration };
       const layers = prepareMotion(canvas),
-        length = motionLength(motion, layers.length),
+        length = Math.max(motionLength(motion, layers.length),format!=='gif'?audioLength(pages[p].audio)*1000:0),
         frames = Math.ceil((length * fps) / 1000);
       if (format === "gif") {
         for (let frame = 0; frame < frames; frame++) {
@@ -109,6 +124,10 @@ export async function exportMotion(
         drawMotion(layers, motion, 0, design.width, design.height);
         canvas.renderAll();
         if (recorder!.state === "inactive") recorder!.start(250);
+        if(audio && destination && pages[p].audio?.length) {
+          const clips=pages[p].audio!;
+          stopAudio=scheduleClips(audio,destination,clips,pageAudioBuffers.get(pages[p])!,audio.currentTime+.02);
+        }
         const start = performance.now();
         while (performance.now() - start < length) {
           check();
@@ -125,6 +144,7 @@ export async function exportMotion(
           onProgress(Math.round(((p + elapsed / length) / pages.length) * 100));
           await new Promise((resolve) => setTimeout(resolve, 1000 / fps));
         }
+        stopAudio?.();stopAudio=undefined;
       }
     }
     check();
@@ -138,8 +158,10 @@ export async function exportMotion(
     recorder!.stop();
     return await recording!;
   } finally {
+    stopAudio?.();
     if (recorder?.state === "recording") recorder.stop();
     stream?.getTracks().forEach((track) => track.stop());
+    if(audio)await audio.close();
     await canvas.dispose();
   }
 }

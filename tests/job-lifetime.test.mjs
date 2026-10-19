@@ -74,6 +74,9 @@ test("explicit cancellation still stops a long-running worker", async (t) => {
     signal: controller.signal,
   });
   const rejection = assert.rejects(result, /Cancelled/);
+  // The shared execution gate grants the worker its turn asynchronously.
+  await Promise.resolve();
+  await Promise.resolve();
   t.mock.timers.tick(20 * 60 * 1000);
   controller.abort();
   await rejection;

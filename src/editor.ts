@@ -29,6 +29,7 @@ import { SolidObject } from "./solid-object";
 import { PhotoFrame, type PhotoMask } from "./photo-frame";
 import { drawingBrush, drawingTools, type DrawingTool } from './drawing';
 import { shortcut } from './platform';
+import { applyPhotoGrades, type PhotoGrade, type GradedImage } from './photo-filters';
 
 export type DesignObject = FabricObject & { id?: string; name?: string; inkTool?: DrawingTool };
 FabricObject.customProperties = [
@@ -44,6 +45,8 @@ FabricObject.customProperties = [
   "srcFromAttribute",
   "chart",
   "inkTool",
+  "photoGrades",
+  "photoBrightness",
 ];
 Object.assign(FabricObject.ownDefaults, {
   originX: "left",
@@ -959,23 +962,19 @@ export class Editor {
   imageFilter(name: string) {
     const obj = this.selected;
     if (!(obj instanceof FabricImage)) return;
-    obj.filters =
-      name === "mono"
-        ? [new filters.Grayscale()]
-        : name === "warm"
-          ? [new filters.Sepia()]
-          : name === "vivid"
-            ? [
-                new filters.Saturation({ saturation: 0.35 }),
-                new filters.Contrast({ contrast: 0.1 }),
-              ]
-            : [];
-    obj.applyFilters();
+    if (name === 'original') { (obj as GradedImage).photoBrightness = 0; obj.filters = []; }
+    applyPhotoGrades(obj, name === 'original' ? [] : [{id:name,amount:1}]);
+    this.commit();
+  }
+  setPhotoGrades(grades: PhotoGrade[]) {
+    if (!(this.selected instanceof FabricImage)) return;
+    applyPhotoGrades(this.selected, grades);
     this.commit();
   }
   brightness(value: number) {
     const obj = this.selected;
     if (!(obj instanceof FabricImage)) return;
+    (obj as GradedImage).photoBrightness = value;
     obj.filters = obj.filters.filter((f) => f.type !== "Brightness");
     obj.filters.push(new filters.Brightness({ brightness: value }));
     obj.applyFilters();

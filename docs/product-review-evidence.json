@@ -485,7 +485,7 @@
     "windowsPublisherSignature": "NotSigned"
   },
   "patch170": {
-    "intent": "Improve the existing Forma platform and preserve its single shared brand/style context. Rebuild the landing page around the supplied WonderKids reference with expressive typography, original branded compositions and purposeful motion, without decorative asterisks or promotional hint labels. Add optional direct backups of saved workspace data to the customer’s private Wasabi account, with encrypted desktop keys and reviewed recovery. Retain $49 once for one Mac, free Windows, clearer AI status and branded downloads.",
+    "intent": "Improve the existing Forma platform and preserve its single shared brand/style context. Rebuild the landing page around the supplied WonderKids reference with expressive typography, original branded compositions and purposeful motion, without decorative asterisks or promotional hint labels. Add optional direct backups of saved workspace data to the customerâ€™s private Wasabi account, with encrypted desktop keys and reviewed recovery. Retain $49 once for one Mac, free Windows, clearer AI status and branded downloads.",
     "testedAt": "2026-10-19T02:25:34.201Z",
     "version": "1.7.0",
     "state": "published and verified; customer Wasabi setup, Stripe authentication and signed retail Mac release remain external setup",
@@ -698,7 +698,7 @@
     "landing": {
       "reference": "https://dribbble.com/shots/23191965-WonderKids-Landing-Page-Exploration",
       "referenceAuthor": "Paperpillar",
-      "direction": "Oversized friendly typography, generous space, warm color and playful compositions adapted to Forma’s existing identity; no reference artwork or branding copied.",
+      "direction": "Oversized friendly typography, generous space, warm color and playful compositions adapted to Formaâ€™s existing identity; no reference artwork or branding copied.",
       "canonicalLogoPreserved": true,
       "originalCodeNativeBackupIllustration": true,
       "selfHostedLicensedDisplayFont": true,
@@ -890,6 +890,314 @@
       "actualWasabiTransaction": false,
       "actualStripeSandboxPurchase": false,
       "actualMacRuntimeTested": false
+    }
+  },
+  "patch180": {
+    "version": "1.8.0",
+    "testedAt": "2026-10-19T12:13:14.554334+00:00",
+    "intent": "Improve the existing local design workflows: selectable AI providers with visible submitted activity, professional template craft, photo activity and grading, page audio with precise timing and local MP3/MP4 exports, and upright landing-page typography with purposeful motion.",
+    "contextReuse": "The existing brand, personal style and campaign contracts remain the source of truth; connection options and audio/movie export reuse the existing editor and Download dialog.",
+    "published": false,
+    "tests": {
+      "serverContracts": 37,
+      "desktopAndCloud": 27,
+      "providerAndAudioContracts": 8,
+      "jobLifetime": 2,
+      "modernTemplateBrowser": 3
+    },
+    "packagedDesktopRegression": {
+      "version": "1.8.0",
+      "testedAt": "2026-10-19T04:37:36.662Z",
+      "packaged": true,
+      "rendererNodeUnavailable": true,
+      "restrictedBridge": true,
+      "cspBlocksExternalFetch": true,
+      "hostRebindingBlocked": true,
+      "sessionOriginRequired": true,
+      "brandWebsiteChoices": true,
+      "combinedBrandAndStyle": true,
+      "summaryCheck": {
+        "fullStatus": "completed",
+        "fullPages": 1,
+        "summaryStatus": "completed",
+        "summaryResult": null
+      },
+      "headerCollapse": true,
+      "campaignActionPlacement": true,
+      "chartStyles": 9,
+      "savedScatterX": true,
+      "campaignIllustration": true,
+      "aiFooter": {
+        "connected": "Connected",
+        "disconnected": "Disconnected",
+        "refineTopGap": 12
+      },
+      "nativeCloud": {
+        "desktopSetup": true,
+        "passwordField": true,
+        "nativeCredentialFieldsExposed": false,
+        "nonWasabiEndpointBlocked": true,
+        "realWasabiAccountTested": false
+      },
+      "photoMask": true,
+      "native3DRotation": true,
+      "savedLineChartEditing": true,
+      "engine": {
+        "model": "gpt-6.1-sol",
+        "reasoningEffort": "max"
+      },
+      "errors": []
+    },
+    "features": {
+      "photoRail": true,
+      "providerControls": true,
+      "help": true,
+      "filters": {
+        "choices": 28,
+        "saved": [
+          {
+            "id": "mono",
+            "amount": 1
+          },
+          {
+            "id": "golden-hour",
+            "amount": 0.01
+          }
+        ]
+      },
+      "recording": true,
+      "audio": {
+        "clips": 3,
+        "sourceRetained": true,
+        "length": 2.56
+      },
+      "webm": {
+        "bytes": 42390,
+        "audioDuration": 2.58,
+        "peak": 1.0346508026123047
+      },
+      "errors": []
+    },
+    "audioAndMovies": {
+      "audio": [
+        {
+          "id": "tone",
+          "name": "Test tone",
+          "duration": 1,
+          "start": 0.1,
+          "end": 0.5,
+          "offset": 0.25,
+          "volume": 0.75,
+          "rate": 2
+        },
+        {
+          "id": "0fa4f20b-aa44-4dec-aa43-c879c9201ddc",
+          "name": "Test tone",
+          "duration": 1,
+          "start": 0.5,
+          "end": 0.9,
+          "offset": 0.45,
+          "volume": 0.75,
+          "rate": 2
+        }
+      ],
+      "percentDefaults": true,
+      "preciseTiming": true,
+      "rateAndVolumePersist": true,
+      "mp3Download": true,
+      "twoPageMp4Download": true,
+      "errors": []
+    },
+    "nativeAudio": {
+      "version": "1.8.0",
+      "boundary": {
+        "node": "undefined",
+        "policy": "camera=(), microphone=(self), geolocation=(), payment=(), usb=()"
+      },
+      "audio": [
+        {
+          "duration": 2.82,
+          "bytes": 38375
+        }
+      ],
+      "camera": "NotAllowedError",
+      "codecs": {
+        "mp3Bytes": 13165,
+        "mp3Duration": 0.5485625,
+        "mp4Bytes": 12989,
+        "mp4Header": "ftyp",
+        "mp4AudioDuration": 0.6396666666666667,
+        "workerUnderProductionCsp": true
+      },
+      "profileIsolated": true
+    },
+    "exportCodecs": {
+      "mp3": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "sample_rate": "44100",
+            "channels": 2
+          }
+        ],
+        "format": {
+          "format_name": "mp3",
+          "duration": "0.679167"
+        }
+      },
+      "mp4": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "width": 360,
+            "height": 360
+          },
+          {
+            "codec_name": "aac",
+            "sample_rate": "48000",
+            "channels": 2
+          }
+        ],
+        "format": {
+          "format_name": "mov,mp4,m4a,3gp,3g2,mj2",
+          "duration": "3.544900"
+        }
+      }
+    },
+    "landing": {
+      "testedAt": "2026-10-19T12:06:37.566Z",
+      "viewports": [
+        1440,
+        768,
+        390,
+        360
+      ],
+      "noHorizontalOverflow": true,
+      "canonicalLogo": true,
+      "noDecorativeArrows": true,
+      "uprightType": true,
+      "selfHostedBodyFont": true,
+      "springInteractions": true,
+      "homeDownloadButtons": 3,
+      "carousel": true,
+      "filters": true,
+      "previewDialog": true,
+      "editorTabs": true,
+      "threeDRotation": true,
+      "motionPause": true,
+      "reducedMotion": true,
+      "errors": []
+    },
+    "walkthrough": {
+      "testedAt": "2026-10-19T12:12:19.109Z",
+      "homeDownloadButtons": 3,
+      "repositoryLinks": 0,
+      "guideNavigation": true,
+      "guideImagesDecoded": true,
+      "viewports": [
+        1440,
+        390
+      ],
+      "horizontalOverflow": false,
+      "browserErrors": []
+    },
+    "designLibrary": {
+      "rendered": 262,
+      "overflow": [],
+      "crowded": [],
+      "smallText": [],
+      "photographic": 54,
+      "masked": 33,
+      "charts": 6
+    },
+    "providerLimits": {
+      "claude": "Live generation reached the provider but the existing account reported insufficient credit.",
+      "gemini": "ACP image capability verified; generation requires interactive account consent.",
+      "kimi": "ACP image capability verified; current account subscription denied Kimi Code access.",
+      "sequentialTeam": "Protocol and single-process sequencing tested; live Claude-to-Codex artwork handoff was not completed because of account access."
+    },
+    "otherLimits": [
+      "Windows installer unsigned.",
+      "Mac runtime, signed installer and checkout remain unverified and unavailable.",
+      "No real Wasabi account transaction in this update.",
+      "Page movies stitch design pages and their audio; imported video editing is not included."
+    ],
+    "productionDependencyAdvisories": 0,
+    "verifiedRelease": {
+      "fuseState": {
+        "RunAsNode": false,
+        "EnableCookieEncryption": true,
+        "EnableNodeOptionsEnvironmentVariable": false,
+        "EnableNodeCliInspectArguments": false,
+        "EnableEmbeddedAsarIntegrityValidation": true,
+        "OnlyLoadAppFromAsar": true,
+        "GrantFileProtocolExtraPrivileges": false
+      },
+      "version": "1.8.0",
+      "testedAt": "2026-10-19T12:28:20.003Z",
+      "sha256": "7c5a72e0bae5e02a1f88491b8574d88131aa80893a052eafbd0aed8e7dd08818",
+      "assets": [
+        {
+          "name": "Forma-Studio-Setup-1.8.0.exe",
+          "size": 692939095,
+          "sha256": "7c5a72e0bae5e02a1f88491b8574d88131aa80893a052eafbd0aed8e7dd08818"
+        },
+        {
+          "name": "Forma-Studio-Setup-1.8.0.exe.blockmap",
+          "size": 722603,
+          "sha256": "01064a132a845836f445f65f0361b51a49303b116d3d5bd8ce4edd50f41f36f7"
+        },
+        {
+          "name": "latest.yml",
+          "size": 353,
+          "sha256": "c02a8b9c96adc5ff141fba37db2bce13c4289baa4c944eb816b6e32acbfe766d"
+        },
+        {
+          "name": "update-policy.json",
+          "size": 225,
+          "sha256": "8787471dbebd84b687094b1cd21be94c432e6a2f6eebb218240494688907e868"
+        },
+        {
+          "name": "SHA256SUMS.txt",
+          "size": 361,
+          "sha256": "bdc278a059f88d243e1eaed516e51629ab62e7b7569b719fd11b6192942a95de"
+        }
+      ],
+      "engine": {
+        "engine": "Codex CLI",
+        "model": "gpt-6.1-sol",
+        "modelLabel": "GPT-6.1 Sol",
+        "reasoningEffort": "max",
+        "imageEngine": "Codex native image generation"
+      },
+      "templates": 262,
+      "thumbnails": 262,
+      "sourceImages": 8,
+      "compiledBundleMatches": true,
+      "canonicalBrandMatches": true,
+      "packagedUpdater": true,
+      "developmentAdvisory": {
+        "id": "GHSA-hp3w-g68c-fv3c",
+        "url": "https://github.com/advisories/GHSA-hp3w-g68c-fv3c",
+        "scope": "development",
+        "upstreamPatchAvailable": false,
+        "checkedPackages": [
+          "sprintf-js",
+          "roarr",
+          "global-agent",
+          "@electron/get",
+          "electron-builder",
+          "app-builder-lib",
+          "dmg-builder",
+          "electron-builder-squirrel-windows"
+        ],
+        "foundInPackagedArchive": [],
+        "githubAlertLeftOpen": true
+      }
     }
   }
 }

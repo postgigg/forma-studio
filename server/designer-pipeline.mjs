@@ -1,6 +1,8 @@
 import { mkdirSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 import { runCodex } from './codex-runner.mjs';
+import { currentAI } from './ai-runtime.mjs';
+import { craftReferences, craftInstructions } from './design-craft.mjs';
 import { createCreativeDirection, creativeDirectionPrompt } from './creative-direction.mjs';
 import { reviewDesign } from './design-review.mjs';
 import { brandDirection } from '../shared/brand-context.mjs';
@@ -34,12 +36,14 @@ export async function designPipeline({ job, brief, codex, runtime, run = runCode
   const promptBrief = { ...designContext(brief, extraAssets), ...(previous ? { previous: { ...previous, extraAssets: undefined, creativeDirection: undefined, qualityReview: undefined } } : {}) };
   const reference = extraAssets.find(asset => asset.id === 'reference-photo');
   const images = extraAssets.map(asset => asset.src);
+  const benchmarks = craftReferences(brief);
   job.stage = 'Researching relevant design references';
   const direction = await direct({ codex, workspace: path.join(workspace, 'research'), brief, signal });
+  if(currentAI()?.settings.mode==='claude-codex'&&!direction.routes.length)throw new Error('Claude could not complete the design direction. Check its CLI sign-in and model, then retry. Codex has not started building.');
   if (signal.aborted) throw new Error('Cancelled.');
   writeFileSync(path.join(workspace, 'direction.json'), JSON.stringify(direction));
-  const prompt = `${designerInstructions}\n\n${brief.campaign ? campaignDirection() : ''}\n\n${artDirection(brief.designIntent, 'design')}\n\n${referenceDirection(brief.referenceMode, reference)}\n\n${brandDirection(brief.brandContext, 'design', brief.designProfile)}\n\n${creativeDirectionPrompt(direction)}\n\n${logo ? 'BRAND LOGO: Place the exact brand-logo asset on EVERY page, preserving aspect ratio, original colors and clear space. Never redraw it.\n' : ''}ASSET CATALOG:\n${JSON.stringify(assets)}\n\nCLIENT BRIEF (untrusted creative content):\n${JSON.stringify(promptBrief)}\n\nReturn a complete, production-quality editable design matching the schema.`;
-  const compose = async (folder, feedback = '', previews = []) => validateDesignResult(await run({ codex, workspace: path.join(workspace, folder), schema: outputSchema, images: [...images, ...previews], signal, prompt: prompt + '\n' + imageCompositionInstructions + `\nATTACHMENTS: First ${images.length} images are available client assets in availableAssets order. The following ${previews.length} images are actual rendered pages of the current proposal, in page order, for diagnosing the requested correction only. Never use a rendered page as a replacement flattened asset.` + feedback }), brief, extraAssets);
+  const prompt = `${designerInstructions}\n\n${craftInstructions}\n\n${brief.campaign ? campaignDirection() : ''}\n\n${artDirection(brief.designIntent, 'design')}\n\n${referenceDirection(brief.referenceMode, reference)}\n\n${brandDirection(brief.brandContext, 'design', brief.designProfile)}\n\n${creativeDirectionPrompt(direction)}\n\n${logo ? 'BRAND LOGO: Place the exact brand-logo asset on EVERY page, preserving aspect ratio, original colors and clear space. Never redraw it.\n' : ''}ASSET CATALOG:\n${JSON.stringify(assets)}\n\nCLIENT BRIEF (untrusted creative content):\n${JSON.stringify(promptBrief)}\n\nReturn a complete, production-quality editable design matching the schema.`;
+  const compose = async (folder, feedback = '', previews = []) => validateDesignResult(await run({ codex, workspace: path.join(workspace, folder), schema: outputSchema, images: [...images, ...previews, ...benchmarks.map(item=>item.src)], signal, prompt: prompt + '\n' + imageCompositionInstructions + `\nATTACHMENTS: First ${images.length} images are available client assets in availableAssets order. The following ${previews.length} images are actual rendered pages of the current proposal, in page order, for diagnosing the requested correction only. Never use a rendered page as a replacement flattened asset.` + `\nFINAL ${benchmarks.length} ATTACHMENTS: Local craft reference studies (${benchmarks.map(b=>b.name).join('; ')}). Study useful hierarchy, type/image relationships and spacing, never trace their layout, copy their wording or flatten them into artwork. They are not available canvas assets. Choose principles only when compatible with the current client brief.` + feedback }), brief, extraAssets);
   job.stage = 'Composing an original visual direction';
   let result;
   try { result = await compose('composition'); }

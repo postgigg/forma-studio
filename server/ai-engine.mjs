@@ -6,6 +6,6 @@ export const aiEngine = Object.freeze({
   reasoningEffort: "max",
   imageEngine: "Codex native image generation",
 });
-export function modelArguments() {
-  return ["--model", aiEngine.model, "-c", `model_reasoning_effort="${aiEngine.reasoningEffort}"`];
+export function modelArguments(model = aiEngine.model) {
+  return ["--model", model || aiEngine.model, "-c", `model_reasoning_effort="${aiEngine.reasoningEffort}"`];
 }

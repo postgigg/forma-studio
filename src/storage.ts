@@ -3,6 +3,7 @@ import type { Asset, Design } from "./types";
 import catalog from "../shared/assets.json";
 import { validateFonts } from "./font-data";
 import { workspaceChanged } from './workspace-events';
+import { validateAudio } from '../shared/audio.mjs';
 import { validateDesignStyle, type DesignStyleProfile } from "../shared/design-style.mjs";
 import {
   validateBrandContext,
@@ -125,6 +126,7 @@ export function validateDesign(raw: unknown): asserts raw is Design {
     }
   };
   for (const page of d.pages) {
+    validateAudio(page?.audio);
     if (!page || typeof page !== "object") throw new Error("Invalid page contents.");
     if (
       page.motion &&

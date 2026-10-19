@@ -130,10 +130,10 @@ export function SizeDialog({
   );
 }
 
-export function ExportDialog({ editor, onClose, notify }: Props) {
+export function ExportDialog({ editor, onClose, notify, initialFormat="png" }: Props & {initialFormat?:"png"|"mp4"}) {
   const [format, setFormat] = useState<
-      "png" | "jpeg" | "svg" | "pdf" | "json" | "gif" | "webm"
-    >("png"),
+      "png" | "jpeg" | "svg" | "pdf" | "json" | "gif" | "webm" | "mp4"
+    >(initialFormat),
     [scale, setScale] = useState(1),
     [transparent, setTransparent] = useState(false),
     [all, setAll] = useState(false),
@@ -147,7 +147,7 @@ export function ExportDialog({ editor, onClose, notify }: Props) {
     [loop, setLoop] = useState(true),
     [progress, setProgress] = useState(0);
   const controller = useRef<AbortController | null>(null);
-  const animated = format === "gif" || format === "webm";
+  const animated = format === "gif" || format === "webm" || format === "mp4";
   return (
     <Modal
       title="Take your design with you"
@@ -180,7 +180,8 @@ export function ExportDialog({ editor, onClose, notify }: Props) {
           <option value="png">PNG · Crisp images & graphics</option>
           <option value="jpeg">JPG · Smaller image files</option>
           <option value="gif">GIF · Looping animated design</option>
-          <option value="webm">WebM · Motion video</option>
+          <option value="mp4">MP4 · Movie with page audio</option>
+          <option value="webm">WebM · Motion video with page audio</option>
           <option value="pdf">PDF · All pages in one document</option>
           <option value="svg">SVG · Editable vector artwork</option>
           <option value="json">Forma · Editable design backup</option>
@@ -188,6 +189,7 @@ export function ExportDialog({ editor, onClose, notify }: Props) {
       </Field>
       {animated && (
         <div className="motion-export-options">
+          {editor.doc.pages.some(page=>page.audio?.length) && <p className="muted small">{format==='gif'?'GIF does not support audio. Choose MP4 or WebM to include your soundtrack.':'Your saved page audio is included. Pages extend to fit their clips.'}</p>}
           <Field label="Animation">
             <select
               aria-label="Export animation"
@@ -294,7 +296,7 @@ export function ExportDialog({ editor, onClose, notify }: Props) {
             onChange={(e) => setAll(e.target.checked)}
           />{" "}
           {animated
-            ? "Include every page in one animation"
+            ? "Stitch every page into one movie / animation"
             : "Download every page as a separate file"}
         </label>
       )}
@@ -311,7 +313,7 @@ export function ExportDialog({ editor, onClose, notify }: Props) {
         onClick={async () => {
           setBusy(true);
           try {
-            if (format === "gif" || format === "webm") {
+            if (format === "gif" || format === "webm" || format === "mp4") {
               await editor.save();
               controller.current = new AbortController();
               setProgress(0);

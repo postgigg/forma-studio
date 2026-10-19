@@ -1,3 +1,4 @@
+import { fontNames } from './contract.mjs';
 import { pencilDirection } from "./pencil-direction.mjs";
 import { artDirection } from "./art-direction.mjs";
 import { validateDesignIntent } from "../shared/design-intent.mjs";
@@ -10,6 +11,7 @@ import { randomUUID } from "node:crypto";
 import { refinementDirection } from "./refinement-direction.mjs";
 import path from "node:path";
 import { runCodex } from "./codex-runner.mjs";
+import { withAIJob } from './ai-runtime.mjs';
 import { pngDimensions } from "./photos.mjs";
 import {
   additionSchema,
@@ -76,18 +78,7 @@ export const refinementSchema = {
     },
   },
 };
-export const refinementFonts = [
-  "Arial",
-  "Georgia",
-  "Verdana",
-  "Trebuchet MS",
-  "Courier New",
-  "Times New Roman",
-  "Forma Frame",
-  "Forma Soft",
-  "Forma Deco",
-  "Forma Outline",
-];
+export const refinementFonts = fontNames;
 function png(src) {
   if (
     typeof src !== "string" ||
@@ -359,12 +350,12 @@ export function createRefinementService({
 }) {
   const jobs = new Map();
   let active = null;
-  const publicJob = (j) => ({
+  const publicJob = (j, includeResult = true) => ({
     id: j.id,
     status: j.status,
     stage: j.stage,
     error: j.error || null,
-    result: j.result || null,
+    result: includeResult ? j.result || null : null,
     elapsedSeconds: Math.round(
       ((j.finishedAt || Date.now()) - j.startedAt) / 1000,
     ),
@@ -488,13 +479,13 @@ export function createRefinementService({
           job.finishedAt = Date.now();
           job.controller.abort();
         }
-        json(res, 200, publicJob(job));
+        json(res, 200, publicJob(job, url.searchParams.get('summary') !== '1'));
         return true;
       }
       if (req.method === "POST" && url.pathname === "/refinements") {
-        if (!authenticated) {
+        if (!(typeof authenticated === 'function' ? authenticated() : authenticated)) {
           json(res, 503, {
-            error: "Sign in to Codex and restart your local designer.",
+            error: "Install and sign in to your selected AI CLI, then reconnect.",
           });
           return true;
         }
@@ -539,7 +530,8 @@ export function createRefinementService({
             controller: new AbortController(),
           };
           jobs.set(job.id, job);
-          void launch(job, brief);
+          active = job.id;
+          void withAIJob(job, 'refinement', () => launch(job, brief));
           json(res, 202, publicJob(job));
         } catch (error) {
           json(res, 400, { error: error.message });

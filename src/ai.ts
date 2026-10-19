@@ -111,10 +111,11 @@ export async function designerRequest(
       value.error || "The local designer could not complete that request.",
       response.status,
     );
-  if (/^\/jobs(?:\/[^/?]+)?(?:\?|$)/.test(route) && value?.id &&
+  const activityRoute = /^\/(jobs|photos|refinements|brand-imports)(?:\/[^/?]+)?(?:\?|$)/.exec(route)?.[1];
+  if (activityRoute && value?.id &&
     ["queued", "running", "completed", "failed", "cancelled"].includes(value.status)) {
     window.dispatchEvent(new CustomEvent("forma:designer-activity", {
-      detail: { id: value.id, status: value.status, stage: value.stage || "Designing" },
+      detail: { id: value.id, route: activityRoute, status: value.status, stage: value.stage || "Designing" },
     }));
   }
   return value;

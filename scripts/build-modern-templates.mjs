@@ -1,5 +1,6 @@
 import {readFileSync,writeFileSync,mkdirSync} from 'node:fs';
 import {createHash} from 'node:crypto';
+import {themeIllustration} from './template-illustrations.mjs';
 
 const read=name=>JSON.parse(readFileSync(`shared/${name}.json`,'utf8'));
 const originals=[...read('templates-studio'),...read('templates-base'),...read('templates-occasions')];
@@ -46,6 +47,10 @@ function add(layer){layers.push({originX:'left',originY:'top',angle:0,strokeWidt
 function rect(x,y,w,h,fill=accent,extra={}){return add({type:'Rect',name:'Color field',left:x*W,top:y*H,width:w*W,height:h*H,fill,...extra});}
 function rule(x,y,w,color=ink){return rect(x,y,w,Math.max(1.5,H*.0015)/H,color,{name:'Editorial rule'});}
 function type(text,x,y,w,h,size,font='Arial',color=ink,weight='normal',extra={}){
+ if(font==='Arial')font=size>=.06?'Bricolage Grotesque':'DM Sans';
+ else if(font==='Georgia'||font==='Times New Roman')font='Instrument Serif';
+ else if(font==='Forma Deco')font='Bricolage Grotesque';
+ if(font==='Instrument Serif')weight='normal';
  return add({type:'Textbox',name:text.replaceAll('\n',' ').slice(0,72),text,left:x*W,top:y*H,width:w*W,boxHeight:h*H,fontSize:size*W,fontFamily:font,fill:color,fontWeight:weight,lineHeight:1.02,charSpacing:font==='Georgia'?-22:-35,...extra});
 }
 function photo(key,x,y,w,h,extra={}){
@@ -202,7 +207,7 @@ function sign(content,mode){
   rule(.10,.69,.80,accent);copyGrid(body,.10,.76,.80,.14,{columns:body.length>2?2:1,color:bg,size:.045});
  }
 }
-function party(content,key,mode){
+function partyLegacy(content,key,mode){
  if(current.id==='studio-079'){
   for(let row=0;row<2;row++)for(let col=0;col<12;col++)if((row+col)%2===0)rect(col/12,.035+row*.044,1/12,.044,ink);
   headline(content.headline,.06,.20,.88,.28,.137,'Arial');
@@ -219,6 +224,39 @@ function party(content,key,mode){
   else if(mode%3===1){headline(content.headline,.06,.08,.88,.33,.14,'Georgia');illustration(current,.54,.47,.39,.40);copyGrid(content.body,.06,.53,.41,.39,{size:.034});}
   else{illustration(current,.11,.07,.78,.33);headline(content.headline,.06,.46,.88,.27,.15,'Arial');copyGrid(content.body,.06,.81,.88,.14,{columns:content.body.length>3?2:1,size:.031});}
  }else photoEditorial(content,key==='garden'||key==='cafe'?key:'birthday',mode%10);
+}
+function party(content,key,mode){
+ const title=content.headline,subject=`${current.name} ${title}`;
+ if(/^\d{1,3}$/.test(title.trim())||current.id==='studio-079')return partyLegacy(content,key,mode);
+ const drawing=/grown-up|fifty|forty|seventy|anniversary/i.test(current.name)?null:themeIllustration(subject,ink,accent);
+ if(!drawing)return partyLegacy(content,key,mode);
+ const hero=(x,y,w,h)=>add({type:'Illustration',name:`${drawing.theme} · editable linework`,svg:drawing.svg,left:x*W,top:y*H,width:w*W,height:h*H});
+ if(mode%4===0){
+  headline(title,.065,.065,.87,.29,.16,'Arial');hero(.24,.35,.70,.42);
+  copyGrid(content.body,.065,.79,.87,.16,{columns:content.body.length>3?2:1,size:.031});
+ }else if(mode%4===1){
+  hero(.075,.065,.85,.43);headline(title,.065,.53,.87,.23,.15,'Georgia');
+  copyGrid(content.body,.065,.80,.87,.155,{columns:content.body.length>3?2:1,size:.031});
+ }else if(mode%4===2){
+  headline(title,.065,.075,.80,.37,.17,'Arial');hero(.35,.43,.60,.43);
+  copyGrid(content.body,.065,.49,.32,.43,{size:.030});
+ }else{
+  hero(.10,.065,.80,.42);headline(title,.065,.53,.87,.23,.16,'Arial');
+  copyGrid(content.body,.065,.80,.87,.155,{columns:content.body.length>3?2:1,size:.031});
+ }
+}
+function commissionPalette(t,fallback){
+ const s=subjects(t),category=group(t);
+ const named=`${t.name} ${t.headline}`.toLowerCase();
+ if(/black tie|black-tie/.test(named))return ['#202124','#FFF7E8','#D9B66F'];
+ if(/cobalt|something blue|blue hour/.test(named))return ['#1939D3','#FFF9EC','#B9D5EA'];
+ if(/gingham|red velvet/.test(named))return ['#FFF3E2','#8B293A','#EF8C6D'];
+
+ if(category==='Menus')return /cocktail|bar|evening/.test(s)?['#192E2B','#FFF1D8','#EAAF72']:/taco|truck/.test(s)?['#FFC341','#2C231B','#DD4D2C']:['#FFF4DE','#612D22','#CE492C'];
+ if(/wedding|anniversary|memorial|bridal/.test(s))return [['#FFF8EC','#254333','#BD7C5D'],['#263F39','#FFF7E6','#D7AA7F'],['#F6EBD9','#643642','#C27B67']][seed%3];
+ if(/birthday|birthdays/.test(category.toLowerCase()))return /moon|space|star|disco/.test(s)?['#202448','#FFF4D3','#D1A2EF']:/garden|berry|flower|tropical/.test(s)?['#F9E9CC','#294D39','#ED7D58']:/pool|lagoon|mermaid/.test(s)?['#D9F2E8','#143E6D','#FCB955']:[['#FFEFD8','#852E4F','#F39A47'],['#FFCC44','#342C60','#F08077'],['#F5D5DC','#482754','#DA714B']][seed%3];
+ if(/estimate|invoice|resume|résumé|proposal|checklist|business document/.test(s+' '+category.toLowerCase()))return ['#F6F3EB','#243E3D','#B66B42'];
+ return fallback;
 }
 function pitch(content,key,index){
  const part=index%4;
@@ -354,6 +392,7 @@ for(const [index,t] of originals.entries()){
  const category=group(t),content=mainCopy(t),key=photograph(t);
  const deck=category==='Business pitches'?Math.floor(pitchIndex/4):null;
  [bg,ink,accent]=palettes[(deck??seed)%palettes.length];
+ [bg,ink,accent]=commissionPalette(t,[bg,ink,accent]);
  let family;
  if(category==='Yard signs'){family='distance typography';sign(content,seed%9);}
  else if(category==='Business cards'){family='identity and contact';card(content,key,seed%6);}
@@ -366,7 +405,7 @@ for(const [index,t] of originals.entries()){
  else{family='typographic editorial';typographic(content,seed%8);}
  const composition=layers.map((layer,i)=>({...layer,id:`${t.id}-modern-${i+1}`}));
  output.push({...t,width:W,height:H,background:bg,ink,accent,layout:'custom',font:composition.find(o=>o.type==='Textbox')?.fontFamily||'Arial',headline:content.headline,
-  thumbnail:`/templates/modern-${t.id}.webp`,composition,designEdition:'Modern 2026',artDirection:{family,photo:key,recipe:seed%10,sourceTemplate:t.id}});
+  thumbnail:`/templates/modern-${t.id}.webp`,composition,designEdition:'Studio craft 2026',artDirection:{family,photo:key,recipe:seed%10,sourceTemplate:t.id}});
 }
 if(output.length!==262||new Set(output.map(t=>t.id)).size!==262)throw new Error('The original 262 template identities must be retained.');
 for(const t of output){

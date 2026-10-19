@@ -8,6 +8,7 @@ import {
   Group,
   type FabricObject,
   util,
+  loadSVGFromString,
 } from "fabric";
 import { uid } from "./types";
 import modernTemplates from "../shared/templates-modern.json";
@@ -61,6 +62,11 @@ export async function templateObjects(t: Template, w: number, h: number) {
       let object: FabricObject;
       if (layer.type === "Photo") {
         object = await templatePhoto(layer);
+      } else if (layer.type === 'Illustration') {
+        const parsed=await loadSVGFromString(layer.svg);
+        object=util.groupSVGElements(parsed.objects.filter((o):o is FabricObject=>!!o),parsed.options);
+        const factor=Math.min(layer.width/object.width,layer.height/object.height);
+        object.set({left:layer.left+(layer.width-object.width*factor)/2,top:layer.top+(layer.height-object.height*factor)/2,scaleX:factor,scaleY:factor,angle:layer.angle||0});
       } else if (layer.type === "Chart" || layer.type === "Solid" || layer.type === "Artwork") {
         object = layer.type === "Chart" ? makeChart(layer.chart) : layer.type === "Solid" ? await SolidObject.create(layer.solid)
           : new Group(await util.enlivenObjects<FabricObject>(structuredClone(layer.objects)), {subTargetCheck: true, interactive: false});

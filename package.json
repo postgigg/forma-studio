@@ -1,6 +1,6 @@
 {
   "name": "forma-studio",
-  "version": "1.7.0",
+  "version": "1.8.0",
   "description": "A local visual design studio with editable templates, motion and intent-aware AI tools.",
   "author": "Forma Studio",
   "main": "desktop/main.cjs",
@@ -26,7 +26,8 @@
     "test:desktop": "node --test tests/desktop-platform.test.cjs tests/desktop-updates.test.cjs tests/desktop-render.test.mjs tests/cloud-backup.test.cjs",
     "test:updates": "node --test tests/desktop-updates.test.cjs",
     "desktop:smoke": "node scripts/test-desktop.mjs",
-    "test:ai-lifetime": "node --experimental-test-module-mocks --test tests/job-lifetime.test.mjs"
+    "test:ai-lifetime": "node --experimental-test-module-mocks --test tests/job-lifetime.test.mjs",
+    "test:providers": "node --test tests/ai-runtime.test.mjs tests/provider-protocol.test.mjs"
   },
   "build": {
     "appId": "studio.forma.desktop",
@@ -52,7 +53,8 @@
       "package.json"
     ],
     "asarUnpack": [
-      "node_modules/@openai/codex-*/**/*"
+      "node_modules/@openai/codex-*/**/*",
+      "dist/vendor/lamejs/**/*"
     ],
     "publish": [
       {
@@ -88,6 +90,9 @@
       "icon": "desktop/icon.png",
       "category": "public.app-category.graphics-design",
       "hardenedRuntime": true,
+      "extendInfo": {
+        "NSMicrophoneUsageDescription": "Record voice clips for your Forma Studio designs."
+      },
       "minimumSystemVersion": "12.0",
       "entitlements": "desktop/entitlements.mac.plist",
       "entitlementsInherit": "desktop/entitlements.mac.plist",
@@ -111,6 +116,7 @@
     "three": "0.186.1"
   },
   "devDependencies": {
+    "@breezystack/lamejs": "1.2.7",
     "@playwright/test": "1.64.0",
     "@types/node": "26.6.5",
     "@types/react": "19.3.0",

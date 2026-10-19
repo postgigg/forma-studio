@@ -14,8 +14,8 @@ test('modern photo masks keep editable sources, filters and position after undo 
  await page.getByRole('button',{name:/^Layers/}).click();
  await page.locator('.layer-select').filter({hasText:'Editorial runner'}).click();
  await page.getByRole('button',{name:'Properties',exact:true}).click();
- await page.getByRole('button',{name:'mono',exact:true}).click();
- await expect.poll(async()=>image(await saved(page)).filters[0]?.type).toBe('Grayscale');
+ await page.getByRole('button',{name:'Mono',exact:true}).click();
+ await expect.poll(async()=>image(await saved(page)).filters[0]?.type).toBe('ColorMatrix');
  await page.getByLabel('X position',{exact:true}).fill(String(original.left+15));
  await expect.poll(async()=>image(await saved(page)).left).toBe(original.left+15);
  await page.getByLabel('X position',{exact:true}).blur();await page.keyboard.press('Control+z');

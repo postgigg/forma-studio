@@ -2,6 +2,7 @@ import fontCatalog from "../shared/fonts.json";
 import type { StoredFont } from "./font-data";
 import type { CreativeDirection, QualityReview } from './CreativeDirection';
 export type CanvasData = Record<string, unknown>;
+export interface AudioClip {id:string;name:string;src:string;duration:number;start:number;end:number;offset:number;volume:number;rate?:number;waveform?:number[]}
 export interface PageMotion {
   style: "none" | "fade" | "rise" | "stagger" | "drift";
   duration: number;
@@ -12,6 +13,7 @@ export interface DesignPage {
   data: CanvasData;
   thumbnail: string;
   motion?: PageMotion;
+  audio?: AudioClip[];
 }
 export interface Design {
   id: string;

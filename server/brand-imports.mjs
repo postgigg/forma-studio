@@ -2,6 +2,7 @@ import { randomUUID } from 'node:crypto';
 import { mkdirSync,writeFileSync } from 'node:fs';
 import path from 'node:path';
 import { runCodex } from './codex-runner.mjs';
+import { withAIJob } from './ai-runtime.mjs';
 import { collectWebsite,websiteAddress } from './public-website.mjs';
 import { brandLimits } from '../shared/brand-context.mjs';
 import { brandImportSchema,validateWebsiteDraft } from '../shared/brand-import.mjs';
@@ -35,7 +36,7 @@ export function createBrandImportService({codex,runtime,json,authenticated,colle
         json(res,200,publicJob(job));return true;
       }
       if(req.method!=='POST'||url.pathname!=='/brand-imports')return false;
-      if(!authenticated){json(res,503,{error:'Connect your Codex account in AI Designer to read a website. You can enter the details manually now.'});return true;}
+      if(!(typeof authenticated==='function'?authenticated():authenticated)){json(res,503,{error:'Connect your selected AI account in AI Designer to read a website. You can enter the details manually now.'});return true;}
       if(!req.headers['content-type']?.startsWith('application/json')){json(res,415,{error:'JSON required.'});return true;}
       try{
         let raw='';for await(const chunk of req){raw+=chunk;if(Buffer.byteLength(raw)>5000)throw new Error('The website address is too long.');}
@@ -43,7 +44,7 @@ export function createBrandImportService({codex,runtime,json,authenticated,colle
         if(active){json(res,409,{error:'A website is already being read. Wait for it or cancel it first.'});return true;}
         for(const [id,job]of jobs)if(job.finishedAt&&Date.now()-job.finishedAt>86400000)jobs.delete(id);
         if(jobs.size>=100){json(res,429,{error:'Restart the local AI service to begin another website draft.'});return true;}
-        const job={id:randomUUID(),url:address,status:'running',stage:'Reading your public website',startedAt:Date.now(),controller:new AbortController()};jobs.set(job.id,job);active=job.id;void launch(job);json(res,202,publicJob(job));
+        const job={id:randomUUID(),url:address,status:'running',stage:'Reading your public website',startedAt:Date.now(),controller:new AbortController()};jobs.set(job.id,job);active=job.id;void withAIJob(job,'website',()=>launch(job));json(res,202,publicJob(job));
       }catch(error){json(res,400,{error:error.message});}
       return true;
     }

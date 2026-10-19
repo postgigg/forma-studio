@@ -124,6 +124,8 @@ export function DesignerPanel({
   };
   useEffect(() => {
     void connect();
+    window.addEventListener('forma:ai-settings-changed',connect);
+    return () => window.removeEventListener('forma:ai-settings-changed',connect);
   }, []);
   useEffect(() => {
     if (!window.formaDesktop || token) return;
@@ -633,7 +635,7 @@ export function DesignerPanel({
           }
         </div>
       )}
-      {!token && <DesktopAI />}
+      <DesktopAI />
       <div className="ai-connection" role="status" data-state={token && connection === "Local designer connected" ? "connected" : "disconnected"}>
         <span className="status-dot" aria-hidden="true" />
         {token && connection === "Local designer connected" ? "Connected" : "Disconnected"}

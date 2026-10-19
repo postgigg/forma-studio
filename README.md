@@ -3,7 +3,7 @@
 <p align="center">A local visual design studio for invitations, brand stories, presentations, data, and ideas.</p>
 <p align="center"><a href="#download-the-desktop-app">Download & setup</a> · <a href="#take-a-tour">Walkthrough</a> · <a href="#try-an-example">Editable demos</a> · <a href="docs/ROADMAP.md">Roadmap</a></p>
 
-![The actual Forma editor with a modern photographic template and separate, editable photo and typography layers.](docs/media/editor-photo-v1.5.png)
+![The actual Forma editor with a modern photographic template and separate, editable photo and typography layers.](docs/media/editor-photo-v1.8.png)
 
 Build with draggable layers, original artwork, photo-filled letters, editable charts, and AI refinement. Save on your device, run the app with Docker, and export still images or motion. These screenshots show the actual editor in an isolated test profile; the example projects are editable Forma files.
 
@@ -14,11 +14,11 @@ Build with draggable layers, original artwork, photo-filled letters, editable ch
 | Design                                                                                                     | Compose                                                             | Refine                                                                 | Share                                                    |
 | ---------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------- | ---------------------------------------------------------------------- | -------------------------------------------------------- |
 | **262 reworked editable templates**                                            | **304 transparent AI stickers**, **290 editable graphics**          | AI Designer, selection refinement, AI Pencil, and Magic Eraser         | PNG, JPG, SVG, PDF, editable JSON, GIF, WebM             |
-| Birthdays, weddings, seasonal events, business, retail, hospitality, wellness, education, and celebrations | 250 graphics across 25 brand collections; four original Forma fonts | Groups, alignment, gradients, transparent stops, crop, corner rounding | Multiple pages, Present, motion previews, local projects |
+| Birthdays, weddings, seasonal events, business, retail, hospitality, wellness, education, and celebrations | 250 graphics across 25 brand collections; four original Forma fonts plus DM Sans, Bricolage Grotesque and Instrument Serif | Groups, alignment, gradients, transparent stops, crop, corner rounding | Multiple pages, Present, motion previews, local projects |
 
 ## Download the desktop app
 
-**Windows is free.** Download [Forma Studio 1.7.0 for Windows](https://tryformastudio.netlify.app/downloads/v1.7.0/Forma-Studio-Setup-1.7.0.exe), run the installer, and open **Forma Studio** from your desktop or Start menu. Windows 10/11, 64-bit. The current installer is unsigned, so Windows may display an unknown-publisher warning.
+**Windows is free.** Download [Forma Studio 1.8.0 for Windows](https://tryformastudio.netlify.app/downloads/v1.8.0/Forma-Studio-Setup-1.8.0.exe), run the installer, and open **Forma Studio** from your desktop or Start menu. Windows 10/11, 64-bit. The current installer is unsigned, so Windows may display an unknown-publisher warning.
 
 **Business setup:** In **Your style → Brand & intent** or **Brand**, choose **Enter manually** or **Use my website**. AI drafts the company, business, mission, audience and voice from public pages, with source excerpts and clearly labelled suggestions. Review the draft, choose which fields to fill, then save. Existing values are preserved by default. Your personal design preferences stay separate and combine with the reviewed brand context across AI tools.
 
@@ -32,7 +32,11 @@ The desktop app bundles the editor, its local worker and Codex CLI. No terminal,
 
 The new identity has a custom folded F symbol and drawn wordmark, shared across the editor, desktop, installer and website. [Identity files and usage](public/brand/README.md) include the source geometry and the limits of the preliminary name/mark search.
 
-For AI, open **AI Designer → AI account & connection → Sign in to Codex**. Complete the sign-in in your browser and return to Forma. Your existing Codex login is also recognized. AI needs a supported account, internet access and available provider usage; those costs are separate from the app. Manual editing and exports work without AI. Website frames use the bundled desktop browser to capture pages in an isolated session.
+For AI, open **AI Designer -> AI account & connection**. Choose Codex, Claude, Gemini or Kimi, or use the sequential **Claude plans -> Codex builds** workflow. Only one model executes at a time. Inspect submitted instructions, commands and results in **Peek under the commands**. Existing brand, personal style and campaign context stay shared. Photos, AI Pencil and Magic Eraser require Codex native image generation. [Provider setup and account requirements](docs/ai-providers.md) explain CLI sign-in, model choice and supported tools.
+
+**Page audio:** Use **Audio** beside the page controls to record a voiceover, import a soundtrack, trim, split and join clips. Download a WAV mix or include sound in a WebM export. GIF, image and PDF exports remain silent. Audio stays embedded in your editable design and workspace backup.
+
+**Photo filters:** Select a photo and open **Properties -> Photo filters**. The collection has 28 looks, including 25 new treatments. Stack up to six, adjust strengths, reorder them or reset the image. Saved edits, crops and brightness remain editable.
 
 The Mac app is **$49 once for one Mac**. It shares the editor and Forma identity, with native Intel and Apple Silicon build paths for macOS 12 or later. [Mac build instructions](docs/macos.md) cover development packages, signing and notarization; [payment verification notes](payments/README.md) cover single-device activation. Purchasing stays closed until merchant configuration and a signed/notarized Mac installer are ready. There is no verified retail Mac download in this Windows release.
 
@@ -118,7 +122,7 @@ Open **Campaigns** in the header or **My designs → Campaigns**. The full-scree
 
 Campaign previews keep the complete artwork inside each card. Portrait, story, square and landscape formats fit above the title; long names wrap without covering the image or dimensions. [See a current editable template collection](docs/media/campaign-modern-v1.5.png).
 
-**AI campaign guide** inside Campaigns explains how to brief a collection. AI uses your own supported Codex account and provider usage. The app itself needs no Forma account. Review generated copy and imagery before publishing.
+**AI campaign guide** inside Campaigns explains how to brief a collection. AI uses your selected provider account and its available usage. The app itself needs no Forma account. Review generated copy and imagery before publishing.
 
 ## Personal design direction
 
@@ -324,7 +328,7 @@ Verified on Windows on **2026-10-14**: the production build succeeded, **41 brow
 
 Earlier checks rendered all 150 new template previews without text overflow, retained a supplied photograph and logo byte-for-byte as editable layers, and exercised laptop rotation with WebGL disabled. Real AI Pencil and refinement checks preserved pixels outside the marked region and supported Undo. The scripts and example screenshots below make these checks reproducible.
 
-The **packaged Windows executable** also passed an isolated-profile check: renderer isolation, the bundled Codex worker reporting GPT-6 Astra, website capture, editable 3D, and native PNG/PDF/JSON saves. The landing page was checked at desktop and mobile widths, including filters, image previews and FAQ controls. The Windows installer is unsigned. [Mac compatibility evidence and remaining runtime checks](docs/macos.md#verification-evidence) are recorded separately; Mac paid delivery is not configured.
+The **packaged Windows executable** also passed an isolated-profile check: renderer isolation, the bundled Codex worker, currently pinned to GPT-6.1 Sol with maximum reasoning, website capture, editable 3D, and native PNG/PDF/JSON saves. The landing page was checked at desktop and mobile widths, including filters, image previews and FAQ controls. The Windows installer is unsigned. [Mac compatibility evidence and remaining runtime checks](docs/macos.md#verification-evidence) are recorded separately; Mac paid delivery is not configured.
 
 With the local editor and worker running:
 
@@ -371,3 +375,11 @@ The [roadmap](docs/ROADMAP.md) separates working tools from proposed next featur
 | Capture fails                  | Confirm Edge is installed and the HTTP(S) page is reachable. Upload a screenshot for protected pages.                                |
 | Designs appear missing         | Use the same profile and exact origin. Open My designs on the same device or import a JSON backup.                                                |
 | Source changed but app did not | Rebuild the Docker editor, then refresh the browser.                                                                                 |
+
+## Audio and movies
+
+Open **Audio** beside the page strip. Record voice or import MP3, M4A, WAV, Ogg or WebM audio. Set trim, cut and timeline positions in seconds to two decimal places. Speed and volume default to **100%**; speed supports 25?400% and changes pitch, while volume supports 0?200%. Split clips without changing the original recording and use **Join clips in this order** to close gaps.
+
+Download the page mix as **MP3** or **WAV**, or choose **Save audio & create movie**. The existing Download dialog offers **MP4** and **WebM**, with an option to stitch all design pages into one movie. Each page includes its saved soundtrack and extends to fit it. Encoding runs locally; MP4 needs an available H.264/AAC encoder. GIF and still exports remain silent. This release assembles design pages; it does not import or edit video footage.
+
+The separate, unmodified LAME MP3 encoder and its corresponding source, license texts and replacement instructions ship in `public/vendor/lamejs`.

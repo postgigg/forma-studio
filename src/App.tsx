@@ -22,6 +22,7 @@ import {
   Laptop,
   Maximize2,
   Megaphone,
+  Mic,
   Minus,
   MousePointer2,
   MoreHorizontal,
@@ -81,6 +82,8 @@ import type { RebuildReference } from "./ai";
 import { captureSelection, type SelectionSnapshot } from "./refinement";
 import { RefineDialog } from "./RefineDialog";
 import { MotionCanvas, MotionDialog } from "./Motion";
+import { AudioStudio } from './AudioStudio';
+import { PageAudio } from './PageAudio';
 import { TextColor } from "./TextColor";
 import { flushSync } from "react-dom";
 import { GraphicColor } from "./GraphicColor";
@@ -117,10 +120,12 @@ type Dialog =
   | "new"
   | "resize"
   | "export"
+  | "movie-export"
   | "projects"
   | "campaigns"
   | "help"
   | "motion"
+  | "audio"
   | "style"
   | "cloud"
   | null;
@@ -645,12 +650,12 @@ export default function App() {
                 setPanelOpen(panel === id ? !panelOpen : true);
                 if (id !== "draw") editor?.draw(false);
               }}
-              title={id === "ai" && designerActivity.count ? designerActivity.stage : label}
+              title={id === "ai" && designerActivity.count ? designerActivity.stage : id === "photos" && designerActivity.photos ? designerActivity.photoStage : label}
               aria-label={label}
-              aria-busy={id === "ai" ? designerActivity.count > 0 : undefined}
+              aria-busy={id === "ai" ? designerActivity.count > 0 : id === "photos" ? designerActivity.photos > 0 : undefined}
             >
               <span>
-                {id === "ai" && designerActivity.count ?
+                {(id === "ai" && designerActivity.count) || (id === "photos" && designerActivity.photos) ?
                   <LoaderCircle size={23} strokeWidth={1.65} className="designer-rail-spinner" /> :
                   <Icon size={23} strokeWidth={1.65} />}
               </span>
@@ -1126,6 +1131,7 @@ export default function App() {
                 <PageThumbnails editor={editor} run={run} />
               </div>
               <footer className="workspace-footer">
+                <button className="footer-page" aria-label="Record and edit page audio" onClick={() => setDialog('audio')}><Mic size={16}/> Audio{editor.page.audio?.length ? ` · ${editor.page.audio.length}` : ''}</button>
                 <button
                   className="footer-page page-tray-toggle"
                   aria-label={
@@ -1320,6 +1326,7 @@ export default function App() {
           notify={notify}
         />
       )}
+      {ready && dialog === 'audio' && <AudioStudio editor={editor} onClose={() => setDialog(null)} onMovie={() => setDialog('movie-export')} />}
       {ready && framing && (
         <FrameDialog
           editor={editor}
@@ -1351,8 +1358,9 @@ export default function App() {
           onClose={() => setDialog(null)}
         />
       )}
-      {ready && dialog === "export" && (
+      {ready && (dialog === "export" || dialog === "movie-export") && (
         <ExportDialog
+          initialFormat={dialog === "movie-export" ? "mp4" : "png"}
           editor={editor}
           notify={notify}
           onClose={() => setDialog(null)}
@@ -1371,9 +1379,8 @@ export default function App() {
       {ready && dialog === 'cloud' && <CloudStorage editor={editor} onClose={() => setDialog(null)} activeAI={designerActivity.count > 0} />}
       {ready && dialog === 'campaigns' && <CampaignStudio editor={editor} brand={brand} brandLogo={brandLogo} onClose={() => setDialog(null)} onAISetup={() => { setDialog(null); setPanel('ai'); setPanelOpen(true); }} />}
       {dialog === "help" && (
-        <Modal title="A few little shortcuts" onClose={() => setDialog(null)}>
+        <Modal title="Keyboard shortcuts" onClose={() => setDialog(null)}>
           {window.formaDesktop?.checkForUpdates && <button className="secondary full" onClick={() => { setDialog(null); run(() => window.formaDesktop!.checkForUpdates()); }}><Download size={17} /> Check for updates</button>}
-          <p className="modal-description">Less clicking. More creating.</p>
           <div className="shortcut-list">
             {[
               ["Undo", shortcut('Z')],
@@ -1436,6 +1443,7 @@ export default function App() {
           aria-label="Presentation"
           aria-modal="true"
         >
+          {editor && <PageAudio key={`audio-${slide}`} clips={editor.doc.pages[slide]?.audio || []} />}
           <button
             className="presentation-close"
             aria-label="Close presentation"

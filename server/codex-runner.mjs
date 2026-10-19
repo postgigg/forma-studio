@@ -4,14 +4,30 @@ import path from 'node:path';
 import os from 'node:os';
 import { pngDimensions } from './photos.mjs';
 import { modelArguments } from './ai-engine.mjs';
+import { currentAI, aiSettings, logAI, oneModel, providerNames } from './ai-runtime.mjs';
+import { runExternal } from './provider-runner.mjs';
+
+export async function runCodex(options) {
+  const config=currentAI()?.settings||aiSettings();
+  const provider=config.mode==='claude-codex'?(options.role==='direction'?'claude':'codex'):config.provider;
+  if(options.generateImage&&provider!=='codex')throw new Error(`Photo generation, AI Pencil and Magic Eraser require Codex. Choose Codex or the Claude → Codex workflow in AI account & connection. ${providerNames[provider]} will not be replaced silently.`);
+  if(options.webSearch&&provider!=='codex'){logAI('action',`${providerNames[provider]} web tools are disabled. Using available public reference studies without claiming a live search.`);return {sources:[]};}
+  logAI('instructions',options.prompt);
+  logAI('request',`${providerNames[provider]} · ${config.models[provider]||'CLI default'} · ${options.images?.length||0} image attachment(s) · ${options.role||'design'}`);
+  try {
+    const result=await oneModel({signal:options.signal,provider,stage:options.role||'design'},()=>provider==='codex'?executeCodex({...options,model:config.models.codex}):runExternal(provider,{...options,model:config.models[provider]}));
+    logAI('result',options.generateImage?'Generated image returned.':JSON.stringify(result));
+    return result;
+  } catch(error){logAI('error',error.message);throw error;}
+}
 
 // Each operation owns one child and one isolated output directory.
-export function runCodex({ codex, workspace, prompt, schema, images = [], generateImage = false, webSearch = false, onEvent, signal }) {
+function executeCodex({ codex, workspace, prompt, schema, images = [], generateImage = false, webSearch = false, onEvent, signal, model }) {
   mkdirSync(workspace, { recursive: true });
   const started = Date.now();
   const output = path.join(workspace, 'answer.json');
   const args = ['exec', '--ignore-user-config', '--skip-git-repo-check', '--ephemeral', '--sandbox', 'read-only', '--json', '--color', 'never', '-c', 'approval_policy="never"', '-c', `web_search="${webSearch ? 'live' : 'disabled'}"`];
-  args.push(...modelArguments());
+  args.push(...modelArguments(model));
   if (schema) {
     const schemaPath = path.join(workspace, 'schema.json');
     writeFileSync(schemaPath, JSON.stringify(schema));
@@ -20,11 +36,13 @@ export function runCodex({ codex, workspace, prompt, schema, images = [], genera
   for (const feature of ['shell_tool', 'unified_exec', 'shell_snapshot', 'apps', 'plugins', 'hooks', 'multi_agent', 'browser_use', 'browser_use_external', 'computer_use', 'view_image', 'goals']) args.push('--disable', feature);
   args.push(generateImage ? '--enable' : '--disable', 'image_generation');
   images.forEach((src, i) => {
-    const file = path.join(workspace, `reference-${i}.png`);
+    const extension=/^data:image\/(jpeg|webp);/.exec(src)?.[1] || 'png';
+    const file = path.join(workspace, `reference-${i}.${extension}`);
     writeFileSync(file, Buffer.from(src.split(',')[1], 'base64'));
     args.push('--image', file);
   });
   args.push('-');
+  logAI('command','codex '+args.map(arg=>arg.includes(workspace)?arg.replaceAll(workspace,'[job workspace]'):arg).join(' '));
   return new Promise((resolve, reject) => {
     if (signal?.aborted) return reject(new Error('Cancelled.'));
     const child = spawn(codex, args, { cwd: workspace, windowsHide: true, shell: false, stdio: ['pipe', 'pipe', 'pipe'] });
@@ -43,6 +61,7 @@ export function runCodex({ codex, workspace, prompt, schema, images = [], genera
         try {
           const event = JSON.parse(line);
           onEvent?.(event);
+          if(event.type==='item.completed'&&event.item?.type==='web_search')logAI('action','Searched public design references.');
           if (event.type === 'thread.started' && /^[a-f0-9-]{36}$/i.test(event.thread_id)) thread = event.thread_id;
           if (event.type === 'error') diagnostic = String(event.message || '');
         } catch { /* Partial output is not a result. */ }

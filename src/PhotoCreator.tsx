@@ -51,6 +51,8 @@ export function PhotoCreator({
   };
   useEffect(() => {
     void connect();
+    window.addEventListener('forma:ai-settings-changed',connect);
+    return () => window.removeEventListener('forma:ai-settings-changed',connect);
   }, []);
   useEffect(() => {
     if (!jobId || !token) return;

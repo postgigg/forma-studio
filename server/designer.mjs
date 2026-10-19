@@ -1,6 +1,6 @@
 import http from "node:http";
 import { spawn, spawnSync } from "node:child_process";
-import { aiEngine } from "./ai-engine.mjs";
+import { configureAI, withAIJob, selectedEngine, selectedReady, providerInventory, aiSettings, saveAISettings, recentActivity, activityLog, aiQueueStatus } from './ai-runtime.mjs';
 import { designPipeline } from "./designer-pipeline.mjs";
 import {
   existsSync,
@@ -66,13 +66,15 @@ function findCodex() {
     "Codex CLI was not found. Set FORMA_CODEX_BIN to the codex.exe path.",
   );
 }
-const codex = findCodex();
-const auth = spawnSync(codex, ["login", "status"], {
+let codex;
+try { codex = findCodex(); } catch { /* Other supported CLIs can run without Codex. */ }
+configureAI({runtime,codex});
+const auth = codex ? spawnSync(codex, ["login", "status"], {
   encoding: "utf8",
   windowsHide: true,
   timeout: 30000,
-});
-const authenticated = auth.status === 0;
+}) : null;
+const authenticated = () => selectedReady();
 const jobs = new Map();
 for (const id of readdirSync(runtime)) {
   if (!/^[a-f0-9-]{36}$/.test(id)) continue;
@@ -116,6 +118,7 @@ function publicJob(job, includeResult = true) {
     id: job.id,
     status: job.status,
     stage: job.stage,
+    ai: job.ai || null,
     createdAt: job.createdAt,
     result: includeResult ? job.result || null : null,
     error: job.error || null,
@@ -200,17 +203,30 @@ const server = http.createServer(async (req, res) => {
   if (req.method === "GET" && url.pathname === "/health")
     return json(res, 200, {
       service: "forma-local-designer",
-      ready: authenticated,
-      ...aiEngine,
+      busy: aiQueueStatus().jobs > 0,
+      ready: authenticated(),
+      ...selectedEngine(),
       version: 1,
     });
   if (req.method === "GET" && url.pathname === "/session") {
     if (!origin || !allowedOrigins.has(origin))
       return json(res, 403, { error: "Open the designer from Forma Studio." });
-    return json(res, 200, { token, ready: authenticated, ...aiEngine });
+    return json(res, 200, { token, ready: authenticated(), ...selectedEngine(), signedIn: auth?.status === 0 });
   }
   if (!origin || !validToken(req.headers["x-forma-token"]))
     return json(res, 403, { error: "Reconnect the local designer and retry." });
+  if (req.method === 'GET' && url.pathname === '/ai/settings') return json(res,200,{settings:aiSettings(),providers:providerInventory(),queue:aiQueueStatus()});
+  if (req.method === 'POST' && url.pathname === '/ai/settings') {
+    if(!req.headers['content-type']?.startsWith('application/json'))return json(res,415,{error:'JSON required.'});
+    try {
+      let raw='';for await(const chunk of req){raw+=chunk;if(Buffer.byteLength(raw)>4000)throw new Error('Settings are too large.');}
+      const settings=saveAISettings(JSON.parse(raw));
+      return json(res,200,{settings,providers:providerInventory(),queue:aiQueueStatus()});
+    } catch(error){return json(res,aiQueueStatus().jobs?409:400,{error:error.message});}
+  }
+  if(req.method==='GET'&&url.pathname==='/ai/activity')return json(res,200,recentActivity());
+  const logMatch=url.pathname.match(/^\/ai\/activity\/([a-f0-9-]{36})$/i);
+  if(req.method==='GET'&&logMatch){const log=activityLog(logMatch[1]);return json(res,log?200:404,log||{error:'No activity record was found for this job.'});}
   if (await frameService.handle(req, res, url)) return;
   if (await photoService.handle(req, res, url)) return;
   if (await refinementService.handle(req, res, url)) return;
@@ -259,10 +275,10 @@ const server = http.createServer(async (req, res) => {
     }
   }
   if (req.method === "POST" && url.pathname === "/jobs") {
-    if (!authenticated)
+    if (!authenticated())
       return json(res, 503, {
         error:
-          "Run codex login on this computer, then restart the local designer.",
+          "Install and sign in to your selected AI CLI, then reconnect.",
       });
     if (!req.headers["content-type"]?.startsWith("application/json"))
       return json(res, 415, { error: "JSON required." });
@@ -298,7 +314,7 @@ const server = http.createServer(async (req, res) => {
         createdAt: new Date().toISOString(),
       };
       jobs.set(job.id, job);
-      void launch(job, brief);
+      void withAIJob(job, 'design', () => launch(job, brief));
       json(res, 202, publicJob(job));
     } catch (error) {
       json(res, 400, { error: error.message });
@@ -309,7 +325,7 @@ const server = http.createServer(async (req, res) => {
 });
 server.listen(port, "127.0.0.1", () =>
   console.log(
-    `Forma AI Designer: http://127.0.0.1:${server.address().port} · Codex ${authenticated ? "signed in" : "needs login"}`,
+    `Forma AI Designer: http://127.0.0.1:${server.address().port} · ${selectedEngine().engine}`,
   ),
 );
 server.on("error", (error) => {

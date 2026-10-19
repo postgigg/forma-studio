@@ -10,6 +10,7 @@ const { createUpdates } = require('./updates.cjs');
 const { checkMacRelease } = require('./mac-releases.cjs');
 const { bundledCodexPath, editCommands, menuTemplate, updatesEnabled, requiresMacLicense } = require('./platform.cjs');
 const { renderProposal } = require('./render.cjs');
+const { ownAudioRequest } = require('./media-permissions.cjs');
 const testing = !!process.env.FORMA_DESKTOP_TEST_DATA;
 const macLicenseRequired = requiresMacLicense({platform:process.platform,packaged:app.isPackaged,macDistribution:require('../package.json').formaMacDistribution});
 const uiPort = testing ? 51862 : 51860, aiPort = testing ? 51863 : 51861;
@@ -53,6 +54,11 @@ async function startWorker() {
     await new Promise(resolve => setTimeout(resolve, 250));
   }
   throw new Error('The local AI service could not start. Close another Forma instance, then use Restart AI. Your editor still works.');
+}
+async function requireIdleAI() {
+  let status;
+  try { const response=await fetch(aiOrigin+'/health',{signal:AbortSignal.timeout(3000)});status=await response.json(); } catch { return; }
+  if(status.busy)throw new Error('An AI job is still running. Wait for it or cancel it in its tool before reconnecting your account or restarting AI.');
 }
 async function capture(value) {
   const devices = JSON.parse(await readFile(path.join(root, 'shared', 'devices.json'), 'utf8'));
@@ -102,7 +108,7 @@ async function startServer() {
         'Content-Type': mime[path.extname(file)] || 'application/octet-stream', 'X-Content-Type-Options': 'nosniff', 'Cache-Control': 'no-cache',
         'Content-Security-Policy': `default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; connect-src 'self' ${aiOrigin}; worker-src 'self' blob:; media-src 'self' blob: data:; object-src 'none'; frame-src 'none'; frame-ancestors 'none'; base-uri 'none'; form-action 'none'`,
         'Referrer-Policy': 'no-referrer', 'X-Frame-Options': 'DENY',
-        'Permissions-Policy': 'camera=(), microphone=(), geolocation=(), payment=(), usb=()',
+        'Permissions-Policy': 'camera=(), microphone=(self), geolocation=(), payment=(), usb=()',
       });
       res.end(req.method === 'HEAD' ? undefined : await readFile(file));
     } catch (error) { res.writeHead(error.code === 'ENOENT' ? 404 : 400, { 'Content-Type': 'application/json' }); res.end(JSON.stringify({ error: error.code === 'ENOENT' ? 'Not found' : error.message })); }
@@ -138,8 +144,8 @@ function finishClose() {
 }
 async function start() {
   await startServer();
-  session.defaultSession.setPermissionRequestHandler((_wc, _permission, callback) => callback(false));
-  session.defaultSession.setPermissionCheckHandler(() => false);
+  session.defaultSession.setPermissionRequestHandler((webContents, permission, callback, details) => callback(ownAudioRequest({webContents,permission,origin,details,main})));
+  session.defaultSession.setPermissionCheckHandler((webContents,permission,requestingOrigin,details) => requestingOrigin===origin&&ownAudioRequest({webContents,permission,origin,details,main}));
   Menu.setApplicationMenu(Menu.buildFromTemplate(menuTemplate({
     edit: command => main?.webContents.send('forma:edit-command', command),
     close: () => main?.close(),
@@ -152,7 +158,7 @@ async function start() {
   ipcMain.handle('forma:update-check', event => { trusted(event); main.webContents.send('forma:show-updates'); return updates.check(); });
   ipcMain.handle('forma:update-download', event => { trusted(event); return updates.download(); });
   ipcMain.handle('forma:update-install', event => { trusted(event); if (updates.getState().phase !== 'downloaded') throw new Error('The update is not ready to install.'); installPending = true; main.close(); return true; });
-  ipcMain.handle('forma:restart-ai', async event => { trusted(event); await startWorker(); return true; });
+  ipcMain.handle('forma:restart-ai', async event => { trusted(event); await requireIdleAI(); await startWorker(); return true; });
   const cloud = require('./cloud-backup.cjs').createCloudBackup({ profile: app.getPath('userData'), safeStorage: require('electron').safeStorage });
   for (const [name, action] of Object.entries({ status: () => cloud.status(), connect: value => cloud.connect(value), automatic: value => cloud.automatic(value), disconnect: () => cloud.disconnect(), backup: value => cloud.backup(value), list: () => cloud.list(), restore: value => cloud.restore(value) })) {
     ipcMain.handle(`forma:cloud-${name}`, (event, value) => { trusted(event); return action(value); });
@@ -162,13 +168,14 @@ async function start() {
     if (!value || typeof value.filename !== 'string' || !(value.bytes instanceof ArrayBuffer) || value.bytes.byteLength > 256 * 1024 * 1024) throw new Error('Invalid or oversized export.');
     const name = path.basename(value.filename).replace(/[<>:"/\\|?*\x00-\x1f]/g, '-');
     const extension = path.extname(name).slice(1).toLowerCase();
-    if (!['png','jpg','jpeg','svg','pdf','json','gif','webm','csv'].includes(extension)) throw new Error('Unsupported export format.');
+    if (!['png','jpg','jpeg','svg','pdf','json','gif','webm','csv','wav','mp3','mp4'].includes(extension)) throw new Error('Unsupported export format.');
     const choice = await dialog.showSaveDialog(main, { title: 'Save your Forma export', defaultPath: path.join(app.getPath('downloads'), name), filters: [{ name: extension.toUpperCase() + ' file', extensions: [extension] }], properties: ['showOverwriteConfirmation', 'createDirectory'] });
     if (choice.canceled || !choice.filePath) return false;
     await writeFile(choice.filePath, Buffer.from(value.bytes)); return true;
   });
   ipcMain.handle('forma:sign-in', async event => {
     trusted(event); if (login) throw new Error('Sign-in is already open in your browser.');
+    await requireIdleAI();
     await new Promise((resolve, reject) => {
       login = spawn(codexPath(), ['login'], { windowsHide: true, stdio: 'ignore', shell: false });
       const timeout = setTimeout(() => { login?.kill(); }, 180000);

@@ -1,0 +1,5 @@
+
+# Preserve unmodified third-party distributions and license notices byte for byte.
+public/vendor/lamejs/** -text -whitespace
+public/fonts/*OFL.txt -text -whitespace
+website/assets/*OFL.txt -text -whitespace
