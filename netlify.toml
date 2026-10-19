@@ -10,8 +10,8 @@
 [build.processing.html]
   pretty_urls = false
 [[redirects]]
-  from = "/downloads/v1.6.2/Forma-Studio-Setup-1.6.2.exe"
-  to = "https://github.com/postgigg/forma-studio/releases/download/v1.6.2/Forma-Studio-Setup-1.6.2.exe"
+  from = "/downloads/v1.7.0/Forma-Studio-Setup-1.7.0.exe"
+  to = "https://github.com/postgigg/forma-studio/releases/download/v1.7.0/Forma-Studio-Setup-1.7.0.exe"
   status = 302
   force = true
 [[redirects]]
