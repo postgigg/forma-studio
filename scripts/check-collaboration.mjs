@@ -24,7 +24,7 @@ async function client(label){
   });
   await page.addInitScript(()=>{
     const invoke=(method,value)=>window.__qaLive({method,value});
-    window.formaDesktop={platform:'win32',aiEndpoint:'http://127.0.0.1:5188',editText:()=>{},onEditCommand:()=>()=>{},onBeforeClose:()=>()=>{},
+    window.formaDesktop={platform:'win32',aiEndpoint:'http://127.0.0.1:5188',editText:command=>{const input=document.activeElement;window.__qaCopy={command,text:input?.value?.slice(input.selectionStart,input.selectionEnd)};},onEditCommand:()=>()=>{},onBeforeClose:()=>()=>{},
       collaboration:{...Object.fromEntries(['interfaces','status','host','join','stop','renew','admit','permission','remove','publish','presence'].map(method=>[method,value=>invoke(method,value)])),onEvent:callback=>{const handler=e=>callback(e.detail);window.addEventListener('__qa-live-event',handler);return()=>window.removeEventListener('__qa-live-event',handler);}}};
   });
   await page.route('**/src/editor.ts*',async route=>{const response=await route.fetch(),source=await response.text();assert.ok(source.includes('notify() {'));await route.fulfill({response,body:source.replace('notify() {','notify() { window.__qaEditor=this;')});});
@@ -42,6 +42,8 @@ try{
   await host.page.getByRole('button',{name:'Start live session',exact:true}).click();
   await expect(host.page.getByLabel('Invitation code',{exact:true})).toBeVisible();
   const code=await host.page.getByLabel('Invitation code',{exact:true}).inputValue();assert.ok(code.startsWith('FORMA-LAN-1.'));
+  await host.page.getByRole('button',{name:'Copy invitation',exact:true}).click();
+  assert.deepEqual(await host.page.evaluate(()=>window.__qaCopy),{command:'copy',text:code});proof.invitationUsesNativeCopy=true;
   await guest.page.getByRole('button',{name:'Work together',exact:true}).click();
   await guest.page.getByRole('tab',{name:'Join with a code'}).click();
   await guest.page.getByLabel('Your collaboration name').fill('Ben');

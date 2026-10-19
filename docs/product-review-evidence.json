@@ -1633,13 +1633,14 @@
   },
   "patch1100": {
     "version": "1.10.0",
-    "verifiedAt": "2026-10-19T20:34:44.666Z",
+    "verifiedAt": "2026-10-19T21:15:40.273Z",
     "published": false,
     "intent": "Private host-led same-network collaboration using the existing design and comment model, with an obvious Help shortcut to the existing updater.",
     "focusedNodeChecks": 40,
     "desktopContractChecks": 27,
     "nodeSuitesOverlap": true,
     "collaboration": {
+      "invitationUsesNativeCopy": true,
       "approval": true,
       "independentLocalCopy": true,
       "embeddedImage": true,
@@ -1704,23 +1705,23 @@
         "GrantFileProtocolExtraPrivileges": false
       },
       "version": "1.10.0",
-      "testedAt": "2026-10-19T20:16:28.243Z",
-      "sha256": "6b52bbb5881ee5f37b6b415be26586ed35a7ccf1b1446b853df200454deabea4",
+      "testedAt": "2026-10-19T21:15:16.221Z",
+      "sha256": "40619a02d6c767728f674013485d2813c8cb08a0b54bc82f7906109c175864de",
       "assets": [
         {
           "name": "Forma-Studio-Setup-1.10.0.exe",
-          "size": 693336912,
-          "sha256": "6b52bbb5881ee5f37b6b415be26586ed35a7ccf1b1446b853df200454deabea4"
+          "size": 693337009,
+          "sha256": "40619a02d6c767728f674013485d2813c8cb08a0b54bc82f7906109c175864de"
         },
         {
           "name": "Forma-Studio-Setup-1.10.0.exe.blockmap",
-          "size": 723588,
-          "sha256": "5672afebf6b0662d021b17ecbd89c772e2374e3cee43b6fe3cb90355c1bdeefd"
+          "size": 723643,
+          "sha256": "d10f69e82c9a7fbec6997606fb65936adacb37d451d93ddb3117fc9af0955511"
         },
         {
           "name": "latest.yml",
           "size": 356,
-          "sha256": "b6250b07f30ec9a1467af5aa4dcedfdaab8940e8945dce8cde62ef7bc31b664d"
+          "sha256": "8dad642bf006ea956309bc790d5927c16fd05f16d2d6328a8044c756dc86e7ad"
         },
         {
           "name": "update-policy.json",
@@ -1730,7 +1731,7 @@
         {
           "name": "SHA256SUMS.txt",
           "size": 363,
-          "sha256": "723166424e5e89ea6f3e0ed10fe44fcf869b7fb6f93415ade501eb8a5721c114"
+          "sha256": "1249757a558d96a746c1169e8496e51b19213404d87301838ff36d1737410fb0"
         }
       ],
       "engine": {
@@ -1784,6 +1785,11 @@
       "collaboration": "Real editor workspaces using a QA-supplied native TLS bridge over loopback; editor inspection is injected only into the test response.",
       "help": "Actual compiled frontend using a desktop bridge fixture; the packaged app separately verifies the real shortcut.",
       "visibleRetailNativeScreenshotsClaimed": false
+    },
+    "clipboard": {
+      "webWritePermission": "denied",
+      "invitationUsesExistingNativeCopy": true,
+      "clipboardContentsReadOrModifiedDuringQA": false
     }
   }
 }
