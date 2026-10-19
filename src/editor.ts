@@ -31,6 +31,9 @@ import { drawingBrush, drawingTools, type DrawingTool } from './drawing';
 import { shortcut } from './platform';
 import { applyPhotoGrades, type PhotoGrade, type GradedImage } from './photo-filters';
 
+import {WhiteboardController} from './whiteboard-controller';
+import {BoardConnector} from './board-connector';
+
 export type DesignObject = FabricObject & { id?: string; name?: string; inkTool?: DrawingTool };
 FabricObject.customProperties = [
   "id",
@@ -47,6 +50,8 @@ FabricObject.customProperties = [
   "inkTool",
   "photoGrades",
   "photoBrightness",
+  "boardCard",
+  "boardParentId",
 ];
 Object.assign(FabricObject.ownDefaults, {
   originX: "left",
@@ -96,6 +101,7 @@ export class Editor {
   history: string[] = [];
   historyIndex = -1;
   clipboard: FabricObject | null = null;
+  board: WhiteboardController;
   drawingTool: DrawingTool = 'pencil';
   private textRange: { object: Textbox; start: number; end: number } | null =
     null;
@@ -227,6 +233,7 @@ export class Editor {
       this.guides = result.guides;
       this.notify();
     });
+    this.board=new WhiteboardController(this);
   }
   clearGuides() {
     if (this.guides.length) {
@@ -278,6 +285,7 @@ export class Editor {
   }
   private capture() {
     if (!this.doc || !this.page) return;
+    this.board.refresh();
     this.page.data = this.canvas.toObject();
     this.doc.fonts = usedFonts(this.doc.pages);
     this.page.thumbnail = this.canvas.toDataURL({
@@ -291,6 +299,7 @@ export class Editor {
     this.canvas.isDrawingMode = false;
     await this.canvas.loadFromJSON(this.page.data);
     this.setZoom(this.zoom);
+    this.board.refresh();
     this.canvas.requestRenderAll();
   }
   async open(design: Design) {
@@ -750,6 +759,7 @@ export class Editor {
       });
     recolor(selected, transforms);
     this.selected.setCoords();
+    if(this.board.active&&('left' in properties||'top' in properties))this.board.translateContents();
     this.commit();
   }
   get hasTextRange() {
@@ -829,11 +839,13 @@ export class Editor {
     this.notify();
   }
   deselect() {
+    if(this.board.connecting||this.board.panning||this.board.commenting)this.board.mode('select');
     this.canvas.discardActiveObject();
     this.canvas.requestRenderAll();
     this.notify();
   }
   background(color: string) {
+    if(this.board.active)this.page.boardGrid='plain';
     this.canvas.backgroundColor = color;
     this.commit();
   }
@@ -862,15 +874,16 @@ export class Editor {
     const clone = await this.clipboard.clone();
     this.canvas.discardActiveObject();
     clone.set({ left: clone.left + 24, top: clone.top + 24 });
+    if(this.board.active)this.board.reidentifyClone(clone);
     if (clone instanceof ActiveSelection) {
       clone.canvas = this.canvas;
       clone.getObjects().forEach((o) => {
-        this.nameObject(o, (o as DesignObject).name || "Copy");
+        if(!this.board.active)this.nameObject(o, (o as DesignObject).name || "Copy");
         this.canvas.add(o);
       });
       clone.setCoords();
     } else {
-      this.nameObject(clone, (clone as DesignObject).name || "Copy");
+      if(!this.board.active)this.nameObject(clone, (clone as DesignObject).name || "Copy");
       this.canvas.add(clone);
     }
     this.canvas.setActiveObject(clone);
@@ -885,7 +898,8 @@ export class Editor {
   group() {
     const selection = this.selected;
     if (selection instanceof ActiveSelection) {
-      const objects = selection.getObjects();
+      const objects = selection.getObjects().filter(o=>!(o instanceof BoardConnector));
+      if(objects.length<2)return;
       this.canvas.discardActiveObject();
       this.canvas.remove(...objects);
       const group = new Group(objects);
@@ -893,7 +907,7 @@ export class Editor {
       this.canvas.add(group);
       this.canvas.setActiveObject(group);
       this.commit();
-    } else if (selection instanceof Group) {
+    } else if (selection instanceof Group && !(selection as DesignObject & {boardCard?:unknown}).boardCard) {
       const objects = selection.removeAll();
       this.canvas.remove(selection);
       this.canvas.add(...objects);
@@ -950,6 +964,7 @@ export class Editor {
       obj.top += this.doc.height / 2 - b.top - b.height / 2;
     if (where === "bottom") obj.top += this.doc.height - b.top - b.height;
     obj.setCoords();
+    if(this.board.active)this.board.translateContents();
     this.commit();
   }
   shadow(enabled: boolean) {
@@ -999,6 +1014,7 @@ export class Editor {
     this.commit();
   }
   draw(enabled: boolean, color = "#754adb", width = 8, tool: DrawingTool = 'pencil', opacity = 100) {
+    if(enabled&&(this.board.connecting||this.board.panning||this.board.commenting))this.board.mode('select');
     this.canvas.isDrawingMode = enabled;
     if (enabled) {
       this.canvas.discardActiveObject();
@@ -1089,6 +1105,7 @@ export class Editor {
     if (duplicate) page.name += " copy";
     this.doc.pages.splice(this.pageIndex + 1, 0, page);
     await this.changePage(this.pageIndex + 1);
+    if(!duplicate&&this.board.active)this.board.grid('dots');
     this.commit();
   }
   async removePage() {
@@ -1135,6 +1152,7 @@ export class Editor {
     if (scaleContent) {
       const sx = width / this.doc.width,
         sy = height / this.doc.height;
+      this.board.scaleContent(sx,sy);
       this.doc.pages.forEach((page) => {
         const items = page.data.objects as Record<string, number>[];
         items.forEach((o) => {
@@ -1329,6 +1347,7 @@ export class Editor {
       this.selectAll();
       return;
     }
+    if(this.board.active&&key===' '&&!modifier){event.preventDefault();if(!event.repeat)this.board.mode('pan');return;}
     if (key === "delete" || key === "backspace") {
       event.preventDefault();
       this.remove();
@@ -1370,6 +1389,7 @@ export class Editor {
   }
   dispose() {
     this.disposed = true;
+    this.board.destroy();
     clearTimeout(this.saveTimer);
     clearTimeout(this.textTimer);
     void this.canvas.dispose();

@@ -13,12 +13,12 @@ Build with draggable layers, original artwork, photo-filled letters, editable ch
 
 | Design                                                                                                     | Compose                                                             | Refine                                                                 | Share                                                    |
 | ---------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------- | ---------------------------------------------------------------------- | -------------------------------------------------------- |
-| **262 reworked editable templates**                                            | **304 transparent AI stickers**, **290 editable graphics**          | AI Designer, selection refinement, AI Pencil, and Magic Eraser         | PNG, JPG, SVG, PDF, editable JSON, GIF, WebM             |
+| **262 reworked editable templates**                                            | **304 transparent AI stickers**, **290 editable graphics**          | AI Designer, selection refinement, AI Pencil, and Magic Eraser         | PNG, JPG, SVG, PDF, editable JSON, GIF, MP4, WebM, MP3 and WAV             |
 | Birthdays, weddings, seasonal events, business, retail, hospitality, wellness, education, and celebrations | 250 graphics across 25 brand collections; four original Forma fonts plus DM Sans, Bricolage Grotesque and Instrument Serif | Groups, alignment, gradients, transparent stops, crop, corner rounding | Multiple pages, Present, motion previews, local projects |
 
 ## Download the desktop app
 
-**Windows is free.** Download [Forma Studio 1.8.0 for Windows](https://tryformastudio.netlify.app/downloads/v1.8.0/Forma-Studio-Setup-1.8.0.exe), run the installer, and open **Forma Studio** from your desktop or Start menu. Windows 10/11, 64-bit. The current installer is unsigned, so Windows may display an unknown-publisher warning.
+**Windows is free.** Download [Forma Studio 1.9.0 for Windows](https://tryformastudio.netlify.app/downloads/v1.9.0/Forma-Studio-Setup-1.9.0.exe), run the installer, and open **Forma Studio** from your desktop or Start menu. Windows 10/11, 64-bit. The current installer is unsigned, so Windows may display an unknown-publisher warning.
 
 **Business setup:** In **Your style → Brand & intent** or **Brand**, choose **Enter manually** or **Use my website**. AI drafts the company, business, mission, audience and voice from public pages, with source excerpts and clearly labelled suggestions. Review the draft, choose which fields to fill, then save. Existing values are preserved by default. Your personal design preferences stay separate and combine with the reviewed brand context across AI tools.
 
@@ -32,11 +32,13 @@ The desktop app bundles the editor, its local worker and Codex CLI. No terminal,
 
 The new identity has a custom folded F symbol and drawn wordmark, shared across the editor, desktop, installer and website. [Identity files and usage](public/brand/README.md) include the source geometry and the limits of the preliminary name/mark search.
 
-For AI, open **AI Designer -> AI account & connection**. Choose Codex, Claude, Gemini or Kimi, or use the sequential **Claude plans -> Codex builds** workflow. Only one model executes at a time. Inspect submitted instructions, commands and results in **Peek under the commands**. Existing brand, personal style and campaign context stay shared. Photos, AI Pencil and Magic Eraser require Codex native image generation. [Provider setup and account requirements](docs/ai-providers.md) explain CLI sign-in, model choice and supported tools.
+For AI, open **Help -> AI accounts & models**. Choose Codex, Claude, Gemini or Kimi, or use the sequential **Claude plans -> Codex builds** workflow. Only one model executes at a time. Inspect submitted instructions, commands and results in **Peek under the commands**. Existing brand, personal style and campaign context stay shared. Photos, AI Pencil and Magic Eraser require Codex native image generation. [Provider setup and account requirements](docs/ai-providers.md) explain CLI sign-in, model choice and supported tools.
 
-**Page audio:** Use **Audio** beside the page controls to record a voiceover, import a soundtrack, trim, split and join clips. Download a WAV mix or include sound in a WebM export. GIF, image and PDF exports remain silent. Audio stays embedded in your editable design and workspace backup.
+**Page audio:** Use **Audio** beside the page controls to record a voiceover, import a soundtrack, trim, split and join clips. Download an MP3 or WAV mix, or stitch design pages into an MP4 / WebM movie with sound. GIF, image and PDF exports remain silent. Audio stays embedded in your editable design and workspace backup.
 
-**Photo filters:** Select a photo and open **Properties -> Photo filters**. The collection has 28 looks, including 25 new treatments. Stack up to six, adjust strengths, reorder them or reset the image. Saved edits, crops and brightness remain editable.
+**Photo filters:** Select a photo and open **Properties -> Photo filters**. The collection has 28 looks, including 25 new treatments. Each filter tile previews your selected photo above its name, including its crop and current adjustments. Stack up to six, adjust strengths, reorder them or reset the image. Saved edits, crops and brightness remain editable.
+
+![The selected photo previewed above every filter name in the compiled editor.](docs/media/photo-filter-previews-v1.9.png)
 
 The Mac app is **$49 once for one Mac**. It shares the editor and Forma identity, with native Intel and Apple Silicon build paths for macOS 12 or later. [Mac build instructions](docs/macos.md) cover development packages, signing and notarization; [payment verification notes](payments/README.md) cover single-device activation. Purchasing stays closed until merchant configuration and a signed/notarized Mac installer are ready. There is no verified retail Mac download in this Windows release.
 
@@ -147,6 +149,16 @@ This illustrative gardening campaign was created by the real local worker using 
 | ![AI Instagram design](docs/media/campaign-instagram-v1.3.png) | ![AI Facebook design](docs/media/campaign-facebook-v1.3.png) | ![AI LinkedIn design](docs/media/campaign-linkedin-v1.3.png) |
 | [Editable example](docs/examples/campaign-instagram.json) | [Editable example](docs/examples/campaign-facebook.json) | [Editable example](docs/examples/campaign-linkedin.json) |
 
+## Plan on a whiteboard
+
+Choose **New design -> Whiteboard** or open **Whiteboard** on the tool rail. Add photos, containers, sticky notes and freehand ink. Draw a connector between objects or select two and choose **Connect two selected objects**. Attached endpoints follow their objects; routes avoid obstructions. Drag the middle handle for a bend and use Properties for labels, colors, solid/dashed/dotted patterns and end markers.
+
+Notes and photos fully inside a container move with it. Hold **Space and drag** to pan. Reuse selection boxes, grouping, alignment, undo and exports. Add a local comment to a selected object or place its pin on the board, then resolve or reopen it. Comments stay in editable backups and are omitted from finished artwork exports. [Whiteboard instructions and limits](docs/whiteboard.md).
+
+![The actual whiteboard with a campaign photo, attached connectors, sticky notes and a local comment.](docs/media/whiteboard-v1.9.png)
+
+[Download the editable campaign-room example](docs/examples/whiteboard-campaign.json) and import it through Help.
+
 ## Draw, highlight & erase
 
 Open **Draw** and choose **Pencil**, **Marker**, **Paintbrush**, **Highlighter**, or **Stroke eraser**. Ink tools offer custom colors, your brand palette, size and opacity. Each stroke stays editable and travels with the design. The highlighter starts translucent; the paintbrush has a soft edge. The stroke eraser removes touched freehand strokes, and one Undo restores a whole erase gesture. Press **Escape** to return to selecting.
@@ -163,11 +175,11 @@ The rebuilt collection retains **24 yard signs, 24 business cards, 24 birthday p
 
 ![Modern templates rendered directly from the editable native objects.](docs/media/modern-collection-v1.5.png)
 
-**Modern collection:** 62 templates use photography, 41 use editable photo masks or rounded crops, six have native 3D lettering, and six contain real chart data. [How the library was rebuilt and verified](docs/template-modernization.md).
+**Modern collection:** 54 templates use photography, 33 use editable photo masks or rounded crops, six have native 3D lettering, and six contain real chart data. [How the library was rebuilt and verified](docs/template-modernization.md).
 
 | Native 3D lettering | Editable chart data |
 | --- | --- |
-| ![Actual 3D material and rotation controls](docs/media/editor-solid-v1.5.png) | ![Actual chart editor and its data](docs/media/editor-chart-v1.5.png) |
+| ![Actual 3D material and rotation controls](docs/media/smooth-3d-v1.9.png) | ![Actual chart editor and its data](docs/media/editor-chart-v1.5.png) |
 
 Open these editable examples in **Import design**: [florist campaign](docs/examples/modern-florist.json), [3D birthday invitation](docs/examples/modern-birthday-3d.json), [pitch with chart data](docs/examples/modern-pitch-chart.json).
 

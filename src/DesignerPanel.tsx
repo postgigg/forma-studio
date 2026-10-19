@@ -24,7 +24,6 @@ import { presets, type Design, type Asset } from "./types";
 import { Field } from "./ui";
 import { useBrandGuidance } from "./BrandContext";
 import { useDesignIntent } from "./DesignIntent";
-import { DesktopAI } from "./DesktopAI";
 import { DesignEvidence } from './CreativeDirection';
 import { allDesigns, getDesign } from "./storage";
 
@@ -107,7 +106,7 @@ export function DesignerPanel({
       const session = await designerRequest("/session");
       if (!session.ready)
         throw new Error(
-          window.formaDesktop ? "Open AI account & connection below to sign in." : "Sign in to Codex on this computer, then restart the designer.",
+          window.formaDesktop ? "Open Help / AI accounts & models to sign in." : "Sign in to Codex on this computer, then restart the designer.",
         );
       setToken(session.token);
       setConnection("Local designer connected");
@@ -118,7 +117,7 @@ export function DesignerPanel({
       setError(
         e instanceof Error && e.message !== "Failed to fetch"
           ? e.message
-          : window.formaDesktop ? "The designer is starting. Use Reconnect in a moment, or open AI account & connection below." : "Start the local designer with npm run ai:start in the Forma project.",
+          : window.formaDesktop ? "The designer is starting. Use Reconnect in a moment, or open Help / AI accounts & models." : "Start the local designer with npm run ai:start in the Forma project.",
       );
     }
   };
@@ -635,7 +634,7 @@ export function DesignerPanel({
           }
         </div>
       )}
-      <DesktopAI />
+      <button className="text-button ai-setup-link" onClick={()=>window.dispatchEvent(new Event("forma:ai-setup"))}>AI account &amp; connection in Help</button>
       <div className="ai-connection" role="status" data-state={token && connection === "Local designer connected" ? "connected" : "disconnected"}>
         <span className="status-dot" aria-hidden="true" />
         {token && connection === "Local designer connected" ? "Connected" : "Disconnected"}

@@ -11,7 +11,7 @@ const require=createRequire(import.meta.url),{ownAudioRequest}=require('../deskt
 const runtime=mkdtempSync(path.join(os.tmpdir(),'forma-ai-settings-'));
 configureAI({runtime});
 test('provider selection is validated, persisted and cannot change an active job snapshot',async()=>{
-  const config={provider:'claude',mode:'claude-codex',models:{codex:'chosen-codex',claude:'chosen-claude',gemini:'',kimi:''}};
+  const config={provider:'claude',claudeAuth:'cli',mode:'claude-codex',models:{codex:'chosen-codex',claude:'chosen-claude',gemini:'',kimi:''}};
   saveAISettings(config);assert.deepEqual(aiSettings(),config);
   const job={id:'11111111-1111-4111-8111-111111111111',status:'running',stage:'Planning'};
   await withAIJob(job,'design',async()=>{assert.deepEqual(currentAI().settings,config);assert.throws(()=>saveAISettings({...config,provider:'gemini'}),/Wait/);logAI('instructions','Client brief sk-test_secretisprivate0123456789');assert.doesNotMatch(JSON.stringify(activityLog(job.id)),/secretisprivate/);});

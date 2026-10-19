@@ -30,6 +30,9 @@ import { DeviceFrame } from "./device-frame";
 import { SolidObject } from "./solid-object";
 import { PhotoFrame } from "./photo-frame";
 import { isChart } from "./charts";
+import {BoardConnector} from './board-connector';
+import type {BoardObject} from './whiteboard-controller';
+import {ConnectorProperties,BoardCardProperties} from './Whiteboard';
 import { PhotoFilters } from './PhotoFilters';
 
 export function Inspector({
@@ -182,7 +185,7 @@ export function Inspector({
         </div>
       ) : (
         <div className="property-scroll">
-          {!obj ? (
+          {obj instanceof BoardConnector ? <ConnectorProperties editor={editor} connector={obj}/> : (obj as BoardObject|undefined)?.boardCard ? <BoardCardProperties editor={editor} card={obj as BoardObject}/> : !obj ? (
             <>
               <div className="property-section">
                 <span className="eyebrow">YOUR CANVAS</span>
@@ -206,7 +209,7 @@ export function Inspector({
                     onChange={(e) => editor.background(e.target.value)}
                   />
                   <span>
-                    {String(editor.canvas.backgroundColor).toUpperCase()}
+                    {editor.page.boardGrid==='dots'?'DOT GRID':typeof editor.canvas.backgroundColor==='string'?editor.canvas.backgroundColor.toUpperCase():'PATTERN'}
                   </span>
                 </div>
                 <div className="swatches">

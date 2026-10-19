@@ -1,5 +1,6 @@
 import { FabricImage, FabricObject, Group, StaticCanvas, Textbox } from 'fabric';
 import { getFont } from './font-library';
+import {BoardConnector} from './board-connector';
 import bundledFonts from '../shared/bundled-fonts.json';
 const bundled:Record<string,string>=bundledFonts;
 function dataUrl(blob:Blob):Promise<string> {return new Promise((resolve,reject)=>{const reader=new FileReader();reader.onload=()=>resolve(String(reader.result));reader.onerror=()=>reject(reader.error);reader.readAsDataURL(blob);});}
@@ -16,6 +17,7 @@ export async function portableSvg(canvas:StaticCanvas) {
         await object.setSrc(await embedded(src));object.set(geometry);
       }
     }
+    if(object instanceof BoardConnector&&object.connector.label)fonts.add('DM Sans');
     if(object instanceof Textbox) {
       if(bundled[object.fontFamily] || getFont(object.fontFamily))fonts.add(object.fontFamily);
       for(const line of Object.values(object.styles))for(const style of Object.values(line))if(style.fontFamily && (bundled[style.fontFamily] || getFont(style.fontFamily)))fonts.add(style.fontFamily);

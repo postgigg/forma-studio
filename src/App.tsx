@@ -33,6 +33,7 @@ import {
   PanelTopClose,
   PanelTopOpen,
   Pencil,
+  Presentation,
   Play,
   Plus,
   Redo2,
@@ -83,6 +84,8 @@ import { captureSelection, type SelectionSnapshot } from "./refinement";
 import { RefineDialog } from "./RefineDialog";
 import { MotionCanvas, MotionDialog } from "./Motion";
 import { AudioStudio } from './AudioStudio';
+import {Help} from './Help';
+import {WhiteboardPanel,BoardCommentPins} from './Whiteboard';
 import { PageAudio } from './PageAudio';
 import { TextColor } from "./TextColor";
 import { flushSync } from "react-dom";
@@ -104,6 +107,7 @@ import { commandKey, shortcut } from "./platform";
 
 const navigation = [
   { id: "design", icon: LayoutTemplate, label: "Design" },
+  { id: "whiteboard", icon: Presentation, label: "Whiteboard" },
   { id: "ai", icon: Sparkles, label: "AI Designer" },
   { id: "elements", icon: Shapes, label: "Elements" },
   { id: "photos", icon: Image, label: "Photos" },
@@ -123,7 +127,6 @@ type Dialog =
   | "movie-export"
   | "projects"
   | "campaigns"
-  | "help"
   | "motion"
   | "audio"
   | "style"
@@ -223,6 +226,10 @@ export default function App() {
   const [solidEditing, setSolidEditing] = useState<{ initial: SolidSettings; existing?: SolidObject } | null>(null);
   const [areaSelecting, setAreaSelecting] = useState(false);
   const [propertiesRequest, setPropertiesRequest] = useState(0);
+  const [helpOpen,setHelpOpen]=useState(false),[helpTab,setHelpTab]=useState<'shortcuts'|'ai'>('shortcuts');
+  useEffect(()=>{const open=()=>{setHelpTab('ai');setHelpOpen(true);};window.addEventListener('forma:ai-setup',open);return()=>window.removeEventListener('forma:ai-setup',open);},[]);
+  useEffect(()=>{const open=()=>{setPanel("whiteboard");setPanelOpen(true);};window.addEventListener('forma:whiteboard',open);return()=>window.removeEventListener('forma:whiteboard',open);},[]);
+  useEffect(()=>{let frame=0;const focus=(event:Event)=>{const stage=stageRef.current,point=(event as CustomEvent<{x:number;y:number}>).detail;if(!editor||!stage||!point)return;flushSync(()=>{setAutoFit(false);editor.setZoom(Math.max(.6,editor.zoom));});cancelAnimationFrame(frame);frame=requestAnimationFrame(()=>{const canvas=editor.canvas.upperCanvasEl.getBoundingClientRect(),view=stage.getBoundingClientRect();stage.scrollLeft+=canvas.left+point.x*editor.zoom-view.left-stage.clientWidth/2;stage.scrollTop+=canvas.top+point.y*editor.zoom-view.top-stage.clientHeight/2;editor.canvas.calcOffset();});};window.addEventListener('forma:board-focus',focus);return()=>{window.removeEventListener('forma:board-focus',focus);cancelAnimationFrame(frame);};},[editor]);
   useEffect(() => { void resumeCampaigns().catch(() => {}); }, []);
   useEffect(() => window.formaDesktop?.onBeforeClose(async () => { await editor?.save(); }), [editor]);
   const finishAreaSelection = useCallback(() => setAreaSelecting(false), []);
@@ -343,7 +350,7 @@ export default function App() {
         desktop.editText(command);
         return;
       }
-      if (!editor?.ready || editor.busy || dialog || refinement || slides.length || target?.closest('[role="dialog"],[role="menu"]')) return;
+      if (!editor?.ready || editor.busy || dialog || helpOpen || refinement || slides.length || target?.closest('[role="dialog"],[role="menu"]')) return;
       run(() => {
         switch (command) {
           case 'undo': return editor.undo();
@@ -355,7 +362,7 @@ export default function App() {
         }
       });
     });
-  }, [editor, dialog, refinement, slides, run]);
+  }, [editor, dialog, helpOpen, refinement, slides, run]);
   useEffect(() => {
     if (!editor?.ready || !stageRef.current || !autoFit) return;
     const el = stageRef.current;
@@ -385,7 +392,7 @@ export default function App() {
         if (e.key === "ArrowLeft") setSlide((v) => Math.max(0, v - 1));
         return;
       }
-      if (dialog || refinement || document.querySelector("dialog[open]"))
+      if (dialog || helpOpen || refinement || document.querySelector("dialog[open]"))
         return;
       if (
         editor?.ready &&
@@ -408,7 +415,7 @@ export default function App() {
     };
     window.addEventListener("keydown", handle);
     return () => window.removeEventListener("keydown", handle);
-  }, [editor, dialog, slides, refinement]);
+  }, [editor, dialog, helpOpen, slides, refinement]);
   useEffect(() => {
     const stage = stageRef.current;
     if (!stage || !editor) return;
@@ -416,6 +423,7 @@ export default function App() {
       delta = 0,
       pointer = { x: 0, y: 0 };
     const wheel = (event: WheelEvent) => {
+      if(document.querySelector('dialog[open]'))return;
       event.preventDefault();
       delta +=
         event.deltaY *
@@ -646,6 +654,7 @@ export default function App() {
               className={panel === id && panelOpen ? "active" : ""}
               disabled={!ready}
               onClick={() => {
+                if(id!=="whiteboard"&&(editor?.board.connecting||editor?.board.panning||editor?.board.commenting))editor.board.mode('select');
                 setPanel(id);
                 setPanelOpen(panel === id ? !panelOpen : true);
                 if (id !== "draw") editor?.draw(false);
@@ -663,7 +672,7 @@ export default function App() {
             </button>
           ))}
           <div className="rail-spacer" />
-          <button onClick={() => setDialog("help")} title="Help & shortcuts">
+          <button onClick={() => {setHelpTab("shortcuts");setHelpOpen(true);}} title="Help & shortcuts">
             <span>
               <CircleHelp size={22} />
             </span>
@@ -687,8 +696,10 @@ export default function App() {
         {ready && panelOpen && panel === "charts" && (
           <ChartLibrary onChoose={(type) => setCharting({ type })} />
         )}
+        {ready && panelOpen && panel === "whiteboard" && <WhiteboardPanel editor={editor} brand={brand} run={run} onUpload={() => {setPanel("uploads");setPanelOpen(true);}} onDraw={() => {setPanel("draw");setPanelOpen(true);}}/>}
         {ready &&
           panelOpen &&
+          panel !== "whiteboard" &&
           panel !== "ai" &&
           panel !== "frames" &&
           panel !== "solids" &&
@@ -997,7 +1008,7 @@ export default function App() {
           </div>
           <div
             ref={stageRef}
-            className={`canvas-stage ${dragging ? "dragging" : ""} ${editor?.drawing ? "is-drawing" : ""} ${areaSelecting ? "area-selecting" : ""}`}
+            className={`canvas-stage ${editor?.board.active?"whiteboard-stage":""} ${dragging ? "dragging" : ""} ${editor?.drawing ? "is-drawing" : ""} ${areaSelecting ? "area-selecting" : ""}`}
             onDragOver={(e) => {
               e.preventDefault();
               setDragging(true);
@@ -1070,6 +1081,7 @@ export default function App() {
                 }
               >
                 <canvas ref={canvasRef} />
+                {ready && editor.board.active && <BoardCommentPins editor={editor} onOpen={()=>{setPanel("whiteboard");setPanelOpen(true);}}/>}
                 {ready && <AlignmentGuides editor={editor} />}
                 {ready && <RotationReadout editor={editor} />}
                 {editor?.busy && (
@@ -1377,48 +1389,9 @@ export default function App() {
         />
       )}
       {ready && dialog === 'cloud' && <CloudStorage editor={editor} onClose={() => setDialog(null)} activeAI={designerActivity.count > 0} />}
-      {ready && dialog === 'campaigns' && <CampaignStudio editor={editor} brand={brand} brandLogo={brandLogo} onClose={() => setDialog(null)} onAISetup={() => { setDialog(null); setPanel('ai'); setPanelOpen(true); }} />}
-      {dialog === "help" && (
-        <Modal title="Keyboard shortcuts" onClose={() => setDialog(null)}>
-          {window.formaDesktop?.checkForUpdates && <button className="secondary full" onClick={() => { setDialog(null); run(() => window.formaDesktop!.checkForUpdates()); }}><Download size={17} /> Check for updates</button>}
-          <div className="shortcut-list">
-            {[
-              ["Undo", shortcut('Z')],
-              ["Redo", shortcut('Shift+Z')],
-              ["Copy / paste", shortcut('C / V')],
-              ["Duplicate", shortcut('D')],
-              ["Select all", shortcut('A')],
-              ["Group / ungroup", shortcut('G')],
-              ["Save on this device", shortcut('S')],
-              ["Add text / rectangle / circle", "T / R / C"],
-              ["Move an element", "Arrow keys"],
-              ["Move 10 pixels", "Shift + Arrow"],
-              ["Delete selected", "Delete / Backspace"],
-              ["Deselect / stop drawing", "Escape"],
-            ].map(([label, key]) => (
-              <div key={label}>
-                <span>{label}</span>
-                <kbd>{key}</kbd>
-              </div>
-            ))}
-          </div>
-          <button
-            className="secondary full"
-            onClick={() => {
-              setDialog(null);
-              importRef.current?.click();
-            }}
-          >
-            <Upload size={17} /> Import a Forma design file
-          </button>
-          <p className="muted small">
-            Shift or {commandKey}-click elements or layers to select several. Drag a
-            selection box across the canvas to select an area. Right-click a
-            selection for actions, or press Shift+F10. All edits save on this
-            device automatically.
-          </p>
-        </Modal>
-      )}
+      {ready && dialog === 'campaigns' && <CampaignStudio editor={editor} brand={brand} brandLogo={brandLogo} onClose={() => setDialog(null)} onAISetup={() => {setHelpTab('ai');setHelpOpen(true);}} />}
+      {helpOpen && <Help initialTab={helpTab} onClose={()=>setHelpOpen(false)} onImport={()=>{setHelpOpen(false);setDialog(null);importRef.current?.click();}}/>}
+
       {toast && (
         <div className="toast" role="status">
           <Check size={18} />

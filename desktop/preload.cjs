@@ -9,7 +9,7 @@ contextBridge.exposeInMainWorld('formaDesktop', {
     ipcRenderer.on('forma:edit-command', handler);
     return () => ipcRenderer.removeListener('forma:edit-command', handler);
   },
-  signIn: () => ipcRenderer.invoke('forma:sign-in'),
+  signIn: (provider='codex',mode='cli') => ipcRenderer.invoke('forma:sign-in',{provider,mode}),
   restartAI: () => ipcRenderer.invoke('forma:restart-ai'),
   saveFile: (filename, bytes) => ipcRenderer.invoke('forma:save-file', { filename, bytes }),
   cloud: Object.freeze({

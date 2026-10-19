@@ -21,7 +21,7 @@ declare global {
       aiEndpoint: string;
       editText(command: DesktopEditCommand): void;
       onEditCommand(callback: (command: DesktopEditCommand) => void): () => void;
-      signIn(): Promise<boolean>;
+      signIn(provider?:string,mode?:'cli'|'environment'): Promise<boolean>;
       restartAI(): Promise<boolean>;
       saveFile(filename: string, bytes: ArrayBuffer): Promise<boolean>;
       cloud: {

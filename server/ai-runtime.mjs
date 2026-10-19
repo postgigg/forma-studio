@@ -6,7 +6,7 @@ import { aiEngine } from './ai-engine.mjs';
 
 const context = new AsyncLocalStorage();
 export const providerNames = Object.freeze({ codex: 'Codex', claude: 'Claude', gemini: 'Gemini', kimi: 'Kimi' });
-let directory, codexBinary, settings = { provider: 'codex', mode: 'single', models: { codex: aiEngine.model, claude: '', gemini: '', kimi: '' } };
+let directory, codexBinary, settings = { provider: 'codex', mode: 'single', models: { codex: aiEngine.model, claude: '', gemini: '', kimi: '' },claudeAuth:'cli' };
 let tail = Promise.resolve(), waiting = 0, executing = null;
 const jobs = new Map();
 export function validateAISettings(value) {
@@ -17,7 +17,8 @@ export function validateAISettings(value) {
     if (typeof model !== 'string' || model.length > 120 || (model && !/^[A-Za-z0-9][A-Za-z0-9._:/-]*$/.test(model))) throw new Error('Use a model name or alias supported by your CLI.');
     models[id] = model;
   }
-  return { provider: value.provider, mode: value.mode, models };
+  const claudeAuth=value.claudeAuth??'environment';if(!['cli','environment'].includes(claudeAuth))throw new Error('Choose a supported Claude account type.');
+  return { provider: value.provider, mode: value.mode, models,claudeAuth };
 }
 export function configureAI({ runtime, codex }) {
   directory = path.join(runtime,'ai'); codexBinary = codex;

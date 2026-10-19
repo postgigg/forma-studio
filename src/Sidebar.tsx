@@ -31,6 +31,7 @@ import { brandAffinity } from "../shared/brand-context.mjs";
 
 export type Panel =
   | "design"
+  | "whiteboard"
   | "elements"
   | "frames"
   | "solids"
@@ -161,6 +162,7 @@ export function Sidebar({
           {
             {
               design: "Design",
+              whiteboard: "Whiteboard",
               elements: "Elements",
               frames: "Frames",
               solids: "3D objects",

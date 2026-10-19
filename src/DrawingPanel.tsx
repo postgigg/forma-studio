@@ -10,6 +10,7 @@ import {
 import { Editor } from "./editor";
 import { colors } from "./types";
 import { drawingTools, type DrawingTool } from "./drawing";
+import {Color} from 'fabric';
 import "./drawing.css";
 const icons = {
   pencil: Pencil,
@@ -25,13 +26,13 @@ export function DrawingPanel({
   editor: Editor;
   brand: string[];
 }) {
-  const [tool, setTool] = useState<DrawingTool>("pencil");
-  const [ink, setInk] = useState("#764bdd");
+  const [tool, setTool] = useState<DrawingTool>(()=>editor.drawingTool);
+  const [ink, setInk] = useState(()=>editor.drawing?'#'+new Color(editor.canvas.freeDrawingBrush?.color||'#764bdd').toHex():'#764bdd');
   const [settings, setSettings] = useState<
     Record<string, { size: number; opacity: number }>
   >(() =>
     Object.fromEntries(
-      drawingTools.map((t) => [t.id, { size: t.size, opacity: t.opacity }]),
+      drawingTools.map((t) => [t.id, { size: editor.drawing&&t.id===editor.drawingTool?editor.canvas.freeDrawingBrush?.width||t.size:t.size, opacity: t.opacity }]),
     ),
   );
   const current = settings[tool],

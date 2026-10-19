@@ -30,6 +30,7 @@ export function SizeDialog({
   const [name, setName] = useState("Untitled design"),
     [width, setWidth] = useState(resize ? editor.doc.width : 1080),
     [height, setHeight] = useState(resize ? editor.doc.height : 1080),
+    [whiteboard,setWhiteboard]=useState(false),
     [scale, setScale] = useState(true),
     [busy, setBusy] = useState(false);
   return (
@@ -54,13 +55,14 @@ export function SizeDialog({
         </Field>
       )}
       <div className="size-presets">
-        {presets.map((p) => (
+        {[...presets,...(!resize?[{name:"Whiteboard",width:4000,height:2600,category:"Whiteboard"}]:[])].map((p) => (
           <button
             key={p.name}
             className={
               width === p.width && height === p.height ? "selected" : ""
             }
             onClick={() => {
+              setWhiteboard(p.category==="Whiteboard");
               setWidth(p.width);
               setHeight(p.height);
               if (!resize) setName(p.name);
@@ -114,7 +116,7 @@ export function SizeDialog({
           setBusy(true);
           try {
             if (resize) editor.resize(width, height, scale);
-            else await editor.create(name, width, height);
+            else {await editor.create(name, width, height);if(whiteboard){editor.board.enable();editor.board.grid('dots');window.dispatchEvent(new Event('forma:whiteboard'));}}
             onClose();
           } catch (e) {
             notify((e as Error).message);

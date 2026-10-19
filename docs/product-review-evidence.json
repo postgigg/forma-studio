@@ -485,7 +485,7 @@
     "windowsPublisherSignature": "NotSigned"
   },
   "patch170": {
-    "intent": "Improve the existing Forma platform and preserve its single shared brand/style context. Rebuild the landing page around the supplied WonderKids reference with expressive typography, original branded compositions and purposeful motion, without decorative asterisks or promotional hint labels. Add optional direct backups of saved workspace data to the customerâ€™s private Wasabi account, with encrypted desktop keys and reviewed recovery. Retain $49 once for one Mac, free Windows, clearer AI status and branded downloads.",
+    "intent": "Improve the existing Forma platform and preserve its single shared brand/style context. Rebuild the landing page around the supplied WonderKids reference with expressive typography, original branded compositions and purposeful motion, without decorative asterisks or promotional hint labels. Add optional direct backups of saved workspace data to the customer\u00e2\u20ac\u2122s private Wasabi account, with encrypted desktop keys and reviewed recovery. Retain $49 once for one Mac, free Windows, clearer AI status and branded downloads.",
     "testedAt": "2026-10-19T02:25:34.201Z",
     "version": "1.7.0",
     "state": "published and verified; customer Wasabi setup, Stripe authentication and signed retail Mac release remain external setup",
@@ -698,7 +698,7 @@
     "landing": {
       "reference": "https://dribbble.com/shots/23191965-WonderKids-Landing-Page-Exploration",
       "referenceAuthor": "Paperpillar",
-      "direction": "Oversized friendly typography, generous space, warm color and playful compositions adapted to Formaâ€™s existing identity; no reference artwork or branding copied.",
+      "direction": "Oversized friendly typography, generous space, warm color and playful compositions adapted to Forma\u00e2\u20ac\u2122s existing identity; no reference artwork or branding copied.",
       "canonicalLogoPreserved": true,
       "originalCodeNativeBackupIllustration": true,
       "selfHostedLicensedDisplayFont": true,
@@ -897,7 +897,7 @@
     "testedAt": "2026-10-19T12:13:14.554334+00:00",
     "intent": "Improve the existing local design workflows: selectable AI providers with visible submitted activity, professional template craft, photo activity and grading, page audio with precise timing and local MP3/MP4 exports, and upright landing-page typography with purposeful motion.",
     "contextReuse": "The existing brand, personal style and campaign contracts remain the source of truth; connection options and audio/movie export reuse the existing editor and Download dialog.",
-    "published": false,
+    "published": true,
     "tests": {
       "serverContracts": 37,
       "desktopAndCloud": 27,
@@ -1090,7 +1090,33 @@
       "threeDRotation": true,
       "motionPause": true,
       "reducedMotion": true,
-      "errors": []
+      "errors": [],
+      "production": {
+        "url": "https://tryformastudio.netlify.app/",
+        "testedAt": "2026-10-19T12:47:20.594Z",
+        "status": 200,
+        "landingPage": true,
+        "editorEntrypoint": false,
+        "campaignSectionRemoved": true,
+        "publicRepositoryLinks": false,
+        "brandedDownload": true,
+        "releaseHostRetained": true,
+        "privateSecurityReportReachable": true,
+        "downloadRedirect": 302,
+        "installerStatus": 200,
+        "installerBytes": 692939095,
+        "walkthroughStatus": 200,
+        "htmlSha256": "ae1d707f1770d6160e1a1a3e09b8f8f7872b01ef6d09444562d674560164877f",
+        "assetsVerified": 23,
+        "textLineEndingsNormalized": [],
+        "installer": "https://tryformastudio.netlify.app/downloads/v1.8.0/Forma-Studio-Setup-1.8.0.exe"
+      },
+      "sites": {
+        "version": 16,
+        "url": "https://forma-studio.pastel-mars-3499.chatgpt.site",
+        "status": "succeeded",
+        "sourceCommit": "4c12b0a9b3882205d30e4d0f47ea01f63ab3ebc2"
+      }
     },
     "walkthrough": {
       "testedAt": "2026-10-19T12:12:19.109Z",
@@ -1198,6 +1224,309 @@
         "foundInPackagedArchive": [],
         "githubAlertLeftOpen": true
       }
+    },
+    "release": {
+      "version": "1.8.0",
+      "publishedAt": "2026-10-19T12:37:47.679Z",
+      "sourceCommit": "b1a7f6b14c7832232170547af49c279ee100eb16",
+      "public": true,
+      "assets": [
+        {
+          "name": "Forma-Studio-Setup-1.8.0.exe",
+          "size": 692939095,
+          "sha256": "7c5a72e0bae5e02a1f88491b8574d88131aa80893a052eafbd0aed8e7dd08818"
+        },
+        {
+          "name": "Forma-Studio-Setup-1.8.0.exe.blockmap",
+          "size": 722603,
+          "sha256": "01064a132a845836f445f65f0361b51a49303b116d3d5bd8ce4edd50f41f36f7"
+        },
+        {
+          "name": "latest.yml",
+          "size": 353,
+          "sha256": "c02a8b9c96adc5ff141fba37db2bce13c4289baa4c944eb816b6e32acbfe766d"
+        },
+        {
+          "name": "update-policy.json",
+          "size": 225,
+          "sha256": "8787471dbebd84b687094b1cd21be94c432e6a2f6eebb218240494688907e868"
+        },
+        {
+          "name": "SHA256SUMS.txt",
+          "size": 361,
+          "sha256": "bdc278a059f88d243e1eaed516e51629ab62e7b7569b719fd11b6192942a95de"
+        }
+      ],
+      "uploadedDigestsMatch": true,
+      "releaseTagMatchesSource": true,
+      "installer": "https://tryformastudio.netlify.app/downloads/v1.8.0/Forma-Studio-Setup-1.8.0.exe"
     }
+  },
+  "patch190": {
+    "version": "1.9.0",
+    "intent": "Improve the existing editor: add a local whiteboard, consolidate AI account controls in Help, provide Claude sign-in, smooth 3D lettering and show the selected photo above every filter name.",
+    "latestAnnotation": "Screenshot 2026-10-19 094056 annotated.png",
+    "contextReused": [
+      "existing canvas, pages, selection, grouping, undo and exports",
+      "existing photo filter stack and uploaded image data",
+      "one AI settings record and existing shared brand, style and campaign intent",
+      "existing drawing tools and stroke eraser"
+    ],
+    "contractTests": {
+      "server": 37,
+      "desktopAndCloud": 27,
+      "providersAudioAndWhiteboard": 16,
+      "jobLifetime": 2
+    },
+    "browserRegressionTests": 5,
+    "whiteboard": {
+      "creation": true,
+      "containerContentsFollow": true,
+      "newCardsDoNotOverlap": true,
+      "pointerConnection": {
+        "id": "46a11226-11db-42d5-96ed-adecbbd950e7",
+        "data": {
+          "style": "elbow",
+          "pattern": "solid",
+          "color": "#754adb",
+          "width": 4,
+          "startHead": "none",
+          "endHead": "arrow",
+          "label": "",
+          "start": {
+            "x": 792,
+            "y": 626,
+            "nodeId": "5c850070-b60e-415a-85cb-7aae613a2051",
+            "side": "auto"
+          },
+          "end": {
+            "x": 1550,
+            "y": 626,
+            "nodeId": "548049ca-02c3-4d62-a55c-ec1b22b35a48",
+            "side": "auto"
+          }
+        },
+        "points": [
+          {
+            "x": 792,
+            "y": 626,
+            "side": "right"
+          },
+          {
+            "x": 1000,
+            "y": 626
+          },
+          {
+            "x": 1000,
+            "y": 900
+          },
+          {
+            "x": 1524,
+            "y": 900
+          },
+          {
+            "x": 1524,
+            "y": 626
+          },
+          {
+            "x": 1550,
+            "y": 626,
+            "side": "left"
+          }
+        ],
+        "blocked": false
+      },
+      "bendHandle": {
+        "x": 1170,
+        "y": 1100
+      },
+      "commentPlacement": true,
+      "persistence": true,
+      "marker": true,
+      "eraserUndo": true,
+      "keyboardContainer": true,
+      "connectSelection": true,
+      "resizeAttachment": true,
+      "endpointHandles": true,
+      "groupAndDuplicate": true,
+      "multiSelectionConnectorCopy": true,
+      "scaleFreeConnections": true,
+      "multiplePages": true,
+      "svgExport": true,
+      "pan": true,
+      "errors": []
+    },
+    "photoPreviews": {
+      "selectedPhotoThumbnails": 28,
+      "allLooksDifferent": true,
+      "monoPixelCheck": {
+        "maxDifference": 2,
+        "opaque": 30931
+      },
+      "noSavedImageMutation": true,
+      "stackAndBrightnessRefresh": true,
+      "cropAndSelectionRefresh": true,
+      "collectionFiltering": true,
+      "errors": []
+    },
+    "help": {
+      "canonicalHelpSettings": true,
+      "sequentialBothSignInButtons": true,
+      "claudeSubscriptionChoice": true,
+      "signInPreservesUnsavedModels": true,
+      "saveExplicit": true,
+      "kimiSignIn": true,
+      "geminiHonestInstructions": true,
+      "actualOAuthLoginAttempted": false,
+      "errors": []
+    },
+    "packagedFeatures": {
+      "version": "1.9.0",
+      "packaged": true,
+      "profileIsolated": true,
+      "whiteboardImportAndProperties": true,
+      "whiteboardPersistence": true,
+      "nativePhotoPreviews": 28,
+      "nativeFilterApplies": true,
+      "nativeHelpAndBothSignInButtons": true,
+      "actualOAuthLoginAttempted": false,
+      "nativeSmooth3DSettings": {
+        "text": "B",
+        "depth": 5,
+        "bevel": 8
+      },
+      "errors": [],
+      "hiddenWindowScreenshotsUsable": false,
+      "captureLimitation": "The test profile intentionally keeps the native window hidden; direct window captures were blank. Functional DOM, bitmap preview generation and persistence assertions passed."
+    },
+    "packagedSecurity": {
+      "version": "1.9.0",
+      "packaged": true,
+      "profileIsolated": true,
+      "rendererNodeUnavailable": true,
+      "cspBlocksExternalFetch": true,
+      "hostRebindingBlocked": true,
+      "sessionOriginRequired": true,
+      "invalidSignInBlocked": true,
+      "settings": {
+        "provider": "codex",
+        "claudeAuth": "cli",
+        "providers": [
+          {
+            "id": "codex",
+            "installed": true
+          },
+          {
+            "id": "claude",
+            "installed": true
+          },
+          {
+            "id": "gemini",
+            "installed": true
+          },
+          {
+            "id": "kimi",
+            "installed": true
+          }
+        ]
+      },
+      "nativeCloud": {
+        "connected": false,
+        "credentialFieldsExposed": false,
+        "nonWasabiEndpointBlocked": true
+      },
+      "engine": {
+        "model": "gpt-6.1-sol",
+        "reasoningEffort": "max"
+      },
+      "errors": [],
+      "legacyNativeUISuite": {
+        "completed": false,
+        "reason": "The intentionally hidden test window stalled screenshot/input steps. Source browser regression tests and the separate packaged new-feature assertions passed."
+      }
+    },
+    "compiledGuide": {
+      "version": "1.9.0",
+      "servedFrom": "dist",
+      "compiledBundleMatchesInstaller": true,
+      "captures": 4,
+      "desktopBridgeFixtureForDisplayingAccountControls": true,
+      "signInInvoked": false,
+      "nativeFunctionalProof": ".local/desktop-features-190-proof.json",
+      "errors": []
+    },
+    "installer": {
+      "fuseState": {
+        "RunAsNode": false,
+        "EnableCookieEncryption": true,
+        "EnableNodeOptionsEnvironmentVariable": false,
+        "EnableNodeCliInspectArguments": false,
+        "EnableEmbeddedAsarIntegrityValidation": true,
+        "OnlyLoadAppFromAsar": true,
+        "GrantFileProtocolExtraPrivileges": false
+      },
+      "version": "1.9.0",
+      "testedAt": "2026-10-19T14:34:16.382Z",
+      "sha256": "7d6d8146765cb5ae794f06c7d1277188b5abe2e8d77fdc68b2116a9567bd0a98",
+      "assets": [
+        {
+          "name": "Forma-Studio-Setup-1.9.0.exe",
+          "size": 692941745,
+          "sha256": "7d6d8146765cb5ae794f06c7d1277188b5abe2e8d77fdc68b2116a9567bd0a98"
+        },
+        {
+          "name": "Forma-Studio-Setup-1.9.0.exe.blockmap",
+          "size": 722407,
+          "sha256": "be919d409b8d1a45e28f7983c8e3a67739f7a834817225114506a5deac91300d"
+        },
+        {
+          "name": "latest.yml",
+          "size": 353,
+          "sha256": "f77f55a4b957b0e6d6fd2f526691c1fb0ad8fb7e88ba33841443ac1ed3065774"
+        },
+        {
+          "name": "update-policy.json",
+          "size": 246,
+          "sha256": "4b9702b4f7082464bc8aa6a3db7c5fd815d97c667e3de4ab22ecb23ad6c49a96"
+        },
+        {
+          "name": "SHA256SUMS.txt",
+          "size": 361,
+          "sha256": "66616f8ef07b02d4e2337295c2b21c774f2db6f1e8a589363619c6efe80444bc"
+        }
+      ],
+      "engine": {
+        "engine": "Codex CLI",
+        "model": "gpt-6.1-sol",
+        "modelLabel": "GPT-6.1 Sol",
+        "reasoningEffort": "max",
+        "imageEngine": "Codex native image generation"
+      },
+      "templates": 262,
+      "thumbnails": 262,
+      "sourceImages": 8,
+      "compiledBundleMatches": true,
+      "canonicalBrandMatches": true,
+      "packagedUpdater": true,
+      "developmentAdvisory": {
+        "id": "GHSA-hp3w-g68c-fv3c",
+        "url": "https://github.com/advisories/GHSA-hp3w-g68c-fv3c",
+        "scope": "development",
+        "upstreamPatchAvailable": false,
+        "checkedPackages": [
+          "sprintf-js",
+          "roarr",
+          "global-agent",
+          "@electron/get",
+          "electron-builder",
+          "app-builder-lib",
+          "dmg-builder",
+          "electron-builder-squirrel-windows"
+        ],
+        "foundInPackagedArchive": [],
+        "githubAlertLeftOpen": true
+      }
+    },
+    "published": false
   }
 }

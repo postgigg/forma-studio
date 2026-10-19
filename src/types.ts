@@ -7,6 +7,7 @@ export interface PageMotion {
   style: "none" | "fade" | "rise" | "stagger" | "drift";
   duration: number;
 }
+export interface BoardComment {id:string;text:string;x:number;y:number;nodeId?:string;resolved:boolean;createdAt:string}
 export interface DesignPage {
   id: string;
   name: string;
@@ -14,8 +15,11 @@ export interface DesignPage {
   thumbnail: string;
   motion?: PageMotion;
   audio?: AudioClip[];
+  comments?: BoardComment[];
+  boardGrid?: "dots"|"plain";
 }
 export interface Design {
+  kind?: "design"|"whiteboard";
   id: string;
   name: string;
   width: number;

@@ -173,16 +173,23 @@ async function start() {
     if (choice.canceled || !choice.filePath) return false;
     await writeFile(choice.filePath, Buffer.from(value.bytes)); return true;
   });
-  ipcMain.handle('forma:sign-in', async event => {
-    trusted(event); if (login) throw new Error('Sign-in is already open in your browser.');
+  ipcMain.handle('forma:sign-in', async (event,value={provider:'codex',mode:'cli'}) => {
+    trusted(event);if(login)throw new Error('A provider sign-in is already open in your browser.');
     await requireIdleAI();
-    await new Promise((resolve, reject) => {
-      login = spawn(codexPath(), ['login'], { windowsHide: true, stdio: 'ignore', shell: false });
-      const timeout = setTimeout(() => { login?.kill(); }, 180000);
-      login.once('error', error => { clearTimeout(timeout); login = null; reject(error); });
-      login.once('exit', code => { clearTimeout(timeout); login = null; code === 0 ? resolve() : reject(new Error('Sign-in was not completed. Try again from AI Designer.')); });
+    const {providerCommand}=await import(require('node:url').pathToFileURL(path.join(root,'server','ai-runtime.mjs')).href);
+    const {authInvocation}=require('../shared/provider-auth.cjs');
+    const provider=value?.provider,cli=provider==='codex'?{command:codexPath(),prefix:[]}:typeof provider==='string'&&['claude','kimi'].includes(provider)?providerCommand(provider):null;
+    const invocation=authInvocation(provider,cli,process.env,value?.mode||'cli');
+    if(login)throw new Error('A provider sign-in is already open in your browser.');
+    await new Promise((resolve,reject)=>{
+      login=spawn(invocation.command,invocation.args,{env:invocation.env,windowsHide:true,stdio:'ignore',shell:false});
+      const timeout=setTimeout(()=>login?.kill(),600000);
+      login.once('error',error=>{clearTimeout(timeout);login=null;reject(error);});
+      login.once('exit',code=>{clearTimeout(timeout);login=null;code===0?resolve():reject(new Error('Sign-in was not completed. Try again from Help / AI accounts & models.'));});
     });
-    await startWorker(); return true;
+    // Each job launches a fresh CLI process and reads its account. Restarting the
+    // worker here would interrupt work that started while the browser was open.
+    return true;
   });
   await createWindow();
   started = true;
