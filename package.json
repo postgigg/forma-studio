@@ -1,6 +1,6 @@
 {
   "name": "forma-studio",
-  "version": "1.9.0",
+  "version": "1.10.0",
   "description": "A local visual design studio with editable templates, motion and intent-aware AI tools.",
   "author": "Forma Studio",
   "main": "desktop/main.cjs",
@@ -28,7 +28,8 @@
     "desktop:smoke": "node scripts/test-desktop.mjs",
     "test:ai-lifetime": "node --experimental-test-module-mocks --test tests/job-lifetime.test.mjs",
     "test:providers": "node --test tests/ai-runtime.test.mjs tests/provider-protocol.test.mjs tests/provider-auth.test.cjs",
-    "test:whiteboard": "node --test tests/whiteboard.test.mjs && node scripts/check-whiteboard.mjs"
+    "test:whiteboard": "node --test tests/whiteboard.test.mjs && node scripts/check-whiteboard.mjs",
+    "test:collaboration": "node --test tests/collaboration.test.mjs tests/collaboration-network.test.cjs && node scripts/check-collaboration.mjs"
   },
   "build": {
     "appId": "studio.forma.desktop",
@@ -114,6 +115,7 @@
     "playwright": "1.64.0",
     "react": "19.3.0",
     "react-dom": "19.3.0",
+    "selfsigned": "5.5.0",
     "three": "0.186.1"
   },
   "devDependencies": {

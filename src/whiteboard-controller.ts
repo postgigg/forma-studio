@@ -567,6 +567,7 @@ export class WhiteboardController {
     this.mode("comment");
   }
   addComment(text: string, point?: BoardPoint, target?: BoardObject) {
+    if (this.editor.liveAccess === 'view') throw new Error('This session is view only.');
     const value = text.trim();
     if (!value) return;
     if ((this.editor.page.comments?.length || 0) >= 200)
@@ -581,11 +582,18 @@ export class WhiteboardController {
       y: box?.top ?? center.y,
       resolved: false,
       createdAt: new Date().toISOString(),
+      ...(this.editor.liveAuthor ? {authorId:this.editor.liveAuthor.id,authorName:this.editor.liveAuthor.name} : {}),
       ...(node?.id ? { nodeId: node.id } : {}),
     };
     (this.editor.page.comments ||= []).push(comment);
     this.selectedComment = comment.id;
     this.editor.commit();
+  }
+  reviewPoint(point: BoardPoint) {
+    const node=this.hit(point.x,point.y);
+    if(this.commenting&&this.editor.liveAccess==='comment'){
+      this.addComment(this.commentDraft,point,node);this.mode('select');
+    }else if(node)this.editor.select(node);else this.editor.deselect();
   }
   commentPoint(comment: BoardComment) {
     const node = this.node(comment.nodeId);

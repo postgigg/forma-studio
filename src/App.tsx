@@ -44,6 +44,7 @@ import {
   Type,
   Undo2,
   Upload,
+  UsersRound,
   X,
 } from "lucide-react";
 import { Editor, type DesignObject } from "./editor";
@@ -85,6 +86,8 @@ import { RefineDialog } from "./RefineDialog";
 import { MotionCanvas, MotionDialog } from "./Motion";
 import { AudioStudio } from './AudioStudio';
 import {Help} from './Help';
+import {useCollaboration} from './live-session';
+import {CollaborationDialog,CollaborationCursors,LiveSessionBar} from './Collaboration';
 import {WhiteboardPanel,BoardCommentPins} from './Whiteboard';
 import { PageAudio } from './PageAudio';
 import { TextColor } from "./TextColor";
@@ -231,7 +234,6 @@ export default function App() {
   useEffect(()=>{const open=()=>{setPanel("whiteboard");setPanelOpen(true);};window.addEventListener('forma:whiteboard',open);return()=>window.removeEventListener('forma:whiteboard',open);},[]);
   useEffect(()=>{let frame=0;const focus=(event:Event)=>{const stage=stageRef.current,point=(event as CustomEvent<{x:number;y:number}>).detail;if(!editor||!stage||!point)return;flushSync(()=>{setAutoFit(false);editor.setZoom(Math.max(.6,editor.zoom));});cancelAnimationFrame(frame);frame=requestAnimationFrame(()=>{const canvas=editor.canvas.upperCanvasEl.getBoundingClientRect(),view=stage.getBoundingClientRect();stage.scrollLeft+=canvas.left+point.x*editor.zoom-view.left-stage.clientWidth/2;stage.scrollTop+=canvas.top+point.y*editor.zoom-view.top-stage.clientHeight/2;editor.canvas.calcOffset();});};window.addEventListener('forma:board-focus',focus);return()=>{window.removeEventListener('forma:board-focus',focus);cancelAnimationFrame(frame);};},[editor]);
   useEffect(() => { void resumeCampaigns().catch(() => {}); }, []);
-  useEffect(() => window.formaDesktop?.onBeforeClose(async () => { await editor?.save(); }), [editor]);
   const finishAreaSelection = useCallback(() => setAreaSelecting(false), []);
   useEffect(() => {
     if (editor) {
@@ -292,6 +294,9 @@ export default function App() {
     clearTimeout(toastTimer.current);
     toastTimer.current = setTimeout(() => setToast(""), 5000);
   }, []);
+  const live=useCollaboration(editor,notify);
+  const [sharing,setSharing]=useState(false);
+  useEffect(() => window.formaDesktop?.onBeforeClose(async () => { await live?.flush(); await editor?.save(); }), [editor,live]);
   const showInspector = (open: boolean) => {
     setInspectorOpen(open);
     try {
@@ -611,6 +616,7 @@ export default function App() {
           <span>{editor?.saveStatus || "Opening studio…"}</span>
         </div>
         <div className="header-actions">
+          <button className={`secondary live-share${live?.active?' active':''}`} aria-label="Work together" title="Work together" disabled={!ready} onClick={()=>setSharing(true)}><UsersRound size={17}/><span>Work together</span>{!!live?.state.pending.length&&<b>{live.state.pending.length}</b>}</button>
           <button className="campaign-launch" aria-label="Campaigns" title="Campaigns" disabled={!ready} onClick={() => run(async () => { await editor!.save(); setDialog('campaigns'); })}><Megaphone size={17}/><span>Campaigns</span></button>
           <button
             className="secondary new-design-button"
@@ -644,15 +650,16 @@ export default function App() {
           </button>
         </div>
       </header>
+      {live&&<LiveSessionBar live={live} onManage={()=>setSharing(true)} onComments={()=>{setPanel('whiteboard');setPanelOpen(true);requestAnimationFrame(()=>window.dispatchEvent(new Event('forma:board-comments')));}}/>}
       <div
-        className={`workspace-shell ${inspectorOpen ? "show-inspector" : ""}`}
+        className={`workspace-shell ${inspectorOpen ? "show-inspector" : ""}${live?.active&&editor?.liveAccess!=='edit'?' live-restricted':''}`}
       >
         <nav className="tool-rail" aria-label="Design tools">
           {navigation.map(({ id, icon: Icon, label }) => (
             <button
               key={id}
               className={panel === id && panelOpen ? "active" : ""}
-              disabled={!ready}
+              disabled={!ready||(!!live?.active&&editor?.liveAccess!=='edit'&&id!=='whiteboard')}
               onClick={() => {
                 if(id!=="whiteboard"&&(editor?.board.connecting||editor?.board.panning||editor?.board.commenting))editor.board.mode('select');
                 setPanel(id);
@@ -1081,7 +1088,9 @@ export default function App() {
                 }
               >
                 <canvas ref={canvasRef} />
-                {ready && editor.board.active && <BoardCommentPins editor={editor} onOpen={()=>{setPanel("whiteboard");setPanelOpen(true);}}/>}
+                {ready&&live?.active&&editor.liveAccess!=='edit'&&<div className="live-review-overlay" aria-label="Shared design review canvas" onPointerDown={event=>{event.preventDefault();event.stopPropagation();editor.board.reviewPoint(editor.canvas.getScenePoint(event.nativeEvent));}} onPointerMove={event=>live.sendPresence(editor.canvas.getScenePoint(event.nativeEvent))}/>}
+                <CollaborationCursors live={live}/>
+                {ready && (editor.board.active||editor.liveAuthor) && <BoardCommentPins editor={editor} onOpen={()=>{setPanel("whiteboard");setPanelOpen(true);}}/>}
                 {ready && <AlignmentGuides editor={editor} />}
                 {ready && <RotationReadout editor={editor} />}
                 {editor?.busy && (
@@ -1391,6 +1400,7 @@ export default function App() {
       {ready && dialog === 'cloud' && <CloudStorage editor={editor} onClose={() => setDialog(null)} activeAI={designerActivity.count > 0} />}
       {ready && dialog === 'campaigns' && <CampaignStudio editor={editor} brand={brand} brandLogo={brandLogo} onClose={() => setDialog(null)} onAISetup={() => {setHelpTab('ai');setHelpOpen(true);}} />}
       {helpOpen && <Help initialTab={helpTab} onClose={()=>setHelpOpen(false)} onImport={()=>{setHelpOpen(false);setDialog(null);importRef.current?.click();}}/>}
+      {sharing&&<CollaborationDialog live={live} onClose={()=>setSharing(false)}/>}
 
       {toast && (
         <div className="toast" role="status">

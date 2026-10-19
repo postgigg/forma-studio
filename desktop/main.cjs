@@ -16,7 +16,7 @@ const macLicenseRequired = requiresMacLicense({platform:process.platform,package
 const uiPort = testing ? 51862 : 51860, aiPort = testing ? 51863 : 51861;
 const root = path.resolve(__dirname, '..'), origin = `http://127.0.0.1:${uiPort}`, aiOrigin = `http://127.0.0.1:${aiPort}`;
 const captureToken = randomBytes(32).toString('hex');
-let main, server, worker, login, closing = false, closePending = false, closeTimer, installPending = false, quitRequested = false, started = false;
+let main, server, worker, login, collaboration, closing = false, closePending = false, closeTimer, installPending = false, quitRequested = false, started = false;
 const updates = createUpdates({ updater: autoUpdater, currentVersion: app.getVersion(), enabled: updatesEnabled({ platform: process.platform, packaged: app.isPackaged, testing, macDistribution: require('../package.json').formaMacDistribution }), releaseCheck: process.platform === 'darwin' ? () => checkMacRelease({ currentVersion: app.getVersion() }) : undefined, onChange: state => { if (main && !main.isDestroyed()) main.webContents.send('forma:update-state', state); } });
 if (process.env.FORMA_DESKTOP_TEST_DATA) app.setPath('userData', path.resolve(process.env.FORMA_DESKTOP_TEST_DATA));
 app.setName('Forma Studio');
@@ -127,7 +127,7 @@ async function createWindow() {
     event.preventDefault(); if (closePending) return; closePending = true;
     main.webContents.send('forma:before-close'); closeTimer = setTimeout(() => void failedSave(), 10000);
   });
-  main.on('closed', () => { main = null; clearTimeout(closeTimer); });
+  main.on('closed', () => { main = null; clearTimeout(closeTimer); void collaboration?.stop(); });
   await main.loadURL(origin);
 }
 async function showWindow() {
@@ -162,6 +162,10 @@ async function start() {
   const cloud = require('./cloud-backup.cjs').createCloudBackup({ profile: app.getPath('userData'), safeStorage: require('electron').safeStorage });
   for (const [name, action] of Object.entries({ status: () => cloud.status(), connect: value => cloud.connect(value), automatic: value => cloud.automatic(value), disconnect: () => cloud.disconnect(), backup: value => cloud.backup(value), list: () => cloud.list(), restore: value => cloud.restore(value) })) {
     ipcMain.handle(`forma:cloud-${name}`, (event, value) => { trusted(event); return action(value); });
+  }
+  collaboration = await require('./collaboration.cjs').createCollaboration({onEvent:value=>{if(main&&!main.isDestroyed())main.webContents.send('forma:live-event',value);}});
+  for (const name of ['interfaces','status','host','join','stop','renew','admit','permission','remove','publish','presence']) {
+    ipcMain.handle(`forma:live-${name}`, (event,value) => { trusted(event); return collaboration[name](value); });
   }
   ipcMain.handle('forma:save-file', async (event, value) => {
     trusted(event);
@@ -205,4 +209,4 @@ async function failedSave() {
 app.on('activate', () => { void showWindow(); });
 app.on('before-quit', () => { quitRequested = true; });
 app.on('window-all-closed', () => { if (process.platform !== 'darwin') app.quit(); });
-app.on('will-quit', () => { updates.stop(); worker?.kill(); login?.kill(); server?.close(); });
+app.on('will-quit', () => { updates.stop(); void collaboration?.stop(); worker?.kill(); login?.kill(); server?.close(); });

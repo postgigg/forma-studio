@@ -12,6 +12,24 @@ contextBridge.exposeInMainWorld('formaDesktop', {
   signIn: (provider='codex',mode='cli') => ipcRenderer.invoke('forma:sign-in',{provider,mode}),
   restartAI: () => ipcRenderer.invoke('forma:restart-ai'),
   saveFile: (filename, bytes) => ipcRenderer.invoke('forma:save-file', { filename, bytes }),
+  collaboration: Object.freeze({
+    interfaces: () => ipcRenderer.invoke('forma:live-interfaces'),
+    status: () => ipcRenderer.invoke('forma:live-status'),
+    host: value => ipcRenderer.invoke('forma:live-host',value),
+    join: value => ipcRenderer.invoke('forma:live-join',value),
+    stop: () => ipcRenderer.invoke('forma:live-stop'),
+    renew: () => ipcRenderer.invoke('forma:live-renew'),
+    admit: value => ipcRenderer.invoke('forma:live-admit',value),
+    permission: value => ipcRenderer.invoke('forma:live-permission',value),
+    remove: id => ipcRenderer.invoke('forma:live-remove',id),
+    publish: value => ipcRenderer.invoke('forma:live-publish',value),
+    presence: value => ipcRenderer.invoke('forma:live-presence',value),
+    onEvent: callback => {
+      const handler = (_event,value) => callback(value);
+      ipcRenderer.on('forma:live-event',handler);
+      return () => ipcRenderer.removeListener('forma:live-event',handler);
+    },
+  }),
   cloud: Object.freeze({
     status: () => ipcRenderer.invoke('forma:cloud-status'),
     connect: value => ipcRenderer.invoke('forma:cloud-connect', value),

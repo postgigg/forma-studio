@@ -31,10 +31,13 @@ export function WhiteboardPanel({
   onUpload: () => void;
   onDraw: () => void;
 }) {
-  const [tab, setTab] = useState<"build" | "comments">("build"),
+  const [tab, setTab] = useState<"build" | "comments">(editor.liveAuthor?'comments':'build'),
     [draft, setDraft] = useState(""),
     [error, setError] = useState("");
   const composer = useRef<HTMLTextAreaElement>(null);
+  const canComment=editor.liveAccess!=='view',canEdit=editor.liveAccess==='edit';
+  useEffect(()=>{if(!canEdit)setTab('comments');},[canEdit]);
+  useEffect(()=>{const open=()=>{setTab('comments');composer.current?.focus();};window.addEventListener('forma:board-comments',open);return()=>window.removeEventListener('forma:board-comments',open);},[]);
   useEffect(() => {
     if (editor.board.selectedComment) {
       setTab("comments");
@@ -51,7 +54,7 @@ export function WhiteboardPanel({
         <h2>Whiteboard</h2>
       </div>
       <div className="board-panel-body">
-        {!editor.board.active ? (
+        {!editor.board.active&&!editor.liveAuthor ? (
           <>
             <p>
               Map an idea, collect references or connect a plan. Keep using your
@@ -80,6 +83,7 @@ export function WhiteboardPanel({
               <button
                 role="tab"
                 aria-selected={tab === "build"}
+                disabled={!canEdit}
                 onClick={() => setTab("build")}
               >
                 Build
@@ -254,13 +258,12 @@ export function WhiteboardPanel({
             ) : (
               <>
                 <p className="muted small">
-                  Comments stay with this board on your device and in its
-                  editable backup. They are not printed in image or movie
-                  exports.
+                  {editor.liveAuthor?'Comments are shared with this live session and saved in each local copy.':'Comments stay with this board on your device and in its editable backup.'} They are not printed in image or movie exports.
                 </p>
                 <textarea
                   ref={composer}
                   aria-label="New board comment"
+                  disabled={!canComment}
                   maxLength={4000}
                   rows={4}
                   value={draft}
@@ -273,7 +276,7 @@ export function WhiteboardPanel({
                 />
                 <button
                   className="primary full"
-                  disabled={!draft.trim()}
+                  disabled={!canComment||!draft.trim()}
                   onClick={() => {
                     try {
                       editor.board.addComment(draft);
@@ -288,7 +291,7 @@ export function WhiteboardPanel({
                 </button>
                 <button
                   className="secondary full"
-                  disabled={!draft.trim()}
+                  disabled={!canComment||!draft.trim()}
                   aria-pressed={editor.board.commenting}
                   onClick={() => {
                     try {
@@ -330,6 +333,7 @@ export function WhiteboardPanel({
                         </button>
                         <button
                           aria-label={`Delete comment ${i + 1}`}
+                          disabled={!canComment||!!(editor.liveAuthor&&comment.authorId&&comment.authorId!==editor.liveAuthor.id)}
                           onClick={() => {
                             editor.page.comments = comments.filter(
                               (c) => c.id !== comment.id,
@@ -340,8 +344,10 @@ export function WhiteboardPanel({
                           <Trash2 size={15} />
                         </button>
                       </div>
+                      {comment.authorName&&<p className="board-comment-author">{comment.authorName} · {new Date(comment.createdAt).toLocaleString()}</p>}
                       <textarea
                         aria-label={`Comment ${i + 1} text`}
+                        disabled={!canComment||!!(editor.liveAuthor&&comment.authorId&&comment.authorId!==editor.liveAuthor.id)}
                         rows={3}
                         value={comment.text}
                         maxLength={4000}
@@ -353,6 +359,7 @@ export function WhiteboardPanel({
                       />
                       <button
                         className="text-button"
+                        disabled={!canComment}
                         onClick={() => {
                           comment.resolved = !comment.resolved;
                           editor.commit();

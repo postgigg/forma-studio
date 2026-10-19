@@ -16,6 +16,7 @@ import {
   Textbox,
   Triangle,
   filters,
+  util,
 } from "fabric";
 import { allDesigns, saveDesign, validateDesign } from "./storage";
 import { templateObjects, templates, type Template } from "./templates";
@@ -109,6 +110,12 @@ export class Editor {
   onShowProperties?: () => void;
   onPhotoFrameEdit?: (frame: PhotoFrame) => void;
   onSolidEdit?: (object: SolidObject) => void;
+  onDocumentChange?: () => boolean;
+  onDocumentSwitch?: () => Promise<void>;
+  onSharedUndo?: (redo:boolean) => Promise<void>;
+  sharedUndoState?: {canUndo:boolean;canRedo:boolean};
+  liveAccess: 'edit'|'comment'|'view' = 'edit';
+  liveAuthor?: {id:string;name:string};
   private saveTimer?: ReturnType<typeof setTimeout>;
   private textTimer?: ReturnType<typeof setTimeout>;
   private disposed = false;
@@ -254,9 +261,11 @@ export class Editor {
     return this.doc?.pages[this.pageIndex];
   }
   get canUndo() {
+    if (this.sharedUndoState) return this.sharedUndoState.canUndo && !this.busy;
     return this.historyIndex > 0 && !this.busy;
   }
   get canRedo() {
+    if (this.sharedUndoState) return this.sharedUndoState.canRedo && !this.busy;
     return this.historyIndex < this.history.length - 1 && !this.busy;
   }
   get drawing() {
@@ -304,6 +313,7 @@ export class Editor {
   }
   async open(design: Design) {
     if (this.busy) return;
+    await this.onDocumentSwitch?.();
     if (this.doc) await this.save();
     this.busy = true;
     this.notify();
@@ -328,6 +338,7 @@ export class Editor {
     template?: Template,
   ) {
     if (this.busy) return;
+    await this.onDocumentSwitch?.();
     if (
       !Number.isFinite(width) ||
       !Number.isFinite(height) ||
@@ -379,6 +390,7 @@ export class Editor {
     if (this.busy || !this.doc || this.disposed) return;
     this.canvas.requestRenderAll();
     this.capture();
+    if (this.onDocumentChange?.() === false) return;
     const value = JSON.stringify({
       doc: { ...this.doc, updatedAt: "" },
       pageIndex: this.pageIndex,
@@ -422,6 +434,7 @@ export class Editor {
     }
   }
   async undo(redo = false) {
+    if (this.onSharedUndo) { await this.onSharedUndo(redo); return; }
     if (this.busy || (redo ? !this.canRedo : !this.canUndo)) return;
     this.busy = true;
     clearTimeout(this.saveTimer);
@@ -442,6 +455,65 @@ export class Editor {
   rename(name: string) {
     this.doc.name = name || "Untitled design";
     this.commit();
+  }
+  prepareLive() {
+    this.capture();
+    for (const page of this.doc.pages) for (const object of (page.data.objects || []) as Record<string,unknown>[]) {
+      if (typeof object.id !== 'string' || !object.id) object.id = uid();
+    }
+    // The visible Fabric objects must use the same IDs as their saved roots.
+    this.objects.forEach((object,index) => { object.id = ((this.page.data.objects as Record<string,unknown>[])[index]?.id as string) || object.id || uid(); });
+    this.capture();
+    return structuredClone(this.doc);
+  }
+  async applySharedDocument(incoming: Design) {
+    validateDesign(incoming);
+    this.busy=true;this.notify();
+    try {
+    const canvasBefore=this.canvas.toObject();
+    const localId=this.doc.id,old=this.doc,pageId=this.page?.id;
+    const selected=this.canvas.getActiveObjects().map(object=>(object as DesignObject).id);
+    const pageIndex=incoming.pages.findIndex(page=>page.id===pageId);
+    if(JSON.stringify(old.fonts)!==JSON.stringify(incoming.fonts))await loadFonts(incoming.fonts);
+    const next={...old,...structuredClone(incoming),id:localId,updatedAt:new Date().toISOString(),pages:incoming.pages.map(page=>({...structuredClone(page),thumbnail:old.pages.find(p=>p.id===page.id)?.thumbnail||''}))};
+    const differentPage=pageIndex<0;
+    const page=next.pages[Math.max(0,pageIndex)];
+    const currentData=canvasBefore as {objects:Record<string,unknown>[];background?:unknown};
+    const current=new Map(currentData.objects.map(object=>[object.id,object]));
+    const targets=page.data.objects as Record<string,unknown>[];
+    const replacements=new Map<string,FabricObject>();
+    const simple=new Map<string,Record<string,unknown>>();
+    for(const raw of targets){
+      const id=raw.id as string,previous=current.get(id);
+      if(previous&&JSON.stringify(previous)===JSON.stringify(raw))continue;
+      const keys=[...new Set([...Object.keys(previous||{}),...Object.keys(raw)])].filter(key=>JSON.stringify(previous?.[key])!==JSON.stringify(raw[key]));
+      if(previous&&previous.type===raw.type&&keys.every(key=>!['type','version','id','src','source','solid','device','photoGrades','photoBrightness'].includes(key)&&
+        (raw[key]===null||typeof raw[key]!=='object')&&(previous[key]===null||typeof previous[key]!=='object'))){
+        simple.set(id,Object.fromEntries(keys.map(key=>[key,raw[key]])));
+      }else if(!differentPage){
+        const [object]=await util.enlivenObjects<FabricObject>([raw]);replacements.set(id,object);
+      }
+    }
+      // Media/font decoding can yield to typing. Never replace an edit made
+      // during that wait; let the controller capture it and rebase first.
+      if(JSON.stringify(canvasBefore)!==JSON.stringify(this.canvas.toObject())){for(const object of replacements.values())object.dispose();return false;}
+      this.doc=next;this.pageIndex=Math.max(0,pageIndex);
+      if(differentPage)await this.renderPage();
+      else {
+        const changedSelection=this.canvas.getActiveObjects().length>1||selected.some(id=>replacements.has(id||'')||!targets.some(raw=>raw.id===id));
+        if(changedSelection)this.canvas.discardActiveObject();
+        for(const object of this.objects)if(!targets.some(raw=>raw.id===object.id)||replacements.has(object.id||''))this.canvas.remove(object);
+        for(const [id,properties] of simple){const object=this.objects.find(o=>o.id===id);if(object){object.set(properties);if(object instanceof Textbox)object.initDimensions();object.setCoords();}}
+        for(const object of replacements.values())this.canvas.add(object);
+        targets.forEach((raw,index)=>{const object=this.objects.find(o=>o.id===raw.id);if(object)this.canvas.moveObjectTo(object,index);});
+        this.canvas.backgroundColor=(page.data.background as string)||'';
+        if(changedSelection){const objects=this.objects.filter(object=>selected.includes(object.id));if(objects.length===1)this.canvas.setActiveObject(objects[0]);else if(objects.length>1)this.canvas.setActiveObject(new ActiveSelection(objects,{canvas:this.canvas}));}
+        if(old.width!==next.width||old.height!==next.height)this.setZoom(this.zoom);
+        this.board.refresh();this.canvas.requestRenderAll();
+      }
+      this.capture();await this.persist();
+      return true;
+    }finally{this.busy=false;this.notify();}
   }
   setZoom(zoom: number) {
     if (!this.doc) return;
@@ -1297,6 +1369,7 @@ export class Editor {
       return;
     const modifier = event.ctrlKey || event.metaKey,
       key = event.key.toLowerCase();
+    if(this.liveAccess!=='edit'&&!(modifier&&['c','a','s'].includes(key))&&key!=='escape'&&event.code!=='Space')return;
     if (
       (event.shiftKey && event.key === "F10") ||
       event.key === "ContextMenu"

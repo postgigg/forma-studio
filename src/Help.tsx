@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Upload } from "lucide-react";
+import { Upload, RefreshCw } from "lucide-react";
 import { Modal } from "./ui";
 import { DesktopAI } from "./DesktopAI";
 import { commandKey, shortcut } from "./platform";
@@ -13,10 +13,13 @@ export function Help({
   onImport: () => void;
 }) {
   const [tab, setTab] = useState(initialTab);
+  const [version,setVersion]=useState('');
+  const desktop=window.formaDesktop;
+  useEffect(()=>{let mounted=true;void desktop?.updateStatus?.().then(state=>{if(mounted)setVersion(state.currentVersion);}).catch(()=>{});return()=>{mounted=false;};},[desktop]);
   useEffect(() => setTab(initialTab), [initialTab]);
   return (
     <Modal title="Help & settings" onClose={onClose} wide>
-      <div className="help-tabs" role="tablist" aria-label="Help sections">
+      <div className="help-tabbar"><div className="help-tabs" role="tablist" aria-label="Help sections">
         <button
           role="tab"
           aria-selected={tab === "shortcuts"}
@@ -31,6 +34,8 @@ export function Help({
         >
           AI accounts & models
         </button>
+      </div>
+      {desktop?.checkForUpdates&&<div className="help-update-link"><span aria-label="Installed Forma version">{version?`Forma ${version}`:'Forma desktop'}</span><button className="secondary" onClick={()=>{onClose();void desktop.checkForUpdates().catch(()=>{});}}><RefreshCw size={15}/> Check for updates</button></div>}
       </div>
       {tab === "ai" ? (
         <DesktopAI />

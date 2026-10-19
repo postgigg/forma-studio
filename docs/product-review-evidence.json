@@ -485,7 +485,7 @@
     "windowsPublisherSignature": "NotSigned"
   },
   "patch170": {
-    "intent": "Improve the existing Forma platform and preserve its single shared brand/style context. Rebuild the landing page around the supplied WonderKids reference with expressive typography, original branded compositions and purposeful motion, without decorative asterisks or promotional hint labels. Add optional direct backups of saved workspace data to the customer\u00e2\u20ac\u2122s private Wasabi account, with encrypted desktop keys and reviewed recovery. Retain $49 once for one Mac, free Windows, clearer AI status and branded downloads.",
+    "intent": "Improve the existing Forma platform and preserve its single shared brand/style context. Rebuild the landing page around the supplied WonderKids reference with expressive typography, original branded compositions and purposeful motion, without decorative asterisks or promotional hint labels. Add optional direct backups of saved workspace data to the customerâ€™s private Wasabi account, with encrypted desktop keys and reviewed recovery. Retain $49 once for one Mac, free Windows, clearer AI status and branded downloads.",
     "testedAt": "2026-10-19T02:25:34.201Z",
     "version": "1.7.0",
     "state": "published and verified; customer Wasabi setup, Stripe authentication and signed retail Mac release remain external setup",
@@ -698,7 +698,7 @@
     "landing": {
       "reference": "https://dribbble.com/shots/23191965-WonderKids-Landing-Page-Exploration",
       "referenceAuthor": "Paperpillar",
-      "direction": "Oversized friendly typography, generous space, warm color and playful compositions adapted to Forma\u00e2\u20ac\u2122s existing identity; no reference artwork or branding copied.",
+      "direction": "Oversized friendly typography, generous space, warm color and playful compositions adapted to Formaâ€™s existing identity; no reference artwork or branding copied.",
       "canonicalLogoPreserved": true,
       "originalCodeNativeBackupIllustration": true,
       "selfHostedLicensedDisplayFont": true,
@@ -1629,6 +1629,161 @@
       "deploymentId": "appgdep_6ad6503f71488191b6d236a196bab10a",
       "status": "succeeded",
       "url": "https://forma-studio.pastel-mars-3499.chatgpt.site"
+    }
+  },
+  "patch1100": {
+    "version": "1.10.0",
+    "verifiedAt": "2026-10-19T20:34:44.666Z",
+    "published": false,
+    "intent": "Private host-led same-network collaboration using the existing design and comment model, with an obvious Help shortcut to the existing updater.",
+    "focusedNodeChecks": 40,
+    "desktopContractChecks": 27,
+    "nodeSuitesOverlap": true,
+    "collaboration": {
+      "approval": true,
+      "independentLocalCopy": true,
+      "embeddedImage": true,
+      "simultaneousIndependentEdits": true,
+      "undoPreservesOtherUser": true,
+      "orderedRapidEdits": true,
+      "nestedGroupEdit": true,
+      "sharedCommentAndResolution": true,
+      "commenterArtworkRollback": true,
+      "viewerCannotComment": true,
+      "pageSync": true,
+      "selectionPresence": true,
+      "disconnectAndPersistence": true,
+      "errors": []
+    },
+    "native": {
+      "version": "1.10.0",
+      "packaged": true,
+      "profileIsolated": true,
+      "nativeAdmission": true,
+      "nativeCanvasAndPersistence": true,
+      "nativePermissionEnforced": true,
+      "rendererSandboxAndCSP": true,
+      "nativeEndSession": true,
+      "helpOpensExistingUpdater": true,
+      "errors": []
+    },
+    "help": {
+      "version": "1.10.0",
+      "compiledFrontend": true,
+      "desktopBridgeFixture": true,
+      "visibleInstalledVersion": true,
+      "shortcutUsesExistingUpdater": true,
+      "noHorizontalOverflow": true,
+      "viewports": [
+        1440,
+        900
+      ],
+      "errors": []
+    },
+    "guide": {
+      "testedAt": "2026-10-19T20:16:05.696Z",
+      "homeDownloadButtons": 3,
+      "repositoryLinks": 0,
+      "guideNavigation": true,
+      "guideImagesDecoded": true,
+      "viewports": [
+        1440,
+        390
+      ],
+      "horizontalOverflow": false,
+      "browserErrors": []
+    },
+    "release": {
+      "fuseState": {
+        "RunAsNode": false,
+        "EnableCookieEncryption": true,
+        "EnableNodeOptionsEnvironmentVariable": false,
+        "EnableNodeCliInspectArguments": false,
+        "EnableEmbeddedAsarIntegrityValidation": true,
+        "OnlyLoadAppFromAsar": true,
+        "GrantFileProtocolExtraPrivileges": false
+      },
+      "version": "1.10.0",
+      "testedAt": "2026-10-19T20:16:28.243Z",
+      "sha256": "6b52bbb5881ee5f37b6b415be26586ed35a7ccf1b1446b853df200454deabea4",
+      "assets": [
+        {
+          "name": "Forma-Studio-Setup-1.10.0.exe",
+          "size": 693336912,
+          "sha256": "6b52bbb5881ee5f37b6b415be26586ed35a7ccf1b1446b853df200454deabea4"
+        },
+        {
+          "name": "Forma-Studio-Setup-1.10.0.exe.blockmap",
+          "size": 723588,
+          "sha256": "5672afebf6b0662d021b17ecbd89c772e2374e3cee43b6fe3cb90355c1bdeefd"
+        },
+        {
+          "name": "latest.yml",
+          "size": 356,
+          "sha256": "b6250b07f30ec9a1467af5aa4dcedfdaab8940e8945dce8cde62ef7bc31b664d"
+        },
+        {
+          "name": "update-policy.json",
+          "size": 259,
+          "sha256": "00442a9d0862825735493ae6a4129bb910409337b103ec68e5bffa0514341173"
+        },
+        {
+          "name": "SHA256SUMS.txt",
+          "size": 363,
+          "sha256": "723166424e5e89ea6f3e0ed10fe44fcf869b7fb6f93415ade501eb8a5721c114"
+        }
+      ],
+      "engine": {
+        "engine": "Codex CLI",
+        "model": "gpt-6.1-sol",
+        "modelLabel": "GPT-6.1 Sol",
+        "reasoningEffort": "max",
+        "imageEngine": "Codex native image generation"
+      },
+      "templates": 262,
+      "thumbnails": 262,
+      "sourceImages": 8,
+      "compiledBundleMatches": true,
+      "canonicalBrandMatches": true,
+      "packagedUpdater": true,
+      "developmentAdvisory": {
+        "id": "GHSA-hp3w-g68c-fv3c",
+        "url": "https://github.com/advisories/GHSA-hp3w-g68c-fv3c",
+        "scope": "development",
+        "upstreamPatchAvailable": false,
+        "checkedPackages": [
+          "sprintf-js",
+          "roarr",
+          "global-agent",
+          "@electron/get",
+          "electron-builder",
+          "app-builder-lib",
+          "dmg-builder",
+          "electron-builder-squirrel-windows"
+        ],
+        "foundInPackagedArchive": [],
+        "githubAlertLeftOpen": true
+      }
+    },
+    "productionAudit": {
+      "knownAdvisories": 0,
+      "checkedAt": "2026-10-19"
+    },
+    "limits": {
+      "sameNetworkOrExistingPrivateVPN": true,
+      "privateIPv4": true,
+      "hostMustRemainOpen": true,
+      "maximumGuests": 8,
+      "maximumDesignMiB": 64,
+      "automaticInternetJoining": false,
+      "bluetoothTransport": false,
+      "offlineConcurrentMerge": false,
+      "physicalMultiComputerWiFiTested": false
+    },
+    "screenshots": {
+      "collaboration": "Real editor workspaces using a QA-supplied native TLS bridge over loopback; editor inspection is injected only into the test response.",
+      "help": "Actual compiled frontend using a desktop bridge fixture; the packaged app separately verifies the real shortcut.",
+      "visibleRetailNativeScreenshotsClaimed": false
     }
   }
 }

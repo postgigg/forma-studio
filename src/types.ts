@@ -7,7 +7,7 @@ export interface PageMotion {
   style: "none" | "fade" | "rise" | "stagger" | "drift";
   duration: number;
 }
-export interface BoardComment {id:string;text:string;x:number;y:number;nodeId?:string;resolved:boolean;createdAt:string}
+export interface BoardComment {id:string;text:string;x:number;y:number;nodeId?:string;resolved:boolean;createdAt:string;authorId?:string;authorName?:string}
 export interface DesignPage {
   id: string;
   name: string;
