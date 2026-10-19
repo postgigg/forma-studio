@@ -17,7 +17,7 @@ Report a suspected vulnerability through the [private vulnerability-reporting ch
 
 ## Verification and limits
 
-The production npm audit on 2026-10-18 reported zero known advisories. Repeat `npm audit --omit=dev`; this result does not cover unknown vulnerabilities, every native binary, or constitute an independent penetration test. CI checks production advisories, server contracts, update rules, the marketing entrypoint and the application build. Dependabot proposes updates for review; it does not merge them automatically.
+The production npm audit on 2026-10-19 reported zero known advisories. Repeat `npm audit --omit=dev`; this result does not cover unknown vulnerabilities, every native binary, or constitute an independent penetration test. CI checks production advisories, server contracts, update rules, the marketing entrypoint and the application build. Dependabot proposes updates for review; it does not merge them automatically.
 
 **Open development advisory:** GHSA-hp3w-g68c-fv3c affects `sprintf-js` 1.1.3 through electron-builder's development-only download/logging dependencies. The upstream advisory lists no patched version. The full npm audit reports eight moderate affected dependency entries from this one underlying advisory; the production-only audit reports zero. Packaged ASAR inspection found none of the eight affected build-tool packages in the shipped app, including unpacked entries. The GitHub alert remains open for an upstream fix or a separately tested build-tool migration. Build only trusted sources with the pinned lockfile; exclusion from the app does not fix the development dependency itself. The [release evidence](docs/product-review-evidence.json) records the package inspection.
 

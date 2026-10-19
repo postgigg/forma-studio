@@ -1634,7 +1634,7 @@
   "patch1100": {
     "version": "1.10.0",
     "verifiedAt": "2026-10-19T21:15:40.273Z",
-    "published": false,
+    "published": true,
     "intent": "Private host-led same-network collaboration using the existing design and comment model, with an obvious Help shortcut to the existing updater.",
     "focusedNodeChecks": 40,
     "desktopContractChecks": 27,
@@ -1790,6 +1790,73 @@
       "webWritePermission": "denied",
       "invitationUsesExistingNativeCopy": true,
       "clipboardContentsReadOrModifiedDuringQA": false
+    },
+    "publishedAt": "2026-10-19T21:30:40.876Z",
+    "publicRelease": {
+      "version": "1.10.0",
+      "publishedAt": "2026-10-19T21:28:11.723Z",
+      "sourceCommit": "235a50f8fe16d1e53c9573ec7b32e940c2eade4e",
+      "public": true,
+      "assets": [
+        {
+          "name": "Forma-Studio-Setup-1.10.0.exe",
+          "size": 693337009,
+          "sha256": "40619a02d6c767728f674013485d2813c8cb08a0b54bc82f7906109c175864de"
+        },
+        {
+          "name": "Forma-Studio-Setup-1.10.0.exe.blockmap",
+          "size": 723643,
+          "sha256": "d10f69e82c9a7fbec6997606fb65936adacb37d451d93ddb3117fc9af0955511"
+        },
+        {
+          "name": "latest.yml",
+          "size": 356,
+          "sha256": "8dad642bf006ea956309bc790d5927c16fd05f16d2d6328a8044c756dc86e7ad"
+        },
+        {
+          "name": "update-policy.json",
+          "size": 259,
+          "sha256": "00442a9d0862825735493ae6a4129bb910409337b103ec68e5bffa0514341173"
+        },
+        {
+          "name": "SHA256SUMS.txt",
+          "size": 363,
+          "sha256": "1249757a558d96a746c1169e8496e51b19213404d87301838ff36d1737410fb0"
+        }
+      ],
+      "uploadedDigestsMatch": true,
+      "releaseTagMatchesSource": true,
+      "installer": "https://tryformastudio.netlify.app/downloads/v1.10.0/Forma-Studio-Setup-1.10.0.exe"
+    },
+    "livePrimarySite": {
+      "url": "https://tryformastudio.netlify.app",
+      "testedAt": "2026-10-19T21:29:54.655Z",
+      "status": 200,
+      "landingPage": true,
+      "editorEntrypoint": false,
+      "campaignSectionRemoved": true,
+      "publicRepositoryLinks": false,
+      "brandedDownload": true,
+      "releaseHostRetained": true,
+      "privateSecurityReportReachable": true,
+      "downloadRedirect": 302,
+      "installerStatus": 200,
+      "installerBytes": 693337009,
+      "walkthroughStatus": 200,
+      "htmlSha256": "7822e4582018024a174ea007b238130819daa53739f680f8fbc39bd654308f1d",
+      "assetsVerified": 29,
+      "textLineEndingsNormalized": [],
+      "installer": "https://tryformastudio.netlify.app/downloads/v1.10.0/Forma-Studio-Setup-1.10.0.exe",
+      "deployId": "6ad68bb2622d95b7477c52b1"
+    },
+    "sites": {
+      "projectId": "appgprj_6acf9bd8e0708191afef0b36ef21dbdf",
+      "sourceCommit": "541b53b2cba0419492994fe313d65fa1521810fc",
+      "versionId": "appgprj_6acf9bd8e0708191afef0b36ef21dbdf~appgver_abfaa7ca31bc8191b2db1f82ed98e4f9",
+      "version": 18,
+      "deploymentId": "appgdep_6ad68b84d22c8191be6849650af9a481",
+      "status": "succeeded",
+      "url": "https://forma-studio.pastel-mars-3499.chatgpt.site"
     }
   }
 }
