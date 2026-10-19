@@ -23,7 +23,7 @@
     "desktop:package": "node scripts/package-desktop.mjs",
     "desktop:package:mac": "node scripts/package-desktop.mjs --mac",
     "desktop:package:win": "node scripts/package-desktop.mjs --win",
-    "test:desktop": "node --test tests/desktop-platform.test.cjs tests/desktop-updates.test.cjs tests/desktop-render.test.mjs",
+    "test:desktop": "node --test tests/desktop-platform.test.cjs tests/desktop-updates.test.cjs tests/desktop-render.test.mjs tests/cloud-backup.test.cjs",
     "test:updates": "node --test tests/desktop-updates.test.cjs",
     "desktop:smoke": "node scripts/test-desktop.mjs",
     "test:ai-lifetime": "node --experimental-test-module-mocks --test tests/job-lifetime.test.mjs"
@@ -96,6 +96,7 @@
     }
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "3.1152.0",
     "@openai/codex": "0.162.1",
     "@supabase/supabase-js": "2.117.3",
     "electron-updater": "6.8.10",

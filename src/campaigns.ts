@@ -7,6 +7,7 @@ import {
 } from "./ai";
 import { getDesign, saveDesign } from "./storage";
 import { uid, type Asset } from "./types";
+import { workspaceChanged } from './workspace-events';
 import type { BrandProfile } from "../shared/brand-context.mjs";
 import type { DesignStyleProfile } from "../shared/design-style.mjs";
 
@@ -196,7 +197,7 @@ export interface Campaign {
 }
 const db = createStore("forma-studio", "workspace");
 let writes: Promise<unknown> = Promise.resolve();
-const changed = () => window.dispatchEvent(new Event("forma:campaigns"));
+const changed = () => { window.dispatchEvent(new Event("forma:campaigns")); workspaceChanged(); };
 export async function allCampaigns(): Promise<Campaign[]> {
   await writes.catch(() => {});
   return (await entries<string, Campaign>(db))
@@ -241,7 +242,7 @@ export async function readCampaignDraft<T>(): Promise<T | null> {
 }
 export function writeCampaignDraft(value: unknown) {
   const copy = structuredClone(value);
-  writes = writes.catch(() => {}).then(() => set("campaign-wizard", copy, db));
+  writes = writes.catch(() => {}).then(() => set("campaign-wizard", copy, db)).then(workspaceChanged);
   return writes;
 }
 export const emptyFolder = (): CampaignFolder => ({

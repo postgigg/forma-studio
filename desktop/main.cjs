@@ -153,6 +153,10 @@ async function start() {
   ipcMain.handle('forma:update-download', event => { trusted(event); return updates.download(); });
   ipcMain.handle('forma:update-install', event => { trusted(event); if (updates.getState().phase !== 'downloaded') throw new Error('The update is not ready to install.'); installPending = true; main.close(); return true; });
   ipcMain.handle('forma:restart-ai', async event => { trusted(event); await startWorker(); return true; });
+  const cloud = require('./cloud-backup.cjs').createCloudBackup({ profile: app.getPath('userData'), safeStorage: require('electron').safeStorage });
+  for (const [name, action] of Object.entries({ status: () => cloud.status(), connect: value => cloud.connect(value), automatic: value => cloud.automatic(value), disconnect: () => cloud.disconnect(), backup: value => cloud.backup(value), list: () => cloud.list(), restore: value => cloud.restore(value) })) {
+    ipcMain.handle(`forma:cloud-${name}`, (event, value) => { trusted(event); return action(value); });
+  }
   ipcMain.handle('forma:save-file', async (event, value) => {
     trusted(event);
     if (!value || typeof value.filename !== 'string' || !(value.bytes instanceof ArrayBuffer) || value.bytes.byteLength > 256 * 1024 * 1024) throw new Error('Invalid or oversized export.');

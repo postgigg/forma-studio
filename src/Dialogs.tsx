@@ -373,7 +373,8 @@ export function ProjectsDialog({
   notify,
   onNew,
   onCampaigns,
-}: Props & { onNew: () => void; onCampaigns: () => void }) {
+  onCloud,
+}: Props & { onNew: () => void; onCampaigns: () => void; onCloud: () => void }) {
   const [designs, setDesigns] = useState<Design[]>([]),
     [busy, setBusy] = useState(true),
     [search, setSearch] = useState("");
@@ -394,6 +395,7 @@ export function ProjectsDialog({
     <Modal wide title="Your creative corner" onClose={onClose}>
       <div className="projects-heading">
         <p>All your ideas, with room for a few more.</p>
+        <button className="secondary" onClick={onCloud}><Cloud size={17} /> Cloud storage</button>
         <button className="secondary" onClick={onCampaigns}>
           <FolderOpen size={17} />
           Campaigns

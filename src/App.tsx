@@ -58,6 +58,7 @@ import { uid, type Asset } from "./types";
 import { useFontLibrary, fontLabel } from "./font-library";
 import { TextSpacing } from "./TextSpacing";
 import { DesktopUpdates } from "./DesktopUpdates";
+import { CloudStorage, useCloudBackup } from './CloudStorage';
 import { StyleStudio } from "./StyleStudio";
 import { CampaignStudio } from "./CampaignStudio";
 import { resumeCampaigns } from "./campaigns";
@@ -121,6 +122,7 @@ type Dialog =
   | "help"
   | "motion"
   | "style"
+  | "cloud"
   | null;
 
 async function imageAsset(file: File, forcePng = false): Promise<Asset> {
@@ -155,6 +157,7 @@ async function imageAsset(file: File, forcePng = false): Promise<Asset> {
 }
 
 export default function App() {
+  useCloudBackup();
   const designerActivity = useDesignerActivity();
   const [headerCollapsed, setHeaderCollapsed] = useState(() => {
     try { return localStorage.getItem("forma:header-collapsed") === "true"; }
@@ -1296,6 +1299,7 @@ export default function App() {
             <p role="status">{editor.saveStatus}</p>
             <button className="secondary" onClick={() => run(async () => { await editor.save(); setDialog("projects"); })}><FolderOpen size={17} /> My designs</button>
             <button className="secondary" onClick={() => run(async () => { await editor.save(); setDialog("campaigns"); })}><Megaphone size={17} /> Campaigns</button>
+            <button className="secondary" onClick={() => run(async () => { await editor.save(); setDialog("cloud"); })}><Cloud size={17} /> Cloud storage</button>
             <button className="secondary" aria-label="New blank design" onClick={() => setDialog("new")}><Plus size={17} /> New design</button>
             <button className="secondary" disabled={editor.busy} onClick={() => run(async () => { setSlides(await editor.presentationImages()); setSlide(0); setDialog(null); })}><Play size={17} /> Present</button>
             <button className="primary" onClick={() => setDialog("export")}><Download size={17} /> Export</button>
@@ -1360,9 +1364,11 @@ export default function App() {
           notify={notify}
           onNew={() => setDialog("new")}
           onCampaigns={() => setDialog("campaigns")}
+          onCloud={() => setDialog("cloud")}
           onClose={() => setDialog(null)}
         />
       )}
+      {ready && dialog === 'cloud' && <CloudStorage editor={editor} onClose={() => setDialog(null)} activeAI={designerActivity.count > 0} />}
       {ready && dialog === 'campaigns' && <CampaignStudio editor={editor} brand={brand} brandLogo={brandLogo} onClose={() => setDialog(null)} onAISetup={() => { setDialog(null); setPanel('ai'); setPanelOpen(true); }} />}
       {dialog === "help" && (
         <Modal title="A few little shortcuts" onClose={() => setDialog(null)}>

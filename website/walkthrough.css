@@ -14,3 +14,5 @@
 .guide-page .site-header{position:relative}.guide-page .button{white-space:normal;text-align:center}.guide-page footer{margin-top:40px}
 @media(max-width:850px){.guide-section{grid-template-columns:1fr}.guide-page .site-header nav{display:none}.guide-intro{padding-bottom:56px}.guide-section{padding:40px 0}}
 @media(prefers-reduced-motion:no-preference){.guide-intro{animation:guide-arrive .7s ease-out both}@keyframes guide-arrive{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}}
+
+.guide-note ol{padding-left:23px;font-size:15px;line-height:1.7}.guide-note li{margin-bottom:14px}.guide-note a{text-decoration:underline;text-underline-offset:3px}.guide-note strong{overflow-wrap:anywhere}.guide-note p{overflow-wrap:anywhere}

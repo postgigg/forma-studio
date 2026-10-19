@@ -7,8 +7,8 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const site = path.join(root, 'website');
 const html = await readFile(path.join(site, 'index.html'), 'utf8');
 const js = await readFile(path.join(site, 'site.js'), 'utf8');
-assert.match(html, /Good ideas\./, 'Publish the marketing landing page.');
-assert.match(html, /Your desktop design studio\./);
+assert.match(html, /A little idea\./, 'Publish the marketing landing page.');
+assert.match(html, /Meet your new desktop design studio\./);
 assert.match(html, /Download for Windows/);
 assert.match(html, /Mac · \$49 once/);
 assert.match(html, /\$49 as a one-time payment/);
@@ -42,7 +42,7 @@ for (const match of guide.matchAll(/(?:src|href)="([^"#][^"]*)"/g)) {
   assert.ok((await stat(path.join(site, reference))).isFile(), `Missing guide asset: ${reference}`);
 }
 for (const match of html.matchAll(/(?:src|href)="([^"#][^"]*)"/g)) {
-  const reference = match[1].split('?')[0];
+  const reference = match[1].split(/[?#]/)[0];
   if (/^https?:/.test(reference)) continue;
   assert.ok((await stat(path.join(site, reference))).isFile(), `Missing landing asset: ${reference}`);
 }

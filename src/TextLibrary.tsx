@@ -8,6 +8,7 @@ import { getFont, rememberFonts, removeLibraryFont, uploadFonts, usedFonts, useF
 import { validateFonts, type StoredFont } from './font-data';
 import { IconButton } from './ui';
 import './text-library.css';
+import { workspaceChanged } from './workspace-events';
 type TextStyle = { name: string; text: string; fontFamily: string; fontSize: number; fontWeight: string | number; fontStyle: 'normal' | 'italic' | 'oblique'; lineHeight: number; charSpacing: number; fill: string };
 type TextKit = { id: string; name: string; styles: TextStyle[]; fonts: StoredFont[] };
 const db = createStore('forma-text-kits', 'library');
@@ -18,7 +19,7 @@ const starters: TextKit[] = [
   { id: 'celebration', name: 'Celebration', styles: [style('Heading', 'Forma Deco', 100), style('Subheading', 'Georgia', 40), style('Body', 'Arial', 24)], fonts: [] },
   { id: 'studio', name: 'Studio', styles: [style('Heading', 'Forma Frame', 90), style('Subheading', 'Courier New', 30), style('Body', 'Arial', 24)], fonts: [] },
 ];
-function validateKit(raw: unknown): TextKit {
+export function validateKit(raw: unknown): TextKit {
   const v = raw as Record<string, any>;
   if (!v || v.format !== 'forma-text-kit' || v.version !== 1 || typeof v.name !== 'string' || !v.name.trim() || v.name.length > 80 || !Array.isArray(v.styles) || !v.styles.length || v.styles.length > 12) throw new Error('Choose a Forma text kit exported from the Text panel.');
   const embedded = validateFonts(v.fonts), allowed = new Set([...fonts, ...embedded.map(font => font.family)]);
@@ -33,7 +34,7 @@ export function TextLibrary({ editor, run }: { editor: Editor; run: (fn: () => u
   const [kits, setKits] = useState<TextKit[]>([]), [name, setName] = useState('My text style'), [message, setMessage] = useState(''), [busy, setBusy] = useState(false);
   useEffect(() => { void get<TextKit[]>('kits', db).then(value => setKits(value || [])); }, []);
   const work = (fn: () => Promise<void>) => run(async () => { setBusy(true); setMessage(''); try { await fn(); } finally { setBusy(false); } });
-  const saveKits = async (next: TextKit[]) => { if (next.length > 100) throw new Error('Your library can hold up to 100 text kits.'); await set('kits', next, db); setKits(next); };
+  const saveKits = async (next: TextKit[]) => { if (next.length > 100) throw new Error('Your library can hold up to 100 text kits.'); await set('kits', next, db); setKits(next); workspaceChanged(); };
   const saveSelected = () => work(async () => {
     const text = editor.selected;
     if (!(text instanceof Textbox) || !name.trim()) return;

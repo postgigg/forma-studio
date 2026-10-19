@@ -485,10 +485,10 @@
     "windowsPublisherSignature": "NotSigned"
   },
   "patch170": {
-    "intent": "Improve Forma without duplicating its existing intent: $49 once for one Mac, Windows free; one paid key activates one device; clearer AI status and action spacing; branded public downloads and a verified sticker ZIP.",
-    "testedAt": "2026-10-18T17:21:44.069Z",
+    "intent": "Improve the existing Forma platform and preserve its single shared brand/style context. Rebuild the landing page around the supplied WonderKids reference with expressive typography, original branded compositions and purposeful motion, without decorative asterisks or promotional hint labels. Add optional direct backups of saved workspace data to the customer’s private Wasabi account, with encrypted desktop keys and reviewed recovery. Retain $49 once for one Mac, free Windows, clearer AI status and branded downloads.",
+    "testedAt": "2026-10-19T02:25:34.201Z",
     "version": "1.7.0",
-    "state": "Main merged; earlier Windows build is superseded and must be rebuilt.",
+    "state": "verified locally; publication in progress",
     "packaged": {
       "fuseState": {
         "RunAsNode": false,
@@ -500,23 +500,23 @@
         "GrantFileProtocolExtraPrivileges": false
       },
       "version": "1.7.0",
-      "testedAt": "2026-10-18T16:42:05.774Z",
-      "sha256": "8a1e9c79f44c9acc6159148a49d993729708f34672ac53dd96531b581f5be06d",
+      "testedAt": "2026-10-19T02:22:34.171Z",
+      "sha256": "fc2a8dbf20dfadfd5ec71b0070f5f902f6460c178f6fdf999aab82846d73d38a",
       "assets": [
         {
           "name": "Forma-Studio-Setup-1.7.0.exe",
-          "size": 689353911,
-          "sha256": "8a1e9c79f44c9acc6159148a49d993729708f34672ac53dd96531b581f5be06d"
+          "size": 689619740,
+          "sha256": "fc2a8dbf20dfadfd5ec71b0070f5f902f6460c178f6fdf999aab82846d73d38a"
         },
         {
           "name": "Forma-Studio-Setup-1.7.0.exe.blockmap",
-          "size": 719593,
-          "sha256": "c0202398481bb5fdae7a36b69d906fdf56b71dc2bea6b0215a9699a72be8ee5c"
+          "size": 718064,
+          "sha256": "864ba71ead8f015c8597e5d8455d4f0655ef65c6e9635a14090e68baf3d7332b"
         },
         {
           "name": "latest.yml",
           "size": 353,
-          "sha256": "5e3b3270b8b9ec60570cca8b286736b8816820a458ba089c03a1a3356d83025d"
+          "sha256": "4b2f8cce00b423b1ba278f3e13aa68fa9528d30c74ae5fa5571f93c9c712f51c"
         },
         {
           "name": "update-policy.json",
@@ -525,8 +525,8 @@
         },
         {
           "name": "SHA256SUMS.txt",
-          "size": 95,
-          "sha256": "39903da3ee88e9f009e0ae060a3764052533148454683139fa0ff27e6317ba93"
+          "size": 361,
+          "sha256": "d440f2ce6e525653710531691bb9cb75c29fc58a403efcb5ad83cbd40a710968"
         }
       ],
       "engine": {
@@ -563,7 +563,7 @@
     },
     "native": {
       "version": "1.7.0",
-      "testedAt": "2026-10-18T16:46:43.912Z",
+      "testedAt": "2026-10-19T02:24:33.113Z",
       "packaged": true,
       "rendererNodeUnavailable": true,
       "restrictedBridge": true,
@@ -588,6 +588,13 @@
         "disconnected": "Disconnected",
         "refineTopGap": 12
       },
+      "nativeCloud": {
+        "desktopSetup": true,
+        "passwordField": true,
+        "nativeCredentialFieldsExposed": false,
+        "nonWasabiEndpointBlocked": true,
+        "realWasabiAccountTested": false
+      },
       "photoMask": true,
       "native3DRotation": true,
       "savedLineChartEditing": true,
@@ -598,7 +605,7 @@
       "errors": []
     },
     "paymentUI": {
-      "testedAt": "2026-10-18T16:31:30.253Z",
+      "testedAt": "2026-10-19T02:22:47.496Z",
       "price": 49,
       "comingSoonCheckoutDisabled": true,
       "viewports": [
@@ -658,6 +665,114 @@
       "desktop": 0,
       "payments": 0
     },
-    "preMergeSourceCommit": "6eba8c6"
+    "landing": {
+      "reference": "https://dribbble.com/shots/23191965-WonderKids-Landing-Page-Exploration",
+      "referenceAuthor": "Paperpillar",
+      "direction": "Oversized friendly typography, generous space, warm color and playful compositions adapted to Forma’s existing identity; no reference artwork or branding copied.",
+      "canonicalLogoPreserved": true,
+      "originalCodeNativeBackupIllustration": true,
+      "selfHostedLicensedDisplayFont": true,
+      "proof": {
+        "testedAt": "2026-10-18T22:52:40.053Z",
+        "viewports": [
+          1440,
+          768,
+          390,
+          360
+        ],
+        "noHorizontalOverflow": true,
+        "canonicalLogo": true,
+        "homeDownloadButtons": 3,
+        "carousel": true,
+        "filters": true,
+        "previewDialog": true,
+        "editorTabs": true,
+        "threeDRotation": true,
+        "motionPause": true,
+        "reducedMotion": true,
+        "errors": []
+      },
+      "walkthrough": {
+        "testedAt": "2026-10-19T02:18:12.816Z",
+        "homeDownloadButtons": 3,
+        "repositoryLinks": 0,
+        "guideNavigation": true,
+        "guideImagesDecoded": true,
+        "viewports": [
+          1440,
+          390
+        ],
+        "horizontalOverflow": false,
+        "browserErrors": []
+      },
+      "published": false
+    },
+    "cloudStorage": {
+      "protocolTests": 6,
+      "nativeKeyStorage": {
+        "testedAt": "2026-10-19T01:30:40.491Z",
+        "platform": "win32",
+        "actualOperatingSystemSafeStorage": true,
+        "encryptionAvailable": true,
+        "encryptedProfileContainsNoPlaintextKeys": true,
+        "encryptedRestartRecovery": true,
+        "compressedRoundtrip": true,
+        "disconnectKeepsRemoteBackup": true,
+        "realWasabiAccountTested": false
+      },
+      "workspaceRecovery": {
+        "testedAt": "2026-10-19T01:33:36.424Z",
+        "summary": {
+          "createdAt": "2026-10-19T01:33:31.613Z",
+          "designs": 2,
+          "campaigns": 1,
+          "images": 1,
+          "fonts": 1,
+          "textKits": 1,
+          "hasBrand": true
+        },
+        "activeCampaignRestoreBlocked": true,
+        "existingProjectsKept": true,
+        "campaignDesignLinksPreserved": true,
+        "restoredJobsPaused": true,
+        "providerJobIdsCleared": true,
+        "uploadsDeduplicated": true,
+        "textKitsDeduplicated": true,
+        "fontsRecovered": true,
+        "sharedBrandOptIn": true,
+        "existingDraftPreserved": true,
+        "unsafeImagesBlocked": true,
+        "desktopBridgeUiMock": true,
+        "desktopOnlyBrowserMessage": true,
+        "connectAndInitialBackup": true,
+        "secretCleared": true,
+        "emptyHistory": true,
+        "disconnect": true,
+        "realWasabiAccountTested": false,
+        "errors": []
+      },
+      "nativeDesktop": {
+        "desktopSetup": true,
+        "passwordField": true,
+        "nativeCredentialFieldsExposed": false,
+        "nonWasabiEndpointBlocked": true,
+        "realWasabiAccountTested": false
+      },
+      "customerOwnedPrivateBucket": true,
+      "directDesktopConnection": true,
+      "publicPublishing": false,
+      "automaticIntervalMinutes": 15,
+      "compressedSnapshots": true,
+      "maximumUncompressedBytes": 268435456,
+      "restoreAddsCopies": true,
+      "brandAndStyleRemainOneSourceOfTruth": true,
+      "realWasabiAccountTested": false
+    },
+    "mergedMain": {
+      "commit": "65eaf8e8a56d3b3b90a5e6a3df1e4e1d1f321115",
+      "retainedMacNativeMenusAndRendering": true,
+      "desktopAndCloudTests": 27,
+      "serverContracts": 37
+    }
   }
 }

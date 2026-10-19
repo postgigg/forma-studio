@@ -2,6 +2,7 @@ import { createStore, del, entries, get, set } from "idb-keyval";
 import type { Asset, Design } from "./types";
 import catalog from "../shared/assets.json";
 import { validateFonts } from "./font-data";
+import { workspaceChanged } from './workspace-events';
 import { validateDesignStyle, type DesignStyleProfile } from "../shared/design-style.mjs";
 import {
   validateBrandContext,
@@ -13,7 +14,7 @@ export function saveDesign(design: Design) {
   const copy = structuredClone(design);
   writes = writes
     .catch(() => {})
-    .then(() => set(`design:${copy.id}`, copy, db));
+    .then(() => set(`design:${copy.id}`, copy, db)).then(workspaceChanged);
   return writes;
 }
 export async function allDesigns(): Promise<Design[]> {
@@ -30,20 +31,21 @@ export async function getDesign(id: string): Promise<Design | undefined> {
 export async function deleteDesign(id: string) {
   await writes.catch(() => {});
   await del(`design:${id}`, db);
+  workspaceChanged();
 }
 export const getAssets = async (): Promise<Asset[]> =>
   (await get("assets", db)) || [];
-export const putAssets = (assets: Asset[]) => set("assets", assets, db);
+export const putAssets = (assets: Asset[]) => set("assets", assets, db).then(workspaceChanged);
 export const getBrand = async (): Promise<string[]> =>
   (await get("brand", db)) || ["#754adb", "#292432", "#f7f2e8", "#d5e2cc"];
-export const putBrand = (brand: string[]) => set("brand", brand, db);
+export const putBrand = (brand: string[]) => set("brand", brand, db).then(workspaceChanged);
 export const getSavedBrand = async (): Promise<string[] | undefined> => get('brand', db);
 export const getBrandProfile = async () =>
   validateBrandContext(await get("brand-profile", db));
 export const getDesignStyle = async () => validateDesignStyle(await get("design-style", db));
-export const putDesignStyle = (profile: DesignStyleProfile) => set("design-style", validateDesignStyle(profile), db);
+export const putDesignStyle = (profile: DesignStyleProfile) => set("design-style", validateDesignStyle(profile), db).then(workspaceChanged);
 export const putBrandProfile = (profile?: BrandProfile) =>
-  set("brand-profile", profile || null, db);
+  set("brand-profile", profile || null, db).then(workspaceChanged);
 export async function putBrandAndDesignStyle(brand: BrandProfile, style: DesignStyleProfile) {
   const nextBrand = validateBrandContext(brand);
   const nextStyle = validateDesignStyle(style);
@@ -60,11 +62,12 @@ export async function putBrandAndDesignStyle(brand: BrandProfile, style: DesignS
       reject(error);
     }
   }));
+  workspaceChanged();
   return { brand: nextBrand, style: nextStyle };
 }
 export const getBrandLogo = async (): Promise<Asset | null> =>
   (await get("brand-logo", db)) || null;
-export const putBrandLogo = (logo: Asset | null) => set("brand-logo", logo, db);
+export const putBrandLogo = (logo: Asset | null) => set("brand-logo", logo, db).then(workspaceChanged);
 export function validateDesign(raw: unknown): asserts raw is Design {
   if (!raw || typeof raw !== "object")
     throw new Error("This is not a Forma design file.");

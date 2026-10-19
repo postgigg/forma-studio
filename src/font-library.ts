@@ -1,6 +1,7 @@
 import { useSyncExternalStore } from 'react';
 import { createStore, get, set } from 'idb-keyval';
 import { fonts } from './types';
+import { workspaceChanged } from './workspace-events';
 import { detectFont, fontBytes, validateFonts, type StoredFont } from './font-data';
 const db = createStore('forma-type-library', 'kits');
 const loaded = new Map<string, StoredFont>(), listeners = new Set<() => void>();
@@ -34,14 +35,14 @@ export async function uploadFonts(files: File[]) {
     let binary = ''; for (let i = 0; i < bytes.length; i += 8192) binary += String.fromCharCode(...bytes.subarray(i, i + 8192));
     next.push({ family, name: file.name.replace(/\.(ttf|otf|woff2?)$/i, '').slice(0, 100), format, data: btoa(binary) });
   }
-  validateFonts(next); await loadFonts(next); await set('fonts', next, db); library = next; notify();
+  validateFonts(next); await loadFonts(next); await set('fonts', next, db); library = next; notify(); workspaceChanged();
 }
 export async function rememberFonts(raw: unknown) {
   await initFonts(); const additions = validateFonts(raw);
   const next = [...new Map([...library, ...additions].map(font => [font.family, font])).values()];
-  validateFonts(next); await loadFonts(additions); await set('fonts', next, db); library = next; notify();
+  validateFonts(next); await loadFonts(additions); await set('fonts', next, db); library = next; notify(); workspaceChanged();
 }
-export async function removeLibraryFont(family: string) { const next = library.filter(font => font.family !== family); await set('fonts', next, db); library = next; notify(); }
+export async function removeLibraryFont(family: string) { const next = library.filter(font => font.family !== family); await set('fonts', next, db); library = next; notify(); workspaceChanged(); }
 export function fontLabel(family: string) { return loaded.get(family)?.name || family; }
 export function getFont(family: string) { return loaded.get(family); }
 export function usedFonts(value: unknown): StoredFont[] {
