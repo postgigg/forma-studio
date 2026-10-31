@@ -13,6 +13,6 @@
   "dependencies": {
     "@netlify/database": "2.0.1",
     "pg": "8.23.1",
-    "stripe": "23.0.0"
+    "stripe": "23.0.1"
   }
 }
